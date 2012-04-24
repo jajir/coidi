@@ -1,0 +1,42 @@
+ ----
+ Introduction
+ ----
+
+Koid - introduction
+ 
+* What is this Koid?
+ 
+ It's implementation of OpenID protocol. It could be user as base component
+ for more complex authentication or authorization systems.
+ 
+ This project can provide to you on-line application Single Sign On.  
+ 
+** What problem could be solved with library?
+ 
+ * Integration of OpenId into your application
+ 
+ * Creating you own OpenID provider 
+ 
+[]
+ 
+[openid-role.png] Role of OpenID protocol.
+
+** Main use cases solved by library
+
+[use-cases-high-level.png] use cases for administration
+
+** Authentication request/response
+
+ It's key concept that allows user to get identity.
+
+ Following diagrams show situation when user access relaying party and provide his identification.
+ Relaying party determine correct OpenId provider and redirect user there with authentication request.
+ OpenId provider select corresponding user if this user is not logged in than ask for credential and perform login operation.
+ Than OpenId provider create authentication response and send it back through redirect to relaying party.
+ When relaying party get authentication response extract identity and verify signature with secret key. 
+
+[authentication-detail.png] Authentication detail
+ 
+[authentication-request-checkid_setup.png] Authentication request processing on OP
+ 
+ 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Koid">
+	<bannerLeft>
+		<name>Koid</name>
+		<src>./ljhdasjo.png</src>
+		<href>http://codasaree/</href>
+	</bannerLeft>
+
+	<publishDate format="dd MMM yyyy" />
+
+	<version />
+
+	<skin>
+		<groupId>org.apache.tapestry</groupId>
+		<artifactId>maven-skin</artifactId>
+		<version>1.1</version>
+	</skin>
+	
+	<body>
+		<links>
+			<item name="Wikipedia" href="httdasdasdaee" />
+		</links>
+
+		<menu name="Koid">
+			<item name="Introduction" href="index.html" />
+			<item name="release methodology" href="release.html" />
+			<item name="XRDS" href="xrds.html" />
+		</menu>
+
+		<menu ref="reports" />
+
+	</body>
+</project>
