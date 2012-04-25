@@ -6,7 +6,7 @@ import org.apache.tapestry5.TapestryFilter;
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.def.ModuleDef;
 import org.apache.tapestry5.ioc.internal.DefaultModuleDefImpl;
-import org.apache.tapestry5.ioc.internal.services.ClassFactoryImpl;
+import org.apache.tapestry5.ioc.internal.services.PlasticProxyFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +31,8 @@ public class ExtendedTapestryFilter extends TapestryFilter {
 	protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
 		logger.debug("modules force loading");
 		return new ModuleDef[] { new DefaultModuleDefImpl(ConfModule.class,
-				logger, new ClassFactoryImpl(
-						ExtendedTapestryFilter.class.getClassLoader())) };
+				logger, new PlasticProxyFactoryImpl(
+						ExtendedTapestryFilter.class.getClassLoader(), logger)) };
 	}
 
 }
