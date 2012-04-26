@@ -120,5 +120,9 @@
 		<url>svn://svn.code.sf.net/p/coidi/code/trunk</url>
 	</scm>
 	<distributionManagement>
+		<site>
+			<id>coidi.sf.net</id>
+			<url>scp://shell.sourceforge.net/home/project-web/coidi/htdocs</url>
+		</site>
 	</distributionManagement>
 </project>
