@@ -21,12 +21,12 @@
 	</context-param>
 
 	<filter>
-		<filter-name>conf</filter-name>
+		<filter-name>rpView</filter-name>
 		<filter-class>com.coroptis.coidi.conf.util.ExtendedTapestryFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>conf</filter-name>
+		<filter-name>rpView</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>ERROR</dispatcher>
