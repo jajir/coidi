@@ -1,5 +1,14 @@
 package com.coroptis.coidi.op.view.pages;
 
-public class Index {
+import org.apache.tapestry5.annotations.Property;
 
+public class Index {
+	
+	@Property
+	private String userSuppliedId;
+	
+	void onSuccess(){
+		
+	}
+	
 }

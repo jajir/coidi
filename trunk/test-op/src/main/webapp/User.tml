@@ -6,6 +6,7 @@
         <title>index</title>
     </head>
     <body>
-    	<t:pageLink page="user" context="literal:karel">karel page</t:pageLink>
+    	<h1>${userName}</h1>
+    	UserName: ${userName}
 	</body>
 </html>

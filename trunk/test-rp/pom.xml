@@ -14,6 +14,12 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>cz.coroptis.coidi</groupId>
+			<artifactId>core</artifactId>
+			<version>${parent.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.openxri</groupId>
 			<artifactId>openxri-client</artifactId>
 			<version>1.0.1</version>
