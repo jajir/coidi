@@ -33,7 +33,8 @@ public class User {
 	StreamResponse onActivate(final String userName) {
 		String accept = request.getHeader("Accept");
 		if ("HEAD".equals(request.getMethod())) {
-			response.setHeader("X-XRDS-Location", "/userxrds");
+			response.setHeader("X-XRDS-Location",
+					xrdsService.getXrdsLocation(userName));
 		}
 		if (accept != null && accept.contains("application/xrds+xml")) {
 			// response stream response

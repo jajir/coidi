@@ -20,4 +20,5 @@ public interface XrdsService {
 	 */
 	String getDocument(String user) throws CoidiException;
 
+	String getXrdsLocation(String userName);
 }

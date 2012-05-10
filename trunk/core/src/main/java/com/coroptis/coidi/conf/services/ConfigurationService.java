@@ -60,26 +60,16 @@ public interface ConfigurationService {
 	Resource getDefaultConfiguration();
 
 	/**
-	 * Allows to get resource for any file. It works for in class path related
-	 * resources and even for in file system placed resources.
+	 * Creates {@link Properties}
 	 * 
-	 * @param configurationUrl
-	 * @return
+	 * @param configurationSection
+	 *            pattern that matches an element in configuration
+	 * @return properties loaded from XML configuration file, no file cannot be
+	 *         found
 	 */
-	@Deprecated
-	Resource getConfigurationFileResource(final String configurationUrl);
+	Map<String, String> loadDefaultConfiguration(String configurationSection);
 
-
-    /**
-     * Creates {@link Properties}
-     * 
-     * @param configurationSection
-     *            pattern that matches an element in configuration
-     * @return properties loaded from XML configuration file, no file cannot be
-     *         found
-     */
-    Map<String, String> loadDefaultConfiguration(String configurationSection);
-    
-	@Deprecated
-	Properties loadConfiguration(String configurationSection);
+	String getProperty(String key);
+	
+	Integer getPropertyInt(String key);
 }

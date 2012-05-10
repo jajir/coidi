@@ -1,0 +1,5 @@
+<configuration>
+	<op>
+		<property name="server">http://localhost:8080/</property>
+	</op>
+</configuration>
