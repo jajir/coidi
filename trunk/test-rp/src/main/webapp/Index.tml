@@ -6,5 +6,10 @@
         <title>index</title>
     </head>
     <body>
+    	<t:form id="openId">
+    		<t:errors/>
+    		<t:label for="userSuppliedId"/>:
+    		 <input t:type="TextField" t:id="userSuppliedId" t:validate="required,minlength=3" size="30"/>
+    	</t:form>
 	</body>
 </html>
