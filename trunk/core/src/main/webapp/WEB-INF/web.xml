@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+         http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	<description>
+		Application that helps easy configure T5 app
+	</description>
+	<display-name>T5 application configuration</display-name>
+	<context-param>
+		<param-name>tapestry.app-package</param-name>
+		<param-value>com.coroptis.coidi.conf</param-value>
+	</context-param>
+	<context-param>
+		<param-name>system.property.configuration.directory</param-name>
+		<param-value>main.conf.dir</param-value>
+	</context-param>
+	<context-param>
+		<param-name>tapestry.application-version</param-name>
+		<param-value>1.0</param-value>
+	</context-param>
+	<context-param>
+		<param-name>tapestry.production-mode</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>tapestry.combine-scripts</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<filter>
+		<filter-name>conf</filter-name>
+		<filter-class>com.coroptis.coidi.conf.util.ExtendedTapestryFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>conf</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+</web-app>

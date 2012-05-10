@@ -26,6 +26,18 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-hibernate</artifactId>
+			<version>${t5.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.openxri</groupId>
 			<artifactId>openxri-client</artifactId>
 			<version>1.0.1</version>
@@ -51,6 +63,12 @@
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
 			<version>${icu4j.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

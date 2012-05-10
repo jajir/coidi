@@ -27,7 +27,6 @@ import com.coroptis.coidi.conf.util.FsResource;
  * Files are named like this: <code>configuration-${server.role}.xml</code>
  * where ${server.role} is replaced by value of system property "server.role".
  * 
- * @author Radek Varbuchta
  * @author jan
  */
 public class ConfigurationServiceImpl implements ConfigurationService {
@@ -38,20 +37,11 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	private final String systemPropertyConfigurationDirectory;
 
 	public ConfigurationServiceImpl(
-			final @Inject @Symbol(ConfigurationService.CONF_KEY_CONFIGURATION_DIRECTORY) String systemPropertyConfigurationDirectory) {
+			@Inject @Symbol(CONF_KEY_CONFIGURATION_DIRECTORY) final String systemPropertyConfigurationDirectory) {
 		this.systemPropertyConfigurationDirectory = systemPropertyConfigurationDirectory;
 	}
 
-	@Override
-	public Properties loadConfiguration(String configurationSection) {
-		Resource configurationResource = getConfigurationFileResource(getDefaultConfigurationFile());
-		Properties out = new Properties();
-		out.putAll(createProperties(configurationSection, configurationResource));
-		return out;
-	}
-
-	@Override
-	public Resource getConfigurationFileResource(final String configurationUrl) {
+	private Resource getConfigurationFileResource(final String configurationUrl) {
 		Resource configurationResource = null;
 		if (configurationUrl.startsWith(".")) {
 			/**
@@ -156,6 +146,27 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 			String configurationSection) {
 		Resource configurationResource = getDefaultConfiguration();
 		return createProperties(configurationSection, configurationResource);
+	}
+
+	@Override
+	public String getProperty(String symbolName) {
+		int pos = symbolName.indexOf(".");
+		if (pos < 0) {
+			return null;
+		}
+		String section = symbolName.substring(0, pos);
+		String key = symbolName.substring(pos + 1);
+		Map<String, String> prop = loadDefaultConfiguration(section);
+		if (prop == null) {
+			return null;
+		}
+		return prop.get(key);
+	}
+
+	@Override
+	public Integer getPropertyInt(String symbolName) {
+		String val = getProperty(symbolName);
+		return val == null ? null : Integer.parseInt(val);
 	}
 
 }

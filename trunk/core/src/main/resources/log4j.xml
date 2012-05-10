@@ -9,7 +9,7 @@
         </layout>
     </appender>
 	
-    <category name="com.coroptis">
+    <category name="com.coroptis.coidi">
     	<param name="additivity" value="false" />
         <priority value="debug" />
 		<appender-ref ref="console"/>

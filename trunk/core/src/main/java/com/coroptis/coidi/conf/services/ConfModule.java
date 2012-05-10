@@ -8,9 +8,12 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
+import com.coroptis.coidi.conf.services.impl.AppSymbolProvider;
 import com.coroptis.coidi.conf.services.impl.ConfigurationServiceImpl;
 import com.coroptis.coidi.conf.util.Conf;
 
@@ -28,11 +31,20 @@ public class ConfModule {
 	public static void bind(ServiceBinder binder) {
 		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class)
 				.eagerLoad();
+		binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId(
+				"appSymbolProvider");
+	}
+
+	public static void contributeSymbolSource(
+			final OrderedConfiguration<SymbolProvider> providers,
+			@InjectService("appSymbolProvider") SymbolProvider appSymbolProvider) {
+		providers.add("appSymbolProvider", appSymbolProvider,
+				"after:factoryDefaults");
 	}
 
 	public static void contributeApplicationInitializer(
 			OrderedConfiguration<ApplicationInitializerFilter> configuration,
-			final @Inject @Symbol(ConfigurationService.CONF_KEY_CONFIGURATION_DIRECTORY) String systemPropertyConfigurationDirectory) {
+			@Inject @Symbol(ConfigurationService.CONF_KEY_CONFIGURATION_DIRECTORY) final String systemPropertyConfigurationDirectory) {
 		String configFile = Conf
 				.getConfigurationDirectory(systemPropertyConfigurationDirectory)
 				+ "log4j-" + Conf.getServerRole() + ".xml";

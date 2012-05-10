@@ -1,0 +1,7 @@
+<configuration>
+	<test>
+		<property name="name">George</property>
+		<property name="surname">Valentine</property>
+		<property name="favorite.color">black</property>
+	</test>
+</configuration>
