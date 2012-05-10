@@ -1,11 +1,11 @@
-package com.coroptis.coidi.op.view.services.impl;
+package com.coroptis.coidi.rp.view.services.impl;
 
-import com.coroptis.coidi.op.view.base.DiscoveryResult;
-import com.coroptis.coidi.op.view.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.view.base.DiscoveryResult;
+import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
 
 public class DiscoveryProcessorHtml implements DiscoveryProcessor {
 
-	public DiscoveryResult Dicovery(String userSuppliedId) {
+	public DiscoveryResult dicovery(String userSuppliedId) {
 		return null;
 	}
 
