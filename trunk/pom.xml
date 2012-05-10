@@ -51,7 +51,7 @@
 				<configuration>
 					<downloadSources>false</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
-					<useProjectReferences>true</useProjectReferences>
+					<useProjectReferences>false</useProjectReferences>
 				</configuration>
 			</plugin>
 			<plugin>
