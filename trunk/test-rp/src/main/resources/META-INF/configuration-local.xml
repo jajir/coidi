@@ -1,0 +1,10 @@
+<configuration>
+	<!-- 
+	<proxy>
+		<property name="server">proxy.server.com</property>
+		<property name="port">8080</property>
+		<property name="userName">someName</property>
+		<property name="password">passwd</property>
+	</proxy>
+	-->
+</configuration>
