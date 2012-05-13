@@ -1,13 +1,14 @@
 package com.coroptis.coidi.op.view.services;
 
-import com.coroptis.coidi.op.view.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.view.utils.KeyPair;
 
 public interface CryptoService {
 
-	byte[] generateSessionRandom(Association.SessionType sessionType);
+	byte[] generateSessionRandom(SessionType sessionType);
 
-	byte[] generateAssociationRandom(Association.AssociationType associationType);
+	byte[] generateAssociationRandom(AssociationType associationType);
 
 	String generateUUID();
 

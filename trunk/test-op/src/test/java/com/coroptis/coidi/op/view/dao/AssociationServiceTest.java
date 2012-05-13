@@ -2,9 +2,9 @@ package com.coroptis.coidi.op.view.dao;
 
 import java.util.Date;
 
-import com.coroptis.coidi.op.view.entities.Association;
-import com.coroptis.coidi.op.view.entities.Association.AssociationType;
-import com.coroptis.coidi.op.view.entities.Association.SessionType;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.coroptis.coidi.op.view.entities.AssociationImpl;
 import com.coroptis.coidi.op.view.services.AssociationService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 
@@ -13,7 +13,7 @@ public class AssociationServiceTest extends AbstractIntegrationDaoTest {
 	AssociationService associationService;
 
 	public void testGetIdentityByName() throws Exception {
-		Association ret = associationService
+		AssociationImpl ret = associationService
 				.getByAssocHandle("bbbb-bbbb-bbbb-bbbb");
 		commit();
 
@@ -21,7 +21,7 @@ public class AssociationServiceTest extends AbstractIntegrationDaoTest {
 	}
 
 	public void testGetIdentityByName_notExists() throws Exception {
-		Association ret = associationService
+		AssociationImpl ret = associationService
 				.getByAssocHandle("bbbb-bbbb-bbbb-blee");
 		commit();
 		
@@ -29,7 +29,7 @@ public class AssociationServiceTest extends AbstractIntegrationDaoTest {
 	}
 
 	public void testCreate() throws Exception {
-		Association assoc = new Association();
+		AssociationImpl assoc = new AssociationImpl();
 		assoc.setAssocHandle("aaaa-aaaa-aaaa-aaaa");
 		assoc.setAssociationType(AssociationType.HMAC_SHA1);
 		assoc.setExpiredIn(new Date());

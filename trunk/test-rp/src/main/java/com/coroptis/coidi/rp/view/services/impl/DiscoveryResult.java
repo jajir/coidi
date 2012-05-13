@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.base;
+package com.coroptis.coidi.rp.view.services.impl;
 
 public class DiscoveryResult {
 

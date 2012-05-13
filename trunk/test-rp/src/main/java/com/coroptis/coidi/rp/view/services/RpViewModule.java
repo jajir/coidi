@@ -8,11 +8,15 @@ import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 
+import com.coroptis.coidi.rp.view.services.impl.AssociationServiseImpl;
+import com.coroptis.coidi.rp.view.services.impl.AuthenticationRequestServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorTerminator;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorYadis;
 import com.coroptis.coidi.rp.view.services.impl.HttpServiceImpl;
+import com.coroptis.coidi.rp.view.services.impl.NonceDaoImpl;
+import com.coroptis.coidi.rp.view.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.XrdsServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.YadisServiceImpl;
 
@@ -23,6 +27,10 @@ public class RpViewModule {
 		binder.bind(ConvertorService.class, ConvertorServiceImpl.class);
 		binder.bind(YadisService.class, YadisServiceImpl.class);
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
+		binder.bind(AssociationServise.class, AssociationServiseImpl.class);
+		binder.bind(NonceDao.class, NonceDaoImpl.class);
+		binder.bind(AuthenticationRequestService.class, AuthenticationRequestServiceImpl.class);
+		binder.bind(NonceService.class, NonceServiceImpl.class);
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(

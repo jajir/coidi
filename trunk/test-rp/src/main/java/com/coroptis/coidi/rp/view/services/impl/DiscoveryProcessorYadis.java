@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.rp.view.base.DiscoveryResult;
 import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.view.services.HttpService;
 import com.coroptis.coidi.rp.view.services.XrdsService;

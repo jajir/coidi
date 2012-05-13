@@ -32,7 +32,7 @@ public class XrdsServiceImpl implements XrdsService {
 		buff.append("      <Type>http://specs.openid.net/auth/2.0/signon</Type>\n");
 		buff.append("      <URI>");
 		buff.append(conf.get("server"));
-		buff.append("endpoint</URI>\n");
+		buff.append("openid</URI>\n");
 		buff.append("      <LocalID>");
 		buff.append(conf.get("server"));
 		buff.append("user/");

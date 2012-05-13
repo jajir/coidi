@@ -6,10 +6,19 @@
         <title>index</title>
     </head>
     <body>
+    	<h1>Testing Relaying party</h1>
     	<t:form id="openId">
     		<t:errors/>
     		<t:label for="userSuppliedId"/>:
-    		 <input t:type="TextField" t:id="userSuppliedId" t:validate="required,minlength=3" size="30"/>
+			<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
+			<br />
+			<t:submit value="Login"/>
+			
+			<br />
+			Testing identities
+			<ul>
+				<li>http://localhost:8080/user/juan</li>
+			</ul>
     	</t:form>
 	</body>
 </html>
