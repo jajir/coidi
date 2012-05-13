@@ -1,14 +1,10 @@
 package com.coroptis.coidi.op.view.services;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
-
-import com.coroptis.coidi.CoidiException;
 
 public class OpenIdResponseAssociation extends AbstractOpenIdResponse {
 
@@ -23,17 +19,19 @@ public class OpenIdResponseAssociation extends AbstractOpenIdResponse {
 
 	public String getMessage() {
 		StringBuilder sb = new StringBuilder();
-		try {
-			for (Entry<String, String> entry : map.entrySet()) {
-				sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-				sb.append(":");
-				sb.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-				sb.append("\n");
-			}
-			return sb.toString();
-		} catch (UnsupportedEncodingException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
+		// try {
+		for (Entry<String, String> entry : map.entrySet()) {
+			sb.append(entry.getKey());
+			// sb.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+			sb.append(":");
+			// sb.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+			sb.append(entry.getValue());
+			sb.append("\n");
 		}
+		return sb.toString();
+		// } catch (UnsupportedEncodingException e) {
+		// logger.error(e.getMessage(), e);
+		// throw new CoidiException(e.getMessage(), e);
+		// }
 	}
 }

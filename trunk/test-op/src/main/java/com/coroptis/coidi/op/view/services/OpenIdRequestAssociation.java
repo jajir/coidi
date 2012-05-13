@@ -2,8 +2,8 @@ package com.coroptis.coidi.op.view.services;
 
 import java.math.BigInteger;
 
-import com.coroptis.coidi.op.view.entities.Association.AssociationType;
-import com.coroptis.coidi.op.view.entities.Association.SessionType;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public class OpenIdRequestAssociation {
 

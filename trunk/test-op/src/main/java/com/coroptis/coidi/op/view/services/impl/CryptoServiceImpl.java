@@ -3,8 +3,8 @@ package com.coroptis.coidi.op.view.services.impl;
 import java.math.BigInteger;
 import java.util.Random;
 
-import com.coroptis.coidi.op.view.entities.Association.AssociationType;
-import com.coroptis.coidi.op.view.entities.Association.SessionType;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.view.services.CryptoService;
 import com.coroptis.coidi.op.view.services.OpenIdRequestAssociation;
 import com.coroptis.coidi.op.view.utils.KeyPair;

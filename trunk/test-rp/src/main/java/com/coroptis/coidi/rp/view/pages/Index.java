@@ -1,10 +1,18 @@
 package com.coroptis.coidi.rp.view.pages;
 
-import org.apache.http.client.HttpClient;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import com.coroptis.coidi.rp.view.services.HttpService;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.slf4j.Logger;
+
+import com.coroptis.coidi.conf.util.AuthenticationRequest;
+import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.rp.view.services.AssociationServise;
+import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.view.services.impl.DiscoveryResult;
 
 public class Index {
 
@@ -12,12 +20,33 @@ public class Index {
 	private String userSuppliedId;
 
 	@Inject
-	private HttpService httpService;
+	private DiscoveryProcessor discoveryProcessor;
 
-	void onSuccess() {
-		HttpClient httpClient = httpService.getHttpClient();
+	@Inject
+	private AssociationServise associationServise;
 
-		System.out.println(httpClient.getParams());
+	@Inject
+	private Logger logger;
+
+	@SessionState
+	private Association association;
+
+	URL onSuccess() throws MalformedURLException {
+		DiscoveryResult discoveryResult = discoveryProcessor
+				.dicovery(userSuppliedId);
+		association = associationServise.generateAssociation(discoveryResult
+				.getEndPoint());
+
+		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
+		authenticationRequest.setAssocHandle(association.getAssocHandle());
+		authenticationRequest.setIdentity(userSuppliedId);
+		authenticationRequest.setMode("checkid_immediate");
+		authenticationRequest.setRealm("not in use");
+		authenticationRequest.setReturnTo("http://localhost:8081/");
+
+		URL redirectTo = new URL(discoveryResult.getEndPoint() + "?"
+				+ authenticationRequest.createMessage());
+		logger.debug("url: " + redirectTo);
+		return redirectTo;
 	}
-
 }

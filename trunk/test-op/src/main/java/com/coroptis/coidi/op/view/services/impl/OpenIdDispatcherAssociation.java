@@ -7,7 +7,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.op.view.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.coroptis.coidi.op.view.entities.AssociationImpl;
 import com.coroptis.coidi.op.view.services.AbstractOpenIdResponse;
 import com.coroptis.coidi.op.view.services.AssociationService;
 import com.coroptis.coidi.op.view.services.CryptoService;
@@ -40,10 +42,10 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		if (requestParams.get(MODE).equals(MODE_ASSOCIATE)) {
 
 			OpenIdRequestAssociation request = new OpenIdRequestAssociation();
-			request.setAssociationType(Association.AssociationType
-					.convert(requestParams.get(OPENID_ASSOCIATION_TYPE)));
-			request.setSessionType(Association.SessionType
-					.convert(requestParams.get(OPENID_SESSION_TYPE)));
+			request.setAssociationType(AssociationType.convert(requestParams
+					.get(OPENID_ASSOCIATION_TYPE)));
+			request.setSessionType(SessionType.convert(requestParams
+					.get(OPENID_SESSION_TYPE)));
 
 			request.setDhModulo(AssociationService.DEFAULT_MODULUS);
 			if (requestParams.get(OPENID_DH_MODULUS) != null) {
@@ -69,20 +71,20 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 			cal.setTime(new Date());
 			cal.add(Calendar.MINUTE, 30);
 
-			Association a = new Association();
-			a.setAssocHandle(cryptoService.generateUUID());
-			a.setSessionType(request.getSessionType());
-			a.setExpiredIn(cal.getTime());
+			AssociationImpl association = new AssociationImpl();
+			association.setAssocHandle(cryptoService.generateUUID());
+			association.setSessionType(request.getSessionType());
+			association.setExpiredIn(cal.getTime());
 
 			OpenIdResponseAssociation out = new OpenIdResponseAssociation();
-			if (request.getSessionType().equals(
-					Association.SessionType.no_encription)) {
-				a.setMacKey(Crypto.convertToString(cryptoService
-						.generateAssociationRandom(a.getAssociationType())));
+			if (request.getSessionType().equals(SessionType.no_encription)) {
+				association.setMacKey(Crypto.convertToString(cryptoService
+						.generateAssociationRandom(association
+								.getAssociationType())));
 				logger.info("No encription was setup during association request/response.");
 			} else {
-				a.setMacKey(Crypto.convertToString(cryptoService
-						.generateSessionRandom(a.getSessionType())));
+				association.setMacKey(Crypto.convertToString(cryptoService
+						.generateSessionRandom(association.getSessionType())));
 				CryptoSession diffieHellman = new CryptoSession(
 						request.getDhModulo(), request.getDhGen());
 				// TODO refactor it
@@ -91,22 +93,22 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 				crypto.setDiffieHellman(diffieHellman);
 				byte[] encryptedPublicKey = crypto.encryptSecret(
 						request.getDhConsumerPublic(),
-						Crypto.convertToBytes(a.getMacKey()));
+						Crypto.convertToBytes(association.getMacKey()));
 				out.put("enc_mac_key",
 						Crypto.convertToString(encryptedPublicKey));
 				out.put("dh_server_public",
 						Crypto.convertToString(crypto.getPublicKey()));
 			}
 
-			a.setAssociationType(request.getAssociationType());
-			associationService.create(a);
+			association.setAssociationType(request.getAssociationType());
+			associationService.create(association);
 
 			Long seconds = (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000L;
 
 			out.put("ns", OPENID_NS_20);
-			out.put("session_type", a.getSessionType().getName());
-			out.put("assoc_type", a.getAssociationType().getName());
-			out.put("assoc_handle", a.getAssocHandle());
+			out.put("session_type", association.getSessionType().getName());
+			out.put("assoc_type", association.getAssociationType().getName());
+			out.put("assoc_handle", association.getAssocHandle());
 			out.put("expires_in", seconds.toString());
 			return out;
 		} else {

@@ -11,16 +11,23 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 //
 
-package com.coroptis.coidi.rp.view.junit;
+package com.coroptis.coidi.rp.view.util;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import org.apache.log4j.Logger;
+
+import com.coroptis.coidi.CoidiException;
+
 /**
  * Implements the underlying Diffie-Hellman cryptography.
  */
 public class DiffieHellman {
+
+	Logger logger = Logger.getLogger(DiffieHellman.class);
+
 	private BigInteger modulus;
 	private BigInteger generator;
 	private BigInteger privateKey;
@@ -126,4 +133,51 @@ public class DiffieHellman {
 		return generator;
 	}
 
+	/**
+	 * Returns the shared secret SHA-1 hashed and XOR 'encrypted'.
+	 * 
+	 * @param otherPublic
+	 *            the other party's public modulus; cannot be null.
+	 * @param secret
+	 *            the key to XOR encrypt with.
+	 * @return the encrypted secret.
+	 * @throws IllegalArgumentException
+	 *             if <code>otherPublic</code> is null.
+	 * @throws RuntimeException
+	 *             if length of <code>secret</code> is incorrect.
+	 */
+	public byte[] xorSecret(BigInteger otherPublic, byte[] secret)
+			throws NoSuchAlgorithmException {
+		if (otherPublic == null) {
+			throw new IllegalArgumentException("otherPublic cannot be null");
+		}
+
+		BigInteger shared = getSharedSecret(otherPublic);
+		byte[] hashed = Convert.sha1(shared.toByteArray());
+
+		if (secret.length != hashed.length) {
+			logger.error("invalid secret byte[] length: secret=" + secret.length
+					+ ", hashed=" + hashed.length);
+			throw new CoidiException("invalid secret byte[] length: secret=" + secret.length
+					+ ", hashed=" + hashed.length);
+		}
+
+		byte[] result = new byte[secret.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = (byte) (hashed[i] ^ secret[i]);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns the shared secret.
+	 * 
+	 * @param composite
+	 *            the composite number (public key) with which this instance
+	 *            shares a secret.
+	 * @return the shared secret.
+	 */
+	public BigInteger getSharedSecret(BigInteger composite) {
+		return composite.modPow(privateKey, modulus);
+	}
 }

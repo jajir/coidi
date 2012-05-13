@@ -1,6 +1,5 @@
 package com.coroptis.coidi.op.view.pages;
 
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +12,8 @@ import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
 
 import com.coroptis.coidi.op.view.services.AbstractOpenIdResponse;
-import com.coroptis.coidi.op.view.services.MessageService;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.view.utils.TextResponse;
-import com.google.common.io.CharStreams;
 
 /**
  * This end point will accept and process all OpenID (direct and indirect)
@@ -38,9 +35,6 @@ public class OpenId {
 	@Inject
 	private OpenIdDispatcher openIdRequestDispatcher;
 
-	@Inject
-	private MessageService messageService;
-
 	public StreamResponse onActivate() {
 		try {
 			HttpServletRequest httpRequest = request.getHTTPServletRequest();
@@ -49,8 +43,6 @@ public class OpenId {
 				map.put(key, request.getRequest().getParameter(key));
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
-			// Map<String, String> map = messageService
-			// .convertUrlToMap(httpRequest.getQueryString());
 			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher
 					.process(map);
 			if (requestResponse.getRedirectToUrl() == null) {

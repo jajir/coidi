@@ -7,87 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.coroptis.coidi.op.entities.Association;
 import com.google.common.base.Objects;
 
 @Entity
 @Table(name = "association")
-public class Association extends AbstractEntity<Association> {
-
-	public static enum AssociationType {
-		HMAC_SHA1("HMAC-SHA1", 20), HMAC_SHA256("HMAC-SHA256", 32);
-
-		private final String name;
-
-		private final Integer sectetLength;
-
-		private AssociationType(final String name, final Integer sectetLength) {
-			this.name = name;
-			this.sectetLength = sectetLength;
-		}
-
-		/**
-		 * @return the name
-		 */
-		public String getName() {
-			return name;
-		}
-
-		public static final AssociationType convert(String str) {
-			if (HMAC_SHA1.getName().equals(str)) {
-				return HMAC_SHA1;
-			} else if (HMAC_SHA256.getName().equals(str)) {
-				return HMAC_SHA256;
-			}
-			return null;
-		}
-
-		/**
-		 * @return the sectetLength
-		 */
-		public Integer getSectetLength() {
-			return sectetLength;
-		}
-
-	}
-
-	public static enum SessionType {
-		no_encription("no-encription", 0), DH_SHA1("DH-SHA1", 20), DH_SHA256(
-				"DH-SHA256", 32);
-
-		private final String name;
-
-		private final Integer sectetLength;
-
-		private SessionType(final String name, final Integer sectetLength) {
-			this.name = name;
-			this.sectetLength = sectetLength;
-		}
-
-		public static final SessionType convert(String str) {
-			if (DH_SHA1.getName().equals(str)) {
-				return DH_SHA1;
-			} else if (DH_SHA256.getName().equals(str)) {
-				return DH_SHA256;
-			} else if (no_encription.getName().equals(str)) {
-				return no_encription;
-			}
-			return null;
-		}
-
-		/**
-		 * @return the name
-		 */
-		public String getName() {
-			return name;
-		}
-
-		/**
-		 * @return the sectetLength
-		 */
-		public Integer getSectetLength() {
-			return sectetLength;
-		}
-	}
+public class AssociationImpl extends AbstractEntity<AssociationImpl> implements
+		Association {
 
 	@Id
 	@Column(nullable = false, length = 50, name = "assoc_handle")
@@ -107,7 +33,7 @@ public class Association extends AbstractEntity<Association> {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(Association.class)
+		return Objects.toStringHelper(AssociationImpl.class)
 				.add("assocHandle", assocHandle)
 				.add("associationType", associationType)
 				.add("expiredIn", expiredIn).add("macKey", macKey)
@@ -121,12 +47,12 @@ public class Association extends AbstractEntity<Association> {
 	}
 
 	@Override
-	protected Association getThis() {
+	protected AssociationImpl getThis() {
 		return this;
 	}
 
 	@Override
-	protected boolean dataEquals(Association other) {
+	protected boolean dataEquals(AssociationImpl other) {
 		if (!areEqual(assocHandle, other.getAssocHandle()))
 			return false;
 		if (!areEqual(associationType, other.getAssociationType()))
@@ -143,6 +69,7 @@ public class Association extends AbstractEntity<Association> {
 	/**
 	 * @return the assocHandle
 	 */
+	@Override
 	public String getAssocHandle() {
 		return assocHandle;
 	}
@@ -158,6 +85,7 @@ public class Association extends AbstractEntity<Association> {
 	/**
 	 * @return the associationType
 	 */
+	@Override
 	public AssociationType getAssociationType() {
 		return associationType;
 	}
@@ -173,6 +101,7 @@ public class Association extends AbstractEntity<Association> {
 	/**
 	 * @return the sessionType
 	 */
+	@Override
 	public SessionType getSessionType() {
 		return sessionType;
 	}
@@ -188,6 +117,7 @@ public class Association extends AbstractEntity<Association> {
 	/**
 	 * @return the macKey
 	 */
+	@Override
 	public String getMacKey() {
 		return macKey;
 	}
@@ -203,6 +133,7 @@ public class Association extends AbstractEntity<Association> {
 	/**
 	 * @return the expiredIn
 	 */
+	@Override
 	public Date getExpiredIn() {
 		return expiredIn;
 	}
