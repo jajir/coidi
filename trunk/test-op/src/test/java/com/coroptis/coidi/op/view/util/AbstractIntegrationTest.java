@@ -35,15 +35,15 @@ public abstract class AbstractIntegrationTest extends TestCase {
 	/**
 	 * @return the pageTester
 	 */
-	public PageTester getPageTester() {
+	protected PageTester getPageTester() {
 		return pageTester;
 	}
 
-	public <T> T getService(Class<T> serviceInterface) {
+	protected <T> T getService(Class<T> serviceInterface) {
 		return getPageTester().getService(serviceInterface);
 	}
 
-	public <T> T getService(Class<T> serviceInterface, String id) {
+	protected <T> T getService(Class<T> serviceInterface, String id) {
 		return getPageTester().getRegistry().getService(id, serviceInterface);
 	}
 

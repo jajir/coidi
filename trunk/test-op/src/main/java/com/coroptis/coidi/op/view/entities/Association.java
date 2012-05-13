@@ -2,8 +2,15 @@ package com.coroptis.coidi.op.view.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.google.common.base.Objects;
 
+@Entity
+@Table(name = "association")
 public class Association extends AbstractEntity<Association> {
 
 	public static enum AssociationType {
@@ -82,38 +89,55 @@ public class Association extends AbstractEntity<Association> {
 		}
 	}
 
+	@Id
+	@Column(nullable = false, length = 50, name = "assoc_handle")
 	private String assocHandle;
 
+	@Column(nullable = false, length = 50, name = "assoc_type")
 	private AssociationType associationType;
 
+	@Column(nullable = false, length = 50, name = "session_type")
 	private SessionType sessionType;
 
+	@Column(nullable = false, length = 50, name = "mac_key")
 	private String macKey;
 
+	@Column(nullable = false, name = "expired_in")
 	private Date expiredIn;
 
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(Association.class)
-				.add("assocHandle", assocHandle).toString();
-		// TODO
+				.add("assocHandle", assocHandle)
+				.add("associationType", associationType)
+				.add("expiredIn", expiredIn).add("macKey", macKey)
+				.add("sessionType", sessionType).toString();
 	}
 
 	@Override
 	protected Object[] getHashCodeData() {
-		// TODO
-		return null;
+		return new Object[] { assocHandle, associationType, expiredIn, macKey,
+				sessionType };
 	}
 
 	@Override
 	protected Association getThis() {
-		// TODO
 		return this;
 	}
 
 	@Override
 	protected boolean dataEquals(Association other) {
-		return false;
+		if (!areEqual(assocHandle, other.getAssocHandle()))
+			return false;
+		if (!areEqual(associationType, other.getAssociationType()))
+			return false;
+		if (!areEqual(expiredIn, other.getExpiredIn()))
+			return false;
+		if (!areEqual(macKey, other.getMacKey()))
+			return false;
+		if (!areEqual(sessionType, other.getSessionType()))
+			return false;
+		return true;
 	}
 
 	/**
@@ -190,9 +214,5 @@ public class Association extends AbstractEntity<Association> {
 	public void setExpiredIn(Date expiredIn) {
 		this.expiredIn = expiredIn;
 	}
-
-	// private byte[] encryptedMacKey;
-	//
-	// private BigInteger publicKey;
 
 }
