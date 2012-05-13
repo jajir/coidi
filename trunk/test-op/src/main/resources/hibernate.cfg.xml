@@ -3,12 +3,23 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+    <!-- 
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/coidi</property>
+		<property name="hibernate.connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.useUnicode">true</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">ok</property>
+		<property name="hibernate.connection.autocommit">false</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+     -->
+		
         <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <!-- <property name="hibernate.connection.url">jdbc:hsqldb:./target/work/t5_tutorial1;shutdown=true</property> -->
         <property name="hibernate.connection.url">jdbc:hsqldb:mem;shutdown=true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>
+        
         <property name="hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
