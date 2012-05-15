@@ -11,7 +11,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
 
-import com.coroptis.coidi.op.view.services.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.view.utils.TextResponse;
 
@@ -45,23 +45,16 @@ public class OpenId {
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
 			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher
 					.process(map);
-			if (requestResponse.getRedirectToUrl() == null) {
-				logger.info("SSO openId response is '"
-						+ requestResponse.getMessage() + "'");
-				return new TextResponse(requestResponse.getMessage());
-			} else {
-				String redirUrl = null;
-				if (requestResponse.getRedirectToUrl().contains("?")) {
-					redirUrl = requestResponse.getRedirectToUrl() + "&"
-							+ requestResponse.getMessage();
-				} else {
-					redirUrl = requestResponse.getRedirectToUrl() + "?"
-							+ requestResponse.getMessage();
-				}
+			if (requestResponse.isUrl()) {
+				String redirUrl = requestResponse.getMessage();
 				logger.info("SSO openId response is redirect to: '" + redirUrl
 						+ "'");
 				response.sendRedirect(redirUrl);
 				return new TextResponse("");
+			} else {
+				logger.info("SSO openId response is '"
+						+ requestResponse.getMessage() + "'");
+				return new TextResponse(requestResponse.getMessage());
 			}
 		} catch (Exception e) {
 			/**

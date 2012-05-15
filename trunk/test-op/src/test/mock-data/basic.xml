@@ -9,4 +9,6 @@
 
 	<association assoc_handle="bbbb-bbbb-bbbb-bbbb" assoc_type="1"
 		session_type="1" mac_key="123456789012345678901234567890" expired_in="2012-01-20 14:20:23" />
+	<association assoc_handle="6a4129eb-1336-4970-9ca8-f2d56111eddc" assoc_type="1"
+		session_type="1" mac_key="123456789012345678901234567890" expired_in="2012-01-20 14:20:23" />
 </dataset>

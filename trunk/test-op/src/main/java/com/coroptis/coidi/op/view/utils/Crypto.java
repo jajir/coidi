@@ -14,8 +14,13 @@
 package com.coroptis.coidi.op.view.utils;
 
 import java.math.BigInteger;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -43,9 +48,30 @@ public class Crypto {
 	 * @throws NoSuchAlgorithmException
 	 *             if SHA-1 is not available.
 	 */
-	 static byte[] sha1(byte[] text) throws NoSuchAlgorithmException {
+	static byte[] sha1(byte[] text) throws NoSuchAlgorithmException {
 		MessageDigest d = MessageDigest.getInstance("SHA-1");
 		return d.digest(text);
+	}
+
+	/**
+	 * Signs a message using HMACSHA1.
+	 * 
+	 * @param key
+	 *            the key to sign with.
+	 * @param text
+	 *            the bytes to sign.
+	 * @return the signed bytes.
+	 * @throws InvalidKeyException
+	 *             if <code>key</code> is not a good HMAC key.
+	 * @throws NoSuchAlgorithmException
+	 *             if HMACSHA1 is not available.
+	 */
+	public static byte[] hmacSha1(byte[] key, byte[] text)
+			throws InvalidKeyException, NoSuchAlgorithmException {
+		SecretKey sk = new SecretKeySpec(key, "HMACSHA1");
+		Mac m = Mac.getInstance(sk.getAlgorithm());
+		m.init(sk);
+		return m.doFinal(text);
 	}
 
 	/**
