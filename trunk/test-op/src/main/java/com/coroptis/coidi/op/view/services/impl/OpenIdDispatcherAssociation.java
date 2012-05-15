@@ -7,15 +7,15 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AssociationResponse;
+import com.coroptis.coidi.core.message.OpenIdRequestAssociation;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.view.entities.AssociationImpl;
-import com.coroptis.coidi.op.view.services.AbstractOpenIdResponse;
 import com.coroptis.coidi.op.view.services.AssociationService;
 import com.coroptis.coidi.op.view.services.CryptoService;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.view.services.OpenIdRequestAssociation;
-import com.coroptis.coidi.op.view.services.OpenIdResponseAssociation;
 import com.coroptis.coidi.op.view.utils.Crypto;
 import com.coroptis.coidi.op.view.utils.CryptoSession;
 import com.coroptis.coidi.op.view.utils.KeyPair;
@@ -76,7 +76,7 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 			association.setSessionType(request.getSessionType());
 			association.setExpiredIn(cal.getTime());
 
-			OpenIdResponseAssociation out = new OpenIdResponseAssociation();
+			AssociationResponse out = new AssociationResponse();
 			if (request.getSessionType().equals(SessionType.no_encription)) {
 				association.setMacKey(Crypto.convertToString(cryptoService
 						.generateAssociationRandom(association
@@ -94,10 +94,8 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 				byte[] encryptedPublicKey = crypto.encryptSecret(
 						request.getDhConsumerPublic(),
 						Crypto.convertToBytes(association.getMacKey()));
-				out.put("enc_mac_key",
-						Crypto.convertToString(encryptedPublicKey));
-				out.put("dh_server_public",
-						Crypto.convertToString(crypto.getPublicKey()));
+				out.setEncMacKey(encryptedPublicKey);
+				out.setDhServerPublic(crypto.getPublicKey());
 			}
 
 			association.setAssociationType(request.getAssociationType());
@@ -105,11 +103,10 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 
 			Long seconds = (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000L;
 
-			out.put("ns", OPENID_NS_20);
-			out.put("session_type", association.getSessionType().getName());
-			out.put("assoc_type", association.getAssociationType().getName());
-			out.put("assoc_handle", association.getAssocHandle());
-			out.put("expires_in", seconds.toString());
+			out.setSessionType(association.getSessionType());
+			out.setAssociationType(association.getAssociationType());
+			out.setAssocHandle(association.getAssocHandle());
+			out.setExpiresIn(seconds.toString());
 			return out;
 		} else {
 			return null;

@@ -7,9 +7,11 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
+import org.apache.tapestry5.services.Dispatcher;
 
 import com.coroptis.coidi.rp.view.services.impl.AssociationServiseImpl;
-import com.coroptis.coidi.rp.view.services.impl.AuthenticationRequestServiceImpl;
+import com.coroptis.coidi.rp.view.services.impl.AuthenticationResponseDispatcher;
+import com.coroptis.coidi.rp.view.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorTerminator;
@@ -29,8 +31,11 @@ public class RpViewModule {
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
 		binder.bind(AssociationServise.class, AssociationServiseImpl.class);
 		binder.bind(NonceDao.class, NonceDaoImpl.class);
-		binder.bind(AuthenticationRequestService.class, AuthenticationRequestServiceImpl.class);
+		binder.bind(AuthenticationService.class,
+				AuthenticationServiceImpl.class);
 		binder.bind(NonceService.class, NonceServiceImpl.class);
+		binder.bind(Dispatcher.class, AuthenticationResponseDispatcher.class)
+				.withId("authenticationResponseDispatcher");
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(
@@ -48,6 +53,13 @@ public class RpViewModule {
 		configuration.add("discoveryProcessorYadis", discoveryProcessorYadis);
 		configuration.add("discoveryProcessorTerminator",
 				discoveryProcessorTerminator);
+	}
+
+	public static void contributeMasterDispatcher(
+			OrderedConfiguration<Dispatcher> configuration,
+			@InjectService("authenticationResponseDispatcher") Dispatcher authenticationResponseDispatcher) {
+		configuration.add("authenticationResponseDispatcher",
+				authenticationResponseDispatcher, "before:PageRender");
 	}
 
 }

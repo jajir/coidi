@@ -2,6 +2,8 @@ package com.coroptis.coidi.op.view.services;
 
 import java.util.Map;
 
+import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+
 /**
  * Allows to process one specific openID message.
  * 

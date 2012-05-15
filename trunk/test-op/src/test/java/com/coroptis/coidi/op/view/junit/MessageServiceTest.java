@@ -4,8 +4,8 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import com.coroptis.coidi.op.view.services.MessageService;
-import com.coroptis.coidi.op.view.services.impl.MessageServiceImpl;
+import com.coroptis.coidi.conf.services.MessageService;
+import com.coroptis.coidi.conf.services.impl.MessageServiceImpl;
 
 public class MessageServiceTest extends TestCase {
 

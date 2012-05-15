@@ -24,10 +24,11 @@ import com.coroptis.coidi.op.view.services.impl.AccessController;
 import com.coroptis.coidi.op.view.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.IdentityServiceImpl;
-import com.coroptis.coidi.op.view.services.impl.MessageServiceImpl;
+import com.coroptis.coidi.op.view.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherAssociation;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherTerminator;
+import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthentication;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.XrdsServiceImpl;
 import com.google.common.io.Files;
@@ -40,11 +41,11 @@ public class OpViewModule {
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
 		binder.bind(UserService.class, UserServiceImpl.class);
 		binder.bind(IdentityService.class, IdentityServiceImpl.class);
-		binder.bind(MessageService.class, MessageServiceImpl.class);
 		binder.bind(AssociationService.class, AssociationServiceImpl.class);
 		binder.bind(CryptoService.class, CryptoServiceImpl.class);
 		binder.bind(Dispatcher.class, AccessController.class).withId(
 				"accessController");
+		binder.bind(NonceService.class, NonceServiceImpl.class);
 	}
 
 	@Startup
@@ -85,9 +86,12 @@ public class OpViewModule {
 	public static void contributeOpenIdDispatcher(
 			OrderedConfiguration<OpenIdDispatcher> configuration,
 			@Autobuild OpenIdDispatcherChecker openIdDispatcherChecker,
+			@Autobuild OpenidDispatcherAuthentication openidDispatcherAuthentication,
 			@Autobuild OpenIdDispatcherAssociation openIdDispatcherAssociation,
 			@Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
 		configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
+		configuration.add("openidDispatcherAuthentication",
+				openidDispatcherAuthentication);
 		configuration.add("openIdDispatcherAssociation",
 				openIdDispatcherAssociation);
 		configuration.add("openIdDispatcherTerminator",
