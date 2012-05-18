@@ -5,11 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
+import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
@@ -24,7 +24,8 @@ import com.coroptis.coidi.op.view.utils.TextResponse;
  */
 public class OpenId {
 
-	private final static Logger logger = Logger.getLogger(OpenId.class);
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private RequestGlobals request;
@@ -41,6 +42,8 @@ public class OpenId {
 			Map<String, String> map = new HashMap<String, String>();
 			for (String key : request.getRequest().getParameterNames()) {
 				map.put(key, request.getRequest().getParameter(key));
+				logger.debug("adding " + key + ", "
+						+ request.getRequest().getParameter(key));
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
 			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher

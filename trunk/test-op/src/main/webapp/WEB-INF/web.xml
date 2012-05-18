@@ -34,7 +34,7 @@
 
 	<filter>
 		<filter-name>opView</filter-name>
-		<filter-class>com.coroptis.coidi.conf.util.ExtendedTapestryFilter</filter-class>
+		<filter-class>com.coroptis.coidi.core.util.ExtendedTapestryFilter</filter-class>
 	</filter>
 
 	<filter-mapping>

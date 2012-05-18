@@ -17,7 +17,7 @@ import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
-import com.coroptis.coidi.conf.services.ConfModule;
+import com.coroptis.coidi.core.services.CoreModule;
 import com.google.common.base.Preconditions;
 
 /**
@@ -48,7 +48,7 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 				+ System.getProperty("server.role"));
 
 		pageTester = new PageTester(T5_APPLICATION_PACKAGE,
-				T5_APPLICATION_NAME, T5_WEBAPP_BASE, ConfModule.class);
+				T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class);
 	}
 
 	/**
