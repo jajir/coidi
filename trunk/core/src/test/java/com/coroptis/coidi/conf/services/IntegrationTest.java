@@ -3,6 +3,7 @@ package com.coroptis.coidi.conf.services;
 import java.util.Map;
 
 import com.coroptis.coidi.conf.util.AbstractIntegrationTest;
+import com.coroptis.coidi.core.services.ConfigurationService;
 
 public class IntegrationTest extends AbstractIntegrationTest {
 

@@ -2,7 +2,7 @@ package com.coroptis.coidi.core.util;
 
 import java.io.File;
 
-import com.coroptis.coidi.conf.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfigurationService;
 
 /**
  * Class that allows to access configuration feature in a static way. It should

@@ -14,8 +14,8 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.internal.util.ClasspathResource;
 import org.xml.sax.SAXException;
 
-import com.coroptis.coidi.conf.services.ConfException;
-import com.coroptis.coidi.conf.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfException;
+import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.util.Conf;
 import com.coroptis.coidi.core.util.FsResource;
 
