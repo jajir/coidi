@@ -1,4 +1,4 @@
-package com.coroptis.coidi.conf.util;
+package com.coroptis.coidi.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;

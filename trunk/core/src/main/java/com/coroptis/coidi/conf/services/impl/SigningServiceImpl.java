@@ -9,8 +9,8 @@ import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.conf.services.CryptographyService;
 import com.coroptis.coidi.conf.services.MessageService;
 import com.coroptis.coidi.conf.services.SigningService;
-import com.coroptis.coidi.conf.util.Crypto;
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.util.Crypto;
 import com.coroptis.coidi.op.entities.Association;
 
 public class SigningServiceImpl implements SigningService {

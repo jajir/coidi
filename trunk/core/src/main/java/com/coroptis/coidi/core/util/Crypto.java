@@ -11,7 +11,7 @@
 // http://www.apache.org/licenses/LICENSE-2.0
 //
 
-package com.coroptis.coidi.conf.util;
+package com.coroptis.coidi.core.util;
 
 import java.math.BigInteger;
 import java.security.InvalidKeyException;

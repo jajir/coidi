@@ -16,8 +16,8 @@ import org.xml.sax.SAXException;
 
 import com.coroptis.coidi.conf.services.ConfException;
 import com.coroptis.coidi.conf.services.ConfigurationService;
-import com.coroptis.coidi.conf.util.Conf;
-import com.coroptis.coidi.conf.util.FsResource;
+import com.coroptis.coidi.core.util.Conf;
+import com.coroptis.coidi.core.util.FsResource;
 
 /**
  * Loads {@link Properties} from configuration file. Configuration files are
