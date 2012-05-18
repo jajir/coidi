@@ -1,4 +1,4 @@
-package com.coroptis.coidi.conf.services;
+package com.coroptis.coidi.core.services;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.entities.Association;

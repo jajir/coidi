@@ -6,10 +6,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.conf.services.CryptographyService;
-import com.coroptis.coidi.conf.services.MessageService;
-import com.coroptis.coidi.conf.services.SigningService;
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.services.CryptographyService;
+import com.coroptis.coidi.core.services.MessageService;
+import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.core.util.Crypto;
 import com.coroptis.coidi.op.entities.Association;
 

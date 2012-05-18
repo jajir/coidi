@@ -10,7 +10,7 @@ import org.apache.tapestry5.ioc.internal.services.PlasticProxyFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coroptis.coidi.conf.services.ConfModule;
+import com.coroptis.coidi.core.services.ConfModule;
 
 /**
  * This filter allows us to jump into startup process and put in hand
