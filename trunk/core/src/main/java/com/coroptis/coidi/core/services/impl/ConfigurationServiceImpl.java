@@ -1,4 +1,4 @@
-package com.coroptis.coidi.conf.services.impl;
+package com.coroptis.coidi.core.services.impl;
 
 import java.io.IOException;
 import java.io.InputStream;

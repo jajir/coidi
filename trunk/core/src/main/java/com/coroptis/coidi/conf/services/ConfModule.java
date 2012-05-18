@@ -13,11 +13,11 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
-import com.coroptis.coidi.conf.services.impl.AppSymbolProvider;
-import com.coroptis.coidi.conf.services.impl.ConfigurationServiceImpl;
-import com.coroptis.coidi.conf.services.impl.CryptographyServiceImpl;
-import com.coroptis.coidi.conf.services.impl.MessageServiceImpl;
-import com.coroptis.coidi.conf.services.impl.SigningServiceImpl;
+import com.coroptis.coidi.core.services.impl.AppSymbolProvider;
+import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
+import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
+import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
+import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.core.util.Conf;
 
 /**
