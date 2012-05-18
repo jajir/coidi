@@ -10,7 +10,7 @@ public class UserSession {
 
 	private String ssoIdentity;
 
-	public Boolean isLogged() {
+	public boolean isLogged() {
 		return ssoIdentity != null;
 	}
 

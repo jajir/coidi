@@ -27,6 +27,10 @@
 		<param-name>tapestry.combine-scripts</param-name>
 		<param-value>false</param-value>
 	</context-param>
+	<context-param>
+    	<param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
+    	<param-value>JSESSION_OP</param-value>
+  	</context-param>
 
 	<filter>
 		<filter-name>opView</filter-name>

@@ -2,6 +2,8 @@ package com.coroptis.coidi.op.view.services;
 
 import java.math.BigInteger;
 
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+
 import com.coroptis.coidi.op.view.entities.AssociationImpl;
 
 public interface AssociationService {
@@ -16,6 +18,7 @@ public interface AssociationService {
 					+ "53359305585439638443");
 	public static final BigInteger DEFAULT_GENERATOR = BigInteger.valueOf(2);
 
+	@CommitAfter
 	void create(AssociationImpl association);
 
 	AssociationImpl getByAssocHandle(String assoc_handle);

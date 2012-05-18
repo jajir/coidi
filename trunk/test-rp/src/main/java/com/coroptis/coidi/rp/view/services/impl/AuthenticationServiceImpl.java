@@ -14,6 +14,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public Boolean verify(AuthenticationResponse authenticationResponse) {
 		if (authenticationResponse.getMode().equals("id_res")) {
+			if (!nonceService.verifyNonce(authenticationResponse.getNonce(),
+					NONCE_EXPIRATION_TIME_IN_MINUTES)) {
+				return false;
+			}
 			return true;
 		}
 		return false;

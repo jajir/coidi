@@ -3,7 +3,7 @@ package com.coroptis.coidi.op.view.pages;
 import org.apache.tapestry5.annotations.SessionState;
 
 import com.coroptis.coidi.op.view.entities.User;
-import com.coroptis.coidi.op.view.utils.SignedUserRequired;
+import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
 import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
@@ -12,8 +12,8 @@ import com.coroptis.coidi.op.view.utils.UserSession;
  * @author jan
  * 
  */
-@SignedUserRequired
-public class Profile {
+@AccessOnlyForSigned
+public class UserProfile {
 
 	@SessionState
 	UserSession userSession;

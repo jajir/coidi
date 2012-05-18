@@ -1,24 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
-	xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>index</title>
-    </head>
-    <body>
-    	<h1>Testing Relaying party</h1>
-    	<t:form id="openId">
-    		<t:errors/>
-    		<t:label for="userSuppliedId"/>:
-			<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
-			<br />
-			<t:submit value="Login"/>
-			
-			<br />
-			Testing identities
-			<ul>
-				<li>http://localhost:8080/user/juan</li>
-			</ul>
-    	</t:form>
-	</body>
+<html t:title="message:title" t:type="layout"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	There will be description what you are looking at.
+	<t:pageLink page="login">Login</t:pageLink>	
+	<t:pageLink page="userProfile">User profile</t:pageLink>	
 </html>
