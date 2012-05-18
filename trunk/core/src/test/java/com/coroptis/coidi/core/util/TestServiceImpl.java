@@ -1,4 +1,4 @@
-package com.coroptis.coidi.conf.util;
+package com.coroptis.coidi.core.util;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
