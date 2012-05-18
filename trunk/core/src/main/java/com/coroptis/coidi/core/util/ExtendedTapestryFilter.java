@@ -10,7 +10,7 @@ import org.apache.tapestry5.ioc.internal.services.PlasticProxyFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coroptis.coidi.core.services.ConfModule;
+import com.coroptis.coidi.core.services.CoreModule;
 
 /**
  * This filter allows us to jump into startup process and put in hand
@@ -30,7 +30,7 @@ public class ExtendedTapestryFilter extends TapestryFilter {
 	 */
 	protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
 		logger.debug("modules force loading");
-		return new ModuleDef[] { new DefaultModuleDefImpl(ConfModule.class,
+		return new ModuleDef[] { new DefaultModuleDefImpl(CoreModule.class,
 				logger, new PlasticProxyFactoryImpl(
 						ExtendedTapestryFilter.class.getClassLoader(), logger)) };
 	}

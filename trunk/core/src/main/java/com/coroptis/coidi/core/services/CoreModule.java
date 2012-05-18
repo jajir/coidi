@@ -27,9 +27,9 @@ import com.coroptis.coidi.core.util.Conf;
  * @author jan
  * 
  */
-public class ConfModule {
+public class CoreModule {
 
-	private final static Logger logger = Logger.getLogger(ConfModule.class);
+	private final static Logger logger = Logger.getLogger(CoreModule.class);
 
 	public static void bind(ServiceBinder binder) {
 		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class)
@@ -79,7 +79,7 @@ public class ConfModule {
 			/**
 			 * Relative path
 			 */
-			URL url = ConfModule.class.getClassLoader().getResource(
+			URL url = CoreModule.class.getClassLoader().getResource(
 					log4jConfigFileName);
 			if (url == null)
 				throw new NullPointerException("url '" + log4jConfigFileName

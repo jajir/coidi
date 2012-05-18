@@ -9,11 +9,11 @@
 	<display-name>T5 application configuration</display-name>
 	<context-param>
 		<param-name>tapestry.app-package</param-name>
-		<param-value>com.coroptis.coidi.conf</param-value>
+		<param-value>com.coroptis.coidi.core</param-value>
 	</context-param>
 	<context-param>
 		<param-name>system.property.configuration.directory</param-name>
-		<param-value>main.conf.dir</param-value>
+		<param-value>core.conf.dir</param-value>
 	</context-param>
 	<context-param>
 		<param-name>tapestry.application-version</param-name>
@@ -30,7 +30,7 @@
 
 	<filter>
 		<filter-name>conf</filter-name>
-		<filter-class>com.coroptis.coidi.conf.util.ExtendedTapestryFilter</filter-class>
+		<filter-class>com.coroptis.coidi.core.util.ExtendedTapestryFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
