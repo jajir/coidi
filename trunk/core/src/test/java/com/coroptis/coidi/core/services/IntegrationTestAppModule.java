@@ -1,4 +1,4 @@
-package com.coroptis.coidi.conf.services;
+package com.coroptis.coidi.core.services;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 

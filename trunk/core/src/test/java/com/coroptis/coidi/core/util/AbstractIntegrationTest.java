@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.test.PageTester;
 
-import com.coroptis.coidi.conf.services.IntegrationTestAppModule;
+import com.coroptis.coidi.core.services.IntegrationTestAppModule;
 
 public abstract class AbstractIntegrationTest extends TestCase {
 

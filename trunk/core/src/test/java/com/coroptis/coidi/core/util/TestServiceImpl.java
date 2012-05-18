@@ -3,7 +3,7 @@ package com.coroptis.coidi.core.util;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
-import com.coroptis.coidi.conf.services.TestService;
+import com.coroptis.coidi.core.services.TestService;
 
 public class TestServiceImpl implements TestService {
 
