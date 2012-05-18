@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class AuthenticationResponse extends AbstractOpenIdResponse {
 
+	public final static String MODE_ID_RES = "id_res";
 	public final static String ASSOC_HANDLE = "assoc_handle";
 	public final static String IDENTITY = "identity";
 	public final static String RETURN_TO = "return_to";
@@ -13,14 +14,16 @@ public class AuthenticationResponse extends AbstractOpenIdResponse {
 
 	public AuthenticationResponse() {
 		super();
-		setUrl(true);
 		setNameSpace(OPENID_NS_20);
+		setMode(MODE_ID_RES);
+		setUrl(true);
 	}
 
 	public AuthenticationResponse(final Map<String, String> map) {
 		super(map);
-		setUrl(true);
 		setNameSpace(OPENID_NS_20);
+		setMode(MODE_ID_RES);
+		setUrl(true);
 	}
 
 	/**
