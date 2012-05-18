@@ -6,7 +6,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.conf.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.op.view.services.XrdsService;
 import com.google.common.base.Preconditions;
 

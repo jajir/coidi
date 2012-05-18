@@ -8,7 +8,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.conf.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.rp.view.services.HttpService;
 import com.google.common.base.Preconditions;
 

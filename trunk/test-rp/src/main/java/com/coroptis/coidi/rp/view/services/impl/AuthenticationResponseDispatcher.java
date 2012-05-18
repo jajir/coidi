@@ -13,8 +13,9 @@ import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.conf.services.MessageService;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.services.MessageService;
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.view.services.AuthenticationService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
@@ -51,10 +52,17 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 					.convertUrlToMap(httpRequest.getQueryString());
 			AuthenticationResponse authenticationResponse = new AuthenticationResponse(
 					map);
-			if (authenticationService.verify(authenticationResponse)) {
-				UserSession session = asm.get(UserSession.class);
-				session.setSsoIdentity(authenticationResponse.getIdentity());
+
+			if (asm.exists(Association.class)) {
+				if (authenticationService.verify(authenticationResponse,
+						asm.get(Association.class))) {
+					UserSession session = asm.get(UserSession.class);
+					session.setSsoIdentity(authenticationResponse.getIdentity());
+				}
+			} else {
+				logger.debug("there is no association.");
 			}
+
 		}
 		return false;
 	}

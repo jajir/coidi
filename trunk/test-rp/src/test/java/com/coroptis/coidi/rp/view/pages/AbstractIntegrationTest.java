@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.test.PageTester;
 
-import com.coroptis.coidi.conf.services.ConfModule;
+import com.coroptis.coidi.core.services.CoreModule;
 
 public abstract class AbstractIntegrationTest extends TestCase {
 
@@ -54,7 +54,7 @@ public abstract class AbstractIntegrationTest extends TestCase {
 		services = Mocks.getServices();
 		services.reset();
 		pageTester = new PageTester(T5_APPLICATION_PACKAGE,
-				T5_APPLICATION_NAME, T5_WEBAPP_BASE, ConfModule.class);
+				T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class);
 		super.setUp();
 	}
 

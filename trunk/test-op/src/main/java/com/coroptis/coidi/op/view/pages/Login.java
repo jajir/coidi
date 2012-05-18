@@ -1,7 +1,6 @@
 package com.coroptis.coidi.op.view.pages;
 
 import org.apache.tapestry5.annotations.Component;
-
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;

@@ -17,7 +17,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
-import com.coroptis.coidi.conf.services.ConfModule;
+import com.coroptis.coidi.core.services.CoreModule;
 
 /**
  * All DAO test should be extended from this class. It provide secure datasets
@@ -46,7 +46,7 @@ public abstract class AbstractDaoTest extends DatabaseTestCase {
 		builder.add(TapestryModule.class);
 		builder.add(DaoTestAppModule.class);
 		builder.add(HibernateCoreModule.class);
-		builder.add(ConfModule.class);
+		builder.add(CoreModule.class);
 		Registry registry = builder.build();
 		registry.performRegistryStartup();
 	}
