@@ -18,7 +18,7 @@ import com.coroptis.coidi.conf.services.impl.ConfigurationServiceImpl;
 import com.coroptis.coidi.conf.services.impl.CryptographyServiceImpl;
 import com.coroptis.coidi.conf.services.impl.MessageServiceImpl;
 import com.coroptis.coidi.conf.services.impl.SigningServiceImpl;
-import com.coroptis.coidi.conf.util.Conf;
+import com.coroptis.coidi.core.util.Conf;
 
 /**
  * This tapestry module helps to initialize T% in a same way in a different
