@@ -1,5 +1,4 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-   	<h1>${userName}</h1>
-   	UserName: ${userName}
+	OpenID Identity: ${userSession.ssoIdentity}
 </html>

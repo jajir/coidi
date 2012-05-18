@@ -8,11 +8,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
+import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Autobuild;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.InjectService;
+import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
@@ -20,7 +23,7 @@ import org.apache.tapestry5.services.Dispatcher;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
-import com.coroptis.coidi.op.view.services.impl.AccessController;
+import com.coroptis.coidi.op.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.op.view.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.IdentityServiceImpl;
@@ -43,8 +46,8 @@ public class OpViewModule {
 		binder.bind(IdentityService.class, IdentityServiceImpl.class);
 		binder.bind(AssociationService.class, AssociationServiceImpl.class);
 		binder.bind(CryptoService.class, CryptoServiceImpl.class);
-		binder.bind(Dispatcher.class, AccessController.class).withId(
-				"accessController");
+		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
+				"accessControllerDispatcher");
 		binder.bind(NonceService.class, NonceServiceImpl.class);
 	}
 
@@ -56,24 +59,26 @@ public class OpViewModule {
 		if (initDatabase) {
 			for (final String line : Files.readLines(new File(initSqlFile),
 					Charset.forName("UTF-8"))) {
-				logger.debug("executing: " + line);
-				session.doWork(new Work() {
+				if (line.length() > 0) {
+					logger.debug("executing: " + line);
+					session.doWork(new Work() {
 
-					@Override
-					public void execute(Connection connection)
-							throws SQLException {
-						connection.createStatement().execute(line);
-						connection.commit();
-					}
-				});
+						@Override
+						public void execute(Connection connection)
+								throws SQLException {
+							connection.createStatement().execute(line);
+							connection.commit();
+						}
+					});
+				}
 			}
 		}
 	}
 
 	public static void contributeMasterDispatcher(
 			OrderedConfiguration<Dispatcher> configuration,
-			@InjectService("accessController") Dispatcher accessController) {
-		configuration.add("accessController", accessController,
+			@InjectService("accessControllerDispatcher") Dispatcher accessController) {
+		configuration.add("accessControllerDispatcher", accessController,
 				"before:PageRender");
 	}
 
@@ -98,4 +103,9 @@ public class OpViewModule {
 				openIdDispatcherTerminator);
 	}
 
+	@Match("*Service")
+	public static void adviseTransactions(HibernateTransactionAdvisor advisor,
+			MethodAdviceReceiver receiver) {
+		advisor.addTransactionCommitAdvice(receiver);
+	}
 }

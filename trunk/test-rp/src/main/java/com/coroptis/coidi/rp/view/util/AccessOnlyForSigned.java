@@ -1,4 +1,4 @@
-package com.coroptis.coidi.op.view.utils;
+package com.coroptis.coidi.rp.view.util;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Pages annotated with this annotation can be accessed just for signed users.
+ * Pages marked with this annotation will be accessible just for signed users.
  * 
  * @author jan
  * 
@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface SignedUserRequired {
+public @interface AccessOnlyForSigned {
 
 }

@@ -1,4 +1,6 @@
-<html t:title="message:title" t:type="layout"
+<html
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-	this is iandex page 
+	<div>
+		Go to <a href="http://localhost:8081/">OpenID relaying party</a>.
+	</div>
 </html>

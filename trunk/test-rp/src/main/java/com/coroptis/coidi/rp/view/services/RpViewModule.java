@@ -9,6 +9,7 @@ import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.services.Dispatcher;
 
+import com.coroptis.coidi.rp.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.rp.view.services.impl.AssociationServiseImpl;
 import com.coroptis.coidi.rp.view.services.impl.AuthenticationResponseDispatcher;
 import com.coroptis.coidi.rp.view.services.impl.AuthenticationServiceImpl;
@@ -36,6 +37,9 @@ public class RpViewModule {
 		binder.bind(NonceService.class, NonceServiceImpl.class);
 		binder.bind(Dispatcher.class, AuthenticationResponseDispatcher.class)
 				.withId("authenticationResponseDispatcher");
+		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
+				"accessControllerDispatcher");
+
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(
@@ -57,9 +61,12 @@ public class RpViewModule {
 
 	public static void contributeMasterDispatcher(
 			OrderedConfiguration<Dispatcher> configuration,
-			@InjectService("authenticationResponseDispatcher") Dispatcher authenticationResponseDispatcher) {
+			@InjectService("authenticationResponseDispatcher") Dispatcher authenticationResponseDispatcher,
+			@InjectService("accessControllerDispatcher") Dispatcher accessControllerDispatcher) {
 		configuration.add("authenticationResponseDispatcher",
 				authenticationResponseDispatcher, "before:PageRender");
+		configuration.add("accessControllerDispatcher",
+				accessControllerDispatcher, "before:PageRender");
 	}
 
 }

@@ -10,7 +10,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.op.view.services.IdentityService;
 import com.coroptis.coidi.op.view.services.UserService;
-import com.coroptis.coidi.op.view.utils.UnSignedUserRequired;
+import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
@@ -19,7 +19,7 @@ import com.coroptis.coidi.op.view.utils.UserSession;
  * @author jan
  * 
  */
-@UnSignedUserRequired
+@AccessOnlyForUnsigned
 public class Registration {
 
 	@Inject
@@ -73,6 +73,6 @@ public class Registration {
 	Object onSuccess() {
 		userSession.setUser(userService
 				.register(userName, password, identityId));
-		return Profile.class;
+		return UserProfile.class;
 	}
 }

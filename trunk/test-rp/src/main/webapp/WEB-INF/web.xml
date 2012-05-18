@@ -27,6 +27,10 @@
 		<param-name>tapestry.application-version</param-name>
 		<param-value>1.0</param-value>
 	</context-param>
+	<context-param>
+    	<param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
+    	<param-value>JSESSION_RP</param-value>
+  	</context-param>
 
 	<filter>
 		<filter-name>rpView</filter-name>

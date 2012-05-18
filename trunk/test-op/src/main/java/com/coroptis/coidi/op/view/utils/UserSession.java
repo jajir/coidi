@@ -1,22 +1,12 @@
 package com.coroptis.coidi.op.view.utils;
 
-import org.apache.log4j.Logger;
-
 import com.coroptis.coidi.op.view.entities.User;
 
-/**
- * Object holding user session data.
- * 
- * @author jan
- * 
- */
 public class UserSession {
-
-	private final static Logger logger = Logger.getLogger(UserSession.class);
 
 	private User user;
 
-	public boolean isUserLogged() {
+	public boolean isLogged() {
 		return user != null;
 	}
 

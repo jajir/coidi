@@ -1,0 +1,16 @@
+<html t:title="message:title" t:type="layout"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+   	<t:form id="openId">
+   		<t:errors/>
+   		<t:label for="userSuppliedId"/>:
+		<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
+		<br />
+		<t:submit value="Login"/>
+		
+		<br />
+		Testing identities
+		<ul>
+			<li>http://localhost:8080/user/juan</li>
+		</ul>
+   	</t:form>
+</html>
