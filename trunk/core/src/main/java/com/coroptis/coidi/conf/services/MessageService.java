@@ -2,6 +2,8 @@ package com.coroptis.coidi.conf.services;
 
 import java.util.Map;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
+
 public interface MessageService {
 
 	/**
@@ -11,5 +13,8 @@ public interface MessageService {
 	 * @return
 	 */
 	Map<String, String> convertUrlToMap(String query);
+
+	String extractStringForSign(final AbstractMessage response,
+			final String prefix);
 
 }
