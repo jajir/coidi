@@ -15,7 +15,8 @@ import com.coroptis.coidi.op.view.services.AssociationService;
 import com.coroptis.coidi.op.view.services.NonceService;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
 
-public class OpenidDispatcherAuthentication implements OpenIdDispatcher {
+public class OpenidDispatcherAuthenticationImmediate implements
+		OpenIdDispatcher {
 
 	@Inject
 	private Logger logger;
@@ -31,10 +32,11 @@ public class OpenidDispatcherAuthentication implements OpenIdDispatcher {
 
 	@Override
 	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
-		if (requestParams.get(MODE).equals(MODE_CHECKID_IMMEDIATE)) {
+		if (requestParams.get(MODE).equals(
+				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
 					requestParams);
-			
+
 			Association association = associationService
 					.getByAssocHandle(authenticationRequest.getAssocHandle());
 			if (association == null) {

@@ -13,7 +13,6 @@ import com.coroptis.coidi.rp.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.rp.view.services.impl.AssociationServiseImpl;
 import com.coroptis.coidi.rp.view.services.impl.AuthenticationResponseDispatcher;
 import com.coroptis.coidi.rp.view.services.impl.AuthenticationServiceImpl;
-import com.coroptis.coidi.rp.view.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorTerminator;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorYadis;
@@ -27,7 +26,6 @@ public class RpViewModule {
 
 	public static void bind(ServiceBinder binder) {
 		binder.bind(HttpService.class, HttpServiceImpl.class);
-		binder.bind(ConvertorService.class, ConvertorServiceImpl.class);
 		binder.bind(YadisService.class, YadisServiceImpl.class);
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
 		binder.bind(AssociationServise.class, AssociationServiseImpl.class);

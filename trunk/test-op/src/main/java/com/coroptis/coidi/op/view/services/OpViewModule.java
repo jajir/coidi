@@ -31,7 +31,8 @@ import com.coroptis.coidi.op.view.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherAssociation;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherTerminator;
-import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthentication;
+import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthenticationImmediate;
+import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthenticationSetup;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.XrdsServiceImpl;
 import com.google.common.io.Files;
@@ -91,12 +92,15 @@ public class OpViewModule {
 	public static void contributeOpenIdDispatcher(
 			OrderedConfiguration<OpenIdDispatcher> configuration,
 			@Autobuild OpenIdDispatcherChecker openIdDispatcherChecker,
-			@Autobuild OpenidDispatcherAuthentication openidDispatcherAuthentication,
+			@Autobuild OpenidDispatcherAuthenticationImmediate openidDispatcherAuthenticationImmediate,
+			@Autobuild OpenidDispatcherAuthenticationSetup openidDispatcherAuthenticationSetup,
 			@Autobuild OpenIdDispatcherAssociation openIdDispatcherAssociation,
 			@Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
 		configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
-		configuration.add("openidDispatcherAuthentication",
-				openidDispatcherAuthentication);
+		configuration.add("openidDispatcherAuthenticationImmediate",
+				openidDispatcherAuthenticationImmediate);
+		configuration.add("openidDispatcherAuthenticationSetup",
+				openidDispatcherAuthenticationSetup);
 		configuration.add("openIdDispatcherAssociation",
 				openIdDispatcherAssociation);
 		configuration.add("openIdDispatcherTerminator",

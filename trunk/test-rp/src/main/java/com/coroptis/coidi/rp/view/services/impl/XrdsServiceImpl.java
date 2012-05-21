@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.rp.view.services.XrdsService;
 import com.coroptis.coidi.rp.view.util.XrdsServiceProvider;
 
@@ -61,16 +62,15 @@ public class XrdsServiceImpl implements XrdsService {
 				return services.last().getUri();
 			}
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
 		}
-		return null;
 	}
 
 	private XrdsServiceProvider convert(Node node) {

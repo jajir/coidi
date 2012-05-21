@@ -71,13 +71,13 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	 *            specifies where configuration file is located
 	 * @return Map loaded from XML configuration file
 	 */
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private HashMap<String, String> createProperties(
 			String configurationSection, Resource configurationResource) {
 		Digester digester = new Digester();
 		digester.addObjectCreate("configuration/" + configurationSection,
 				HashMap.class);
-
+		//TODO refactor it, add test
 		// call the put method on the top object on the digester stack
 		// passing the key attribute as the 0th parameterw
 		// and the element body text as the 1th parameter..

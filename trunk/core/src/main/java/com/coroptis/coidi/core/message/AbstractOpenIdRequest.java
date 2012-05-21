@@ -4,12 +4,12 @@ import java.util.Map;
 
 public class AbstractOpenIdRequest extends AbstractMessage {
 
-	public AbstractOpenIdRequest(){
+	public AbstractOpenIdRequest() {
 		super();
 	}
-	
-	public AbstractOpenIdRequest(final Map<String, String> map){
-		super(map);
+
+	public AbstractOpenIdRequest(final Map<String, String> map) {
+		super(map, OPENID);
 	}
 
 	public String getMessage() {

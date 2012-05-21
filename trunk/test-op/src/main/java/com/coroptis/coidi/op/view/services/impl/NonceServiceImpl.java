@@ -5,32 +5,35 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.op.view.services.NonceService;
-import com.coroptis.coidi.op.view.utils.Crypto;
 
 public class NonceServiceImpl implements NonceService {
 
 	private final static String ISO_DATETIME_FORMAT = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
 
-	// FIXME it's not thread safe
-	private final static SimpleDateFormat ISO_DATE_FORMATTER = new SimpleDateFormat(
-			ISO_DATETIME_FORMAT);
-
 	private final SecureRandom random;
+
+	@Inject
+	private ConvertorService convertorService;
 
 	public NonceServiceImpl() throws NoSuchAlgorithmException {
 		random = SecureRandom.getInstance("SHA1PRNG");
 	}
 
-	public String generateCrumb() {
+	private String generateCrumb() {
 		byte[] b = new byte[10];
 		random.nextBytes(b);
-		return Crypto.convertToString(b);
+		return convertorService.convertToString(b);
 	}
 
 	@Override
 	public String createNonce() {
-		return ISO_DATE_FORMATTER.format(new Date()) + generateCrumb();
+		SimpleDateFormat isoDateFormatter = new SimpleDateFormat(
+				ISO_DATETIME_FORMAT);
+		return isoDateFormatter.format(new Date()) + generateCrumb();
 	}
 
 }

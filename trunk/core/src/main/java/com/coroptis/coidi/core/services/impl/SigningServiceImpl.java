@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.core.util.Crypto;
 import com.coroptis.coidi.op.entities.Association;
 
 public class SigningServiceImpl implements SigningService {
@@ -24,6 +24,9 @@ public class SigningServiceImpl implements SigningService {
 	@Inject
 	private MessageService messageService;
 
+	@Inject
+	private ConvertorService convertorService;
+
 	@Override
 	public String sign(final AbstractMessage response,
 			final Association association) {
@@ -31,9 +34,9 @@ public class SigningServiceImpl implements SigningService {
 				.extractStringForSign(response, "openid.");
 		try {
 			byte[] b = cryptoService.hmacSha1(
-					Crypto.convertToBytes(association.getMacKey()),
+					convertorService.convertToBytes(association.getMacKey()),
 					toSign.getBytes("UTF-8"));
-			return Crypto.convertToString(b);
+			return convertorService.convertToString(b);
 		} catch (UnsupportedEncodingException e) {
 			logger.error(e.getMessage(), e);
 			throw new CoidiException(e.getMessage(), e);

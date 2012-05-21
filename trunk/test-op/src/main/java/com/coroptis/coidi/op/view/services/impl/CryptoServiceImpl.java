@@ -1,13 +1,10 @@
 package com.coroptis.coidi.op.view.services.impl;
 
-import java.math.BigInteger;
 import java.util.Random;
 
-import com.coroptis.coidi.core.message.OpenIdRequestAssociation;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.view.services.CryptoService;
-import com.coroptis.coidi.op.view.utils.KeyPair;
 
 public class CryptoServiceImpl implements CryptoService {
 
@@ -56,22 +53,6 @@ public class CryptoServiceImpl implements CryptoService {
 				+ padHex((msb & 0x0000000000000000FFFFL), 4) + "-"
 				+ padHex((((lsb & 0xFFFF000000000000L) >> 48) & 0xFFFF), 4)
 				+ "-" + padHex(lsb & 0xFFFFFFFFFFFFL, 12);
-	}
-
-	@Override
-	public KeyPair generateCryptoSession(OpenIdRequestAssociation association) {
-		int bits = association.getDhModulo().bitLength();
-		BigInteger max = association.getDhModulo().subtract(BigInteger.ONE);
-		while (true) {
-			BigInteger pkey = new BigInteger(bits, random);
-			if (pkey.compareTo(max) >= 0) { // too large
-				continue;
-			} else if (pkey.compareTo(BigInteger.ONE) <= 0) {// too small
-				continue;
-			}
-			return new KeyPair(pkey, association.getDhGen().modPow(pkey,
-					association.getDhModulo()));
-		}
 	}
 
 }

@@ -14,6 +14,22 @@ public class ErrorResponse extends AbstractOpenIdResponse {
 		setNameSpace(OPENID_NS_20);
 	}
 
+	public ErrorResponse(final Boolean isUrl, final String error) {
+		super();
+		setUrl(isUrl);
+		setError(error);
+		setNameSpace(OPENID_NS_20);
+	}
+
+	public ErrorResponse(final Boolean isUrl, final String error,
+			final String contact) {
+		super();
+		setUrl(isUrl);
+		setNameSpace(OPENID_NS_20);
+		setError(error);
+		setContact(contact);
+	}
+
 	public ErrorResponse(final Map<String, String> map, final Boolean isUrl) {
 		super(map);
 		setUrl(isUrl);

@@ -6,6 +6,7 @@
        	<title>${title}</title>
     </head>
     <body>
+   		<h2><t:pageLink page="index">Relaying party</t:pageLink></h2>
     	<t:if test="userSession.logged">
     		You are logged as: ${userSession.ssoIdentity}
 			<t:pageLink page="userProfile">User profile</t:pageLink>/<t:actionLink t:id="logout">Logout</t:actionLink>    			

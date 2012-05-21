@@ -30,7 +30,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 						+ authenticationResponse.getNonce() + "'");
 				return false;
 			}
-			signingService.sign(authenticationResponse, association);
+			String signature = signingService.sign(authenticationResponse,
+					association);
+			if (!signature.equals(authenticationResponse.getSignature())) {
+				logger.info("Signature in authentication response '"
+						+ authenticationResponse.getSignature()
+						+ "' is not same as computed '" + signature
+						+ "', used association: " + association);
+				return false;
+			}
 			return true;
 		}
 		return false;

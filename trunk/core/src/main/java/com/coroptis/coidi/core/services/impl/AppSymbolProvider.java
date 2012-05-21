@@ -1,7 +1,5 @@
 package com.coroptis.coidi.core.services.impl;
 
-import java.util.Map;
-
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 
@@ -24,17 +22,5 @@ public class AppSymbolProvider implements SymbolProvider {
 	@Override
 	public String valueForSymbol(String symbolName) {
 		return configurationService.getProperty(symbolName);
-//		int pos = symbolName.indexOf(".");
-//		if (pos < 0) {
-//			return null;
-//		}
-//		String section = symbolName.substring(0, pos);
-//		String key = symbolName.substring(pos + 1);
-//		Map<String, String> prop = configurationService
-//				.loadDefaultConfiguration(section);
-//		if (prop == null) {
-//			return null;
-//		}
-//		return prop.get(key);
 	}
 }
