@@ -17,7 +17,7 @@ class AttachmentStreamResponse implements StreamResponse {
 	 * 
 	 * See http://www.onjava.com/pub/a/onjava/excerpt/jebp_3/index3.html
 	 */
-	protected String contentType = "text/plain";
+	private String contentType = "text/plain";
 
 	public AttachmentStreamResponse(InputStream is) {
 		this.is = is;

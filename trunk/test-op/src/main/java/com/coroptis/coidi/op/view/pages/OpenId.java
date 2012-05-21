@@ -48,6 +48,7 @@ public class OpenId {
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
 			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher
 					.process(map);
+			logger.debug("openId response: " + requestResponse.getMessage());
 			if (requestResponse.isUrl()) {
 				String redirUrl = requestResponse.getMessage();
 				logger.info("SSO openId response is redirect to: '" + redirUrl

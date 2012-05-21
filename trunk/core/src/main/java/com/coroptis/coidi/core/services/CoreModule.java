@@ -15,6 +15,8 @@ import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
 import com.coroptis.coidi.core.services.impl.AppSymbolProvider;
 import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
+import com.coroptis.coidi.core.services.impl.ConvertorServiceImpl;
+import com.coroptis.coidi.core.services.impl.CryptoSessionServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
 import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
 import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
@@ -38,7 +40,9 @@ public class CoreModule {
 				"appSymbolProvider");
 		binder.bind(MessageService.class, MessageServiceImpl.class);
 		binder.bind(CryptographyService.class, CryptographyServiceImpl.class);
+		binder.bind(CryptoSessionService.class, CryptoSessionServiceImpl.class);
 		binder.bind(SigningService.class, SigningServiceImpl.class);
+		binder.bind(ConvertorService.class, ConvertorServiceImpl.class);
 	}
 
 	public static void contributeSymbolSource(

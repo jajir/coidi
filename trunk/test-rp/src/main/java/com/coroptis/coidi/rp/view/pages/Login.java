@@ -42,7 +42,8 @@ public class Login {
 		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
 		authenticationRequest.setAssocHandle(association.getAssocHandle());
 		authenticationRequest.setIdentity(userSuppliedId);
-		authenticationRequest.setMode("checkid_immediate");
+		authenticationRequest.setMode("checkid_setup");
+		// authenticationRequest.setMode("checkid_immediate");
 		authenticationRequest.setRealm("not in use");
 		authenticationRequest.setReturnTo("http://localhost:8081/");
 		authenticationRequest.put("go_to", discoveryResult.getEndPoint());

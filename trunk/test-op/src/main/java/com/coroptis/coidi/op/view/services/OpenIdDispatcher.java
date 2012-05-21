@@ -16,10 +16,6 @@ public interface OpenIdDispatcher {
 
 	final static String MODE_ASSOCIATE = "associate";
 
-	final static String MODE_CHECKID_SETUP = "checkid_setup";
-
-	final static String MODE_CHECKID_IMMEDIATE = "checkid_immediate";
-
 	final static String OPENID_NS = "openid.ns";
 
 	final static String OPENID_NS_20 = "http://specs.openid.net/auth/2.0";

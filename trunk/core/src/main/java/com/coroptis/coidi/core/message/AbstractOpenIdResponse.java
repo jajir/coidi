@@ -4,15 +4,15 @@ import java.util.Map;
 
 public class AbstractOpenIdResponse extends AbstractMessage {
 
-	public AbstractOpenIdResponse(){
+	public AbstractOpenIdResponse() {
 		super();
 	}
-	
-	public AbstractOpenIdResponse(final Map<String, String> map){
-		super(map);
+
+	public AbstractOpenIdResponse(final Map<String, String> map) {
+		super(map, null);
 	}
 
-	public String getMessage(){
+	public String getMessage() {
 		return getPrefixedMessage(null);
 	}
 

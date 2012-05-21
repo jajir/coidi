@@ -2,5 +2,5 @@
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	There will be description what you are looking at.
 	<t:pageLink page="login">Login</t:pageLink>	
-	<t:pageLink page="userProfile">User profile</t:pageLink>	
+	<t:pageLink page="userProfile">User profile</t:pageLink>
 </html>

@@ -1,5 +1,6 @@
 package com.coroptis.coidi.core.services.impl;
 
+import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,12 +12,17 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
+import com.coroptis.coidi.core.util.KeyPair;
 
 public class CryptographyServiceImpl implements CryptographyService {
 
 	@Inject
 	private Logger logger;
+
+	@Inject
+	private CryptoSessionService cryptoSessionService;
 
 	@Override
 	public byte[] hmacSha1(byte[] key, byte[] text) {
@@ -32,6 +38,13 @@ public class CryptographyServiceImpl implements CryptographyService {
 			logger.error(e.getMessage(), e);
 			throw new CoidiException(e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public byte[] encryptSecret(KeyPair keyPair, BigInteger dhConsumerPublic,
+			byte[] macKey) {
+		return cryptoSessionService
+				.xorSecret(keyPair, dhConsumerPublic, macKey);
 	}
 
 }

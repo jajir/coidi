@@ -1,5 +1,8 @@
 package com.coroptis.coidi.op.view.services.impl;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
@@ -27,6 +30,14 @@ public class AssociationServiceImpl implements AssociationService {
 		return (AssociationImpl) session.createCriteria(AssociationImpl.class)
 				.add(Restrictions.eq("assocHandle", assoc_handle))
 				.uniqueResult();
+	}
+
+	@Override
+	public Date getTimeToLive() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.MINUTE, 30);
+		return cal.getTime();
 	}
 
 }

@@ -30,7 +30,7 @@ public abstract class AbstractMessage {
 
 	public final static String MODE_CHECKID_IMMEDIATE = "checkid_immediate";
 
-	protected Map<String, String> map;
+	private Map<String, String> map;
 
 	private boolean isUrl;
 
@@ -40,9 +40,20 @@ public abstract class AbstractMessage {
 		map = new HashMap<String, String>();
 	}
 
-	public AbstractMessage(final Map<String, String> map) {
+	public AbstractMessage(final Map<String, String> map, final String prefix) {
 		this();
-		this.map.putAll(map);
+		if (prefix == null) {
+			this.map.putAll(map);
+		} else {
+			for (Entry<String, String> entry : map.entrySet()) {
+				if (entry.getKey().startsWith(prefix)) {
+					this.map.put(entry.getKey().substring(prefix.length()),
+							entry.getValue());
+				} else {
+					this.map.put(entry.getKey(), entry.getValue());
+				}
+			}
+		}
 	}
 
 	protected String getPrefixedMessage(final String keyPrefix) {
@@ -71,23 +82,27 @@ public abstract class AbstractMessage {
 			throws UnsupportedEncodingException {
 		StringBuilder buff = new StringBuilder();
 		for (Entry<String, String> entry : map.entrySet()) {
-//			if (!isUrl() || !"return_to".equals(entry.getKey())) {
-				if (keyPrefix != null) {
-					buff.append(keyPrefix);
-				}
-				buff.append(entry.getKey());
-				buff.append(separator);
-				if (isUrl) {
-					buff.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-				} else {
-					buff.append(entry.getValue());
-				}
-				buff.append(lineEnds);
-//			}
+			if (keyPrefix != null) {
+				buff.append(keyPrefix);
+			}
+			buff.append(entry.getKey());
+			buff.append(separator);
+			if (isUrl) {
+				buff.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+			} else {
+				buff.append(entry.getValue());
+			}
+			buff.append(lineEnds);
 		}
 		buff = buff.replace(buff.length() - lineEnds.length(), buff.length(),
 				"");
 		return buff;
+	}
+
+	protected Map<String, String> getMap() {
+		HashMap<String, String> out = new HashMap<String, String>();
+		out.putAll(map);
+		return out;
 	}
 
 	public void put(final String key, final String value) {
