@@ -25,6 +25,7 @@ import org.hibernate.jdbc.Work;
 
 import com.coroptis.coidi.op.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.op.view.services.impl.AssociationServiceImpl;
+import com.coroptis.coidi.op.view.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.IdentityServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.NonceServiceImpl;
@@ -50,6 +51,8 @@ public class OpViewModule {
 		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
 				"accessControllerDispatcher");
 		binder.bind(NonceService.class, NonceServiceImpl.class);
+		binder.bind(AuthenticationService.class,
+				AuthenticationServiceImpl.class);
 	}
 
 	@Startup

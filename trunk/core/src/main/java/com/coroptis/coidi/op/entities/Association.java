@@ -42,15 +42,29 @@ public interface Association {
 	}
 
 	public static enum SessionType {
-		no_encription("no-encription", 0), DH_SHA1("DH-SHA1", 20), DH_SHA256(
-				"DH-SHA256", 32);
+		no_encription("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
+				"DH-SHA256", "SHA-256", 32);
 
+		/**
+		 * Open id name. It's identification from open id specification.
+		 */
 		private final String name;
 
+		/**
+		 * Name of algorithm in Java word in JCE.
+		 */
+		private final String algorithmName;
+
+		/**
+		 * Length of digest in bytes computed with defined algorithm from
+		 * message.
+		 */
 		private final Integer sectetLength;
 
-		private SessionType(final String name, final Integer sectetLength) {
+		private SessionType(final String name, final String algorithmName,
+				final Integer sectetLength) {
 			this.name = name;
+			this.algorithmName = algorithmName;
 			this.sectetLength = sectetLength;
 		}
 
@@ -77,6 +91,13 @@ public interface Association {
 		 */
 		public Integer getSectetLength() {
 			return sectetLength;
+		}
+
+		/**
+		 * @return the algorithmName
+		 */
+		public String getAlgorithmName() {
+			return algorithmName;
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
@@ -41,7 +42,8 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 
 	@Override
 	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
-		if (requestParams.get(MODE).equals(MODE_ASSOCIATE)) {
+		if (requestParams.get(OPENID_MODE).equals(
+				AbstractMessage.MODE_ASSOCIATE)) {
 			AssociationRequest request = new AssociationRequest(requestParams);
 			if (request.getAssociationType() == null) {
 				return new ErrorResponse(false,
@@ -74,7 +76,8 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 				out.setEncMacKey(cryptographyService.encryptSecret(
 						cryptoSession,
 						request.getDhConsumerPublic(),
-						convertorService.convertToBytes(association.getMacKey())));
+						convertorService.convertToBytes(association.getMacKey()),
+						request.getSessionType()));
 				out.setDhServerPublic(cryptoSession.getPublicKey());
 			}
 

@@ -49,6 +49,21 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
 	}
 
 	/**
+	 * @return the claimedId
+	 */
+	public String getClaimedId() {
+		return get(CLAIMED_ID);
+	}
+
+	/**
+	 * @param claimedId
+	 *            the identity to set
+	 */
+	public void setClaimedId(final String claimedId) {
+		put(CLAIMED_ID, claimedId);
+	}
+
+	/**
 	 * @return the assocHandle
 	 */
 	public String getAssocHandle() {

@@ -5,6 +5,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.view.pages.AbstractIntegrationTest;
 import com.coroptis.coidi.rp.view.pages.Normalizer;
 import com.coroptis.coidi.rp.view.services.AssociationServise;
@@ -34,8 +36,8 @@ public class IntegrationTest extends AbstractIntegrationTest {
 		// String endpoint = "http://server.myid.net/server";
 		String endpoint = "http://localhost:8080/openid";
 		AssociationServise associationServise = getService(AssociationServise.class);
-		Association association = associationServise
-				.generateAssociation(endpoint);
+		Association association = associationServise.generateAssociation(
+				endpoint, SessionType.DH_SHA1, AssociationType.HMAC_SHA1);
 
 		assertNotNull(association);
 		logger.debug(association);
