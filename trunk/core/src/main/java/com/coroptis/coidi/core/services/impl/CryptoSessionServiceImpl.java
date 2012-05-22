@@ -1,22 +1,21 @@
 package com.coroptis.coidi.core.services.impl;
 
 import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.services.CryptoSessionService;
+import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public class CryptoSessionServiceImpl implements CryptoSessionService {
 
 	@Inject
-	private Logger logger;
+	private CryptographyService cryptographyService;
 
 	private final Random random;
 
@@ -31,13 +30,14 @@ public class CryptoSessionServiceImpl implements CryptoSessionService {
 
 	@Override
 	public byte[] xorSecret(KeyPair keyPair, BigInteger otherPublic,
-			byte[] secret) {
+			byte[] secret, final SessionType sessionType) {
 		if (otherPublic == null) {
 			throw new IllegalArgumentException("otherPublic cannot be null");
 		}
 
 		BigInteger shared = keyPair.getSharedSecret(otherPublic);
-		byte[] hashed = sha1(shared.toByteArray());
+		byte[] hashed = cryptographyService.computeDigest(shared.toByteArray(),
+				sessionType);
 
 		if (secret.length != hashed.length) {
 			throw new CoidiException("invalid secret byte[] length: secret="
@@ -53,7 +53,6 @@ public class CryptoSessionServiceImpl implements CryptoSessionService {
 
 	@Override
 	public KeyPair generateCryptoSession(AssociationRequest association) {
-		// TODO could it work with not default p and q?
 		return generateCryptoSession(association.getDhModulo(),
 				association.getDhGen());
 	}
@@ -70,17 +69,6 @@ public class CryptoSessionServiceImpl implements CryptoSessionService {
 				continue;
 			}
 			return new KeyPair(pkey, dhGen.modPow(pkey, dhModulo));
-		}
-	}
-
-	// TODO move ciphering
-	private byte[] sha1(byte[] text) {
-		try {
-			MessageDigest d = MessageDigest.getInstance("SHA-1");
-			return d.digest(text);
-		} catch (NoSuchAlgorithmException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
 		}
 	}
 

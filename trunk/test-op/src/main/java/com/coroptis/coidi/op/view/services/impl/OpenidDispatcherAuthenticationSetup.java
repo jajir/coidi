@@ -36,7 +36,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
 	@Override
 	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
-		if (requestParams.get(MODE).equals(
+		if (requestParams.get(OPENID_MODE).equals(
 				AuthenticationRequest.MODE_CHECKID_SETUP)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
 					requestParams);

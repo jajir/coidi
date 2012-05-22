@@ -32,7 +32,7 @@ public class OpenidDispatcherAuthenticationImmediate implements
 
 	@Override
 	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
-		if (requestParams.get(MODE).equals(
+		if (requestParams.get(OPENID_MODE).equals(
 				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
 					requestParams);

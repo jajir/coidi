@@ -27,7 +27,7 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 		ErrorResponse errorResponse = new ErrorResponse(false);
 		StringBuilder buff = new StringBuilder();
 		buff.append("Unable to process incoming message, incorrect openid.mode '");
-		buff.append(requestParams.get(MODE));
+		buff.append(requestParams.get(OPENID_MODE));
 		buff.append("'\n");
 		for (Entry<String, String> entry : requestParams.entrySet()) {
 			buff.append(entry.getKey());
@@ -38,7 +38,7 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 		logger.warn(buff.toString());
 		errorResponse
 				.setError("Unable to process incoming message, incorrect openid.mode '"
-						+ requestParams.get(MODE) + "'\n");
+						+ requestParams.get(OPENID_MODE) + "'\n");
 		return errorResponse;
 	}
 

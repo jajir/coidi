@@ -2,6 +2,7 @@ package com.coroptis.coidi.op.view.services;
 
 import java.util.Map;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 
 /**
@@ -12,13 +13,8 @@ import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
  */
 public interface OpenIdDispatcher {
 
-	final static String MODE = "openid.mode";
-
-	final static String MODE_ASSOCIATE = "associate";
-
-	final static String OPENID_NS = "openid.ns";
-
-	final static String OPENID_NS_20 = "http://specs.openid.net/auth/2.0";
+	final static String OPENID_MODE = AbstractMessage.OPENID
+			+ AbstractMessage.MODE;
 
 	/**
 	 * Process message. If return value is <code>null</code> then next openID

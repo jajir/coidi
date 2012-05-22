@@ -2,6 +2,7 @@ package com.coroptis.coidi.core.services.impl;
 
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Mac;
@@ -15,6 +16,8 @@ import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
+import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.google.common.base.Preconditions;
 
 public class CryptographyServiceImpl implements CryptographyService {
 
@@ -25,7 +28,7 @@ public class CryptographyServiceImpl implements CryptographyService {
 	private CryptoSessionService cryptoSessionService;
 
 	@Override
-	public byte[] hmacSha1(byte[] key, byte[] text) {
+	public byte[] hmacSha1(final byte[] key, final byte[] text) {
 		try {
 			SecretKey sk = new SecretKeySpec(key, "HMACSHA1");
 			Mac m = Mac.getInstance(sk.getAlgorithm());
@@ -41,10 +44,29 @@ public class CryptographyServiceImpl implements CryptographyService {
 	}
 
 	@Override
-	public byte[] encryptSecret(KeyPair keyPair, BigInteger dhConsumerPublic,
-			byte[] macKey) {
-		return cryptoSessionService
-				.xorSecret(keyPair, dhConsumerPublic, macKey);
+	public byte[] encryptSecret(final KeyPair keyPair,
+			final BigInteger dhConsumerPublic, final byte[] macKey,
+			final SessionType sessionType) {
+		return cryptoSessionService.xorSecret(keyPair, dhConsumerPublic,
+				macKey, sessionType);
+	}
+
+	@Override
+	public byte[] computeDigest(final byte[] text, final SessionType sessionType) {
+		Preconditions.checkNotNull(text, "signing text");
+		Preconditions.checkNotNull(sessionType, "sessionType");
+		if (sessionType.equals(SessionType.no_encription)) {
+			throw new CoidiException(
+					"Can't sign when session type is 'no-encryption'");
+		}
+		try {
+			MessageDigest d = MessageDigest.getInstance(sessionType
+					.getAlgorithmName());
+			return d.digest(text);
+		} catch (NoSuchAlgorithmException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
 	}
 
 }

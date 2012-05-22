@@ -5,11 +5,14 @@ import java.net.URL;
 
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
+import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.view.services.AssociationServise;
 import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryResult;
@@ -18,8 +21,8 @@ import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
 @AccessOnlyForUnsigned
 public class Login {
 
-	@Property
-	private String userSuppliedId;
+	@Inject
+	private Logger logger;
 
 	@Inject
 	private DiscoveryProcessor discoveryProcessor;
@@ -27,17 +30,33 @@ public class Login {
 	@Inject
 	private AssociationServise associationServise;
 
-	@Inject
-	private Logger logger;
+	@Property
+	private String userSuppliedId;
+
+	@Property
+	@Validate("required")
+	private AssociationType associationType;
+
+	@Property
+	@Validate("required")
+	private SessionType sessionType;
 
 	@SessionState
 	private Association association;
 
+	public void onActivate() {
+		associationType = AssociationType.HMAC_SHA1;
+		sessionType = SessionType.DH_SHA1;
+	}
+
 	URL onSuccess() throws MalformedURLException {
+		logger.debug("association type: " + associationType);
+		logger.debug("session type    : " + sessionType);
+
 		DiscoveryResult discoveryResult = discoveryProcessor
 				.dicovery(userSuppliedId);
-		association = associationServise.generateAssociation(discoveryResult
-				.getEndPoint());
+		association = associationServise.generateAssociation(
+				discoveryResult.getEndPoint(), sessionType, associationType);
 
 		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
 		authenticationRequest.setAssocHandle(association.getAssocHandle());

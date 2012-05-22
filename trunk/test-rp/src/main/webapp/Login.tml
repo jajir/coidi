@@ -5,9 +5,13 @@
    		<t:label for="userSuppliedId"/>:
 		<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
 		<br />
-		<t:submit value="Login"/>
-		
+   		<t:label for="associationType"/>:
+		<t:select t:id="associationType" />
 		<br />
+   		<t:label for="sessionType"/>:
+		<t:select t:id="sessionType" />
+		<br />
+		<t:submit value="Login"/>
 		Testing identities
 		<ul>
 			<li>http://localhost:8080/user/juan</li>

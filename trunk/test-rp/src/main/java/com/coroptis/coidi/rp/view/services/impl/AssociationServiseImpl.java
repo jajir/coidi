@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
@@ -32,7 +33,6 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.rp.view.services.AssociationServise;
 import com.coroptis.coidi.rp.view.services.HttpService;
-import com.coroptis.coidi.rp.view.util.Convert;
 import com.google.common.base.Preconditions;
 
 public class AssociationServiseImpl implements AssociationServise {
@@ -46,8 +46,12 @@ public class AssociationServiseImpl implements AssociationServise {
 	@Inject
 	private CryptoSessionService cryptoSessionService;
 
+	@Inject
+	private ConvertorService convertorService;
+
 	@Override
-	public Association generateAssociation(final String opEndpoint) {
+	public Association generateAssociation(final String opEndpoint,
+			final SessionType sessionType, final AssociationType associationType) {
 		Preconditions.checkNotNull(opEndpoint, "opEndpoint");
 		logger.debug("Creating associatio at '" + opEndpoint + "'");
 		try {
@@ -56,8 +60,8 @@ public class AssociationServiseImpl implements AssociationServise {
 					CryptographyService.DEFAULT_MODULUS,
 					CryptographyService.DEFAULT_GENERATOR);
 			AssociationRequest associationRequest = new AssociationRequest();
-			associationRequest.setAssociationType(AssociationType.HMAC_SHA1);
-			associationRequest.setSessionType(SessionType.DH_SHA1);
+			associationRequest.setAssociationType(associationType);
+			associationRequest.setSessionType(sessionType);
 			associationRequest.setDhConsumerPublic(keyPair.getPublicKey());
 			associationRequest.setDhGen(keyPair.getGenerator());
 			associationRequest.setDhModulo(keyPair.getModulus());
@@ -85,8 +89,9 @@ public class AssociationServiseImpl implements AssociationServise {
 					.getExpiresIn()));
 			byte[] macKey = cryptoSessionService.xorSecret(keyPair,
 					associationResponse.getDhServerPublic(),
-					associationResponse.getEncMacKey());
-			association.setMacKey(Convert.convertToString(macKey));
+					associationResponse.getEncMacKey(),
+					associationResponse.getSessionType());
+			association.setMacKey(convertorService.convertToString(macKey));
 			return association;
 		} catch (UnsupportedEncodingException e) {
 			logger.error(e.getMessage(), e);
