@@ -9,6 +9,7 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 public class AssociationResponse extends AbstractOpenIdResponse {
 
 	public final static String ENC_MAC_KEY = "enc_mac_key";
+	public final static String MAC_KEY = "mac_key";
 	public final static String DH_SERVER_PUBLIC = "dh_server_public";
 	public final static String SESSION_TYPE = "session_type";
 	public final static String ASSOCIATION_TYPE = "assoc_type";
@@ -26,7 +27,7 @@ public class AssociationResponse extends AbstractOpenIdResponse {
 		setUrl(false);
 		setNameSpace(OPENID_NS_20);
 	}
-	
+
 	/**
 	 * @return the associationType
 	 */
@@ -115,5 +116,20 @@ public class AssociationResponse extends AbstractOpenIdResponse {
 	 */
 	public void setEncMacKey(final byte[] encMacKey) {
 		put(ENC_MAC_KEY, convertToString(encMacKey));
+	}
+
+	/**
+	 * @return the macKey
+	 */
+	public byte[] getMacKey() {
+		return convertToBytes(get(MAC_KEY));
+	}
+
+	/**
+	 * @param macKey
+	 *            the macKey to set
+	 */
+	public void setMacKey(final byte[] macKey) {
+		put(MAC_KEY, convertToString(macKey));
 	}
 }

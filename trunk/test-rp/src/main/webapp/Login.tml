@@ -5,12 +5,17 @@
    		<t:label for="userSuppliedId"/>:
 		<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
 		<br />
-   		<t:label for="associationType"/>:
-		<t:select t:id="associationType" />
+   		<t:label for="statelessMode"/>:
+		<t:checkbox t:id="statelessMode" t:mixins="triggerfragment" t:invert="true" fragment="stateModeOptions"/>
 		<br />
-   		<t:label for="sessionType"/>:
-		<t:select t:id="sessionType" />
-		<br />
+		<t:formfragment t:id="stateModeOptions" visible="showOptions">
+	   		<t:label for="associationType"/>:
+			<t:select t:id="associationType" />
+			<br />
+	   		<t:label for="sessionType"/>:
+			<t:select t:id="sessionType" />
+			<br />
+		</t:formfragment>
 		<t:submit value="Login"/>
 		Testing identities
 		<ul>

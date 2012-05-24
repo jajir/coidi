@@ -4,6 +4,12 @@ import java.util.Date;
 
 public interface Association {
 
+	/**
+	 * This define algorithm used for signing message with secret mac key.
+	 * 
+	 * @author jan
+	 * 
+	 */
 	public static enum AssociationType {
 		HMAC_SHA1("HMAC-SHA1", 20), HMAC_SHA256("HMAC-SHA256", 32);
 
@@ -41,6 +47,12 @@ public interface Association {
 
 	}
 
+	/**
+	 * This define algorithm used for generating secret mac key.
+	 * 
+	 * @author jan
+	 * 
+	 */
 	public static enum SessionType {
 		no_encription("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
 				"DH-SHA256", "SHA-256", 32);

@@ -1,5 +1,9 @@
 package com.coroptis.coidi.rp.view.services;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -15,4 +19,7 @@ public interface HttpService {
 	 */
 	DefaultHttpClient getHttpClient() throws CoidiException;
 
+	List<NameValuePair> toList(Map<String, String> parameters);
+
+	Map<String, String> convertToMap(String body);
 }

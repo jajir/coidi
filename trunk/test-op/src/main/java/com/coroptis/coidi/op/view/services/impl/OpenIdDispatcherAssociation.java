@@ -58,14 +58,16 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 			association.setAssocHandle(cryptoService.generateUUID());
 			association.setSessionType(request.getSessionType());
 			association.setExpiredIn(associationService.getTimeToLive());
+			association.setAssociationType(request.getAssociationType());
 
 			AssociationResponse out = new AssociationResponse();
 			if (request.getSessionType().equals(SessionType.no_encription)) {
-				association.setMacKey(convertorService
-						.convertToString(cryptoService
-								.generateAssociationRandom(association
-										.getAssociationType())));
-				logger.info("No encription was setup during association request/response.");
+				logger.info("No encryption was setup during association request/response.");
+				byte macKey[] = cryptoService
+						.generateAssociationRandom(association
+								.getAssociationType());
+				association.setMacKey(convertorService.convertToString(macKey));
+				out.setMacKey(macKey);
 			} else {
 				association.setMacKey(convertorService
 						.convertToString(cryptoService
@@ -81,7 +83,6 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 				out.setDhServerPublic(cryptoSession.getPublicKey());
 			}
 
-			association.setAssociationType(request.getAssociationType());
 			associationService.create(association);
 
 			out.setSessionType(association.getSessionType());

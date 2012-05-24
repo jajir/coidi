@@ -17,8 +17,8 @@ import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorTerminator;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryProcessorYadis;
 import com.coroptis.coidi.rp.view.services.impl.HttpServiceImpl;
+import com.coroptis.coidi.rp.view.services.impl.HttpTranportServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.NonceDaoImpl;
-import com.coroptis.coidi.rp.view.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.XrdsServiceImpl;
 import com.coroptis.coidi.rp.view.services.impl.YadisServiceImpl;
 
@@ -32,11 +32,11 @@ public class RpViewModule {
 		binder.bind(NonceDao.class, NonceDaoImpl.class);
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
-		binder.bind(NonceService.class, NonceServiceImpl.class);
 		binder.bind(Dispatcher.class, AuthenticationResponseDispatcher.class)
 				.withId("authenticationResponseDispatcher");
 		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
 				"accessControllerDispatcher");
+		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
 
 	}
 

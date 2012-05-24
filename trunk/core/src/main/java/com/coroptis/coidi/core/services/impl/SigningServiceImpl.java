@@ -42,4 +42,20 @@ public class SigningServiceImpl implements SigningService {
 			throw new CoidiException(e.getMessage(), e);
 		}
 	}
+	
+	@Override
+	public String sign(final AbstractMessage response, final String macKey) {
+		String toSign = messageService
+				.extractStringForSign(response, "openid.");
+		try {
+			byte[] b = cryptoService.hmacSha1(
+					convertorService.convertToBytes(macKey),
+					toSign.getBytes("UTF-8"));
+			return convertorService.convertToString(b);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
+	}
+
 }

@@ -23,26 +23,31 @@ import org.apache.tapestry5.services.Dispatcher;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
+import com.coroptis.coidi.op.view.dao.StatelessModeNonceDao;
+import com.coroptis.coidi.op.view.dao.impl.StatelessModeNonceDaoImpl;
 import com.coroptis.coidi.op.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.op.view.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.IdentityServiceImpl;
-import com.coroptis.coidi.op.view.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherAssociation;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthenticationImmediate;
 import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthenticationSetup;
+import com.coroptis.coidi.op.view.services.impl.StatelessModeNonceServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.XrdsServiceImpl;
 import com.google.common.io.Files;
 
-public class OpViewModule {
+public class OpViewModule {// NO_UCD
 
 	private final static Logger logger = Logger.getLogger(OpViewModule.class);
 
 	public static void bind(ServiceBinder binder) {
+		binder.bind(StatelessModeNonceDao.class,
+				StatelessModeNonceDaoImpl.class);
+
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
 		binder.bind(UserService.class, UserServiceImpl.class);
 		binder.bind(IdentityService.class, IdentityServiceImpl.class);
@@ -50,9 +55,10 @@ public class OpViewModule {
 		binder.bind(CryptoService.class, CryptoServiceImpl.class);
 		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
 				"accessControllerDispatcher");
-		binder.bind(NonceService.class, NonceServiceImpl.class);
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
+		binder.bind(StatelessModeNonceService.class,
+				StatelessModeNonceServiceImpl.class);
 	}
 
 	@Startup
@@ -111,8 +117,15 @@ public class OpViewModule {
 	}
 
 	@Match("*Service")
-	public static void adviseTransactions(HibernateTransactionAdvisor advisor,
-			MethodAdviceReceiver receiver) {
+	public static void adviseServiceTransactions(
+			HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
 		advisor.addTransactionCommitAdvice(receiver);
 	}
+
+	@Match("*Dao")
+	public static void adviseDaoTransactions(
+			HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
+		advisor.addTransactionCommitAdvice(receiver);
+	}
+
 }
