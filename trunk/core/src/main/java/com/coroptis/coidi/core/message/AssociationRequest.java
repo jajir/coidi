@@ -33,14 +33,22 @@ public class AssociationRequest extends AbstractOpenIdRequest {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(AssociationRequest.class)
-				.add(MODE, getMode())
-				.add(ASSOCIATION_TYPE, getAssociationType())
-				.add(SESSION_TYPE, getSessionType())
-				.add(DH_MODULUS, getDhModulo())
-				.add(DH_CONSUMER_PUBLIC, getDhConsumerPublic())
-				.add(DH_GENERATOR, getDhGen()).add(OPENID_NS, getNameSpace())
-				.toString();
+		if (SessionType.no_encription.equals(getSessionType())) {
+			return Objects.toStringHelper(AssociationRequest.class)
+					.add(MODE, getMode())
+					.add(ASSOCIATION_TYPE, getAssociationType())
+					.add(SESSION_TYPE, getSessionType())
+					.add(OPENID_NS, getNameSpace()).toString();
+		} else {
+			return Objects.toStringHelper(AssociationRequest.class)
+					.add(MODE, getMode())
+					.add(ASSOCIATION_TYPE, getAssociationType())
+					.add(SESSION_TYPE, getSessionType())
+					.add(DH_MODULUS, getDhModulo())
+					.add(DH_CONSUMER_PUBLIC, getDhConsumerPublic())
+					.add(DH_GENERATOR, getDhGen())
+					.add(OPENID_NS, getNameSpace()).toString();
+		}
 	}
 
 	/**

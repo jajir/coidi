@@ -30,6 +30,9 @@ public class Login {
 	@Inject
 	private AssociationServise associationServise;
 
+	@SessionState
+	private Association association;
+
 	@Property
 	private String userSuppliedId;
 
@@ -41,8 +44,8 @@ public class Login {
 	@Validate("required")
 	private SessionType sessionType;
 
-	@SessionState
-	private Association association;
+	@Property
+	private boolean statelessMode;
 
 	public void onActivate() {
 		associationType = AssociationType.HMAC_SHA1;
@@ -55,20 +58,28 @@ public class Login {
 
 		DiscoveryResult discoveryResult = discoveryProcessor
 				.dicovery(userSuppliedId);
-		association = associationServise.generateAssociation(
-				discoveryResult.getEndPoint(), sessionType, associationType);
 
 		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-		authenticationRequest.setAssocHandle(association.getAssocHandle());
+		if (statelessMode) {
+			// no association handle
+		} else {
+			association = associationServise
+					.generateAssociation(discoveryResult.getEndPoint(),
+							sessionType, associationType);
+			authenticationRequest.setAssocHandle(association.getAssocHandle());
+		}
 		authenticationRequest.setIdentity(userSuppliedId);
 		authenticationRequest.setMode("checkid_setup");
 		// authenticationRequest.setMode("checkid_immediate");
 		authenticationRequest.setRealm("not in use");
 		authenticationRequest.setReturnTo("http://localhost:8081/");
 		authenticationRequest.put("go_to", discoveryResult.getEndPoint());
-
 		URL redirectTo = new URL(authenticationRequest.getMessage());
 		logger.debug("url: " + redirectTo);
 		return redirectTo;
+	}
+
+	public Boolean getShowOptions() {
+		return !statelessMode;
 	}
 }

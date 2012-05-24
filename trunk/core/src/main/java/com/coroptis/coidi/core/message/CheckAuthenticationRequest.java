@@ -2,46 +2,32 @@ package com.coroptis.coidi.core.message;
 
 import java.util.Map;
 
-public class AuthenticationResponse extends AbstractOpenIdResponse {
+public class CheckAuthenticationRequest extends AbstractOpenIdRequest {
 
-	public final static String MODE_ID_RES = "id_res";
-	public final static String OP_ENDPOINT = "op_endpoint";
-	public final static String IDENTITY = "identity";
-	public final static String CLAIMED_ID = "claimed_id";
-	public final static String RETURN_TO = "return_to";
-	public final static String NONCE = "response_nonce";
+	public final static String MODE_CHECK_AUTHENTICATION = "check_authentication";
 	public final static String INVALIDATE_HANDLE = "invalidate_handle";
-	public final static String ASSOC_HANDLE = "assoc_handle";
+	public final static String IDENTITY = "identity";
+	public final static String RETURN_TO = "return_to";
+	public final static String NONCE = "nonce";
 	public final static String SIGNED = "signed";
 	public final static String SIG = "sig";
 
-	public AuthenticationResponse() {
+	public CheckAuthenticationRequest() {
 		super();
 		setNameSpace(OPENID_NS_20);
-		setMode(MODE_ID_RES);
-		setUrl(true);
+		setMode(MODE_CHECK_AUTHENTICATION);
+		setUrl(false);
 	}
 
-	public AuthenticationResponse(final Map<String, String> map) {
+	public CheckAuthenticationRequest(final Map<String, String> map) {
 		super(map);
 		setNameSpace(OPENID_NS_20);
-		setMode(MODE_ID_RES);
-		setUrl(true);
+		setMode(MODE_CHECK_AUTHENTICATION);
+		setUrl(false);
 	}
 
-	/**
-	 * @return the assocHandle
-	 */
-	public String getAssocHandle() {
-		return get(ASSOC_HANDLE);
-	}
-
-	/**
-	 * @param assocHandle
-	 *            the assocHandle to set
-	 */
-	public void setAssocHandle(final String assocHandle) {
-		put(ASSOC_HANDLE, assocHandle);
+	public Map<String, String> getMap() {
+		return super.getMap();
 	}
 
 	/**
@@ -134,33 +120,4 @@ public class AuthenticationResponse extends AbstractOpenIdResponse {
 		put(INVALIDATE_HANDLE, invalidateHandle);
 	}
 
-	/**
-	 * @return the opEndpoint
-	 */
-	public String getOpEndpoint() {
-		return get(OP_ENDPOINT);
-	}
-
-	/**
-	 * @param opEndpoint
-	 *            the opEndpoint to set
-	 */
-	public void setOpEndpoint(final String opEndpoint) {
-		put(OP_ENDPOINT, opEndpoint);
-	}
-
-	/**
-	 * @return the claimedId
-	 */
-	public String getClaimedId() {
-		return get(CLAIMED_ID);
-	}
-
-	/**
-	 * @param claimedId
-	 *            the claimedId to set
-	 */
-	public void setClaimedId(final String claimedId) {
-		put(CLAIMED_ID, claimedId);
-	}
 }

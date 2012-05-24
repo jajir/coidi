@@ -4,10 +4,11 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.view.services.AuthenticationService;
-import com.coroptis.coidi.rp.view.services.NonceService;
+import com.coroptis.coidi.rp.view.services.NonceDao;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -20,6 +21,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Inject
 	private SigningService signingService;
 
+	@Inject
+	private NonceDao nonceDao;
+
 	@Override
 	public Boolean verify(final AuthenticationResponse authenticationResponse,
 			final Association association) {
@@ -29,6 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				logger.info("nonce is expired. '"
 						+ authenticationResponse.getNonce() + "'");
 				return false;
+			} else {
+				nonceDao.storeNonce(authenticationResponse.getNonce());
 			}
 			String signature = signingService.sign(authenticationResponse,
 					association);

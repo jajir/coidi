@@ -16,7 +16,7 @@ import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
  * @author jan
  * 
  */
-public class User {
+public class User { // NO_UCD
 
 	@Property
 	private String userName;

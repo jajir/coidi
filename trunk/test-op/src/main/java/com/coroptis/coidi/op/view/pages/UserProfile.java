@@ -13,10 +13,10 @@ import com.coroptis.coidi.op.view.utils.UserSession;
  * 
  */
 @AccessOnlyForSigned
-public class UserProfile {
+public class UserProfile { // NO_UCD
 
 	@SessionState
-	UserSession userSession;
+	private UserSession userSession;
 
 	public User getUser() {
 		return userSession.getUser();

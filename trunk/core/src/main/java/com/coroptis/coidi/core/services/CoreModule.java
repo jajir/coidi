@@ -19,6 +19,7 @@ import com.coroptis.coidi.core.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptoSessionServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
 import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
+import com.coroptis.coidi.core.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.core.util.Conf;
 
@@ -43,6 +44,7 @@ public class CoreModule {
 		binder.bind(CryptoSessionService.class, CryptoSessionServiceImpl.class);
 		binder.bind(SigningService.class, SigningServiceImpl.class);
 		binder.bind(ConvertorService.class, ConvertorServiceImpl.class);
+		binder.bind(NonceService.class, NonceServiceImpl.class);
 	}
 
 	public static void contributeSymbolSource(

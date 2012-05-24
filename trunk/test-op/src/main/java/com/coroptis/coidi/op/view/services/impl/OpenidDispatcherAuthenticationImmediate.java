@@ -9,10 +9,11 @@ import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.view.services.AssociationService;
-import com.coroptis.coidi.op.view.services.NonceService;
+import com.coroptis.coidi.op.view.services.AuthenticationService;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
 
 public class OpenidDispatcherAuthenticationImmediate implements
@@ -28,6 +29,9 @@ public class OpenidDispatcherAuthenticationImmediate implements
 	private AssociationService associationService;
 
 	@Inject
+	private AuthenticationService authenticationService;
+
+	@Inject
 	private SigningService signingService;
 
 	@Override
@@ -36,6 +40,11 @@ public class OpenidDispatcherAuthenticationImmediate implements
 				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
 					requestParams);
+			if (!authenticationService
+					.isAuthenticationRequest(authenticationRequest)) {
+				logger.debug("authentication request doesn't contains any idenity field");
+				return null;
+			}
 
 			Association association = associationService
 					.getByAssocHandle(authenticationRequest.getAssocHandle());

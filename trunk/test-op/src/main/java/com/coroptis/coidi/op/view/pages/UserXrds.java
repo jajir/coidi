@@ -13,7 +13,7 @@ import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
  * @author jan
  * 
  */
-public class UserXrds {
+public class UserXrds { // NO_UCD
 
 	@Inject
 	private XrdsService xrdsService;

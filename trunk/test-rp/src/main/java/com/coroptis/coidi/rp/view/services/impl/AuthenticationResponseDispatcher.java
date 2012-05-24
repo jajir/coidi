@@ -14,9 +14,12 @@ import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
+import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.view.services.AuthenticationService;
+import com.coroptis.coidi.rp.view.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
 public class AuthenticationResponseDispatcher implements Dispatcher {
@@ -32,6 +35,9 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 
 	@Inject
 	private AuthenticationService authenticationService;
+
+	@Inject
+	private HttpTransportService httpTransportService;
 
 	private final ApplicationStateManager asm;
 
@@ -54,13 +60,40 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 					map);
 
 			if (asm.exists(Association.class)) {
+				logger.debug("there is association.");
 				if (authenticationService.verify(authenticationResponse,
 						asm.get(Association.class))) {
 					UserSession session = asm.get(UserSession.class);
 					session.setSsoIdentity(authenticationResponse.getIdentity());
 				}
 			} else {
-				logger.debug("there is no association.");
+				logger.debug("there is no association - stateless mode.");
+				// TODO finish stateless mode
+				CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
+				checkAuthenticationRequest.setIdentity(authenticationResponse
+						.getIdentity());
+				checkAuthenticationRequest
+						.setInvalidateHandle(authenticationResponse
+								.getInvalidateHandle());
+				checkAuthenticationRequest.setNonce(authenticationResponse
+						.getNonce());
+				checkAuthenticationRequest.setReturnTo(authenticationResponse
+						.getReturnTo());
+				checkAuthenticationRequest.setSignature(authenticationResponse
+						.getSignature());
+				checkAuthenticationRequest.setSigned(authenticationResponse
+						.getSigned());
+				// post it to server
+				CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
+						httpTransportService.readPort(
+								authenticationResponse.getOpEndpoint(),
+								checkAuthenticationRequest.getMap()));
+				if (response2.getIsValid()) {
+					UserSession session = asm.get(UserSession.class);
+					session.setSsoIdentity(authenticationResponse.getIdentity());
+				} else {
+					logger.error("check authentication wasn't successful");
+				}
 			}
 
 		}

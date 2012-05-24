@@ -10,11 +10,14 @@ import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.view.entities.StatelessModeNonce;
 import com.coroptis.coidi.op.view.services.AssociationService;
-import com.coroptis.coidi.op.view.services.NonceService;
+import com.coroptis.coidi.op.view.services.AuthenticationService;
 import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.view.services.StatelessModeNonceService;
 import com.coroptis.coidi.op.view.utils.UserSession;
 
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
@@ -32,7 +35,13 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 	private SigningService signingService;
 
 	@Inject
+	private AuthenticationService authenticationService;
+
+	@Inject
 	private ApplicationStateManager applicationStateManager;
+
+	@Inject
+	private StatelessModeNonceService statelessModeNonceService;
 
 	@Override
 	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
@@ -40,16 +49,10 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 				AuthenticationRequest.MODE_CHECKID_SETUP)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
 					requestParams);
-
-			Association association = associationService
-					.getByAssocHandle(authenticationRequest.getAssocHandle());
-			if (association == null) {
-				ErrorResponse errorResponse = new ErrorResponse(false);
-				String msg = "Unable to find association handle '"
-						+ authenticationRequest.getAssocHandle() + "'";
-				logger.warn(msg);
-				errorResponse.setError(msg);
-				return errorResponse;
+			if (!authenticationService
+					.isAuthenticationRequest(authenticationRequest)) {
+				logger.debug("authentication request doesn't contains any idenity field");
+				return null;
 			}
 
 			if (!applicationStateManager.exists(UserSession.class)) {
@@ -73,17 +76,36 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 				};
 			}
 
+			Association association = associationService
+					.getByAssocHandle(authenticationRequest.getAssocHandle());
+			if (authenticationRequest.getAssocHandle() != null
+					&& association == null) {
+				return new ErrorResponse(false, "Invalid assoc handle '"
+						+ authenticationRequest.getAssocHandle()
+						+ "', associaction wasn't associated.");
+			}
+
 			AuthenticationResponse response = new AuthenticationResponse();
-			response.setAssocHandle(authenticationRequest.getAssocHandle());
-			response.setIdentity(authenticationRequest.getIdentity());
 			response.setNonce(nonceService.createNonce());
+			response.setIdentity(authenticationRequest.getIdentity());
 			response.setReturnTo(authenticationRequest.getReturnTo());
-			response.setSigned("assoc_handle,identity,nonce,return_to");
-			response.setSignature(signingService.sign(response, association));
+
+			if (association == null) {
+				// state less mode
+				StatelessModeNonce statelessModeNonce = statelessModeNonceService
+						.createStatelessModeNonce(response.getNonce());
+				response.setSigned("identity,nonce,return_to");
+				response.setSignature(signingService.sign(response,
+						statelessModeNonce.getMacKey()));
+			} else {
+				response.setSigned("assoc_handle,identity,nonce,return_to");
+				response.setAssocHandle(authenticationRequest.getAssocHandle());
+				response.setSignature(signingService
+						.sign(response, association));
+			}
 			response.put("go_to", authenticationRequest.getReturnTo());
 			return response;
 		}
 		return null;
 	}
-
 }

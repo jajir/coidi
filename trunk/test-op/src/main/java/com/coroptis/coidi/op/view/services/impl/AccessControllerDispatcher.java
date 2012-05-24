@@ -33,7 +33,7 @@ public class AccessControllerDispatcher implements Dispatcher {
 	private final ComponentClassResolver resolver;
 	private final ComponentSource componentSource;
 
-	public AccessControllerDispatcher(ApplicationStateManager asm,
+	public AccessControllerDispatcher(ApplicationStateManager asm, // NO_UCD
 			ComponentClassResolver resolver, ComponentSource componentSource) {
 		this.asm = asm;
 		this.resolver = resolver;

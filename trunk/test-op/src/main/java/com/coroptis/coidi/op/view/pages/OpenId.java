@@ -22,7 +22,7 @@ import com.coroptis.coidi.op.view.utils.TextResponse;
  * @author jan
  * 
  */
-public class OpenId {
+public class OpenId { // NO_UCD
 
 	@Inject
 	private Logger logger;

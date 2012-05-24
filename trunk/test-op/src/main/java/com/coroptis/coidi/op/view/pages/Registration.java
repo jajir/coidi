@@ -20,7 +20,7 @@ import com.coroptis.coidi.op.view.utils.UserSession;
  * 
  */
 @AccessOnlyForUnsigned
-public class Registration {
+public class Registration { // NO_UCD
 
 	@Inject
 	private UserService userService;
