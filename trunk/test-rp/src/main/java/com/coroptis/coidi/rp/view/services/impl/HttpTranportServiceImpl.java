@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.rp.view.services.HttpService;
 import com.coroptis.coidi.rp.view.services.HttpTransportService;
+import com.google.common.base.Preconditions;
 
 public class HttpTranportServiceImpl implements HttpTransportService {
 
@@ -24,7 +25,10 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 	@Inject
 	private HttpService httpService;
 
-	public Map<String, String> readPort(String url, Map<String, String> map) {
+	@Override
+	public Map<String, String> doPost(final String url,
+			final Map<String, String> map) {
+		Preconditions.checkNotNull(url, "URL");
 		try {
 			HttpPost post = new HttpPost(url);
 			post.getParams().setBooleanParameter(
@@ -33,8 +37,7 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 					"UTF-8"));
 			HttpResponse httpResponse = httpService.getHttpClient().execute(
 					post);
-			String resp;
-			resp = EntityUtils.toString(httpResponse.getEntity());
+			String resp = EntityUtils.toString(httpResponse.getEntity());
 			logger.debug("response: " + resp);
 			return httpService.convertToMap(resp);
 		} catch (ParseException e) {

@@ -9,6 +9,6 @@ public interface StatelessModeNonceService {
 
 	StatelessModeNonce getByNonce(String noce);
 
-	Boolean verifyCheckAuthenticationRequest(
+	Boolean isValidCheckAuthenticationRequest(
 			final CheckAuthenticationRequest request);
 }

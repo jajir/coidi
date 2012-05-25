@@ -42,8 +42,8 @@ public class OpenId { // NO_UCD
 			Map<String, String> map = new HashMap<String, String>();
 			for (String key : request.getRequest().getParameterNames()) {
 				map.put(key, request.getRequest().getParameter(key));
-				logger.debug("adding " + key + ", "
-						+ request.getRequest().getParameter(key));
+				logger.debug("adding '" + key + "', '"
+						+ request.getRequest().getParameter(key) + "'");
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
 			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher

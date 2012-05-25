@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface HttpTransportService {
 
-	Map<String, String> readPort(String url, Map<String, String> map);
+	Map<String, String> doPost(String url, Map<String, String> map);
 	
 }

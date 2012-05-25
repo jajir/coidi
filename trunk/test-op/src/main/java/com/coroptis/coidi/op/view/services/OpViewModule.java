@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.view.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.IdentityServiceImpl;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherAssociation;
+import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherCheckAuthentication;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.view.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.view.services.impl.OpenidDispatcherAuthenticationImmediate;
@@ -103,6 +104,7 @@ public class OpViewModule {// NO_UCD
 			@Autobuild OpenIdDispatcherChecker openIdDispatcherChecker,
 			@Autobuild OpenidDispatcherAuthenticationImmediate openidDispatcherAuthenticationImmediate,
 			@Autobuild OpenidDispatcherAuthenticationSetup openidDispatcherAuthenticationSetup,
+			@Autobuild OpenIdDispatcherCheckAuthentication openIdDispatcherCheckAuthentication,
 			@Autobuild OpenIdDispatcherAssociation openIdDispatcherAssociation,
 			@Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
 		configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
@@ -112,6 +114,8 @@ public class OpViewModule {// NO_UCD
 				openidDispatcherAuthenticationSetup);
 		configuration.add("openIdDispatcherAssociation",
 				openIdDispatcherAssociation);
+		configuration.add("openIdDispatcherCheckAuthentication",
+				openIdDispatcherCheckAuthentication);
 		configuration.add("openIdDispatcherTerminator",
 				openIdDispatcherTerminator);
 	}
