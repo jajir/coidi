@@ -83,9 +83,12 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 						.getSignature());
 				checkAuthenticationRequest.setSigned(authenticationResponse
 						.getSigned());
+				logger.debug("check authentication msg: "
+						+ checkAuthenticationRequest);
+
 				// post it to server
 				CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
-						httpTransportService.readPort(
+						httpTransportService.doPost(
 								authenticationResponse.getOpEndpoint(),
 								checkAuthenticationRequest.getMap()));
 				if (response2.getIsValid()) {

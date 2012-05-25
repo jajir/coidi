@@ -1,6 +1,5 @@
 package com.coroptis.coidi.op.view.dao.impl;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -13,7 +12,6 @@ public class StatelessModeNonceDaoImpl implements StatelessModeNonceDao {
 	@Inject
 	private Session session;
 
-	@CommitAfter
 	@Override
 	public void save(StatelessModeNonce statelessModeNonce) {
 		session.save(statelessModeNonce);

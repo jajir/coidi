@@ -2,6 +2,8 @@ package com.coroptis.coidi.core.message;
 
 import java.util.Map;
 
+import com.google.common.base.Objects;
+
 public class CheckAuthenticationRequest extends AbstractOpenIdRequest {
 
 	public final static String MODE_CHECK_AUTHENTICATION = "check_authentication";
@@ -26,6 +28,17 @@ public class CheckAuthenticationRequest extends AbstractOpenIdRequest {
 		setUrl(false);
 	}
 
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(CheckAuthenticationRequest.class)
+				.add(MODE, getMode()).add(IDENTITY, getIdentity())
+				.add(INVALIDATE_HANDLE, getInvalidateHandle())
+				.add(NONCE, getNonce()).add(RETURN_TO, getReturnTo())
+				.add(SIG, getSignature()).add(SIGNED, getSigned())
+				.add(OPENID_NS, getNameSpace()).toString();
+	}
+
+	@Override
 	public Map<String, String> getMap() {
 		return super.getMap();
 	}

@@ -57,7 +57,7 @@ public class AssociationServiseImpl implements AssociationServise {
 		logger.debug("creating association request: " + associationRequest);
 
 		AssociationResponse associationResponse = new AssociationResponse(
-				httpTransportService.readPort(opEndpoint,
+				httpTransportService.doPost(opEndpoint,
 						associationRequest.getMap()));
 		AssociationBean association = new AssociationBean();
 		association.setAssocHandle(associationResponse.getAssocHandle());

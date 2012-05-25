@@ -1,9 +1,7 @@
 package com.coroptis.coidi.core.message;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
@@ -56,11 +54,7 @@ public class AssociationRequest extends AbstractOpenIdRequest {
 	 * http-client which is not part of this module.
 	 */
 	public Map<String, String> getMap() {
-		Map<String, String> out = new HashMap<String, String>();
-		for (Entry<String, String> entry : super.getMap().entrySet()) {
-			out.put(OPENID + entry.getKey(), entry.getValue());
-		}
-		return out;
+		return super.getMap();
 	}
 
 	/**

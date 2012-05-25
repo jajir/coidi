@@ -44,8 +44,8 @@ public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
 				logger.info("Invalid nonce '" + request.getNonce() + "'");
 				return response;
 			}
-			if (statelessModeNonceService
-					.verifyCheckAuthenticationRequest(request)) {
+			if (!statelessModeNonceService
+					.isValidCheckAuthenticationRequest(request)) {
 				response.setIsValid(false);
 				return response;
 			}

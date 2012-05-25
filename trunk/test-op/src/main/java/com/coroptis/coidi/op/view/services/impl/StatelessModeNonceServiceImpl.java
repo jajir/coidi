@@ -12,6 +12,7 @@ import com.coroptis.coidi.op.view.dao.StatelessModeNonceDao;
 import com.coroptis.coidi.op.view.entities.StatelessModeNonce;
 import com.coroptis.coidi.op.view.services.CryptoService;
 import com.coroptis.coidi.op.view.services.StatelessModeNonceService;
+import com.google.common.base.Preconditions;
 
 public class StatelessModeNonceServiceImpl implements StatelessModeNonceService {
 
@@ -31,8 +32,8 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 
 	private final AssociationType statelesModeAssociationType;
 
+	// NO_UCD
 	public StatelessModeNonceServiceImpl(
-			// NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
 		this.logger = logger;
@@ -59,9 +60,12 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 	}
 
 	@Override
-	public Boolean verifyCheckAuthenticationRequest(
+	public Boolean isValidCheckAuthenticationRequest(
 			final CheckAuthenticationRequest request) {
 		StatelessModeNonce statelessModeNonce = getByNonce(request.getNonce());
+		Preconditions.checkNotNull(statelessModeNonce,
+				"nonce '" + request.getNonce()
+						+ "' wasn't fourn during sateles authentication");
 		String signature = signingService.sign(request,
 				statelessModeNonce.getMacKey());
 		if (signature.equals(request.getSignature())) {
