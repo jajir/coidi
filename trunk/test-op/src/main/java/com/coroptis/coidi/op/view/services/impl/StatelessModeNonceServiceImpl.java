@@ -33,7 +33,6 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 	private final AssociationType statelesModeAssociationType;
 
 	public StatelessModeNonceServiceImpl(
-			// NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
 		this.logger = logger;

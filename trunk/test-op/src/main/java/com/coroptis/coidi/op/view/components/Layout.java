@@ -10,7 +10,7 @@ import com.coroptis.coidi.op.view.pages.Index;
 import com.coroptis.coidi.op.view.utils.UserSession;
 
 @Import(stylesheet = "context:css/layout.css")
-public class Layout {
+public class Layout { // NO_UCD
 
 	@SuppressWarnings("unused")
 	@Property
