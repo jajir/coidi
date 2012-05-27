@@ -6,7 +6,7 @@
 		<artifactId>coidi</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>rp</artifactId>
+	<artifactId>Relaying part library</artifactId>
 	<packaging>jar</packaging>
 	<name>Implementation of OpenID</name>
 	<properties>

@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>test-op</artifactId>
 	<packaging>war</packaging>
-	<name>Implementation of OpenID</name>
+	<name>Testing OpenId provider (OP)</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
