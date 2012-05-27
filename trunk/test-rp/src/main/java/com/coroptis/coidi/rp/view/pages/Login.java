@@ -9,12 +9,12 @@ import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.view.services.AssociationServise;
 import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.view.services.RpService;
 import com.coroptis.coidi.rp.view.services.impl.DiscoveryResult;
 import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
 
@@ -50,6 +50,9 @@ public class Login {
 	@Property
 	private String mode;
 
+	@Inject
+	private RpService rpService;
+
 	public void onActivate() {
 		associationType = AssociationType.HMAC_SHA1;
 		sessionType = SessionType.DH_SHA1;
@@ -63,25 +66,16 @@ public class Login {
 		DiscoveryResult discoveryResult = discoveryProcessor
 				.dicovery(userSuppliedId);
 
-		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
 		if (statelessMode) {
-			// no association handle
+			return new URL(rpService.authentication(discoveryResult,
+					sessionType, mode, userSuppliedId, null));
 		} else {
 			association = associationServise
 					.generateAssociation(discoveryResult.getEndPoint(),
 							sessionType, associationType);
-			authenticationRequest.setAssocHandle(association.getAssocHandle());
+			return new URL(rpService.authentication(discoveryResult,
+					sessionType, mode, userSuppliedId, association));
 		}
-		authenticationRequest.setIdentity(userSuppliedId);
-		authenticationRequest.setMode(mode);
-		// authenticationRequest.setMode("checkid_setup");
-		// authenticationRequest.setMode("checkid_immediate");
-		authenticationRequest.setRealm("not in use");
-		authenticationRequest.setReturnTo("http://localhost:8081/");
-		authenticationRequest.put("go_to", discoveryResult.getEndPoint());
-		URL redirectTo = new URL(authenticationRequest.getMessage());
-		logger.debug("url: " + redirectTo);
-		return redirectTo;
 	}
 
 	public Boolean getShowOptions() {

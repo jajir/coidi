@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
@@ -40,7 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final AssociationType statelesModeAssociationType;
 
-	public AuthenticationServiceImpl(
+	public AuthenticationServiceImpl( // NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
 		statelesModeAssociationType = AssociationType.convert(assocTypeStr);
@@ -74,19 +73,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		response.setOpEndpoint(opServer + "openid");
 		if (authenticationRequest.getAssocHandle() == null) {
 			// state less mode
-			StatelessModeNonce statelessModeNonce = statelessModeNonceService
-					.createStatelessModeNonce(response.getNonce());
-			response.setSigned("identity,nonce,return_to");
-			response.setSignature(signingService
-					.sign(response, statelessModeNonce.getMacKey(),
-							statelesModeAssociationType));
+			signInStatelessMode(response);
 		} else {
 			Association association = associationService
 					.getByAssocHandle(authenticationRequest.getAssocHandle());
 			if (association == null) {
-				return new ErrorResponse(false, "Invalid assoc handle '"
+				logger.info("Invalid assoc handle '"
 						+ authenticationRequest.getAssocHandle()
-						+ "', associaction wasn't associated.");
+						+ "', let's try to response in stateless mode.");
+				signInStatelessMode(response);
+				response.setInvalidateHandle(authenticationRequest
+						.getAssocHandle());
 			}
 			response.setAssocHandle(authenticationRequest.getAssocHandle());
 			response.setSigned("assoc_handle,identity,nonce,return_to");
@@ -94,5 +91,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		logger.debug("authentication response: " + response.getMessage());
 		return response;
+	}
+
+	private void signInStatelessMode(final AuthenticationResponse response) {
+		StatelessModeNonce statelessModeNonce = statelessModeNonceService
+				.createStatelessModeNonce(response.getNonce());
+		response.setSigned("identity,nonce,return_to");
+		response.setSignature(signingService.sign(response,
+				statelessModeNonce.getMacKey(), statelesModeAssociationType));
 	}
 }

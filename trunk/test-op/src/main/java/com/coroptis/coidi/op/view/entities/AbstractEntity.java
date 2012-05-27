@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.Hibernate;
 
-public abstract class AbstractEntity<T extends AbstractEntity<T>> {
+abstract class AbstractEntity<T extends AbstractEntity<T>> {
 
 	/**
 	 * Default.
