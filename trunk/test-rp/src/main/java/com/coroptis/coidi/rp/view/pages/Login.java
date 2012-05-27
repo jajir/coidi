@@ -47,6 +47,9 @@ public class Login {
 	@Property
 	private boolean statelessMode;
 
+	@Property
+	private String mode;
+
 	public void onActivate() {
 		associationType = AssociationType.HMAC_SHA1;
 		sessionType = SessionType.DH_SHA1;
@@ -55,6 +58,7 @@ public class Login {
 	URL onSuccess() throws MalformedURLException {
 		logger.debug("association type: " + associationType);
 		logger.debug("session type    : " + sessionType);
+		logger.debug("mode            : " + mode);
 
 		DiscoveryResult discoveryResult = discoveryProcessor
 				.dicovery(userSuppliedId);
@@ -69,7 +73,8 @@ public class Login {
 			authenticationRequest.setAssocHandle(association.getAssocHandle());
 		}
 		authenticationRequest.setIdentity(userSuppliedId);
-		authenticationRequest.setMode("checkid_setup");
+		authenticationRequest.setMode(mode);
+		// authenticationRequest.setMode("checkid_setup");
 		// authenticationRequest.setMode("checkid_immediate");
 		authenticationRequest.setRealm("not in use");
 		authenticationRequest.setReturnTo("http://localhost:8081/");

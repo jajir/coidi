@@ -3,6 +3,7 @@ package com.coroptis.coidi.core.services;
 import java.math.BigInteger;
 
 import com.coroptis.coidi.core.util.KeyPair;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public interface CryptographyService {
@@ -18,11 +19,11 @@ public interface CryptographyService {
 
 	public static final BigInteger DEFAULT_GENERATOR = BigInteger.valueOf(2);
 
-	byte[] hmacSha1(byte[] key, byte[] text);
+	byte[] hmacSha1(byte[] key, byte[] text,
+			final AssociationType associationType);
 
 	byte[] encryptSecret(KeyPair keyPair, BigInteger dhConsumerPublic,
-			byte[] macKey,
-			SessionType sessionType);
+			byte[] macKey, SessionType sessionType);
 
 	byte[] computeDigest(final byte[] text, final SessionType sessionType);
 

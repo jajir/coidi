@@ -16,6 +16,12 @@
 			<t:select t:id="sessionType" />
 			<br />
 		</t:formfragment>
+ 		<t:radiogroup t:id="mode">
+ 			<t:label for="setup"/>
+			<t:radio t:id="setup" value="literal:checkid_setup"/>
+ 			<t:label for="immediate"/>
+			<t:radio t:id="immediate" value="literal:checkid_immediate"/>
+        </t:radiogroup>		
 		<t:submit value="Login"/>
 		Testing identities
 		<ul>

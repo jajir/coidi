@@ -11,14 +11,29 @@ public interface Association {
 	 * 
 	 */
 	public static enum AssociationType {
-		HMAC_SHA1("HMAC-SHA1", 20), HMAC_SHA256("HMAC-SHA256", 32);
+		HMAC_SHA1("HMAC-SHA1", "HmacSHA1", 20), HMAC_SHA256("HMAC-SHA256",
+				"HmacSHA256", 32);
 
+		/**
+		 * Open id name. It's identification from open id specification.
+		 */
 		private final String name;
 
+		/**
+		 * Name of algorithm in Java word in JCE.
+		 */
+		private final String algorithmName;
+
+		/**
+		 * Length of digest in bytes computed with defined algorithm from
+		 * message.
+		 */
 		private final Integer sectetLength;
 
-		private AssociationType(final String name, final Integer sectetLength) {
+		private AssociationType(final String name, final String algorithmName,
+				final Integer sectetLength) {
 			this.name = name;
+			this.algorithmName = algorithmName;
 			this.sectetLength = sectetLength;
 		}
 
@@ -43,6 +58,13 @@ public interface Association {
 		 */
 		public Integer getSectetLength() {
 			return sectetLength;
+		}
+
+		/**
+		 * @return the algorithmName
+		 */
+		public String getAlgorithmName() {
+			return algorithmName;
 		}
 
 	}

@@ -32,8 +32,8 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 
 	private final AssociationType statelesModeAssociationType;
 
-	// NO_UCD
 	public StatelessModeNonceServiceImpl(
+			// NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
 		this.logger = logger;
@@ -67,7 +67,7 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 				"nonce '" + request.getNonce()
 						+ "' wasn't fourn during sateles authentication");
 		String signature = signingService.sign(request,
-				statelessModeNonce.getMacKey());
+				statelessModeNonce.getMacKey(), statelesModeAssociationType);
 		if (signature.equals(request.getSignature())) {
 			return true;
 		} else {
