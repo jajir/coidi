@@ -12,6 +12,7 @@ import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
 
 public class SigningServiceImpl implements SigningService {
 
@@ -35,22 +36,23 @@ public class SigningServiceImpl implements SigningService {
 		try {
 			byte[] b = cryptoService.hmacSha1(
 					convertorService.convertToBytes(association.getMacKey()),
-					toSign.getBytes("UTF-8"));
+					toSign.getBytes("UTF-8"), association.getAssociationType());
 			return convertorService.convertToString(b);
 		} catch (UnsupportedEncodingException e) {
 			logger.error(e.getMessage(), e);
 			throw new CoidiException(e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
-	public String sign(final AbstractMessage response, final String macKey) {
+	public String sign(final AbstractMessage response, final String macKey,
+			final AssociationType associationType) {
 		String toSign = messageService
 				.extractStringForSign(response, "openid.");
 		try {
 			byte[] b = cryptoService.hmacSha1(
 					convertorService.convertToBytes(macKey),
-					toSign.getBytes("UTF-8"));
+					toSign.getBytes("UTF-8"), associationType);
 			return convertorService.convertToString(b);
 		} catch (UnsupportedEncodingException e) {
 			logger.error(e.getMessage(), e);

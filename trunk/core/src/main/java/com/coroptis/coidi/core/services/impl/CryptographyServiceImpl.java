@@ -16,6 +16,7 @@ import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.google.common.base.Preconditions;
 
@@ -28,9 +29,11 @@ public class CryptographyServiceImpl implements CryptographyService {
 	private CryptoSessionService cryptoSessionService;
 
 	@Override
-	public byte[] hmacSha1(final byte[] key, final byte[] text) {
+	public byte[] hmacSha1(final byte[] key, final byte[] text,
+			final AssociationType associationType) {
 		try {
-			SecretKey sk = new SecretKeySpec(key, "HMACSHA1");
+			SecretKey sk = new SecretKeySpec(key,
+					associationType.getAlgorithmName());
 			Mac m = Mac.getInstance(sk.getAlgorithm());
 			m.init(sk);
 			return m.doFinal(text);

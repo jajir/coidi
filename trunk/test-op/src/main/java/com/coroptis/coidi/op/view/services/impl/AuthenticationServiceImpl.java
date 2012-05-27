@@ -11,6 +11,7 @@ import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.view.entities.StatelessModeNonce;
 import com.coroptis.coidi.op.view.services.AssociationService;
 import com.coroptis.coidi.op.view.services.AuthenticationService;
@@ -19,8 +20,7 @@ import com.google.common.base.Preconditions;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-	@Inject
-	private Logger logger;
+	private final Logger logger;
 
 	@Inject
 	private NonceService nonceService;
@@ -37,6 +37,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Inject
 	@Symbol("op.server")
 	private String opServer;
+
+	private final AssociationType statelesModeAssociationType;
+
+	public AuthenticationServiceImpl(
+			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
+			final Logger logger) {
+		statelesModeAssociationType = AssociationType.convert(assocTypeStr);
+		this.logger = logger;
+		logger.debug("stateless mode association type: "
+				+ statelesModeAssociationType);
+	}
 
 	@Override
 	public boolean isAuthenticationRequest(
@@ -66,8 +77,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			StatelessModeNonce statelessModeNonce = statelessModeNonceService
 					.createStatelessModeNonce(response.getNonce());
 			response.setSigned("identity,nonce,return_to");
-			response.setSignature(signingService.sign(response,
-					statelessModeNonce.getMacKey()));
+			response.setSignature(signingService
+					.sign(response, statelessModeNonce.getMacKey(),
+							statelesModeAssociationType));
 		} else {
 			Association association = associationService
 					.getByAssocHandle(authenticationRequest.getAssocHandle());
