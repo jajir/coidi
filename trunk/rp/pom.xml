@@ -6,9 +6,9 @@
 		<artifactId>coidi</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>Relaying part library</artifactId>
+	<artifactId>rp</artifactId>
 	<packaging>jar</packaging>
-	<name>Implementation of OpenID</name>
+	<name>Relaying party library</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
