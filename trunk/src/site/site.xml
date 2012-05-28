@@ -26,6 +26,7 @@
 			<item name="Introduction" href="./introduction.html" />
 			<item name="Release methodology" href="./release.html" />
 			<item name="XRDS example" href="./xrds.html" />
+			<item name="Project structure" href="./project.html" />
 		</menu>
 		
 		<menu ref="modules" />

@@ -2,9 +2,9 @@
  Introduction
  ----
 
-Koid - introduction
+Coidi - introduction
  
-* What is this Koid?
+* What is this Coidi?
  
  It's implementation of OpenID protocol. It could be user as base component
  for more complex authentication or authorization systems.
