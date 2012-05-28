@@ -1,0 +1,21 @@
+ ----
+ Project structure
+ ----
+
+Project structure
+
+ Project is composed from few hierarchically organized modules.
+ 
+[modules.png] Modules hierarchy
+
+ * Core - functionality used in OP and RP 
+ 
+ * OpenID Provider - module that allows to create OpenID provider
+ 
+ * Relaying party - module providing relaying party functionality
+ 
+ * Testing OP - example OpenID provider based on OP library
+ 
+ * Testing RP - testing integration of Relaying party library into application
+ 
+[]
