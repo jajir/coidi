@@ -1,0 +1,17 @@
+ ----
+ Introduction
+ ----
+
+Single Sign On - Introduction
+
+* User perspective
+ 
+[overview-without-SSO.png] user interact with applications without SSO
+
+[overview-with-SSO.png] user interact with applications with SSO
+
+* Application perspective
+
+[app-without-sso.png] application structure without SSO
+
+[app-with-sso.png] application structure with SSO

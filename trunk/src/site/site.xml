@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="Koid">
+<project name="Coidi">
 	<bannerLeft>
-		<name>Koid</name>
+		<name>Coidi</name>
 		<src>./ljhdasjo.png</src>
-		<href>http://codasaree/</href>
+		<href>http://coidi.sourceforge.net/</href>
 	</bannerLeft>
 
 	<publishDate format="dd MMM yyyy" />
@@ -18,15 +18,17 @@
 	
 	<body>
 		<links>
-			<item name="Wikipedia" href="httdasdasdaee" />
+			<item name="Coidi at Souceforge" href="https://sourceforge.net/projects/coidi/" />
 		</links>
-
-		<menu name="Koid">
-			<item name="Introduction" href="index.html" />
-			<item name="release methodology" href="release.html" />
-			<item name="XRDS" href="xrds.html" />
+		
+		<menu name="Coidi">
+			<item name="Index" href="./index.html" />
+			<item name="Introduction" href="./introduction.html" />
+			<item name="Release methodology" href="./release.html" />
+			<item name="XRDS example" href="./xrds.html" />
 		</menu>
-
+		
+		<menu ref="modules" />
 		<menu ref="reports" />
 
 	</body>
