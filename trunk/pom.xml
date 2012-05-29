@@ -28,6 +28,7 @@
 		<module>test-rp</module>
 		<module>test-op</module>
 		<module>dist</module>
+		<module>test</module>
 	</modules>
 	<dependencies>
 	</dependencies>

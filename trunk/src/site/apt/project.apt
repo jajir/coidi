@@ -4,6 +4,16 @@
 
 Project structure
 
+ Project structure have two point of view from maven module:
+ 
+ * maven modules perspective
+ 
+ * final packages perspective
+ 
+[]
+
+* Project modules structure 
+
  Project is composed from few hierarchically organized modules.
  
 [modules.png] Modules hierarchy
@@ -18,4 +28,15 @@ Project structure
  
  * Testing RP - testing integration of Relaying party library into application
  
+ * Testing - testing library that simplify test for all modules
+ 
+ * Distribution package - this package is responsible for creating final packages including proper files and documentation 
+ 
 []
+
+* Project packages
+
+[packaging.png] Final project packages
+
+ All packages contains core module.
+ Library for OpendID provider contains core. And OP itself is included into testing OP package.
