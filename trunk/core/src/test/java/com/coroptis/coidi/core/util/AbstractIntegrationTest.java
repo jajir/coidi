@@ -12,9 +12,9 @@ public abstract class AbstractIntegrationTest extends TestCase {
 	protected final static Logger logger = Logger
 			.getLogger(AbstractIntegrationTest.class);
 
-	protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.conf";
+	protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.core";
 
-	protected final static String T5_APPLICATION_NAME = "Conf";
+	protected final static String T5_APPLICATION_NAME = "Core";
 
 	protected final static String T5_WEBAPP_BASE = "src/main/webapp";
 

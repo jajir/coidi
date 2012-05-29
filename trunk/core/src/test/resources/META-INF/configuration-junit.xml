@@ -3,5 +3,6 @@
 		<property name="name">George</property>
 		<property name="surname">Valentine</property>
 		<property name="favorite.color">black</property>
+		<property name="age">32</property>
 	</test>
 </configuration>

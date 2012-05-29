@@ -1,4 +1,6 @@
-package com.coroptis.coidi.core.message;
+package com.coroptis.coidi.core.junit.message;
+
+import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 
 import junit.framework.TestCase;
 
