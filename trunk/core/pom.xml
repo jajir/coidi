@@ -44,15 +44,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-test</artifactId>
-			<version>${t5.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymockclassextension</artifactId>
-			<version>${easymock.version}</version>
+			<groupId>cz.coroptis.coidi</groupId>
+			<artifactId>coidi-test-support</artifactId>
+			<version>${parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

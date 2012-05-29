@@ -1,4 +1,6 @@
-package com.coroptis.coidi.core.message;
+package com.coroptis.coidi.core.junit.message;
+
+import com.coroptis.coidi.core.message.AssociationRequest;
 
 import junit.framework.TestCase;
 

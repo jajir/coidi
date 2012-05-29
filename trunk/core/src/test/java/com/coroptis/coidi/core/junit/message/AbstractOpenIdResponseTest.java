@@ -1,7 +1,9 @@
-package com.coroptis.coidi.core.message;
+package com.coroptis.coidi.core.junit.message;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 
 import junit.framework.TestCase;
 
