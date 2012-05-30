@@ -2,13 +2,13 @@
 <project name="Coidi">
 	<bannerLeft>
 		<name>Coidi</name>
-		<src>./ljhdasjo.png</src>
+		<src>./maven-feather.png</src>
 		<href>http://coidi.sourceforge.net/</href>
 	</bannerLeft>
 
-	<publishDate format="dd MMM yyyy" />
+	<publishDate format="dd MMM yyyy" position="right" />
 
-	<version />
+	<version position="right" />
 
 	<skin>
 		<groupId>org.apache.tapestry</groupId>
@@ -16,21 +16,29 @@
 		<version>1.1</version>
 	</skin>
 	
+	<poweredBy>
+   		<logo name="Maven" href="http://maven.apache.org/" img="./maven-feather.png" />
+    	<logo name="Tapestry 5" href="http://tapestry.apache.org/" img="./tapestry.png" />
+	</poweredBy>
+	
 	<body>
-		<links>
-			<item name="Coidi at Souceforge" href="https://sourceforge.net/projects/coidi/" />
-		</links>
 		
+		<breadcrumbs>
+			<item name="Coidi at Souceforge" href="https://sourceforge.net/projects/coidi/" />
+			<item name="Documentation" href="http://coidi.sourceforge.net/"/>
+		</breadcrumbs>
+    		
 		<menu name="Coidi">
 			<item name="Index" href="./index.html" />
 			<item name="Introduction" href="./introduction.html" />
 			<item name="Release methodology" href="./release.html" />
 			<item name="XRDS example" href="./xrds.html" />
 			<item name="Project structure" href="./project.html" />
+			<item name="How to integrate" href="./integration.html" />
 		</menu>
 		
 		<menu ref="modules" />
+		
 		<menu ref="reports" />
-
 	</body>
 </project>
