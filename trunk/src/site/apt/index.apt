@@ -16,7 +16,15 @@ Coidi - introduction
  * Integration of OpenId into your application
  
  * Creating you own OpenID provider 
+
+** Auditorium
+
+ Who should use this documentation? 
+
+ * Technical people who wants to test or use OpenID
  
+ * Application architect to get information about OpenID integration 
+
 []
  
 [openid-role.png] Role of OpenID protocol.
