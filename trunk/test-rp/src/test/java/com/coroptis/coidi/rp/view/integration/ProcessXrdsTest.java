@@ -3,8 +3,8 @@ package com.coroptis.coidi.rp.view.integration;
 import java.io.File;
 import java.nio.charset.Charset;
 
+import com.coroptis.coidi.rp.services.XrdsService;
 import com.coroptis.coidi.rp.view.pages.AbstractIntegrationTest;
-import com.coroptis.coidi.rp.view.services.XrdsService;
 import com.google.common.io.Files;
 
 public class ProcessXrdsTest extends AbstractIntegrationTest {

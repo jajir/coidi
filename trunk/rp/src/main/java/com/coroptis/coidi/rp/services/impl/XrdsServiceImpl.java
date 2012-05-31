@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,8 +17,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.rp.view.services.XrdsService;
-import com.coroptis.coidi.rp.view.util.XrdsServiceProvider;
+import com.coroptis.coidi.rp.base.XrdsServiceProvider;
+import com.coroptis.coidi.rp.services.XrdsService;
 
 public class XrdsServiceImpl implements XrdsService {
 

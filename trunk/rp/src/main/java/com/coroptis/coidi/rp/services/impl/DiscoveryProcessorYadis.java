@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.io.IOException;
 
@@ -13,9 +13,10 @@ import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
-import com.coroptis.coidi.rp.view.services.HttpService;
-import com.coroptis.coidi.rp.view.services.XrdsService;
+import com.coroptis.coidi.rp.base.DiscoveryResult;
+import com.coroptis.coidi.rp.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.services.HttpService;
+import com.coroptis.coidi.rp.services.XrdsService;
 
 /**
  * Yadis.

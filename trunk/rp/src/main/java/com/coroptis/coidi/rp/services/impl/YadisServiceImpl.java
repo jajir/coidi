@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.rp.view.services.HttpService;
-import com.coroptis.coidi.rp.view.services.YadisService;
+import com.coroptis.coidi.rp.services.HttpService;
+import com.coroptis.coidi.rp.services.YadisService;
 
 public class YadisServiceImpl implements YadisService {
 

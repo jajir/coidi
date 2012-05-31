@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services;
+package com.coroptis.coidi.rp.services;
 
 public interface XrdsService {
 	

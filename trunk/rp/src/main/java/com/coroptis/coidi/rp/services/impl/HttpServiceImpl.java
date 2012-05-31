@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConfigurationService;
-import com.coroptis.coidi.rp.view.services.HttpService;
+import com.coroptis.coidi.rp.services.HttpService;
 import com.google.common.base.Preconditions;
 
 public class HttpServiceImpl implements HttpService {

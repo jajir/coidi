@@ -7,11 +7,11 @@ import org.apache.http.util.EntityUtils;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.view.pages.AbstractIntegrationTest;
 import com.coroptis.coidi.rp.view.pages.Normalizer;
-import com.coroptis.coidi.rp.view.services.AssociationServise;
-import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
-import com.coroptis.coidi.rp.view.services.HttpService;
 
 public class IntegrationTest extends AbstractIntegrationTest {
 

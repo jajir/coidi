@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
@@ -7,8 +7,8 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.rp.view.services.AuthenticationService;
-import com.coroptis.coidi.rp.view.services.NonceDao;
+import com.coroptis.coidi.rp.services.AuthenticationService;
+import com.coroptis.coidi.rp.services.NonceDao;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
