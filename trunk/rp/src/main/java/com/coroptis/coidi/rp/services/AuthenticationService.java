@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services;
+package com.coroptis.coidi.rp.services;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;

@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services;
+package com.coroptis.coidi.rp.services;
 
 /**
  * Nonce is string key that allows to assure replaying party that positive

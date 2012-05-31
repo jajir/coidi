@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.rp.view.services.AssociationServise;
-import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
-import com.coroptis.coidi.rp.view.services.RpService;
-import com.coroptis.coidi.rp.view.services.impl.DiscoveryResult;
+import com.coroptis.coidi.rp.base.DiscoveryResult;
+import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.services.RpService;
 import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
 
 @AccessOnlyForUnsigned

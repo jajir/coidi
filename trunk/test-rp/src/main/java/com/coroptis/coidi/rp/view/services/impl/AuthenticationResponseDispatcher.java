@@ -18,8 +18,8 @@ import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.rp.view.services.AuthenticationService;
-import com.coroptis.coidi.rp.view.services.HttpTransportService;
+import com.coroptis.coidi.rp.services.AuthenticationService;
+import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
 public class AuthenticationResponseDispatcher implements Dispatcher {

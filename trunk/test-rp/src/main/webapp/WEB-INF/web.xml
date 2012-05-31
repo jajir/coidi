@@ -31,6 +31,10 @@
     	<param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
     	<param-value>JSESSION_RP</param-value>
   	</context-param>
+	<context-param>
+		<param-name>additional.module.rp</param-name>
+		<param-value>com.coroptis.coidi.rp.services.RpModule</param-value>
+	</context-param>
 
 	<filter>
 		<filter-name>rpView</filter-name>

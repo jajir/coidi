@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.coroptis.coidi.rp.view.services.NonceDao;
+import com.coroptis.coidi.rp.services.NonceDao;
 
 /**
  * Simplest implementation based on {@link Set}.

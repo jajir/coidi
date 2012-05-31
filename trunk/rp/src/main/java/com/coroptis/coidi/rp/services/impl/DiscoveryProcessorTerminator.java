@@ -1,6 +1,7 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
-import com.coroptis.coidi.rp.view.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.base.DiscoveryResult;
+import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 
 public class DiscoveryProcessorTerminator implements DiscoveryProcessor {
 

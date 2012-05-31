@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.view.services.impl;
+package com.coroptis.coidi.rp.services.impl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +16,8 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationBean;
-import com.coroptis.coidi.rp.view.services.AssociationServise;
-import com.coroptis.coidi.rp.view.services.HttpTransportService;
+import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.google.common.base.Preconditions;
 
 public class AssociationServiseImpl implements AssociationServise {
