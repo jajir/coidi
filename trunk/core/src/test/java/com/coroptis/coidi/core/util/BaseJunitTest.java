@@ -10,7 +10,7 @@ import com.coroptis.coidi.test.AbstractJunitTest;
  * @author jan
  * 
  */
-public class BaseJunitTest extends AbstractJunitTest {
+public abstract class BaseJunitTest extends AbstractJunitTest {
 
 	protected Registry registry;
 

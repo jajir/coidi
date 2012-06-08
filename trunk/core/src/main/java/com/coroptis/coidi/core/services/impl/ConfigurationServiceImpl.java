@@ -9,11 +9,10 @@ import java.util.Properties;
 import org.apache.commons.digester.Digester;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.Resource;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.internal.util.ClasspathResource;
 import org.xml.sax.SAXException;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConfException;
 import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.util.Conf;
@@ -36,9 +35,20 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
 	private final String systemPropertyConfigurationDirectory;
 
-	public ConfigurationServiceImpl(
-			@Inject @Symbol(CONF_KEY_CONFIGURATION_DIRECTORY) final String systemPropertyConfigurationDirectory) {
-		this.systemPropertyConfigurationDirectory = systemPropertyConfigurationDirectory;
+	public ConfigurationServiceImpl() {
+		/**
+		 * This value can't be get through SymbolProvider, because there will be
+		 * recursion. Configuration service depends on symbol provide which
+		 * indirectly depends on this class.
+		 */
+		this.systemPropertyConfigurationDirectory = System
+				.getProperty(CONF_KEY_CONFIGURATION_DIRECTORY);
+		if (systemPropertyConfigurationDirectory == null) {
+			throw new CoidiException("system propety '"
+					+ CONF_KEY_CONFIGURATION_DIRECTORY + "' is null. "
+					+ "Application don't know where to find"
+					+ " directory with configuration.");
+		}
 	}
 
 	private Resource getConfigurationFileResource(final String configurationUrl) {
@@ -77,7 +87,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 		Digester digester = new Digester();
 		digester.addObjectCreate("configuration/" + configurationSection,
 				HashMap.class);
-		//TODO refactor it, add test
+		// TODO refactor it, add test
 		// call the put method on the top object on the digester stack
 		// passing the key attribute as the 0th parameterw
 		// and the element body text as the 1th parameter..
@@ -139,6 +149,13 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	@Override
 	public Resource getDefaultConfiguration() {
 		return getConfigurationFileResource(getDefaultConfigurationFile());
+	}
+
+	@Override
+	public Resource getConfiguration(String configurationName) {
+		String fileName = getConfigurationDirectory() + configurationName + "-"
+				+ getServerRole() + ".xml";
+		return getConfigurationFileResource(fileName);
 	}
 
 	@Override
