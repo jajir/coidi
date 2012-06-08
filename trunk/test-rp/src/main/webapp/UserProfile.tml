@@ -1,4 +1,6 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	<h3>Your identity</h3>
 	OpenID Identity: ${userSession.ssoIdentity}
+	<h3>Here should be some private content</h3>
 </html>

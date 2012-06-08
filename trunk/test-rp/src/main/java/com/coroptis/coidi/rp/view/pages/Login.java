@@ -3,9 +3,11 @@ package com.coroptis.coidi.rp.view.pages;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -53,19 +55,30 @@ public class Login {
 	@Inject
 	private RpService rpService;
 
+	@Component
+	private Form openId;
+
+	private DiscoveryResult discoveryResult;
+
 	public void onActivate() {
 		associationType = AssociationType.HMAC_SHA1;
 		sessionType = SessionType.DH_SHA1;
+		mode = "checkid_setup";
 	}
 
-	URL onSuccess() throws MalformedURLException {
+	void onValidateFromOpenId() {
 		logger.debug("association type: " + associationType);
 		logger.debug("session type    : " + sessionType);
 		logger.debug("mode            : " + mode);
 
-		DiscoveryResult discoveryResult = discoveryProcessor
-				.dicovery(userSuppliedId);
+		discoveryResult = discoveryProcessor.dicovery(userSuppliedId);
 
+		if (discoveryResult.getEndPoint() == null) {
+			openId.recordError("Discovery wasn't successfull, please check you id");
+		}
+	}
+
+	URL onSuccess() throws MalformedURLException {
 		if (statelessMode) {
 			return new URL(rpService.authentication(discoveryResult,
 					sessionType, mode, userSuppliedId, null));
