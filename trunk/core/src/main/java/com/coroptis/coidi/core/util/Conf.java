@@ -2,6 +2,7 @@ package com.coroptis.coidi.core.util;
 
 import java.io.File;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConfigurationService;
 
 /**
@@ -26,6 +27,10 @@ public class Conf {
 	 */
 	public static String getConfigurationDirectory(
 			final String systemPropertyConfigurationDirectory) {
+		if (systemPropertyConfigurationDirectory == null) {
+			throw new CoidiException(
+					"name of system property containing congiguration directory is null");
+		}
 		String confDir = System
 				.getProperty(systemPropertyConfigurationDirectory);
 		if (confDir == null || confDir.length() == 0) {

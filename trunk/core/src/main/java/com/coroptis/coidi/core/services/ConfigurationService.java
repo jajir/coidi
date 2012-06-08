@@ -60,6 +60,16 @@ public interface ConfigurationService {
 	Resource getDefaultConfiguration();
 
 	/**
+	 * Return configuration file called '<configurationName>-<server.role>.xml'.
+	 * 
+	 * @param configurationName
+	 *            required configuration name, name have to be usable as part of
+	 *            file name
+	 * @return application configuration file
+	 */
+	Resource getConfiguration(String configurationName);
+
+	/**
 	 * Creates {@link Properties}
 	 * 
 	 * @param configurationSection
@@ -70,6 +80,6 @@ public interface ConfigurationService {
 	Map<String, String> loadDefaultConfiguration(String configurationSection);
 
 	String getProperty(String key);
-	
+
 	Integer getPropertyInt(String key);
 }

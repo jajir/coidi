@@ -35,8 +35,7 @@ public class CoreModule {
 	private final static Logger logger = Logger.getLogger(CoreModule.class);
 
 	public static void bind(ServiceBinder binder) {
-		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class)
-				.eagerLoad();
+		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
 		binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId(
 				"appSymbolProvider");
 		binder.bind(MessageService.class, MessageServiceImpl.class);

@@ -50,7 +50,13 @@ public class ExtendedTapestryFilter extends TapestryFilter {
 	 * those normally located. This implementation returns an empty array.
 	 */
 	protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
-		logger.debug("modules force loading");
+		final String prop = context
+				.getInitParameter("system.property.configuration.directory");
+		if (prop == null) {
+			logger.warn("Web application context param 'system.property.configuration.directory' wasn't defined.");
+		} else {
+			System.setProperty("system.property.configuration.directory", prop);
+		}
 		try {
 			List<Class<?>> models = extract(context);
 			ModuleDef[] out = new ModuleDef[models.size() + 1];
