@@ -1,6 +1,6 @@
 <html
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	<div>
-		Go to <a href="http://localhost:8081/">OpenID relaying party</a>.
+		Go to <a href="http://localhost:8081/">Testing OpenID relaying party</a>.
 	</div>
 </html>

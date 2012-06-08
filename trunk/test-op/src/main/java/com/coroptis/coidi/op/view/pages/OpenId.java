@@ -12,7 +12,7 @@ import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
-import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.view.utils.TextResponse;
 
 /**

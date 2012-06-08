@@ -1,4 +1,5 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-    	<h1>name: ${user.name}</h1>
+    	<h3>Logged user details</h3>
+    	name: ${user.name}
 </html>
