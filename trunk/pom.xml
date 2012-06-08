@@ -17,6 +17,7 @@
 		<easymock.version>2.4</easymock.version>
 		<xml-apis.version>1.3.04</xml-apis.version>
 		<icu4j.version>3.6.1</icu4j.version>
+		<log4j.version>1.2.14</log4j.version>
 	</properties>
 	<description>Implementation of OpenID. Target is to create simple and easy to integrate implementation of OpenId  
 	</description>
