@@ -20,7 +20,7 @@ How to Integrate coidi to you application
 []
 
  For successful coidi impementation you should be familiar with 
- {{{http://tapestry.apache.org/}Tapestry 5}} mostly with {{{http://tapestry.apache.org/ioc.html}IoC}}.
+ {{{http://tapestry.apache.org/}Tapestry 5}}mostly with{{{http://tapestry.apache.org/ioc.html}IoC}}.
 
 * Relaying party
 
@@ -43,6 +43,11 @@ How to Integrate coidi to you application
  
 []
 
+*** UI changes
+
+ On Relaying party side have to be created new form for entering user'd identifiers.   
+
+*** 
  Simply says it's just place where are nonces stored for some limited time (usually 30 minutes).
  When you run you application as single node that you can store nonces in memory.
  This approach allows use nonces more that once when your application is restarted. In that case you can use bundled in memory nonce store.

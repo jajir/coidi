@@ -4,6 +4,13 @@
 
 XRDS
 
+* Discovery process 
+
+ It's process for Relaying Party that provide endpoint and service description.
+ Information about endpoint services are stored in XRDS document.  
+
+[yadis-discovery-rp.png] Relaying Party discovery process
+
 * Example of XRDS document 
 
 +----+
