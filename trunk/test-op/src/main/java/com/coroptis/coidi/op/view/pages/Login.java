@@ -12,10 +12,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.op.view.services.AuthenticationService;
-import com.coroptis.coidi.op.view.services.UserService;
+import com.coroptis.coidi.op.services.AuthenticationService;
+import com.coroptis.coidi.op.services.UserService;
+import com.coroptis.coidi.op.util.UserSession;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD

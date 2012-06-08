@@ -1,4 +1,11 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-	this is iandex page 
+	this is iandex page
+	<div>
+		Private user profiles:
+		<ul>
+			<li><t:pageLink page="userProfile" context="literal:karel">http://localhost:8080/userProfile/juan</t:pageLink></li>
+			<li><t:pageLink page="userProfile" context="literal:karel">http://localhost:8080/userProfile/karel</t:pageLink></li>
+		</ul>
+	</div>
 </html>

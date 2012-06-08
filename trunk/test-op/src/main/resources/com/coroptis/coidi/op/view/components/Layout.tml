@@ -6,16 +6,32 @@
        	<title>${title}</title>
     </head>
     <body>
-   		<h2><t:pageLink page="index">OpenID provider</t:pageLink></h2>
-    	<t:if test="userSession.logged">
-    		You are logged as: ${userSession.user.name}
-			<t:pageLink page="userProfile">User profile</t:pageLink>/<t:actionLink t:id="logout">Logout</t:actionLink>    			
-    		<p:else>
-				<t:pageLink page="login">Login</t:pageLink>	
-    		</p:else>
-    	</t:if>
-    	<h1>${title}</h1>
-    	<t:body />
-    	<t:footer />
+    	<div class="bg">
+	    	<div class="cp">
+	    		<div class="menu">
+			    	<t:if test="userSession.logged">
+			    		You are logged as: <t:pageLink page="userProfile">${userSession.user.name}</t:pageLink>
+						/ <t:actionLink t:id="logout">Logout</t:actionLink>    			
+			    		<p:else>
+							<t:pageLink page="login">Login</t:pageLink>	
+			    		</p:else>
+			    	</t:if>
+	    		</div>
+	    		<div class="logo">
+		   			<t:pageLink page="index">OpenID provider</t:pageLink>
+	    		</div>
+	    	</div>
+    	</div>
+    	<div class="cp">
+	    	<h1>${title}</h1>
+	    	<div class="body">
+		    	<t:body />
+	    	</div>
+    	</div>
+    	<div class="bg">
+	    	<div class="cp">
+		    	<t:footer />
+	    	</div>
+    	</div>
 	</body>
 </html>

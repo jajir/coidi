@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
-import com.coroptis.coidi.op.view.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.view.services.UserService;
-import com.coroptis.coidi.op.view.services.XrdsService;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.UserService;
+import com.coroptis.coidi.op.services.XrdsService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 
 public class StartupTest extends AbstractIntegrationDaoTest {

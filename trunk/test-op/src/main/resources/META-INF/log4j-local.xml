@@ -14,9 +14,15 @@
         <priority value="debug" />
 		<appender-ref ref="console"/>
     </category>
+ 	
+    <category name="com.mysql.jdbc">
+    	<param name="additivity" value="false" />
+        <priority value="debug" />
+		<appender-ref ref="console"/>
+    </category>
  
 	<root>
-		<param name="additivity" value="false" />
+		<param name="additivity" value="true" />
 		<priority value="info"/>
 		<appender-ref ref="console"/>
 	</root>

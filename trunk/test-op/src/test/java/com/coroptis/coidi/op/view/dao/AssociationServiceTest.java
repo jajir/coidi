@@ -4,8 +4,8 @@ import java.util.Date;
 
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.view.entities.AssociationImpl;
-import com.coroptis.coidi.op.view.services.AssociationService;
+import com.coroptis.coidi.op.entities.AssociationImpl;
+import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 
 public class AssociationServiceTest extends AbstractIntegrationDaoTest {
