@@ -1,31 +1,48 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-   	<t:form id="openId">
+   	<t:form t:id="openId" class="a-form">
    		<t:errors/>
-   		<t:label for="userSuppliedId"/>:
-		<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
-		<br />
-   		<t:label for="statelessMode"/>:
-		<t:checkbox t:id="statelessMode" t:mixins="triggerfragment" t:invert="true" fragment="stateModeOptions"/>
-		<br />
-		<t:formfragment t:id="stateModeOptions" visible="showOptions">
-	   		<t:label for="associationType"/>:
-			<t:select t:id="associationType" />
-			<br />
-	   		<t:label for="sessionType"/>:
-			<t:select t:id="sessionType" />
-			<br />
-		</t:formfragment>
+   		<div class="row">
+	   		<t:label for="userSuppliedId"/>
+			<t:textField t:id="userSuppliedId" t:validate="required,minlength=3" size="50" />
+   		</div>
+   		<div class="row">
+	   		<t:label for="statelessMode"/>
+			<t:checkbox t:id="statelessMode" t:mixins="triggerfragment" t:invert="true" fragment="stateModeOptions"/>
+   		</div>
+   		<div class="row">
+			<t:formfragment t:id="stateModeOptions" visible="showOptions">
+		   		<t:label for="associationType"/>
+				<t:select t:id="associationType" />
+				<br />
+		   		<t:label for="sessionType"/>
+				<t:select t:id="sessionType" />
+				<br />
+			</t:formfragment>
+   		</div>
  		<t:radiogroup t:id="mode">
- 			<t:label for="setup"/>
-			<t:radio t:id="setup" value="literal:checkid_setup"/>
- 			<t:label for="immediate"/>
-			<t:radio t:id="immediate" value="literal:checkid_immediate"/>
-        </t:radiogroup>		
-		<t:submit value="Login"/>
-		Testing identities
+   			<div class="row">
+	 			<t:label for="setup"/>
+				<t:radio t:id="setup" value="literal:checkid_setup"/>
+   			</div>
+   			<div class="row">
+	 			<t:label for="immediate"/>
+				<t:radio t:id="immediate" value="literal:checkid_immediate"/>
+	   		</div>
+        </t:radiogroup>
+   		<div class="row">
+   			<span class="label">
+				<t:pageLink page="index">Back</t:pageLink>
+   			</span>
+   			<t:submit value="Login"/>
+		</div>
+		<div>
+		<h3>Identities for testing</h3>
+		This identities could be used as 'User Supplied Id' for testing purposes
 		<ul>
-			<li>http://localhost:8080/user/juan</li>
+			<li>http://localhost:8080/user/juan  (qwe/qwe)</li>
+			<li>http://localhost:8080/user/kraken</li>
 		</ul>
+		</div>
    	</t:form>
 </html>

@@ -1,6 +1,17 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-	There will be description what you are looking at.
-	<t:pageLink page="login">Login</t:pageLink>	
-	<t:pageLink page="userProfile">User profile</t:pageLink>
+	<div>
+		Relaying party culd be some enterteinment web appication like chat that accept OpenID identities. 
+	</div>
+	<br />
+	<div>
+		You can <t:pageLink page="login">Sign in</t:pageLink>.
+		If you are already signed in than you'll be redirected back to this page.
+	</div>
+	<br />
+	<div>
+		Testing <t:pageLink page="userProfile">User profile</t:pageLink> required logged in user.
+		If you are not logged in than you'll be redirected to 'sign in' page.
+	</div>
+	<br />
 </html>
