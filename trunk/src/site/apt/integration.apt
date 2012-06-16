@@ -31,8 +31,10 @@ How to Integrate coidi to you application
 []
 
 ** Integration steps
+
+ * Changes in UI (required) - you should add new form for for entering user's OpenId identificators.
 	
- * changes in UI (required) - you should add new form for for entering user's OpenId identificators.
+ * Call OpenId relaying party functions
  
  * Persistent nonce store (optionally) - Nonces have to be stored for some limited time.
  In some cases nonces could hold just in application memory.
@@ -43,11 +45,25 @@ How to Integrate coidi to you application
  
 []
 
-*** UI changes
+ Clustered deployment structure of OpenID relying part:
+ 
+[appdeployment-rp-nonce.png] RP with implemented nonce store 
 
- On Relaying party side have to be created new form for entering user'd identifiers.   
+ In most cases is scheduler part of both nodes. 
 
-*** 
+** UI changes
+
+ On Relaying party side have to be created new form for entering user'd identifiers.
+ According to OpenId specification form field where user should enter his OpenID identification string should be called "openid_identifier".   
+ Then just "Submit" button is required.
+ After submitting user's identification should be passed to relaying party verification process.  
+
+** Call OpenId relaying party functions
+
+ 
+
+** Persistent nonce store
+ 
  Simply says it's just place where are nonces stored for some limited time (usually 30 minutes).
  When you run you application as single node that you can store nonces in memory.
  This approach allows use nonces more that once when your application is restarted. In that case you can use bundled in memory nonce store.
@@ -58,8 +74,6 @@ How to Integrate coidi to you application
  <com.coroptis.coidi.rp.services.NonceDao> interface from rp library.
  
  When you expect big load of uses and authentication requests than you should take care of removing of old nonces.
- 
-[appdeployment-rp-nonce.png] RP with implemented nonce store
  
  Nonce store could be implemented with any technology, for example:
  
