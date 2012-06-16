@@ -46,6 +46,10 @@
 					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -60,16 +64,10 @@
 			<version>${icu4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
-		<!-- <dependency> <groupId>xml-apis</groupId> <artifactId>xml-apis</artifactId> 
-			<version>${xml-apis.version}</version> <scope>compile</scope> </dependency> 
-			<dependency> <groupId>com.ibm.icu</groupId> <artifactId>icu4j</artifactId> 
-			<version>${icu4j.version}</version> <scope>compile</scope> </dependency> -->
-
 		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-core</artifactId>
-			<version>${t5.version}</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
 

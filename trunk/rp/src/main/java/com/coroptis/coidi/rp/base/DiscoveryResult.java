@@ -1,26 +1,38 @@
 package com.coroptis.coidi.rp.base;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class DiscoveryResult {
 
-	private String endPoint;
+	private final Set<XrdService> services = new HashSet<XrdService>();
 
-	public DiscoveryResult(final String endPoint) {
-		this.endPoint = endPoint;
+	public XrdService getPreferedService() {
+		XrdService out = null;
+		for (XrdService service : services) {
+			if (out == null) {
+				out = service;
+			} else if (out.getEffectivePriority() > service
+					.getEffectivePriority()) {
+				out = service;
+			}
+		}
+		return out;
 	}
 
 	/**
 	 * @return the endPoint
 	 */
 	public String getEndPoint() {
-		return endPoint;
+		return getPreferedService() == null ? null : getPreferedService()
+				.getUrl();
 	}
 
 	/**
-	 * @param endPoint
-	 *            the endPoint to set
+	 * @return the services
 	 */
-	public void setEndPoint(String endPoint) {
-		this.endPoint = endPoint;
+	public Set<XrdService> getServices() {
+		return services;
 	}
 
 }

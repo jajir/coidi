@@ -17,6 +17,7 @@ import com.coroptis.coidi.rp.services.impl.HttpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.HttpTranportServiceImpl;
 import com.coroptis.coidi.rp.services.impl.NonceDaoImpl;
 import com.coroptis.coidi.rp.services.impl.RpServiceImpl;
+import com.coroptis.coidi.rp.services.impl.XmlProcessingImpl;
 import com.coroptis.coidi.rp.services.impl.XrdsServiceImpl;
 import com.coroptis.coidi.rp.services.impl.YadisServiceImpl;
 
@@ -29,6 +30,7 @@ public class RpModule {
 		binder.bind(AssociationServise.class, AssociationServiseImpl.class);
 		binder.bind(NonceDao.class, NonceDaoImpl.class);
 		binder.bind(RpService.class, RpServiceImpl.class);
+		binder.bind(XmlProcessing.class, XmlProcessingImpl.class);
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
 		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
@@ -50,6 +52,25 @@ public class RpModule {
 		configuration.add("discoveryProcessorYadis", discoveryProcessorYadis);
 		configuration.add("discoveryProcessorTerminator",
 				discoveryProcessorTerminator);
+	}
+
+	public static AuthReq buildAuthReqChainProcessor(List<AuthReq> commands,
+			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+		return chainBuilder.build(AuthReq.class, commands);
+	}
+
+	public static void contributeAuthReqChainProcessor(
+			OrderedConfiguration<AuthReq> configuration,
+			@Autobuild AuthReqPreconditions authReqPreconditions,
+			@Autobuild AuthReqAttributeExchange authReqAttributeExchange,
+			@Autobuild AuthReqOpenId authReqOpenId,
+			@Autobuild AuthReqUiIcon auReqUiIcon,
+			@Autobuild AuthReqTerminator authReqTerminator) {
+		configuration.add("authReqPreconditions", authReqPreconditions);
+		configuration.add("authReqAttributeExchange", authReqAttributeExchange);
+		configuration.add("authReqOpenId", authReqOpenId);
+		configuration.add("auReqUiIcon", auReqUiIcon);
+		configuration.add("authReqTerminator", authReqTerminator);
 	}
 
 }

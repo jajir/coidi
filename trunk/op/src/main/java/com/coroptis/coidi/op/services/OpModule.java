@@ -48,6 +48,7 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
+import com.coroptis.coidi.op.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.services.impl.XrdsServiceImpl;
 import com.google.common.io.Files;
 
@@ -72,6 +73,7 @@ public class OpModule {// NO_UCD
 		binder.bind(IdentityService.class, IdentityServiceImpl.class);
 		binder.bind(AssociationService.class, AssociationServiceImpl.class);
 		binder.bind(CryptoService.class, CryptoServiceImpl.class);
+		binder.bind(UserService.class, UserServiceImpl.class);
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
 		binder.bind(StatelessModeNonceService.class,
@@ -134,12 +136,6 @@ public class OpModule {// NO_UCD
 				openIdDispatcherCheckAuthentication);
 		configuration.add("openIdDispatcherTerminator",
 				openIdDispatcherTerminator);
-	}
-
-	@Match("*Service")
-	public static void adviseServiceTransactions(
-			HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
-		advisor.addTransactionCommitAdvice(receiver);
 	}
 
 	@Match("*Dao")
