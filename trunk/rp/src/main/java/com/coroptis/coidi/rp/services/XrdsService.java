@@ -1,7 +1,9 @@
 package com.coroptis.coidi.rp.services;
 
+import com.coroptis.coidi.rp.base.DiscoveryResult;
+
 public interface XrdsService {
-	
-	String getEndpoint(String xrdsDocument);
-	
+
+	DiscoveryResult extractDiscoveryResult(String xrdsDocument);
+
 }

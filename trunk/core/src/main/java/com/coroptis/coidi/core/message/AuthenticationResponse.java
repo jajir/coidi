@@ -25,7 +25,6 @@ public class AuthenticationResponse extends AbstractOpenIdResponse {
 	public AuthenticationResponse(final Map<String, String> map) {
 		super(map);
 		setNameSpace(OPENID_NS_20);
-		setMode(MODE_ID_RES);
 		setUrl(true);
 	}
 

@@ -27,7 +27,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public Boolean verify(final AuthenticationResponse authenticationResponse,
 			final Association association) {
-		if (authenticationResponse.getMode().equals("id_res")) {
+		if (authenticationResponse.getMode() != null
+				&& authenticationResponse.getMode().equals("id_res")) {
 			if (!nonceService.verifyNonce(authenticationResponse.getNonce(),
 					NONCE_EXPIRATION_TIME_IN_MINUTES)) {
 				logger.info("nonce is expired. '"
@@ -46,6 +47,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				return false;
 			}
 			return true;
+		} else {
+			logger.debug("authentication response doesn't contains mode");
 		}
 		return false;
 	}

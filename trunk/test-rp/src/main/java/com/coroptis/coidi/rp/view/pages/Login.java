@@ -16,6 +16,7 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.services.RpService;
 import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
@@ -58,7 +59,7 @@ public class Login {
 	@Component
 	private Form openId;
 
-	private DiscoveryResult discoveryResult;
+	private String authenticationRequestUrl;
 
 	public void onActivate() {
 		associationType = AssociationType.HMAC_SHA1;
@@ -71,24 +72,29 @@ public class Login {
 		logger.debug("session type    : " + sessionType);
 		logger.debug("mode            : " + mode);
 
-		discoveryResult = discoveryProcessor.dicovery(userSuppliedId);
+		try {
+			DiscoveryResult discoveryResult = discoveryProcessor
+					.dicovery(userSuppliedId);
 
-		if (discoveryResult.getEndPoint() == null) {
-			openId.recordError("Discovery wasn't successfull, please check you id");
+			if (statelessMode) {
+				authenticationRequestUrl = rpService.authentication(
+						discoveryResult, sessionType, mode, userSuppliedId,
+						null);
+			} else {
+				association = associationServise.generateAssociation(
+						discoveryResult.getEndPoint(), sessionType,
+						associationType);
+				authenticationRequestUrl = rpService.authentication(
+						discoveryResult, sessionType, mode, userSuppliedId,
+						association);
+			}
+		} catch (AuthenticationProcessException e) {
+			openId.recordError(e.getMessage());
 		}
 	}
 
 	URL onSuccess() throws MalformedURLException {
-		if (statelessMode) {
-			return new URL(rpService.authentication(discoveryResult,
-					sessionType, mode, userSuppliedId, null));
-		} else {
-			association = associationServise
-					.generateAssociation(discoveryResult.getEndPoint(),
-							sessionType, associationType);
-			return new URL(rpService.authentication(discoveryResult,
-					sessionType, mode, userSuppliedId, association));
-		}
+		return new URL(authenticationRequestUrl);
 	}
 
 	public Boolean getShowOptions() {

@@ -18,6 +18,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
 import com.coroptis.coidi.core.services.CoreModule;
+import com.coroptis.coidi.test.MockIDatabaseConnection;
 import com.google.common.base.Preconditions;
 
 /**

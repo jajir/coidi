@@ -7,6 +7,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
+import com.coroptis.coidi.rp.services.AuthReq;
 import com.coroptis.coidi.rp.services.RpService;
 
 public class RpServiceImpl implements RpService {
@@ -14,6 +15,9 @@ public class RpServiceImpl implements RpService {
 	@Inject
 	private Logger logger;
 
+	@Inject
+	private AuthReq authReq;
+	
 	@Override
 	public String authentication(DiscoveryResult discoveryResult,
 			SessionType sessionType, String mode, String userSuppliedId,
@@ -26,9 +30,7 @@ public class RpServiceImpl implements RpService {
 		}
 		authenticationRequest.setIdentity(userSuppliedId);
 		authenticationRequest.setMode(mode);
-		authenticationRequest.setRealm("not in use");
-		authenticationRequest.setReturnTo("http://localhost:8081/");
-		authenticationRequest.put("go_to", discoveryResult.getEndPoint());
+		authReq.applyExtension(authenticationRequest, discoveryResult);
 		logger.debug("authentication: " + authenticationRequest.getMessage());
 		return authenticationRequest.getMessage();
 	}

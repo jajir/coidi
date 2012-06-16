@@ -35,6 +35,7 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 	@Inject
 	private XrdsService xrdsService;
 
+	
 	public DiscoveryResult dicovery(String userSuppliedId) {
 		try {
 			DefaultHttpClient httpClient = httpService.getHttpClient();
@@ -49,17 +50,17 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 				HttpResponse resp = httpClient.execute(httpget);
 				String body = EntityUtils.toString(resp.getEntity());
 				logger.debug(body);
-				String endpoint = xrdsService.getEndpoint(body);
-				logger.info("yadis resolving ... at '" + endpoint + "'");
-				return new DiscoveryResult(endpoint);
+				DiscoveryResult endpoint = xrdsService.extractDiscoveryResult(body);
+				logger.info("yadis resolving ... at '" + endpoint.getEndPoint() + "'");
+				return endpoint;
 			} else {
 				HttpGet httpget = new HttpGet(header.getValue());
 				httpget.setHeader("Accept", "application/xrds+xml");
 				HttpResponse resp = httpClient.execute(httpget);
 				String body = EntityUtils.toString(resp.getEntity());
-				String endpoint = xrdsService.getEndpoint(body);
-				logger.info("yadis resolving ... at '" + endpoint + "'");
-				return new DiscoveryResult(endpoint);
+				DiscoveryResult endpoint = xrdsService.extractDiscoveryResult(body);
+				logger.info("yadis resolving ... at '" + endpoint.getEndPoint() + "'");
+				return endpoint;
 			}
 		} catch (ClientProtocolException e) {
 			logger.error(e.getMessage(), e);
