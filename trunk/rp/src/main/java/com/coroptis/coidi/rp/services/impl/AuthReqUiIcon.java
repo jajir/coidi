@@ -1,8 +1,9 @@
-package com.coroptis.coidi.rp.services;
+package com.coroptis.coidi.rp.services.impl;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
+import com.coroptis.coidi.rp.services.AuthReq;
 
 /**
  * Useful for google federated login. Allows to show icon of login site.

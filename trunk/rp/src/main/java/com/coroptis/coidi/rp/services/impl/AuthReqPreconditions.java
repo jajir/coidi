@@ -1,4 +1,4 @@
-package com.coroptis.coidi.rp.services;
+package com.coroptis.coidi.rp.services.impl;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
+import com.coroptis.coidi.rp.services.AuthReq;
+import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 
 public class AuthReqPreconditions implements AuthReq {
 

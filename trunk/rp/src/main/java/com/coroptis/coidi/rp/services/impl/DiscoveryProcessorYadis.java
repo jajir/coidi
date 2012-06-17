@@ -12,11 +12,12 @@ import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
+import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.XrdsService;
+import com.google.common.base.Preconditions;
 
 /**
  * Yadis.
@@ -35,8 +36,9 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 	@Inject
 	private XrdsService xrdsService;
 
-	
 	public DiscoveryResult dicovery(String userSuppliedId) {
+		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
+		userSuppliedId = userSuppliedId.trim();
 		try {
 			DefaultHttpClient httpClient = httpService.getHttpClient();
 			HttpHead httpHead = new HttpHead(userSuppliedId);
@@ -50,24 +52,34 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 				HttpResponse resp = httpClient.execute(httpget);
 				String body = EntityUtils.toString(resp.getEntity());
 				logger.debug(body);
-				DiscoveryResult endpoint = xrdsService.extractDiscoveryResult(body);
-				logger.info("yadis resolving ... at '" + endpoint.getEndPoint() + "'");
+				DiscoveryResult endpoint = xrdsService
+						.extractDiscoveryResult(body);
+				logger.info("yadis resolving ... at '" + endpoint.getEndPoint()
+						+ "'");
 				return endpoint;
 			} else {
 				HttpGet httpget = new HttpGet(header.getValue());
 				httpget.setHeader("Accept", "application/xrds+xml");
 				HttpResponse resp = httpClient.execute(httpget);
 				String body = EntityUtils.toString(resp.getEntity());
-				DiscoveryResult endpoint = xrdsService.extractDiscoveryResult(body);
-				logger.info("yadis resolving ... at '" + endpoint.getEndPoint() + "'");
+				DiscoveryResult endpoint = xrdsService
+						.extractDiscoveryResult(body);
+				logger.info("yadis resolving ... at '" + endpoint.getEndPoint()
+						+ "'");
 				return endpoint;
 			}
+		} catch (IllegalArgumentException e) {
+			logger.error(e.getMessage(), e);
+			throw new AuthenticationProcessException(
+					"Invalid format of you identificator");
 		} catch (ClientProtocolException e) {
 			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
+			throw new AuthenticationProcessException(
+					"There is problem to get XRDS document, check your identificator");
 		} catch (IOException e) {
 			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
+			throw new AuthenticationProcessException(
+					"There is problem to get XRDS document, check your identificator");
 		}
 	}
 
