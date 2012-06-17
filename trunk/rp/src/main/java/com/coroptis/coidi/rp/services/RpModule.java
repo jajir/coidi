@@ -9,6 +9,11 @@ import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 
 import com.coroptis.coidi.rp.services.impl.AssociationServiseImpl;
+import com.coroptis.coidi.rp.services.impl.AuthReqAttributeExchange;
+import com.coroptis.coidi.rp.services.impl.AuthReqOpenId;
+import com.coroptis.coidi.rp.services.impl.AuthReqPreconditions;
+import com.coroptis.coidi.rp.services.impl.AuthReqTerminator;
+import com.coroptis.coidi.rp.services.impl.AuthReqUiIcon;
 import com.coroptis.coidi.rp.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorTerminator;

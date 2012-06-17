@@ -8,5 +8,5 @@ public interface RpService {
 
 	String authentication(DiscoveryResult discoveryResult,
 			SessionType sessionType, String mode, String userSuppliedId,
-			Association association);
+			Association association, String returnTo);
 }

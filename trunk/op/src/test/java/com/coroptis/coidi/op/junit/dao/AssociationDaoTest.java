@@ -8,7 +8,7 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationImpl;
 import com.coroptis.coidi.op.util.AbstractDaoTest;
 
-public class AssociationServiceTest extends AbstractDaoTest {
+public class AssociationDaoTest extends AbstractDaoTest {
 
 	AssociationDao associationService;
 

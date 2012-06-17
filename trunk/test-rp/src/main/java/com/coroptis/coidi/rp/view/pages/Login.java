@@ -71,6 +71,7 @@ public class Login {
 		logger.debug("association type: " + associationType);
 		logger.debug("session type    : " + sessionType);
 		logger.debug("mode            : " + mode);
+		logger.debug("userSuppliedId  : " + userSuppliedId);
 
 		try {
 			DiscoveryResult discoveryResult = discoveryProcessor
@@ -79,15 +80,17 @@ public class Login {
 			if (statelessMode) {
 				authenticationRequestUrl = rpService.authentication(
 						discoveryResult, sessionType, mode, userSuppliedId,
-						null);
+						null, "http://localhost:8081/");
 			} else {
 				association = associationServise.generateAssociation(
 						discoveryResult.getEndPoint(), sessionType,
 						associationType);
 				authenticationRequestUrl = rpService.authentication(
 						discoveryResult, sessionType, mode, userSuppliedId,
-						association);
+						association, "http://localhost:8081/");
 			}
+			logger.debug("authenticationRequestUrl: "
+					+ authenticationRequestUrl);
 		} catch (AuthenticationProcessException e) {
 			openId.recordError(e.getMessage());
 		}
