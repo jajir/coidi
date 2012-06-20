@@ -15,7 +15,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 import com.coroptis.coidi.rp.services.DiscoveryProcessor;
+import com.coroptis.coidi.rp.services.DiscoverySupport;
 import com.coroptis.coidi.rp.services.HttpService;
+import com.coroptis.coidi.rp.services.XmlProcessing;
 import com.coroptis.coidi.rp.services.XrdsService;
 import com.google.common.base.Preconditions;
 
@@ -36,38 +38,70 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 	@Inject
 	private XrdsService xrdsService;
 
+	@Inject
+	private XmlProcessing xmlProcessing;
+
+	@Inject
+	private DiscoverySupport discoverySupport;
+
+	private DiscoveryResult doHead(String userSuppliedId)
+			throws ClientProtocolException, IOException {
+		logger.debug("trying HEAD at '" + userSuppliedId + "'");
+		DefaultHttpClient httpClient = httpService.getHttpClient();
+		HttpHead httpHead = new HttpHead(userSuppliedId);
+		httpHead.setHeader("Accept", "application/xrds+xml");
+		HttpResponse response = httpClient.execute(httpHead);
+		Header header = response.getFirstHeader("X-XRDS-Location");
+		if (header == null) {
+			return doGet(userSuppliedId);
+		} else {
+			return discoverySupport.getXrdsDocument(header.getValue());
+		}
+	}
+
+	private boolean isContentType(Header headerContentType) {
+		if (headerContentType == null) {
+			return false;
+		} else {
+			return headerContentType.getValue().indexOf("application/xrds+xml") >= 0;
+		}
+	}
+
+	private DiscoveryResult doGet(String userSuppliedId)
+			throws ClientProtocolException, IOException {
+		logger.debug("trying GET at '" + userSuppliedId + "'");
+		HttpGet httpget = new HttpGet(userSuppliedId);
+		httpget.setHeader("Accept", "application/xrds+xml");
+		HttpResponse response = httpService.getHttpClient().execute(httpget);
+		Header headerXrdsLocation = response.getFirstHeader("X-XRDS-Location");
+		if (headerXrdsLocation == null) {
+			Header headerContentType = response.getFirstHeader("Content-Type");
+			String body = EntityUtils.toString(response.getEntity());
+			if (isContentType(headerContentType)) {
+				// it's XRDS document
+				return xrdsService.extractDiscoveryResult(body);
+			} else {
+				// try if it's HTML with meta
+				String meta = xmlProcessing.getMetaContent(body,
+						"X-XRDS-Location");
+				if (meta == null) {
+					throw new AuthenticationProcessException(
+							"Unable to find XRDS document.");
+				} else {
+					return discoverySupport.getXrdsDocument(meta);
+				}
+			}
+		} else {
+			return discoverySupport.getXrdsDocument(headerXrdsLocation
+					.getValue());
+		}
+	}
+
 	public DiscoveryResult dicovery(String userSuppliedId) {
 		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 		userSuppliedId = userSuppliedId.trim();
 		try {
-			DefaultHttpClient httpClient = httpService.getHttpClient();
-			HttpHead httpHead = new HttpHead(userSuppliedId);
-			httpHead.setHeader("Accept", "application/xrds+xml");
-			HttpResponse response = httpClient.execute(httpHead);
-			Header header = response.getFirstHeader("X-XRDS-Location");
-			if (header == null) {
-				// try GET
-				HttpGet httpget = new HttpGet(userSuppliedId);
-				httpget.setHeader("Accept", "application/xrds+xml");
-				HttpResponse resp = httpClient.execute(httpget);
-				String body = EntityUtils.toString(resp.getEntity());
-				logger.debug(body);
-				DiscoveryResult endpoint = xrdsService
-						.extractDiscoveryResult(body);
-				logger.info("yadis resolving ... at '" + endpoint.getEndPoint()
-						+ "'");
-				return endpoint;
-			} else {
-				HttpGet httpget = new HttpGet(header.getValue());
-				httpget.setHeader("Accept", "application/xrds+xml");
-				HttpResponse resp = httpClient.execute(httpget);
-				String body = EntityUtils.toString(resp.getEntity());
-				DiscoveryResult endpoint = xrdsService
-						.extractDiscoveryResult(body);
-				logger.info("yadis resolving ... at '" + endpoint.getEndPoint()
-						+ "'");
-				return endpoint;
-			}
+			return doHead(userSuppliedId);
 		} catch (IllegalArgumentException e) {
 			logger.error(e.getMessage(), e);
 			throw new AuthenticationProcessException(

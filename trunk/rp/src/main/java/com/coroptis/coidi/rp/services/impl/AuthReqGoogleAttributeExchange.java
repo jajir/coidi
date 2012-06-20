@@ -5,7 +5,7 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
-public class AuthReqAttributeExchange implements AuthReq {
+public class AuthReqGoogleAttributeExchange implements AuthReq {
 
 	@Override
 	public boolean applyExtension(AuthenticationRequest authenticationRequest,

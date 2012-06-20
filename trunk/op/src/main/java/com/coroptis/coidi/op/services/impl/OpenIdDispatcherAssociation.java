@@ -6,7 +6,6 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
@@ -45,7 +44,7 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 	private ConvertorService convertorService;
 
 	@Override
-	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams) {
 		if (requestParams.get(OPENID_MODE).equals(
 				AbstractMessage.MODE_ASSOCIATE)) {
 			AssociationRequest request = new AssociationRequest(requestParams);

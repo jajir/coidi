@@ -2,6 +2,9 @@
 	<openid>
 		<property name="realm">http://localhost:8081/</property>
 	</openid>
+	<common>
+		<property name="return_to">http://localhost:8081/</property>
+	</common>
 	<!-- 
 	<proxy>
 		<property name="server">proxy.server.com</property>

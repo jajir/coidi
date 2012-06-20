@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
@@ -35,7 +35,7 @@ public class OpenidDispatcherAuthenticationImmediate implements
 	private SigningService signingService;
 
 	@Override
-	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams) {
 		if (requestParams.get(OPENID_MODE).equals(
 				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(

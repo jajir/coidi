@@ -3,7 +3,6 @@ package com.coroptis.coidi.op.services;
 import java.util.Map;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 
 /**
  * Allows to process one specific openID message.
@@ -23,6 +22,6 @@ public interface OpenIdDispatcher {
 	 * @param requestParams
 	 * @return
 	 */
-	AbstractOpenIdResponse process(Map<String, String> requestParams);
+	AbstractMessage process(Map<String, String> requestParams);
 
 }

@@ -34,12 +34,17 @@ public class ProcessXrdsTest extends AbstractIntegrationTest {
 		assertEquals("https://www.google.com/accounts/o8/ud", ret.getEndPoint());
 	}
 
+	public void testProcessExample5() throws Exception {
+		DiscoveryResult ret = readValue("src/test/resources/example-xrds5.xml");
+
+		assertEquals("http://server.myid.net/server/2.0", ret.getEndPoint());
+	}
+
 	private DiscoveryResult readValue(String fileName) throws Exception {
 		XrdsService xrdsService = getService(XrdsService.class);
 		String xrds = Files.toString(new File(fileName),
 				Charset.forName("UTF-8"));
 		return xrdsService.extractDiscoveryResult(xrds);
-
 	}
 
 }

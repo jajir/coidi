@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
@@ -31,7 +31,7 @@ public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
 	private StatelessModeNonceService statelessModeNonceService;
 
 	@Override
-	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams) {
 		if (requestParams.get(OPENID_MODE).equals(
 				CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 			CheckAuthenticationRequest request = new CheckAuthenticationRequest(
