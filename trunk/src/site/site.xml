@@ -35,6 +35,7 @@
 			<item name="XRDS example" href="./xrds.html" />
 			<item name="Project structure" href="./project.html" />
 			<item name="How to integrate" href="./integration.html" />
+			<item name="Abbreviations" href="./abbreviations.html" />
 		</menu>
 		
 		<menu ref="modules" />
