@@ -1,7 +1,7 @@
 package com.coroptis.coidi.op.services;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 
 public interface AuthenticationService {
 
@@ -15,7 +15,6 @@ public interface AuthenticationService {
 	 *         false
 	 */
 	boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
-	
-	AbstractOpenIdResponse process(
-			AuthenticationRequest authenticationRequest);
+
+	AuthenticationResponse process(AuthenticationRequest authenticationRequest);
 }

@@ -2,7 +2,7 @@ package com.coroptis.coidi.core.message;
 
 import java.util.Map;
 
-public class AuthenticationResponse extends AbstractOpenIdResponse {
+public class AuthenticationResponse extends AbstractOpenIdRequest {
 
 	public final static String MODE_ID_RES = "id_res";
 	public final static String OP_ENDPOINT = "op_endpoint";

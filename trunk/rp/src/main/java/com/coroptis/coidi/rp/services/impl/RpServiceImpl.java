@@ -35,6 +35,7 @@ public class RpServiceImpl implements RpService {
 			authenticationRequest.setAssocHandle(association.getAssocHandle());
 		}
 		authenticationRequest.setIdentity(userSuppliedId);
+		authenticationRequest.setClaimedId(userSuppliedId);
 		authenticationRequest.setMode(mode);
 		authenticationRequest.setRealm(realm);
 		authenticationRequest.setReturnTo(returnTo);

@@ -10,8 +10,8 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.PasswordField;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.UserService;
 import com.coroptis.coidi.op.util.UserSession;
@@ -53,7 +53,7 @@ public class Login { // NO_UCD
 		if (userSession.getAuthenticationRequest() != null) {
 			AuthenticationRequest authenticationRequest = userSession
 					.getAuthenticationRequest();
-			AbstractOpenIdResponse response = authenticationService
+			AuthenticationResponse response = authenticationService
 					.process(authenticationRequest);
 			return new URL(response.getMessage());
 		}

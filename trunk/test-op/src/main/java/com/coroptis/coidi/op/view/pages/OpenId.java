@@ -11,7 +11,7 @@ import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.view.utils.TextResponse;
 
@@ -46,7 +46,7 @@ public class OpenId { // NO_UCD
 						+ request.getRequest().getParameter(key) + "'");
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
-			AbstractOpenIdResponse requestResponse = openIdRequestDispatcher
+			AbstractMessage requestResponse = openIdRequestDispatcher
 					.process(map);
 			logger.debug("openId response: " + requestResponse.getMessage());
 			if (requestResponse.isUrl()) {

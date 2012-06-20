@@ -17,6 +17,8 @@ public class XrdService {
 	public static final String TYPE_UI_ICON_1_0 = "http://specs.openid.net/extensions/ui/1.0/icon";
 	public static final String TYPE_PAPE_1_0 = "http://specs.openid.net/extensions/pape/1.0";
 	public static final String TYPE_SREG_1_0 = "http://openid.net/sreg/1.0";
+	public static final String TYPE_CLAIMED_IDENTIFIER_ELEMENT_1_0 = "http://openid.net/signon/1.0";
+	public static final String TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0 = "http://specs.openid.net/auth/2.0/signon";
 
 	public Boolean idPresent(String serviceType) {
 		return types.contains(serviceType);

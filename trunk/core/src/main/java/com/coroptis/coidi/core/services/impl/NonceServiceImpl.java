@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
@@ -54,12 +55,12 @@ public class NonceServiceImpl implements NonceService {
 			return false;
 		}
 
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		calendar.setTime(nonceDateTime);
 		calendar.add(Calendar.MINUTE, expirationMinutes);
-
-		if (now.getTime() > calendar.getTimeInMillis()) {
-			logger.debug("Nonce expired.");
+		if (calendar.getTime().before(now)) {
+			logger.debug("Nonce expired. Because now is '" + now
+					+ "' and nonce is '" + calendar.getTime() + "'");
 			return false;
 		}
 

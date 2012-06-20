@@ -3,7 +3,7 @@ package com.coroptis.coidi.op.view.integration;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.UserService;
 import com.coroptis.coidi.op.services.XrdsService;
@@ -35,7 +35,7 @@ public class StartupTest extends AbstractIntegrationDaoTest {
 		req.put("openid.return_to", "http://localhost:8081/somePage");
 
 		OpenIdDispatcher authentication = getService(OpenIdDispatcher.class);
-		AbstractOpenIdResponse ret = authentication.process(req);
+		AbstractMessage ret = authentication.process(req);
 
 		assertNotNull(ret);
 		System.out.println(ret.isUrl());

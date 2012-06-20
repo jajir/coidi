@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
@@ -23,7 +23,7 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 	private Logger logger;
 
 	@Override
-	public AbstractOpenIdResponse process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams) {
 		ErrorResponse errorResponse = new ErrorResponse(false);
 		StringBuilder buff = new StringBuilder();
 		buff.append("Unable to process incoming message, incorrect openid.mode '");

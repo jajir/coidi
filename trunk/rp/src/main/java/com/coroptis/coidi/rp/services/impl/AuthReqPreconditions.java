@@ -22,12 +22,25 @@ public class AuthReqPreconditions implements AuthReq {
 			throw new AuthenticationProcessException(
 					"Discovery process failed, found XRDS document is not valid.");
 		}
-		if (!discoveryResult.getPreferedService().idPresent(
+		/**
+		 * Look for OP identifier element
+		 */
+		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_OPENID_2_0)) {
-			logger.info("Discovery process failed, found XRDS document doens't contains OpenID name space.");
-			throw new AuthenticationProcessException(
-					"Discovery process failed, found XRDS document doens't contains OpenID name space.");
+			return false;
+		} else {
+			/**
+			 * Look for Claimed identifier element
+			 */
+			if (discoveryResult.getPreferedService().idPresent(
+					XrdService.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0)) {
+				return false;
+			} else {
+				logger.info("Discovery process failed, found XRDS document doens't contains"
+						+ " neither OP identifier element nor Claimend identifier element.");
+				throw new AuthenticationProcessException(
+						"Discovery process failed, found XRDS document is not valid.");
+			}
 		}
-		return false;
 	}
 }

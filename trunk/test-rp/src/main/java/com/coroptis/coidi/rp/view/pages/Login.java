@@ -9,6 +9,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.op.entities.Association;
@@ -32,6 +33,10 @@ public class Login {
 
 	@Inject
 	private AssociationServise associationServise;
+
+	@Inject
+	@Symbol("common.return_to")
+	private String return_to;
 
 	@SessionState
 	private Association association;
@@ -80,14 +85,14 @@ public class Login {
 			if (statelessMode) {
 				authenticationRequestUrl = rpService.authentication(
 						discoveryResult, sessionType, mode, userSuppliedId,
-						null, "http://localhost:8081/");
+						null, return_to);
 			} else {
 				association = associationServise.generateAssociation(
 						discoveryResult.getEndPoint(), sessionType,
 						associationType);
 				authenticationRequestUrl = rpService.authentication(
 						discoveryResult, sessionType, mode, userSuppliedId,
-						association, "http://localhost:8081/");
+						association, return_to);
 			}
 			logger.debug("authenticationRequestUrl: "
 					+ authenticationRequestUrl);

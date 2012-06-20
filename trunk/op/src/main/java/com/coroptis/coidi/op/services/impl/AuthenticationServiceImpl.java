@@ -4,7 +4,6 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
@@ -39,7 +38,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final AssociationType statelesModeAssociationType;
 
-	public AuthenticationServiceImpl( // NO_UCD
+	public AuthenticationServiceImpl(
+			// NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
 		statelesModeAssociationType = AssociationType.convert(assocTypeStr);
@@ -63,7 +63,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return false;
 	}
 
-	public AbstractOpenIdResponse process(
+	@Override
+	public AuthenticationResponse process(
 			AuthenticationRequest authenticationRequest) {
 		AuthenticationResponse response = new AuthenticationResponse();
 		response.setIdentity(authenticationRequest.getIdentity());
