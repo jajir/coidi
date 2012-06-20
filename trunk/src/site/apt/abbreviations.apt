@@ -1,0 +1,41 @@
+ ----
+ Abbreviations
+ ----
+
+User abbreviations
+ 
+* Abbreviations
+ 
+  Because in this documentation are abbreviations widely used here should be this abbreviations shortly described.
+  
+*--------+------+
+|GET     | GET HTTP request defined in RFC 2616 {{http://www.ietf.org/rfc/rfc2616.txt}}|
+*--------+------+
+|HEAD    | HEAD HTTP request defined in RFC 2616 {{http://www.ietf.org/rfc/rfc2616.txt}}|
+*--------+------+
+|HTML    | Defined in HTML 4.01 {{http://www.w3.org/TR/html401/}}|
+*--------+------+
+|HTTP    | Defined in  RFC 2616 {{http://www.ietf.org/rfc/rfc2616.txt}}|
+*--------+------+
+|JPA     | Java Persistence API {{http://docs.oracle.com/javaee/5/tutorial/doc/?wp406141&JavaEETutorialPartFour.html}}|
+*--------+------+
+|LDAP    | Lightweight Directory Access Protocol {{http://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol}}|
+*--------+------+
+|OP      | OpenID Provider - provide user authentication|
+*--------+------+
+|RP      | Relying Party - rely in user authentication provided by OP|
+*--------+------+
+|SSO     | Single Sign On {{http://en.wikipedia.org/wiki/Single_sign-on}}|
+*--------+------+
+|UI      | User Interface|
+*--------+------+
+|URL     | Uniform Resource Locator defined in RFC 3986 {{http://www.ietf.org/rfc/rfc3986.txt}}|
+*--------+------+
+|XRDS    | eXtensible Resource Descriptor Sequence {{http://en.wikipedia.org/wiki/XRDS}}|
+*--------+------+
+|XRI     | Extensible Resource Identifiers specification {{https://www.oasis-open.org/committees/download.php/15377/xri-syntax-V2.0-cs.pdf}}|
+*--------+------+
+Abbreviation
+
+ 
+ 
