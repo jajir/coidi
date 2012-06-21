@@ -36,9 +36,12 @@ public class NonceServiceImpl implements NonceService {
 
 	@Override
 	public Date extractDate(final String nonce) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat(ISO_DATETIME_FORMAT);
+		SimpleDateFormat isoDateFormatter = new SimpleDateFormat(
+				ISO_DATETIME_FORMAT);
+		isoDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		try {
-			return dateFormat.parse(Preconditions.checkNotNull(nonce, "nonce"));
+			return isoDateFormatter.parse(Preconditions.checkNotNull(nonce,
+					"nonce"));
 		} catch (ParseException e) {
 			return null;
 		}

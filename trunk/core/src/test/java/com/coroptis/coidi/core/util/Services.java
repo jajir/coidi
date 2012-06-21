@@ -4,6 +4,8 @@ import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.ConvertorService;
+import com.coroptis.coidi.core.services.CryptographyService;
+import com.coroptis.coidi.core.services.MessageService;
 
 public class Services {
 
@@ -11,9 +13,14 @@ public class Services {
 			.createMock(ConfigurationService.class);
 	private final ConvertorService convertorService = EasyMock
 			.createMock(ConvertorService.class);
+	private final CryptographyService cryptographyService = EasyMock
+			.createMock(CryptographyService.class);
+	private final MessageService messageService = EasyMock
+			.createMock(MessageService.class);
 
 	private final Object[] mocks = new Object[] { getConfigurationService(),
-			getConvertorService() };
+			getConvertorService(), getCryptographyService(),
+			getMessageService() };
 
 	private static Services services;
 
@@ -57,5 +64,19 @@ public class Services {
 	 */
 	public ConvertorService getConvertorService() {
 		return convertorService;
+	}
+
+	/**
+	 * @return the cryptographyService
+	 */
+	public CryptographyService getCryptographyService() {
+		return cryptographyService;
+	}
+
+	/**
+	 * @return the messageService
+	 */
+	public MessageService getMessageService() {
+		return messageService;
 	}
 }
