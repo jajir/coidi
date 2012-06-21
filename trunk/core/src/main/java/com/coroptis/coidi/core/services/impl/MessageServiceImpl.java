@@ -42,13 +42,18 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public String extractStringForSign(final AbstractMessage response,
 			final String prefix) {
-		StringBuilder buff = new StringBuilder();
+		StringBuilder buff = new StringBuilder(1024);
 		String signed = response.get("signed");
 		for (String item : signed.split(",")) {
-			buff.append(response.get(getKey(prefix, item)));
-			buff.append(",");
+			buff.append(item);
+			buff.append(':');
+			String value = response.get(getKey(prefix, item));
+			if (value != null) {
+				buff.append(value);
+			}
+			buff.append('\n');
 		}
-		return buff.substring(0, buff.length() - 1).toString();
+		return buff.toString();
 	}
 
 	private String getKey(final String prefix, final String simpleKey) {

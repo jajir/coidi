@@ -29,13 +29,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			final Association association) {
 		if (authenticationResponse.getMode() != null
 				&& authenticationResponse.getMode().equals("id_res")) {
-			if (!nonceService.verifyNonce(authenticationResponse.getNonce(),
+			if (nonceService.verifyNonce(authenticationResponse.getNonce(),
 					NONCE_EXPIRATION_TIME_IN_MINUTES)) {
+				nonceDao.storeNonce(authenticationResponse.getNonce());
+			} else {
 				logger.info("nonce is expired. '"
 						+ authenticationResponse.getNonce() + "'");
 				return false;
-			} else {
-				nonceDao.storeNonce(authenticationResponse.getNonce());
 			}
 			String signature = signingService.sign(authenticationResponse,
 					association);

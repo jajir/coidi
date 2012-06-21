@@ -32,7 +32,8 @@ public class SigningServiceImpl implements SigningService {
 	public String sign(final AbstractMessage response,
 			final Association association) {
 		String toSign = messageService
-				.extractStringForSign(response, "openid.");
+				.extractStringForSign(response, null);
+		logger.debug("Message to sign '" + toSign + "'");
 		try {
 			byte[] b = cryptoService.hmacSha1(
 					convertorService.convertToBytes(association.getMacKey()),

@@ -2,6 +2,7 @@ package com.coroptis.coidi.core.junit.service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.ServiceBinder;
@@ -27,6 +28,7 @@ public class NonceServiceTest extends BaseJunitTest {
 	public void testVerifyNonce_true() throws Exception {
 		SimpleDateFormat isoDateFormatter = new SimpleDateFormat(
 				"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'");
+		isoDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		String nonce = isoDateFormatter.format(new Date()) + "rCqe4J";
 		logger.debug("nonce: " + nonce);
 		services.replay();

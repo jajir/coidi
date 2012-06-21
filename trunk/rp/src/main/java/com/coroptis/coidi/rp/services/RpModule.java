@@ -19,6 +19,7 @@ import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorGoogle;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorHtml;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorTerminator;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorYadis;
+import com.coroptis.coidi.rp.services.impl.DiscoveryServiceImpl;
 import com.coroptis.coidi.rp.services.impl.DiscoverySupportImpl;
 import com.coroptis.coidi.rp.services.impl.HttpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.HttpTranportServiceImpl;
@@ -36,6 +37,7 @@ public class RpModule {
 		binder.bind(XrdsService.class, XrdsServiceImpl.class);
 		binder.bind(AssociationServise.class, AssociationServiseImpl.class);
 		binder.bind(NonceDao.class, NonceDaoImpl.class);
+		binder.bind(DiscoveryService.class, DiscoveryServiceImpl.class);
 		binder.bind(DiscoverySupport.class, DiscoverySupportImpl.class);
 		binder.bind(RpService.class, RpServiceImpl.class);
 		binder.bind(XmlProcessing.class, XmlProcessingImpl.class);
@@ -77,7 +79,8 @@ public class RpModule {
 			@Autobuild AuthReqUiIcon auReqUiIcon,
 			@Autobuild AuthReqTerminator authReqTerminator) {
 		configuration.add("authReqPreconditions", authReqPreconditions);
-		configuration.add("authReqGoogleAttributeExchange", authReqGoogleAttributeExchange);
+		configuration.add("authReqGoogleAttributeExchange",
+				authReqGoogleAttributeExchange);
 		configuration.add("authReqOpenId", authReqOpenId);
 		configuration.add("auReqUiIcon", auReqUiIcon);
 		configuration.add("authReqTerminator", authReqTerminator);
