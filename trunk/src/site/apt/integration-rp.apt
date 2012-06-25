@@ -1,0 +1,73 @@
+ ----
+ Integration - RP
+ ----
+
+Integration - RP
+
+* Integration - RP
+
+** Requirements
+
+ * Coidi RP could by integrated just with java web application. Java 1.6 or greater.
+
+[]
+
+** Integration steps
+
+ * Changes in UI (required) - you should add new form for for entering user's OpenId identificators.
+	
+ * Call OpenId relaying party functions
+ 
+ * Persistent nonce store (optionally) - Nonces have to be stored for some limited time.
+ In some cases nonces could hold just in application memory.
+ 
+ * Scheduler (optionally) - All nonces are stored in nonce store.
+ Nonce is valid just for limited time after could be removed. 
+ Deleting of stale nonces should be called periodically by some scheduler.  
+ 
+[]
+
+ Clustered deployment structure of OpenID relying part:
+ 
+[appdeployment-rp-nonce.png] RP with implemented nonce store 
+
+ In most cases is scheduler part of both nodes. 
+
+** UI changes
+
+ On Relaying party side have to be created new form for entering user'd identifiers.
+ According to OpenId specification form field where user should enter his OpenID identification string should be called "openid_identifier".   
+ Then just "Submit" button is required.
+ After submitting user's identification should be passed to relaying party verification process.  
+
+** Call OpenId relaying party functions
+
+ 
+
+** Persistent nonce store
+ 
+ Simply says it's just place where are nonces stored for some limited time (usually 30 minutes).
+ When you run you application as single node that you can store nonces in memory.
+ This approach allows use nonces more that once when your application is restarted. In that case you can use bundled in memory nonce store.
+ You should consider if this security vulnerability is acceptable for your application.
+ 
+ When you run application with more that one node or you don't want accept risk of reusing nonce after application restart
+ that you have to consider your persistent nonce store. You can create your own nonce store by implementing 
+ <com.coroptis.coidi.rp.services.NonceDao> interface from rp library.
+ 
+ When you expect big load of uses and authentication requests than you should take care of removing of old nonces.
+ 
+ Nonce store could be implemented with any technology, for example:
+ 
+ * Database - JPA 
+ 
+ * Shared cache memory - for example {{{http://memcached.org/}memcached}}
+ 
+ * LDAP
+
+[]
+
+ Coidi doesn't provide concrete implementation, because each application have it's special requirements 
+ for drivers, library that can't by fulfilled by coidi library.
+ 
+TODO add some examples

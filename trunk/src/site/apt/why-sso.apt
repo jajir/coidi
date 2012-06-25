@@ -1,0 +1,46 @@
+ ----
+ Introduction
+ ----
+
+Single Sign On - Introduction
+
+ Single Sign On (SSO) is quite old idea. In last few years become quite popular.
+ Nearly all big IT companies bring their own SSO solution google, facebook, IBM, ORACLE and many others.
+ 
+ Lets look why idea of SSO is so popular.
+
+* User perspective
+ 
+ User have to interact with many different systems. All particular systems have their own login page, registration form and other.
+ User have to remember logins and password for each system.
+ 
+[overview-without-SSO.png] user interact with applications without SSO
+ 
+ When SSO is introduced into systems user experience could be much better. Application seems be unified,
+ and basic user management related usecases behaves in a same way across all systems.   
+ 
+[overview-with-SSO.png] user interact with applications with SSO
+
+* Application architecture perspective
+
+ SSO implies changes also from application architecture perspectives. When SSO is not used all identity relate usecases
+ have to be implemented on each application. Usually it's following usecases:
+
+ * Login
+ 
+ * Logout - not all SSO system implements this use case
+ 
+ * Registration - usually at least some part of registration have to stay at integrated application
+ 
+ * Forgotten login/password
+ 
+ * Change login/password
+
+[]
+
+[app-without-sso.png] application structure without SSO
+
+ When SSO is integrated into application than part of user management is done on identity provider.
+ Also previously listed usecases could be saved on integrated application. 
+
+[app-with-sso.png] application structure with SSO

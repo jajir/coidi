@@ -30,13 +30,19 @@
     		
 		<menu name="Coidi">
 			<item name="Index" href="./index.html" />
+			<item name="Why SSO" href="./why-sso.html" />
+			
 			<item name="Introduction" href="./introduction.html" />
-			<item name="Release methodology" href="./release.html" />
-			<item name="XRDS example" href="./xrds.html" />
 			<item name="Normalization" href="./normalization.html" />
-			<item name="Project structure" href="./project.html" />
-			<item name="How to integrate" href="./integration.html" />
+			<item name="Discovery" href="./discovery.html" />
+			<item name="Authentication" href="./authentication.html" />
+			<item name="How to integrate" href="./integration.html" >
+				<item name="Relying party" href="./integration-rp.html" />
+				<item name="OpenID provider" href="./integration-op.html" />
+			</item>
 			<item name="Abbreviations" href="./abbreviations.html" />
+			<item name="Project structure" href="./project.html" />
+			<item name="Release methodology" href="./release.html" />
 		</menu>
 		
 		<menu ref="modules" />
