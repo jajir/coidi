@@ -109,6 +109,16 @@ public abstract class AbstractMessage {
 		map.put(key, value);
 	}
 
+	public boolean putIgnoreEmpty(final String key, final String value) {
+		if (value != null && value.length() > 0) {
+			map.put(key, value);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public String get(final String key) {
 		return map.get(key);
 	}

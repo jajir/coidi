@@ -39,7 +39,7 @@ public class AuthReqChainProcessorTest extends AbstractIntegrationTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		authReq = getService(AuthReq.class);
+		authReq = getService(AuthReq.class,"AuthReqChainProcessor");
 	}
 
 	@Override

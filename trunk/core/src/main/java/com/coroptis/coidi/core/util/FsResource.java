@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
 import org.apache.tapestry5.ioc.Resource;
+
+import com.coroptis.coidi.CoidiException;
 
 /**
  * Allows read file
@@ -60,7 +63,11 @@ public class FsResource implements Resource {
 
 	@Override
 	public URL toURL() {
-		throw new UnsupportedOperationException("not implemented");
+		try {
+			return file.toURI().toURL();
+		} catch (MalformedURLException e) {
+			throw new CoidiException(e.getMessage(), e);
+		}
 	}
 
 	@Override

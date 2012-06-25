@@ -20,7 +20,21 @@ public interface DiscoverySupport {
 	 *             When exception occurs during obtaining discovery result than
 	 *             this exception with proper description is throws
 	 */
-	public DiscoveryResult getXrdsDocument(String xrdsDocumentUrl)
+	DiscoveryResult getXrdsDocument(String xrdsDocumentUrl)
 			throws AuthenticationProcessException;
+
+	/**
+	 * Guess if given string is email.
+	 * 
+	 * @param email
+	 *            required email string
+	 * @return return <code>true</code> when given parameter is email otherwise
+	 *         return <code>null</code>
+	 */
+	Boolean isItEmail(String email);
+
+	Boolean isXri(String identifier);
+
+	String normalize(String userSuppliedId);
 
 }

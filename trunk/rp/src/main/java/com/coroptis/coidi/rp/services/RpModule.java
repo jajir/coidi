@@ -12,6 +12,8 @@ import com.coroptis.coidi.rp.services.impl.AssociationServiseImpl;
 import com.coroptis.coidi.rp.services.impl.AuthReqGoogleAttributeExchange;
 import com.coroptis.coidi.rp.services.impl.AuthReqOpenId;
 import com.coroptis.coidi.rp.services.impl.AuthReqPreconditions;
+import com.coroptis.coidi.rp.services.impl.AuthReqRegistration10;
+import com.coroptis.coidi.rp.services.impl.AuthReqRegistration11;
 import com.coroptis.coidi.rp.services.impl.AuthReqTerminator;
 import com.coroptis.coidi.rp.services.impl.AuthReqUiIcon;
 import com.coroptis.coidi.rp.services.impl.AuthenticationServiceImpl;
@@ -44,7 +46,10 @@ public class RpModule {
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
 		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
-
+		binder.bind(AuthReq.class, AuthReqRegistration10.class).withId(
+				"authReqRegistration10");
+		binder.bind(AuthReq.class, AuthReqRegistration11.class).withId(
+				"authReqRegistration11");
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(
