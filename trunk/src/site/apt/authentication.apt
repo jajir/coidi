@@ -5,8 +5,27 @@
 Coidi - introduction
  
 * What is this Coidi?
+ 
+ It's implementation of OpenID protocol. It could be user as base component
+ for more complex authentication or authorization systems.
+ 
+ This project can provide to you on-line application Single Sign On.  
+ 
+** What problem could be solved with library?
+ 
+ * Integration of OpenId into your application
+ 
+ * Creating you own OpenID provider 
 
- How can could coidi librari could help?  
+** Auditorium
+
+ Who should use this documentation? 
+
+ * Technical people who wants to test or use OpenID
+ 
+ * Application architect to get information about OpenID integration 
+
+[]
  
 [openid-role.png] Role of OpenID protocol.
 

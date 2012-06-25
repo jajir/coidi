@@ -1,0 +1,81 @@
+ ----
+ XRDS
+ ----
+
+XRDS
+
+* Discovery process 
+
+ It's process for Relaying Party that provide endpoint and service description.
+ Information about endpoint services are stored in XRDS document.  
+
+[yadis-discovery-rp.png] Relaying Party discovery process
+
+ Previous picture shows how to get XRDS document.
+ This document contains information where is technical enpoint that understand OpenId protocol.
+ Discovered XRDS document can contain multiple service sections.
+ Each Service section describe one endpoint technical capabilities. Technical endpoint is tag URI.
+ Multiple tags 'Type' specified technical options for given endpoint.
+ Following diagrams shows how relaying party select proper endpoint for OpenID version 2.0.
+ 
+ [[1]] Select OpenID 2.0 related services. This are services containing Claimed identifier element or OP identifier element. 
+
+ [[1]] Order selected services by following criteria:
+ 
+  [[2]] OP identifier element, it's Type 'http://specs.openid.net/auth/2.0/server'
+ 
+  [[2]] Claimed Identifier Element, it's Type 'http://specs.openid.net/auth/2.0/signon'
+ 
+  [[2]] By value of attribute 'priority', lower priority is more relevant, when priority is missing treat is as big number.
+ 
+ [[1]] Select first service from list and it's requested OP technical endpoint.
+ 
+[] 
+
+* Example of XRDS document 
+
++----+
+<?xml version="1.0" encoding="UTF-8"?>
+<xrds:XRDS
+    xmlns:xrds="xri://$xrds"
+    xmlns:ux="http://specs.openid.net/extensions/ux/1.0"
+    xmlns="xri://$xrd*($v*2.0)">
+  <XRD>
+
+    <Service priority="0">
+      <Type>http://specs.openid.net/auth/2.0/server</Type>
+      <Type>http://openid.net/sreg/1.0</Type>
+      <URI priority="0">https://www.myopenid.com/server</URI>
+    </Service>
+
+    <Service>
+      <Type>http://specs.openid.net/extensions/ux/1.0/friendlyname</Type>
+      <ux:friendlyname>MyOpenID</ux:friendlyname>
+    </Service>
+    <Service>
+      <Type>http://specs.openid.net/extensions/ux/1.0/img</Type>
+      <ux:img url="https://www.myopenid.com/static/images/myopenid_selector.png" width="48" height="48"></ux:img>
+    </Service>
+  </XRD>
+</xrds:XRDS>
++----+
+
+* Example of google XRDS
+
++----+
+<?xml version="1.0" encoding="UTF-8"?>
+<xrds:XRDS xmlns:xrds="xri://$xrds" xmlns="xri://$xrd*($v*2.0)">
+  <XRD>
+    <Service priority="0">
+      <Type>http://specs.openid.net/auth/2.0/server</Type>
+      <Type>http://openid.net/srv/ax/1.0</Type>
+      <Type>http://specs.openid.net/extensions/ui/1.0/mode/popup</Type>
+      <Type>http://specs.openid.net/extensions/ui/1.0/icon</Type>
+      <Type>http://specs.openid.net/extensions/pape/1.0</Type>
+      <URI>https://www.google.com/accounts/o8/ud</URI>
+    </Service>
+  </XRD>
+</xrds:XRDS>
++----+
+
+ 
