@@ -1,5 +1,7 @@
 package com.coroptis.coidi.rp.integration;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -31,7 +33,8 @@ public class AuthReqChainProcessorTest extends AbstractIntegrationTest {
 		service.getTypes().add(XrdService.TYPE_UI_ICON_1_0);
 		service.getTypes().add(XrdService.TYPE_UI_POPUP_1_0);
 		discoveryResult.getServices().add(service);
-		authReq.applyExtension(authenticationRequest, discoveryResult);
+		authReq.applyExtension(authenticationRequest, discoveryResult,
+				new HashMap<String, String>());
 
 		logger.debug(authenticationRequest.getMessage());
 	}
@@ -39,7 +42,7 @@ public class AuthReqChainProcessorTest extends AbstractIntegrationTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		authReq = getService(AuthReq.class,"AuthReqChainProcessor");
+		authReq = getService(AuthReq.class, "AuthReqChainProcessor");
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.coroptis.coidi.rp.services.impl;
 
+import java.util.Map;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -16,7 +18,7 @@ public class AuthReqPreconditions implements AuthReq {
 
 	@Override
 	public boolean applyExtension(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult) {
+			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService() == null) {
 			logger.info("Discovery process failed, found XRDS document is not valid.");
 			throw new AuthenticationProcessException(

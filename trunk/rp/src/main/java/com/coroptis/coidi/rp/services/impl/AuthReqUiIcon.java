@@ -1,5 +1,7 @@
 package com.coroptis.coidi.rp.services.impl;
 
+import java.util.Map;
+
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
@@ -15,7 +17,7 @@ public class AuthReqUiIcon implements AuthReq {
 
 	@Override
 	public boolean applyExtension(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult) {
+			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_UI_ICON_1_0)) {
 			authenticationRequest.put("openid.ns.ui",

@@ -1,5 +1,7 @@
 package com.coroptis.coidi.rp.services.impl;
 
+import java.util.Map;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
@@ -33,7 +35,7 @@ public class AuthReqRegistration11 implements AuthReq {
 
 	@Override
 	public boolean applyExtension(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult) {
+			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_SREG_1_1)) {
 			logger.debug("Registration extension 1.1 will be applied");
