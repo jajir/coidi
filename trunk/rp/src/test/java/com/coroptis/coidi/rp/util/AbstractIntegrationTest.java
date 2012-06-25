@@ -18,8 +18,6 @@ public abstract class AbstractIntegrationTest extends TestCase {
 
 	protected final static String T5_WEBAPP_BASE = "src/main/webapp";
 
-	protected Mocks services;
-
 	static {
 		System.setProperty("server.role", "junit");
 		System.setProperty("system.property.configuration.directory",
@@ -51,8 +49,6 @@ public abstract class AbstractIntegrationTest extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
-		services = Mocks.getServices();
-		services.reset();
 		pageTester = new PageTester(T5_APPLICATION_PACKAGE,
 				T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class);
 		super.setUp();
@@ -60,7 +56,6 @@ public abstract class AbstractIntegrationTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		services = null;
 		pageTester.shutdown();
 		pageTester = null;
 		super.tearDown();

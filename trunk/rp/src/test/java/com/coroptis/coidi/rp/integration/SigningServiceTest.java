@@ -38,7 +38,6 @@ public class SigningServiceTest extends AbstractIntegrationTest {
 		AssociationBean association = new AssociationBean();
 		association.setMacKey("3uAPFsOq3UYQ3v3SeujCZaNclIg=");
 		association.setAssociationType(AssociationType.HMAC_SHA1);
-		services.replay();
 		String sig = signingService.sign(response, association);
 
 		logger.debug("computed: '" + sig + "'");

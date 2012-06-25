@@ -22,14 +22,10 @@ public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
 	@Inject
 	private DiscoverySupport discoverySupport;
 
-	private Boolean isItEmail(String email) {
-		return (email.endsWith(".com"));
-	}
-
 	public DiscoveryResult dicovery(String userSuppliedId) {
 		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 		userSuppliedId = userSuppliedId.trim();
-		if (isItEmail(userSuppliedId)) {
+		if (discoverySupport.isItEmail(userSuppliedId)) {
 			logger.debug("It's gmail id '" + userSuppliedId + "'");
 			return discoverySupport
 					.getXrdsDocument("https://www.google.com/accounts/o8/id");

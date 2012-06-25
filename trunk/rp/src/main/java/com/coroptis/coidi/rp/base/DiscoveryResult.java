@@ -13,7 +13,7 @@ import com.google.common.collect.UnmodifiableIterator;
 public class DiscoveryResult {
 
 	private final Set<XrdService> services = new HashSet<XrdService>();
-
+	
 	private final ImmutableSortedSet.Builder<XrdService> sortedServicesBuilder = new ImmutableSortedSet.Builder<XrdService>(
 			new Comparator<XrdService>() {
 				@Override
