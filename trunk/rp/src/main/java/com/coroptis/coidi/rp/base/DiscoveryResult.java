@@ -14,6 +14,8 @@ public class DiscoveryResult {
 
 	private final Set<XrdService> services = new HashSet<XrdService>();
 	
+	private String claimedId;
+	
 	private final ImmutableSortedSet.Builder<XrdService> sortedServicesBuilder = new ImmutableSortedSet.Builder<XrdService>(
 			new Comparator<XrdService>() {
 				@Override
@@ -96,6 +98,20 @@ public class DiscoveryResult {
 	 */
 	public Set<XrdService> getServices() {
 		return services;
+	}
+
+	/**
+	 * @return the claimedId
+	 */
+	public String getClaimedId() {
+		return claimedId;
+	}
+
+	/**
+	 * @param claimedId the claimedId to set
+	 */
+	public void setClaimedId(String claimedId) {
+		this.claimedId = claimedId;
 	}
 
 }

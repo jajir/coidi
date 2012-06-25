@@ -24,7 +24,6 @@ public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
 
 	public DiscoveryResult dicovery(String userSuppliedId) {
 		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
-		userSuppliedId = userSuppliedId.trim();
 		if (discoverySupport.isItEmail(userSuppliedId)) {
 			logger.debug("It's gmail id '" + userSuppliedId + "'");
 			return discoverySupport

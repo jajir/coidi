@@ -23,7 +23,9 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 		if (!discoverySupport.isItEmail(claimedId)) {
 			claimedId = discoverySupport.normalize(claimedId);
 		}
-		return discoveryProcessor.dicovery(claimedId);
+		DiscoveryResult out = discoveryProcessor.dicovery(claimedId);
+		out.setClaimedId(claimedId);
+		return out;
 	}
 
 }

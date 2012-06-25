@@ -1,5 +1,7 @@
 package com.coroptis.coidi.rp.services.impl;
 
+import java.util.Map;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
@@ -16,7 +18,7 @@ public class AuthReqOAuthExtension implements AuthReq {
 
 	@Override
 	public boolean applyExtension(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult) {
+			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_ATTRIBUTE_EXCHANGE_2_0)) {
 			authenticationRequest.put("openid.ns.ext2",
