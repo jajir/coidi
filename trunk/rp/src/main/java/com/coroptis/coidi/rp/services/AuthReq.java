@@ -18,7 +18,7 @@ public interface AuthReq {
 	 * @param parameters
 	 * @return
 	 */
-	boolean applyExtension(AuthenticationRequest authenticationRequest,
+	boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters);
 
 }

@@ -1,10 +1,10 @@
 <configuration>
-	<!-- 
-	<proxy>
-		<property name="server">proxy.indra.es</property>
-		<property name="port">8080</property>
-		<property name="userName">jjirout</property>
-		<property name="password">kocicka0</property>
-	</proxy>
-	-->
+	<openid>
+		<property name="realm">http://localhost:8081/</property>
+	</openid>
+	<common>
+		<property name="image.cache.dir">target/images/</property>
+		<property name="return_to">http://localhost:8081/userProfile</property>		
+		<property name="extension.registration.requiredFields">blee</property>		
+	</common>
 </configuration>

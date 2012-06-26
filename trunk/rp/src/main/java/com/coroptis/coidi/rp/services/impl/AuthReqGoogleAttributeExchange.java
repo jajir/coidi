@@ -10,7 +10,7 @@ import com.coroptis.coidi.rp.services.AuthReq;
 public class AuthReqGoogleAttributeExchange implements AuthReq {
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_ATTRIBUTE_EXCHANGE_2_0)) {

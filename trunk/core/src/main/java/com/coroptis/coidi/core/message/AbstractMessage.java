@@ -88,9 +88,13 @@ public abstract class AbstractMessage {
 			buff.append(entry.getKey());
 			buff.append(separator);
 			if (isUrl) {
-				buff.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+				if (entry.getValue() != null) {
+					buff.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+				}
 			} else {
-				buff.append(entry.getValue());
+				if (entry.getValue() != null) {
+					buff.append(entry.getValue());
+				}
 			}
 			buff.append(lineEnds);
 		}

@@ -1,13 +1,18 @@
 package com.coroptis.coidi.rp.util;
 
-import org.easymock.EasyMock;
+
+import org.easymock.classextension.EasyMock;
 
 import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.XrdsService;
 
 public class Services {
 
+	/**
+	 * Services defined in Coidi
+	 */
 	private final ConfigurationService configurationService = EasyMock
 			.createMock(ConfigurationService.class);
 	private final HttpService httpService = EasyMock
@@ -15,8 +20,14 @@ public class Services {
 	private final XrdsService xrdsService = EasyMock
 			.createMock(XrdsService.class);
 
+	/**
+	 * Other services
+	 */
+	private final DiscoveryResult discoveryResult = EasyMock
+			.createMock(DiscoveryResult.class);
+
 	private final Object[] mocks = new Object[] { getConfigurationService(),
-			getHttpService(), getXrdsService() };
+			getHttpService(), getXrdsService(), getDiscoveryResult() };
 
 	private static Services services;
 
@@ -67,5 +78,12 @@ public class Services {
 	 */
 	public XrdsService getXrdsService() {
 		return xrdsService;
+	}
+
+	/**
+	 * @return the discoveryResult
+	 */
+	public DiscoveryResult getDiscoveryResult() {
+		return discoveryResult;
 	}
 }

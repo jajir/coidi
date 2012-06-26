@@ -16,7 +16,7 @@ import com.coroptis.coidi.rp.services.AuthReq;
 public class AuthReqUiIcon implements AuthReq {
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_UI_ICON_1_0)) {

@@ -17,7 +17,7 @@ public class AuthReqPreconditions implements AuthReq {
 	private Logger logger;
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService() == null) {
 			logger.info("Discovery process failed, found XRDS document is not valid.");

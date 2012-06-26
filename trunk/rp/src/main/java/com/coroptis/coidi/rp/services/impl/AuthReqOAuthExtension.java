@@ -17,7 +17,7 @@ public class AuthReqOAuthExtension implements AuthReq {
 	private String realm;
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_ATTRIBUTE_EXCHANGE_2_0)) {
