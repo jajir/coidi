@@ -6,7 +6,24 @@ Coidi - introduction
  
 * What is this Coidi?
 
- How can could coidi librari could help?  
+ Coidi is implementation of OpendID protocol and related protocol extensions.
+ Main goal of this library to easily provide authentication functionality.  
+
+ Following diagram shows fundamental use case - authenticate. 
+ This allows to RP verify that User's identity is correct.
+ In other words it's about answering question "Is user who say he is?".
+ This verification can't by based on user's claim it have to be verified on OP.  
+
+[uc-authenticate.png] Authenticate use case.
+ 
+** Authenticate use case usage
+
+ When user try to access some protected page as user profile on RP than RP have to get user's identity.
+ RP ask user for entering some identifier.
+ It could be OpendID of google email (when appropriate OpenID extension is used).
+ Based on that identifier RP discover which server (OP) is responsible for managing this identity and ask this server (OP) to authenticate this identity.
+ When OP positively authenticate user's identity than RP allows user to get requested page.
+ This process in on next diagram. 
  
 [openid-role.png] Role of OpenID protocol.
 
