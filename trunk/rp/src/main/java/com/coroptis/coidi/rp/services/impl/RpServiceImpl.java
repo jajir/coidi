@@ -41,7 +41,7 @@ public class RpServiceImpl implements RpService {
 		authenticationRequest.setRealm(realm);
 		authenticationRequest.setReturnTo(authenticationParameters
 				.getReturnTo());
-		authReq.applyExtension(authenticationRequest, discoveryResult,
+		authReq.process(authenticationRequest, discoveryResult,
 				authenticationParameters.getParameters());
 		logger.debug("authentication: " + authenticationRequest.getMessage());
 		return authenticationRequest.getMessage();

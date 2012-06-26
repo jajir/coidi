@@ -15,7 +15,7 @@ import com.coroptis.coidi.rp.services.AuthReq;
 public class AuthReqTerminator implements AuthReq {
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		return true;
 	}

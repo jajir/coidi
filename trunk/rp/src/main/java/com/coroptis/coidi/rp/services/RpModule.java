@@ -46,10 +46,6 @@ public class RpModule {
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
 		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
-		binder.bind(AuthReq.class, AuthReqRegistration10.class).withId(
-				"authReqRegistration10");
-		binder.bind(AuthReq.class, AuthReqRegistration11.class).withId(
-				"authReqRegistration11");
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(
@@ -82,12 +78,16 @@ public class RpModule {
 			@Autobuild AuthReqGoogleAttributeExchange authReqGoogleAttributeExchange,
 			@Autobuild AuthReqOpenId authReqOpenId,
 			@Autobuild AuthReqUiIcon auReqUiIcon,
+			@Autobuild AuthReqRegistration10 authReqRegistration10,
+			@Autobuild AuthReqRegistration11 authReqRegistration11,
 			@Autobuild AuthReqTerminator authReqTerminator) {
 		configuration.add("authReqPreconditions", authReqPreconditions);
 		configuration.add("authReqGoogleAttributeExchange",
 				authReqGoogleAttributeExchange);
 		configuration.add("authReqOpenId", authReqOpenId);
 		configuration.add("auReqUiIcon", auReqUiIcon);
+		configuration.add("authReqRegistration10", authReqRegistration10);
+		configuration.add("authReqRegistration11", authReqRegistration11);
 		configuration.add("authReqTerminator", authReqTerminator);
 	}
 

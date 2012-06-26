@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.coroptis.coidi.rp.base.AuthenticationParameters;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AssociationServise;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
@@ -81,18 +82,21 @@ public class Login {
 		try {
 			DiscoveryResult discoveryResult = discoveryProcessor
 					.dicovery(userSuppliedId);
+			AuthenticationParameters params = new AuthenticationParameters();
+			params.setMode(mode);
+			params.setReturnTo(return_to);
+			params.setSessionType(sessionType);
+			params.setUserSuppliedId(userSuppliedId);
 
 			if (statelessMode) {
 				authenticationRequestUrl = rpService.authentication(
-						discoveryResult, sessionType, mode, userSuppliedId,
-						null, return_to);
+						discoveryResult, null, params);
 			} else {
 				association = associationServise.generateAssociation(
 						discoveryResult.getEndPoint(), sessionType,
 						associationType);
 				authenticationRequestUrl = rpService.authentication(
-						discoveryResult, sessionType, mode, userSuppliedId,
-						association, return_to);
+						discoveryResult, association, params);
 			}
 			logger.debug("authenticationRequestUrl: "
 					+ authenticationRequestUrl);

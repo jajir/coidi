@@ -12,8 +12,8 @@ import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
 /**
- * Add registration request 1.1 to authentication request. Process is added based on
- * requirement specified in discovery.
+ * Add registration request 1.1 to authentication request. Process is added
+ * based on requirement specified in discovery.
  * 
  * @author jan
  * 
@@ -27,14 +27,16 @@ public class AuthReqRegistration11 implements AuthReq {
 	@Symbol("common.extension.registration.requiredFields")
 	private String requiredFields;
 
+	@Inject
 	@Symbol("common.extension.registration.optionalFields")
 	private String optionalFields;
 
+	@Inject
 	@Symbol("common.extension.registration.policyUrl")
 	private String policyUrl;
 
 	@Override
-	public boolean applyExtension(AuthenticationRequest authenticationRequest,
+	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
 				XrdService.TYPE_SREG_1_1)) {
@@ -43,9 +45,10 @@ public class AuthReqRegistration11 implements AuthReq {
 					XrdService.TYPE_SREG_1_1);
 			authenticationRequest.putIgnoreEmpty("openid.sreg.required",
 					requiredFields);
-			authenticationRequest
-					.putIgnoreEmpty("openid.sreg.", optionalFields);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.", policyUrl);
+			authenticationRequest.putIgnoreEmpty("openid.sreg.optional",
+					optionalFields);
+			authenticationRequest.putIgnoreEmpty("openid.sreg.policy_url",
+					policyUrl);
 		}
 		return false;
 	}
