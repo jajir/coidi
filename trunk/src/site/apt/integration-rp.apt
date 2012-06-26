@@ -71,3 +71,5 @@ Integration - RP
  for drivers, library that can't by fulfilled by coidi library.
  
 TODO add some examples
+
+configuration of normalization dicovery and authentication request creating.
