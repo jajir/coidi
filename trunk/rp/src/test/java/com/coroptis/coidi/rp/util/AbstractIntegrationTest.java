@@ -20,6 +20,12 @@ public abstract class AbstractIntegrationTest extends TestCase {
 
 	static {
 		System.setProperty("server.role", "junit");
+		System.setProperty("common.extension.registration.requiredFields",
+				"name");
+		System.setProperty("common.extension.registration.optionalFields",
+				"email");
+		System.setProperty("common.extension.registration.policyUrl",
+				"http://www.example.com/policy-description");
 		System.setProperty("system.property.configuration.directory",
 				"non-existing");
 		logger.debug("loading T5 registry with server.role.junit: "
