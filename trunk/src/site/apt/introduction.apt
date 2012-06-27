@@ -4,7 +4,7 @@
 
 Coidi - introduction
  
-* What is this Coidi?
+* High level authentication
 
  Coidi is implementation of OpendID protocol and related protocol extensions.
  Main goal of this library to easily provide authentication functionality.  
@@ -27,9 +27,37 @@ Coidi - introduction
  
 [openid-role.png] Role of OpenID protocol.
 
+* Authentication in more details
+
+ Previously described use cases are here describe in more details.
+
 ** Main use cases solved by library
 
-[use-cases-high-level.png] use cases for administration
+ Following diagram shows main use cases solved by library.  
+
+[use-cases-high-level.png] use cases for OpenID
+
+ Use cases are described in order how they are invoked.
+ OpenId protocol contain few other alternative flows but following one is most important.   
+
+ * provide user supplied id - RP ask user to enter his 'user supplied id'.
+  By definition it's URL or XRI, but extensions allows to understand email addresses.  
+ 
+ * normalization - When RP accept 'user supplied ID' than it's have to adjusted to fit following process.
+  This process include some basic string operations like removing/adding trailing slash.
+  Result of this process is 'claimed id'.
+ 
+ * discovery - this process get information about OP that is responsible for given claimed id.
+  Result of discovery process is XRDS document that describe OP.
+  Usually it contains information which extension are available at this OP and what is technical end point for further communication.     
+ 
+ * association -  this process establish shared secret between OP and RP. This secret could be used for signing messages. 
+ 
+ * authentication request - It's message send from RP via redirect to OP in which PR ask OP to confirm user's identity.
+ 
+ * authentication response - I't message send from OP via redirect to RP in which RP could confirm end user's identity. 
+
+[]
 
 ** Authentication request/response
 
@@ -42,8 +70,3 @@ Coidi - introduction
  When relaying party get authentication response extract identity and verify signature with secret key. 
 
 [authentication-detail.png] Authentication detail
- 
-[authentication-request-checkid_setup.png] Authentication request processing on OP
- 
-[yadis-discovery-op.png] YADIS discovery on OP
- 
