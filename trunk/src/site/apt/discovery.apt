@@ -78,4 +78,9 @@ XRDS
 </xrds:XRDS>
 +----+
 
+* Yadis discovery on OP
+
+ Following diagram shows how OP should provide YADIS discovery document.
+  
+[yadis-discovery-op.png] YADIS discovery on OP
  

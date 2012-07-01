@@ -15,6 +15,10 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -22,6 +26,8 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.rp.base.AuthRespExtension;
+import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthenticationService;
 import com.coroptis.coidi.rp.services.NonceDao;
 
@@ -38,6 +44,35 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Inject
 	private NonceDao nonceDao;
+
+	@Inject
+	private AuthRespDecoder authRespDecoder;
+
+	@Override
+	public Map<String, AuthRespExtension> generateResponse(
+			final AuthenticationResponse authenticationResponse) {
+		Map<String, AuthRespExtension> extensions = new HashMap<String, AuthRespExtension>();
+		for (Entry<String, String> entry : authenticationResponse.getMap()
+				.entrySet()) {
+			if (entry.getKey().startsWith("openid.ns")) {
+				AuthRespExtension extension = authRespDecoder.decode(
+						authenticationResponse, entry.getKey(),
+						entry.getValue());
+				if (extension == null) {
+					logger.warn("There is no available processor for extension '"
+							+ entry.getKey() + "'");
+				}
+				extensions.put(entry.getValue(), extension);
+			}
+		}
+		return extensions;
+	}
+
+	@Override
+	public Map<String, AuthRespExtension> generateResponse(
+			final Map<String, String> map) {
+		return generateResponse(new AuthenticationResponse(map));
+	}
 
 	@Override
 	public Boolean verify(final AuthenticationResponse authenticationResponse,

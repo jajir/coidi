@@ -25,7 +25,9 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
  *
  */
 public interface AuthReq {
-
+	
+	final static String REG_NEW_IDENTITY = "registration.itIsNewIdentity";
+	
 	/**
 	 * 
 	 * @param authenticationRequest

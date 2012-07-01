@@ -15,7 +15,9 @@
  */
 package com.coroptis.coidi.core.message;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class AuthenticationResponse extends AbstractOpenIdRequest {
 
@@ -41,6 +43,15 @@ public class AuthenticationResponse extends AbstractOpenIdRequest {
 		super(map);
 		setNameSpace(OPENID_NS_20);
 		setUrl(true);
+	}
+
+	@Override
+	public Map<String, String> getMap() {
+		Map<String, String> out = new HashMap<String, String>();
+		for (Entry<String, String> entry : super.getMap().entrySet()) {
+			out.put(entry.getKey(), entry.getValue());
+		}
+		return out;
 	}
 
 	/**

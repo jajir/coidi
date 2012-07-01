@@ -54,15 +54,16 @@ public class AuthReqRegistration11 implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_SREG_1_1)) {
+				XrdService.TYPE_SREG_1_1)
+				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
 			logger.debug("Registration extension 1.1 will be applied");
 			authenticationRequest.put("openid.ns.sreg",
 					XrdService.TYPE_SREG_1_1);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.required",
+			authenticationRequest.putIgnoreEmpty("sreg.required",
 					requiredFields);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.optional",
+			authenticationRequest.putIgnoreEmpty("sreg.optional",
 					optionalFields);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.policy_url",
+			authenticationRequest.putIgnoreEmpty("sreg.policy_url",
 					policyUrl);
 		}
 		return false;

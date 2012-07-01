@@ -24,7 +24,6 @@ import org.easymock.classextension.EasyMock;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
-import com.coroptis.coidi.rp.services.impl.AuthReqRegistration10;
 import com.coroptis.coidi.rp.services.impl.AuthReqRegistration11;
 import com.coroptis.coidi.rp.util.AbstractLocalJunitTest;
 
@@ -48,6 +47,7 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 		authReq.process(authenticationRequest, services.getDiscoveryResult(),
 				params);
 
+		assertNull(authenticationRequest.get("sreg.required"));
 		services.verify();
 	}
 
@@ -60,11 +60,12 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 		authReq.process(authenticationRequest, services.getDiscoveryResult(),
 				params);
 
+		assertNull(authenticationRequest.get("sreg.required"));
 		services.verify();
 	}
 
 	public void testProcess_invalid_nameSpace() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
+		params.put(AuthReq.REG_NEW_IDENTITY, "true");
 		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
 				.andReturn(xrdService);
 
@@ -72,11 +73,12 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 		authReq.process(authenticationRequest, services.getDiscoveryResult(),
 				params);
 
+		assertNull(authenticationRequest.get("sreg.required"));
 		services.verify();
 	}
 
 	public void testProcess() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
+		params.put(AuthReq.REG_NEW_IDENTITY, "true");
 		xrdService.getTypes().add(XrdService.TYPE_SREG_1_1);
 		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
 				.andReturn(xrdService);
@@ -88,10 +90,10 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 		services.verify();
 		assertEquals(XrdService.TYPE_SREG_1_1,
 				authenticationRequest.get("openid.ns.sreg"));
-		assertEquals("name", authenticationRequest.get("openid.sreg.required"));
-		assertEquals("email", authenticationRequest.get("openid.sreg.optional"));
+		assertEquals("name", authenticationRequest.get("sreg.required"));
+		assertEquals("email", authenticationRequest.get("sreg.optional"));
 		assertEquals("http://www.example.com/policy-description",
-				authenticationRequest.get("openid.sreg.policy_url"));
+				authenticationRequest.get("sreg.policy_url"));
 	}
 
 	@Override

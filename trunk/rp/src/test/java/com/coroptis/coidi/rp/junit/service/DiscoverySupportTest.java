@@ -1,5 +1,5 @@
 /**
- * Copyright 2012 coroptis.com
+w * Copyright 2012 coroptis.com
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,8 +35,11 @@ public class DiscoverySupportTest extends AbstractLocalJunitTest {
 
 		assertFalse(discoverySupport.isItEmail("kj.kjjk@some-server.com-ll"));
 		assertFalse(discoverySupport.isItEmail("#$kj.kjjk@some-server.com-ll"));
+		assertFalse(discoverySupport
+				.isItEmail("http://localhost:8080/user/juan"));
 		assertFalse(discoverySupport.isItEmail(""));
 		assertFalse(discoverySupport.isItEmail(null));
+
 	}
 
 	public void testIsXri() throws Exception {
@@ -75,6 +78,15 @@ public class DiscoverySupportTest extends AbstractLocalJunitTest {
 				discoverySupport.normalize("https://example.com/"));
 		assertEquals("http://example.com/",
 				discoverySupport.normalize("http://example.com"));
+	}
+
+	public void testIsUrl() throws Exception {
+		assertTrue(discoverySupport.isItUrl("http://www.google.com/a"));
+		assertTrue(discoverySupport.isItUrl("http://www.google.com"));
+		assertTrue(discoverySupport.isItUrl("http://www.google.com/"));
+		assertTrue(discoverySupport.isItUrl("http://www.google.com/a/"));
+		assertTrue(discoverySupport.isItUrl("http://localhost:8080/user/juan"));
+
 	}
 
 	@Override

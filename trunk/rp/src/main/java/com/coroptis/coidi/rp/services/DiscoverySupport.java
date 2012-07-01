@@ -25,6 +25,12 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
  */
 public interface DiscoverySupport {
 
+	static final String EMAIL_PATTERN = "([_A-Za-z0-9-]+)(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})";
+
+	static final String XRI_PATTERN = "^([=@+$!\\(]|xri://).*";
+
+	static final String DOMAIN_SLASH_PATTERN = "^(http://|https://)[^/]*";
+
 	/**
 	 * Try to get and process XRDS document from giver URL.
 	 * 
@@ -47,6 +53,8 @@ public interface DiscoverySupport {
 	 *         return <code>null</code>
 	 */
 	Boolean isItEmail(String email);
+
+	Boolean isItUrl(final String url);
 
 	Boolean isXri(String identifier);
 

@@ -76,12 +76,17 @@ public abstract class AbstractMessage {
 			if (isUrl()) {
 				StringBuilder buff = concatEntries(keyPrefix, "=", "&");
 				String returnTo = get("go_to");
-				if (returnTo.contains("?")) {
-					buff.insert(0, "&");
+				if (returnTo == null) {
+					logger.info("There is no 'go_to' parameter in message '"
+							+ buff.toString() + "'");
 				} else {
-					buff.insert(0, "?");
+					if (returnTo.contains("?")) {
+						buff.insert(0, "&");
+					} else {
+						buff.insert(0, "?");
+					}
+					buff.insert(0, returnTo);
 				}
-				buff.insert(0, returnTo);
 				return buff.toString();
 			} else {
 				return concatEntries(keyPrefix, ":", "\n").toString();

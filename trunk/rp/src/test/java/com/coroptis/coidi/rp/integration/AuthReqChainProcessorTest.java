@@ -41,7 +41,7 @@ public class AuthReqChainProcessorTest extends AbstractIntegrationTest {
 		XrdService service = new XrdService();
 		service.setPriority(2);
 		service.setUrl("http://localhost:8080/");
-		service.getTypes().add(XrdService.TYPE_ATTRIBUTE_EXCHANGE_2_0);
+		service.getTypes().add(XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 		service.getTypes().add(XrdService.TYPE_OPENID_2_0);
 		service.getTypes().add(XrdService.TYPE_PAPE_1_0);
 		service.getTypes().add(XrdService.TYPE_SREG_1_0);

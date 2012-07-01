@@ -55,7 +55,7 @@ public class AssociationServiseImpl implements AssociationServise {
 		Preconditions.checkNotNull(opEndpoint, "opEndpoint");
 		Preconditions.checkNotNull(sessionType, "sessionType");
 		Preconditions.checkNotNull(associationType, "associationType");
-		logger.debug("Creating associatio at '" + opEndpoint + "'");
+		logger.debug("Creating association at '" + opEndpoint + "'");
 
 		AssociationRequest associationRequest = new AssociationRequest();
 		associationRequest.setAssociationType(associationType);

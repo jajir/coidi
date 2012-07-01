@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -34,17 +35,13 @@ import com.coroptis.coidi.rp.services.XrdsService;
 
 public class DiscoverySupportImpl implements DiscoverySupport {
 
-	private static final String EMAIL_PATTERN = "([_A-Za-z0-9-]+)(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})";
-
-	private static final String XRI_PATTERN = "^([=@+$!\\(]|xri://).*";
-
-	private static final String DOMAIN_SLASH_PATTERN = "^(http://|https://)[^/]*";
-
 	private final Pattern patternEmail;
 
 	private final Pattern patternXri;
 
 	private final Pattern patternDomainSlash;
+
+	private final UrlValidator urlValidator;
 
 	@Inject
 	private Logger logger;
@@ -59,6 +56,9 @@ public class DiscoverySupportImpl implements DiscoverySupport {
 		patternEmail = Pattern.compile(EMAIL_PATTERN);
 		patternXri = Pattern.compile(XRI_PATTERN);
 		patternDomainSlash = Pattern.compile(DOMAIN_SLASH_PATTERN);
+		String[] schemes = { "http", "https" };
+		urlValidator = new UrlValidator(schemes, UrlValidator.ALLOW_2_SLASHES
+				+ UrlValidator.ALLOW_LOCAL_URLS + UrlValidator.NO_FRAGMENTS);
 	}
 
 	@Override
@@ -92,6 +92,15 @@ public class DiscoverySupportImpl implements DiscoverySupport {
 		} else {
 			Matcher matcher = patternEmail.matcher(email);
 			return matcher.matches();
+		}
+	}
+
+	@Override
+	public Boolean isItUrl(final String url) {
+		if (url == null) {
+			return false;
+		} else {
+			return urlValidator.isValid(url);
 		}
 	}
 
