@@ -39,8 +39,6 @@ import com.coroptis.coidi.rp.services.AuthReq;
  */
 public class AuthReqRegistration10 implements AuthReq {
 
-	public final static String REG_NEW_IDENTITY = "registration.itIsNewIdentity";
-
 	@Inject
 	private Logger logger;
 
@@ -63,11 +61,11 @@ public class AuthReqRegistration10 implements AuthReq {
 				XrdService.TYPE_SREG_1_0)
 				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
 			logger.debug("Registration extension 1.0 will be applied");
-			authenticationRequest.putIgnoreEmpty("openid.sreg.required",
+			authenticationRequest.putIgnoreEmpty("sreg.required",
 					requiredFields);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.optional",
+			authenticationRequest.putIgnoreEmpty("sreg.optional",
 					optionalFields);
-			authenticationRequest.putIgnoreEmpty("openid.sreg.policy_url",
+			authenticationRequest.putIgnoreEmpty("sreg.policy_url",
 					policyUrl);
 		}
 		return false;

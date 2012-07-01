@@ -31,6 +31,8 @@ import com.coroptis.coidi.rp.services.impl.AuthReqRegistration10;
 import com.coroptis.coidi.rp.services.impl.AuthReqRegistration11;
 import com.coroptis.coidi.rp.services.impl.AuthReqTerminator;
 import com.coroptis.coidi.rp.services.impl.AuthReqUiIcon;
+import com.coroptis.coidi.rp.services.impl.AuthRespDecoderExtension10;
+import com.coroptis.coidi.rp.services.impl.AuthRespSupportImpl;
 import com.coroptis.coidi.rp.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorGoogle;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorHtml;
@@ -61,6 +63,7 @@ public class RpModule {
 		binder.bind(AuthenticationService.class,
 				AuthenticationServiceImpl.class);
 		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
+		binder.bind(AuthRespSupport.class, AuthRespSupportImpl.class);
 	}
 
 	public static DiscoveryProcessor buildRestChainProcessor(
@@ -90,20 +93,31 @@ public class RpModule {
 	public static void contributeAuthReqChainProcessor(
 			OrderedConfiguration<AuthReq> configuration,
 			@Autobuild AuthReqPreconditions authReqPreconditions,
-			@Autobuild AuthReqGoogleAttributeExchange authReqGoogleAttributeExchange,
 			@Autobuild AuthReqOpenId authReqOpenId,
+			@Autobuild AuthReqGoogleAttributeExchange authReqGoogleAttributeExchange,
 			@Autobuild AuthReqUiIcon auReqUiIcon,
 			@Autobuild AuthReqRegistration10 authReqRegistration10,
 			@Autobuild AuthReqRegistration11 authReqRegistration11,
 			@Autobuild AuthReqTerminator authReqTerminator) {
 		configuration.add("authReqPreconditions", authReqPreconditions);
+		configuration.add("authReqOpenId", authReqOpenId);
 		configuration.add("authReqGoogleAttributeExchange",
 				authReqGoogleAttributeExchange);
-		configuration.add("authReqOpenId", authReqOpenId);
 		configuration.add("auReqUiIcon", auReqUiIcon);
 		configuration.add("authReqRegistration10", authReqRegistration10);
 		configuration.add("authReqRegistration11", authReqRegistration11);
 		configuration.add("authReqTerminator", authReqTerminator);
 	}
 
+	public static AuthRespDecoder buildAuthRespDecoderChainProcessor(
+			List<AuthRespDecoder> commands,
+			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+		return chainBuilder.build(AuthRespDecoder.class, commands);
+	}
+
+	public static void contributeAuthRespDecoderChainProcessor(
+			OrderedConfiguration<AuthRespDecoder> configuration,
+			@Autobuild AuthRespDecoderExtension10 respDecoderExtension10) {
+		configuration.add("respDecoderExtension10", respDecoderExtension10);
+	}
 }

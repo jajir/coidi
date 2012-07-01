@@ -33,4 +33,5 @@ public class AuthenticationResponseTest extends TestCase {
 		assertEquals("http://karel.is.com", response.getIdentity());
 	}
 
+
 }

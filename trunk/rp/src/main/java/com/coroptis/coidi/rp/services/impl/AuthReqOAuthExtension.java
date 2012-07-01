@@ -35,7 +35,7 @@ public class AuthReqOAuthExtension implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_ATTRIBUTE_EXCHANGE_2_0)) {
+				XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0)) {
 			authenticationRequest.put("openid.ns.ext2",
 					"http://spec.openid.net/extensions/oauth/1.0");
 			authenticationRequest.put("openid.ext2.consumer", realm);

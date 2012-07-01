@@ -24,10 +24,10 @@ import org.easymock.classextension.EasyMock;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
-import com.coroptis.coidi.rp.services.impl.AuthReqRegistration10;
+import com.coroptis.coidi.rp.services.impl.AuthReqGoogleAttributeExchange;
 import com.coroptis.coidi.rp.util.AbstractLocalJunitTest;
 
-public class AuthReqRegistration10Test extends AbstractLocalJunitTest {
+public class AuthReqGoogleAttributeExchangeTest extends AbstractLocalJunitTest {
 
 	private final static String SERVICE_NAME = "realService";
 
@@ -47,57 +47,14 @@ public class AuthReqRegistration10Test extends AbstractLocalJunitTest {
 		authReq.process(authenticationRequest, services.getDiscoveryResult(),
 				params);
 
-		assertNull(authenticationRequest.get("sreg.required"));
+		assertNull(authenticationRequest.get("openid.ns.ax"));
 		services.verify();
-	}
-
-	public void testProcess_invalid_regNewIdentityParam() throws Exception {
-		xrdService.getTypes().add(XrdService.TYPE_SREG_1_0);
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
-
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
-
-		assertNull(authenticationRequest.get("sreg.required"));
-		services.verify();
-	}
-
-	public void testProcess_invalid_nameSpace() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
-
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
-
-		assertNull(authenticationRequest.get("openid.sreg.required"));
-		services.verify();
-	}
-
-	public void testProcess() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
-		xrdService.getTypes().add(XrdService.TYPE_SREG_1_0);
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
-
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
-
-		services.verify();
-		assertEquals("name", authenticationRequest.get("sreg.required"));
-		assertEquals("email", authenticationRequest.get("sreg.optional"));
-		assertEquals("http://www.example.com/policy-description",
-				authenticationRequest.get("sreg.policy_url"));
 	}
 
 	@Override
 	public void bind(ServiceBinder binder) {
-		binder.bind(AuthReq.class, AuthReqRegistration10.class).withId(
-				SERVICE_NAME);
+		binder.bind(AuthReq.class, AuthReqGoogleAttributeExchange.class)
+				.withId(SERVICE_NAME);
 	}
 
 	@Override
@@ -123,4 +80,5 @@ public class AuthReqRegistration10Test extends AbstractLocalJunitTest {
 		xrdService = null;
 		super.tearDown();
 	}
+
 }

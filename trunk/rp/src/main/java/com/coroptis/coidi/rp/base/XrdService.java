@@ -27,7 +27,7 @@ public class XrdService {
 	private final Set<String> types = new HashSet<String>();
 
 	public static final String TYPE_OPENID_2_0 = "http://specs.openid.net/auth/2.0/server";
-	public static final String TYPE_ATTRIBUTE_EXCHANGE_2_0 = "http://openid.net/srv/ax/1.0";
+	public static final String TYPE_ATTRIBUTE_EXCHANGE_1_0 = "http://openid.net/srv/ax/1.0";
 	public static final String TYPE_UI_POPUP_1_0 = "http://specs.openid.net/extensions/ui/1.0/mode/popup";
 	public static final String TYPE_UI_ICON_1_0 = "http://specs.openid.net/extensions/ui/1.0/icon";
 	public static final String TYPE_PAPE_1_0 = "http://specs.openid.net/extensions/pape/1.0";
