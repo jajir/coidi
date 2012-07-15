@@ -1,0 +1,34 @@
+ ----
+ Introduction
+ ----
+
+OpenID - introduction
+ 
+ Following pages quickly describe OpenID protocol.
+ 
+ Next diagram shows fundamental use case - authenticate. 
+ This allows to RP verify that User's identity is correct.
+ In other words it's about answering question "Is user who say he is?".
+ This verification can't by based on user's claim it have to be verified on OP.  
+
+[uc-authenticate.png] Authenticate use case.
+
+ How it work when user tries to access his user profile on RP site.
+ User is logged on OP but not on RP.
+ 
+[uc-access-rp-logged.png] user access profile page
+
+ [[1]] user tries to access his user profile page, user profile page requires logged user
+
+ [[1]] user is not logged in (or authenticated) on RP so RP ask user for his identity 
+
+ [[1]] user provides his OpenID identity, it could be URL (http://john.somepage.com) or in some cases email
+
+ [[1]] PR based on provided identity find OP and than ask OP to verify claimed identity 
+
+ [[1]] OP confirm that identity belong to user that used it 
+
+ [[1]] RP knows user's identity and can trust it. Because of this RP can provide user's profile page
+ 
+[]
+ 
