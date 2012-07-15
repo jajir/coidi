@@ -2,19 +2,10 @@
  Introduction
  ----
 
-Coidi - introduction
+OpenID - introduction
  
-* High level authentication
+* Authentication - high level
 
- Coidi is implementation of OpendID protocol and related protocol extensions.
- Main goal of this library to easily provide authentication functionality.  
-
- Following diagram shows fundamental use case - authenticate. 
- This allows to RP verify that User's identity is correct.
- In other words it's about answering question "Is user who say he is?".
- This verification can't by based on user's claim it have to be verified on OP.  
-
-[uc-authenticate.png] Authenticate use case.
  
 ** Authenticate use case usage
 
@@ -27,7 +18,7 @@ Coidi - introduction
  
 [openid-role.png] Role of OpenID protocol.
 
-* Authentication in more details
+* Authentication - more details
 
  Previously described use cases are here describe in more details.
 

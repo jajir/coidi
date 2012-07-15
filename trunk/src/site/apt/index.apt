@@ -3,11 +3,13 @@
  ----
 
 What is this Coidi?
+
+
+ Coidi is implementation of OpendID protocol and related protocol extensions.
+ Main goal of this library to easily provide authentication functionality.  
+ It could be used as a component for more complex authentication or authorization systems.
  
- It's implementation of OpenID protocol. It could be used as a component
- for more complex authentication or authorization systems.
- 
- This project can provide to you on-line application Single Sign On.  
+ This project can allows your application accept foreign identities and even provide own identities. 
  
 What problem could be solved with library?
  

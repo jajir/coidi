@@ -32,10 +32,12 @@
 			<item name="Index" href="./index.html" />
 			<item name="Why SSO" href="./why-sso.html" />
 			
-			<item name="Introduction" href="./introduction.html" />
-			<item name="Normalization" href="./normalization.html" />
-			<item name="Discovery" href="./discovery.html" />
-			<item name="Authentication" href="./authentication.html" />
+			<item name="OpenID" href="./openid.html">
+				<item name="Introduction" href="./introduction.html" />
+				<item name="Normalization" href="./normalization.html" />
+				<item name="Discovery" href="./discovery.html" />
+				<item name="Authentication" href="./authentication.html" />
+			</item>
 			<item name="How to integrate" href="./integration.html" >
 				<item name="Relying party" href="./integration-rp.html" />
 				<item name="OpenID provider" href="./integration-op.html" />
