@@ -11,11 +11,13 @@ What is this Coidi?
  
  This project can allows your application accept foreign identities and even provide own identities. 
  
-What problem could be solved with library?
+What problem could be solved with coidi?
  
  * Integration of OpenId into your application
  
  * Creating you own OpenID provider 
+
+[]
 
 Auditorium
 
