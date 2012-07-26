@@ -4,7 +4,7 @@
 
 Integration - RP
 
-* Integration - RP
+* First steps
 
 ** Requirements
 
@@ -14,15 +14,15 @@ Integration - RP
 
 ** Integration steps
 
- * Changes in UI (required) - you should add new form for for entering user's OpenId identificators.
+ [[1]] Changes in UI (required) - you should add new form for for entering user's OpenId identificators.
 	
- * Call OpenId relaying party functions
+ [[1]] Call OpenId relaying party functions
  
- * Persistent nonce store (optionally) - Nonces have to be stored for some limited time.
+ [[1]] Persistent nonce store (optionally) - Nonces have to be stored for some limited time.
  In some cases nonces could hold just in application memory.
  
- * Scheduler (optionally) - All nonces are stored in nonce store.
- Nonce is valid just for limited time after could be removed. 
+ [[1]] Scheduler (optionally) - All nonces are stored in nonce store.
+ Nonce is valid just for limited time. When this time exceed than nonce could be removed. 
  Deleting of stale nonces should be called periodically by some scheduler.  
  
 []
@@ -31,7 +31,9 @@ Integration - RP
  
 [appdeployment-rp-nonce.png] RP with implemented nonce store 
 
- In most cases is scheduler part of both nodes. 
+ In most cases is scheduler in both nodes.
+ 
+* Integration steps 
 
 ** UI changes
 
@@ -46,6 +48,9 @@ Integration - RP
 
 ** Persistent nonce store
  
+ As was mentioned nonces are unique string that verify that authentication was used just one time.
+ When nonce come for first time to RP than is stored.
+ Next time when it come whole message is rejected.  
  Simply says it's just place where are nonces stored for some limited time (usually 30 minutes).
  When you run you application as single node that you can store nonces in memory.
  This approach allows use nonces more that once when your application is restarted. In that case you can use bundled in memory nonce store.
@@ -69,6 +74,15 @@ Integration - RP
 
  Coidi doesn't provide concrete implementation, because each application have it's special requirements 
  for drivers, library that can't by fulfilled by coidi library.
+
+** Scheduler
+
+ When is used some kind of persistent store for nonces than this nonces after some time become stale.
+ Stale nonces could be removed. Process of removing staled nonces could be run periodically by some scheduler.
+ Scheduler should be part of production application.
+ Coidi library scheduler doesn't support because scheduler is usually part of application server 
+
+* Integration od code
  
 TODO add some examples
 

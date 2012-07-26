@@ -6,7 +6,6 @@ OpenID - introduction
  
 * Authentication - high level
 
- 
 ** Authenticate use case usage
 
  When user try to access some protected page as user profile on RP than RP have to get user's identity.

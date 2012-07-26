@@ -1,1 +1,19 @@
 body{width:960px;}
+#leftColumn, #navcolumn {background-color: #ffffff;}
+#breadcrumbs {
+height: 13px;
+background-image: none;
+padding: 5px 10px 5px 20px;
+margin-bottom:10px;
+border-bottom-color: #CCC;
+border-bottom-style: solid;
+border-bottom-width: 1px;
+}
+
+a.externalLink, a.externalLink:link, a.externalLink:visited, a.externalLink:active, a.externalLink:hover {
+padding-right: 0px;
+}
+
+#navcolumn ul {
+	margin: 0px 0 5px -0em;
+}

@@ -3,8 +3,14 @@
  ----
 
 OpenID - introduction
- 
- Following pages quickly describe OpenID protocol.
+
+ Following page quickly describe OpenID protocol.
+
+* Main use case
+
+ OpenID protocol help to solve one use case - authenticate.
+
+** Authenticate use case
  
  Next diagram shows fundamental use case - authenticate. 
  This allows to RP verify that User's identity is correct.
@@ -12,6 +18,8 @@ OpenID - introduction
  This verification can't by based on user's claim it have to be verified on OP.  
 
 [uc-authenticate.png] Authenticate use case.
+
+** Authenticate process description
 
  How it work when user tries to access his user profile on RP site.
  User is logged on OP but not on RP.
@@ -32,3 +40,23 @@ OpenID - introduction
  
 []
  
+* OpenID extensions
+
+ Extensions helps to provide mode informations about user to RP or helps to improve user experience with OpenID.   
+
+** Protocol extensions
+ 
+ Main part of extensions use extension mechanism of of OpenID protocol.
+ This extensions transfer move information during authentication process from RP to OP and in opposite direction.  
+
+** Other extensions
+ 
+  There are also extensions which are not compatible with OpenID protocol and still are important.
+  For example it's integration google account in OpenID.
+  Google identified user not by URL which is valid user identifier but with email address.
+  Your Google account is john@google.com not http://john.google.com.
+  When RP have to support google account then have to discovery process have to extended to resolve google accounts.
+  
+  
+    
+
