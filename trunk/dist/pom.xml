@@ -7,9 +7,99 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>dist</artifactId>
-	<packaging>pom</packaging>
-	<name>Implementation of OpenID</name>
+	<packaging>jar</packaging>
+	<name>Create Coidi distribution</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty</artifactId>
+			<version>6.1.25</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r09</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>${groupid}</groupId>
+			<artifactId>test-rp</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>${groupid}</groupId>
+			<artifactId>test-op</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>${basedir}/src/main/assembly/coidi-dist.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<inherited>true</inherited>
+				<executions>
+					<execution>
+						<id>build-version</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<!-- this task replaces version placeholder in build.xml -->
+							<tasks>
+								<echo>Property replacement started </echo>
+								<copy todir="${project.build.directory}/dist">
+									<fileset dir="${basedir}/src/dist">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+								<replace dir="${project.build.directory}/dist" token="${coidi.version}"
+									value="${project.version}">
+									<include name="**/*.sh" />
+								</replace>
+								<echo>Property replacement is done</echo>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>fix-crlf</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<tasks>
+								<fixcrlf srcdir="${project.build.directory}" includes="**/*sh,**/*.properties"
+									eol="unix" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

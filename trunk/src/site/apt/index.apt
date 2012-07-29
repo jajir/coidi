@@ -30,4 +30,35 @@ Auditorium
  * System analysts to get use cases overview proded by OpenID 
 
 []
+
+Development status
+
+ Following table show how are supported particular features:
+ 
+*--------+------+------+------+
+|Feature|Implementen on RP| Implemented on OP|Description
+*--------+------+------+------+
+OpenID specification|yes|yes|
+*--------+------+------+------+
+|Normalization|yes|not meaningful|
+*--------+------+------+------+
+|XRI discovery|yes|yes|
+*--------+------+------+------+
+|Yadis protocol|yes|yes|
+*--------+------+------+------+
+|Google federated login|yes|not meaningful|
+*--------+------+------+------+
+|Extension Registration 1.0|yes|no|
+*--------+------+------+------+
+|Extension Registration 1.1|yes|no|
+*--------+------+------+------+
+|Extension OAuth 1.1|yes|no|
+*--------+------+------+------+
+|Extension UI Icon|yes|no|
+*--------+------+------+------+
+|Attribute exchange extension|yes|no|
+*--------+------+------+------+
+Development status
+
+
  
