@@ -5,17 +5,18 @@
 What is this Coidi?
 
 
- Coidi is implementation of OpendID protocol and related protocol extensions.
- Main goal of this library to easily provide authentication functionality.  
- It could be used as a component for more complex authentication or authorization systems.
+ Open source implementation of OpenID.
+ Aim is to create easy to integrate library that helps adopt OpenID in your product.
+ Coidi include OpenID extensions. For example for integration with Google federated login, registering extension and others.
+ Coidi contain support for OpenID provider part and relaying party.
  
- This project can allows your application accept foreign identities and even provide own identities. 
+ Coidi allows to your application accept foreign identities and even provide own identities. 
  
 What problem could be solved with coidi?
  
- * Integration of OpenId into your application
+ * Allows user access you site with OpenID identifier (e.g. allow users to login to your application with google account) 
  
- * Creating you own OpenID provider 
+ * Creating you own OpenID provider - provide your own identities 
 
 []
 
@@ -27,38 +28,48 @@ Auditorium
  
  * Application architect to get information about OpenID integration 
 
- * System analysts to get use cases overview proded by OpenID 
+ * System analysts to get use cases overview provided by OpenID 
 
 []
 
 Development status
 
- Following table show how are supported particular features:
+ Following table show how are supported particular features implemented in latest coidi version:
  
 *--------+------+------+------+
-|Feature|Implementen on RP| Implemented on OP|Description
+||Feature||Implementen on RP|| Implemented on OP||Descriptions||
 *--------+------+------+------+
-OpenID specification|yes|yes|
+|OpenID specification|yes|yes|Core functionality that allows verify users identity| 
 *--------+------+------+------+
-|Normalization|yes|not meaningful|
+|Normalization|yes|not meaningful|Process when user supplied id is verified and formated|
 *--------+------+------+------+
-|XRI discovery|yes|yes|
+|XRI discovery|yes|yes|Allows to find OP based on user provided XRI identifier|
 *--------+------+------+------+
-|Yadis protocol|yes|yes|
+|Yadis protocol|yes|yes|Protocol defining how to get information about provided serviced from OP|
 *--------+------+------+------+
-|Google federated login|yes|not meaningful|
+|Google federated login|yes|not meaningful|Allows use google email in RP|
 *--------+------+------+------+
-|Extension Registration 1.0|yes|no|
+|Extension Registration 1.0|yes|no| |
 *--------+------+------+------+
-|Extension Registration 1.1|yes|no|
+|Extension Registration 1.1|yes|no| |
 *--------+------+------+------+
-|Extension OAuth 1.1|yes|no|
+|Extension OAuth 1.1|yes|no| |
 *--------+------+------+------+
-|Extension UI Icon|yes|no|
+|Extension UI Icon|yes|no| |
 *--------+------+------+------+
-|Attribute exchange extension|yes|no|
+|Attribute exchange extension|yes|no|Provide extra attributes to RP|
 *--------+------+------+------+
 Development status
+
+ There are also few unsorted tasks:
+ 
+ * finish example of RP integration in doc
+ 
+ * add typical use cases where could coidi help 
+ 
+[]
+ 
+   
 
 
  

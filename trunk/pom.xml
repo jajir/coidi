@@ -203,6 +203,12 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<mailingLists>
+		<mailingList>
+			<name>general coidi discussion</name>
+			<post>coidi-general@lists.sourceforge.net</post>
+		</mailingList>
+	</mailingLists>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
