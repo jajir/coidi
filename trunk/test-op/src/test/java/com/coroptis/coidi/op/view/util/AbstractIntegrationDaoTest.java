@@ -20,19 +20,17 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.hibernate.HibernateSessionManager;
-import org.apache.tapestry5.hibernate.HibernateSessionSource;
 import org.apache.tapestry5.test.PageTester;
 import org.dbunit.DatabaseTestCase;
-import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
 import com.coroptis.coidi.core.services.CoreModule;
+import com.coroptis.coidi.op.services.OpModule;
 import com.coroptis.coidi.test.MockIDatabaseConnection;
 import com.google.common.base.Preconditions;
 
@@ -64,7 +62,8 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 				+ System.getProperty("server.role"));
 
 		pageTester = new PageTester(T5_APPLICATION_PACKAGE,
-				T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class);
+				T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class,
+				OpModule.class);
 	}
 
 	/**
@@ -72,8 +71,6 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 	 * then access pages, clink on links and post forms.
 	 */
 	private static PageTester pageTester;
-
-	private MockIDatabaseConnection mockIDatabaseConnection;
 
 	/**
 	 * Get connections to real database.
@@ -83,16 +80,9 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 	 */
 	@Override
 	protected IDatabaseConnection getConnection() throws Exception {
-		if (mockIDatabaseConnection == null) {
-			mockIDatabaseConnection = new MockIDatabaseConnection(getService(
-					HibernateSessionSource.class).getSessionFactory());
-			mockIDatabaseConnection.getConfig().setProperty(
-					DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
-					new MySqlDataTypeFactory());
-		}
-		Preconditions.checkNotNull(mockIDatabaseConnection,
-				"mockIDatabaseConnection");
-		return mockIDatabaseConnection;
+		Preconditions.checkNotNull(pageTester.getRegistry(), "registry");
+		Session session = pageTester.getRegistry().getService(Session.class);
+		return new MockIDatabaseConnection(session.getSessionFactory());
 	}
 
 	/**
@@ -146,9 +136,10 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		HibernateSessionManager hibernateSessionManager = getService(HibernateSessionManager.class);
-		Session session = hibernateSessionManager.getSession();
-		session.beginTransaction();
+		// HibernateSessionManager hibernateSessionManager =
+		// getService(HibernateSessionManager.class);
+		// Session session = hibernateSessionManager.getSession();
+		// session.beginTransaction();
 	}
 
 	@Override
