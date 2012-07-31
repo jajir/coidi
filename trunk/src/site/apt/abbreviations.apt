@@ -9,6 +9,8 @@ User abbreviations
   Because in this documentation are abbreviations widely used here should be this abbreviations shortly described.
   
 *--------+------+
+||Name   || Description||
+*--------+------+
 |GET     | GET HTTP request defined in RFC 2616 {{http://www.ietf.org/rfc/rfc2616.txt}}|
 *--------+------+
 |HEAD    | HEAD HTTP request defined in RFC 2616 {{http://www.ietf.org/rfc/rfc2616.txt}}|

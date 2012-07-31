@@ -31,6 +31,7 @@
 		<menu name="Coidi">
 			<item name="Index" href="./index.html" />
 			<item name="Why SSO" href="./why-sso.html" />
+			<item name="How to start" href="./how-to-start.html" />
 			
 			<item name="OpenID" href="./openid.html">
 				<item name="Introduction" href="./introduction.html" />

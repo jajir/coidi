@@ -4,4 +4,27 @@
 
 How to start
  
- ???
+ How to start:
+ 
+ * Java 1.6 is required
+ 
+ * apache maven 2
+ 
+ * Disk space about 100Mb
+ 
+ * Go to https://sourceforge.net/projects/coidi/ and get access to source codes (currently SVN repo)
+ 
+ * Check out project
+ 
+ * You can start play with project
+ 
+[]
+
+Where to continue
+
+ * More information could be get form this documentation and form project mail list coidi-general@lists.sourceforge.net.
+ 
+ * I you have problem please create trouble ticket at https://sourceforge.net/p/coidi/tickets/.
+ 
+[]
+
