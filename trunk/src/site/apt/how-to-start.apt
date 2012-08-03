@@ -4,9 +4,13 @@
 
 How to start
 
- Here will be described how to start play with coidi testing OP and RP. 
+ Here will be described how to start play with coidi testing OP and RP and how to start play with coidi in your project.
 
-* Requirement
+* How to run coidi testing RP server and OP server
+
+ Installing of this two servers allows you to test authorization process between OP and RP.  
+
+** Requirement
 
  * java 1.6
  
@@ -18,7 +22,7 @@ How to start
  
 []
 
-* Install steps
+** Install steps
 
  * Download latest distribution package from {{https://sourceforge.net/projects/coidi/files/}}  
  
@@ -49,3 +53,63 @@ How to start
    
 []
  
+ 
+* How to use coidi library
+
+** Requirement
+
+ * java 1.6
+ 
+ * apache maven at least 2.0
+ 
+ * about 100Mb of free space
+ 
+ * free ports 8080 and 8081 for testing
+
+[]
+
+** Integration step
+
+ * include new repository specification in your local settings.xml maven file:
+ 
++----+
+<profile>
+	<id>default</id>
+	<repositories>
+		<repository>
+			<id>koroptev-snapshots</id>
+			<url>https://oss.sonatype.org/content/groups/public/cz/coroptis/coidi/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		
+		...
+		
+	</repositories>
+</profile>
++----+
+
+ * include new dependency in your pom.xml
+ 
++----+
+<dependency>
+	<groupId>cz.coroptis.coidi</groupId>
+	<artifactId>rp</artifactId>
+	<version>${coidi.version}</version>
+	<scope>compile</scope>
+</dependency>
++----+
+
+ * Now you should be able to use coidi API.
+ 
+ * for more see integration chapter.
+
+[]
+  
+ 
+[]
