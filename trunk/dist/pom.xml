@@ -36,6 +36,7 @@
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
+		<!-- <dependency> </dependency> -->
 	</dependencies>
 
 	<build>
@@ -97,6 +98,31 @@
 						<goals>
 							<goal>run</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${groupid}</groupId>
+									<artifactId>coidi</artifactId>
+									<version>${project.version}</version>
+									<type>zip</type>
+									<classifier>site</classifier>
+									<overWrite>true</overWrite>
+									<outputDirectory>target/dist/doc</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
