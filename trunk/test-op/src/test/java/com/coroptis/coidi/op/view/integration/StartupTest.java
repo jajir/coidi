@@ -15,20 +15,27 @@
  */
 package com.coroptis.coidi.op.view.integration;
 
+import java.io.File;
+import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.UserService;
 import com.coroptis.coidi.op.services.XrdsService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
+import com.google.common.io.Files;
 
 public class StartupTest extends AbstractIntegrationDaoTest {
 
 	public void testStartup() throws Exception {
 		XrdsService xrdsService = getService(XrdsService.class);
-
 		assertEquals("http://localhost:8080/userxrds/zdenek",
 				xrdsService.getXrdsLocation("zdenek"));
 	}
@@ -37,6 +44,28 @@ public class StartupTest extends AbstractIntegrationDaoTest {
 		UserService userService = getService(UserService.class);
 
 		assertNull(userService.login("karel", "kachnicka"));
+	}
+
+	public void testLoadInitialData() throws Exception {
+		/**
+		 * Following code is copied from OpModule
+		 */
+		Session session = getService(Session.class);
+		for (final String line : Files.readLines(new File(
+				"src/main/resources/data.sql"), Charset.forName("UTF-8"))) {
+			if (line.length() > 0) {
+				logger.debug("executing: " + line);
+				session.doWork(new Work() {
+
+					@Override
+					public void execute(Connection connection)
+							throws SQLException {
+						connection.createStatement().execute(line);
+						connection.commit();
+					}
+				});
+			}
+		}
 	}
 
 	public void testDispatchAuthentication() throws Exception {

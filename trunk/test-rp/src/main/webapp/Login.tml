@@ -31,18 +31,41 @@
 	   		</div>
         </t:radiogroup>
    		<div class="row">
+	   		<t:label for="simpleRegistrationExtension"/>
+			<t:checkbox t:id="simpleRegistrationExtension" t:mixins="triggerfragment" t:invert="false" fragment="sreg"/>
+   		</div>
+		<t:formfragment t:id="sreg" visible="simpleRegistrationExtension">
+			<table>
+				<tr>
+					<td>Property name</td>
+					<td>Required</td>
+					<td>Optinal</td>
+				</tr>
+				<t:loop index="index" source="0..8">
+					<tr>
+						<td>${sregMsg}</td>
+						<td><t:checkbox t:id="sregReq" /></td>
+						<td><t:checkbox t:id="sregOpt"/></td>
+					</tr>
+				</t:loop>
+			</table>
+	   		<div class="row">
+	   			
+	   		</div>
+		</t:formfragment>
+   		<div class="row">
    			<span class="label">
 				<t:pageLink page="index">Back</t:pageLink>
    			</span>
    			<t:submit value="Login"/>
 		</div>
-		<div>
+   	</t:form>
+	<div>
 		<h3>Identities for testing</h3>
 		This identities could be used as 'User Supplied Id' for testing purposes
 		<ul>
 			<li>http://localhost:8080/user/juan  (qwe/qwe)</li>
 			<li>http://localhost:8080/user/kraken</li>
 		</ul>
-		</div>
-   	</t:form>
+	</div>
 </html>

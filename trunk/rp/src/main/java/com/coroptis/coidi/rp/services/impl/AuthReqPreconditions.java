@@ -20,9 +20,9 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 
@@ -43,14 +43,14 @@ public class AuthReqPreconditions implements AuthReq {
 		 * Look for OP identifier element
 		 */
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_OPENID_2_0)) {
+				OpenIdNs.TYPE_OPENID_2_0)) {
 			return false;
 		} else {
 			/**
 			 * Look for Claimed identifier element
 			 */
 			if (discoveryResult.getPreferedService().idPresent(
-					XrdService.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0)) {
+					OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0)) {
 				return false;
 			} else {
 				logger.info("Discovery process failed, found XRDS document doens't contains"

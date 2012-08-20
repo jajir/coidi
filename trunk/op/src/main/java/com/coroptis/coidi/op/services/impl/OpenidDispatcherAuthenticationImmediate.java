@@ -28,7 +28,10 @@ import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
+import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 public class OpenidDispatcherAuthenticationImmediate implements
@@ -48,6 +51,12 @@ public class OpenidDispatcherAuthenticationImmediate implements
 
 	@Inject
 	private SigningService signingService;
+
+	@Inject
+	private AuthenticationProcessor authenticationProcessor;
+
+	@Inject
+	private IdentityService identityService;
 
 	@Override
 	public AbstractMessage process(Map<String, String> requestParams) {
@@ -80,9 +89,17 @@ public class OpenidDispatcherAuthenticationImmediate implements
 			response.setSigned("assoc_handle,identity,nonce,return_to");
 			response.setSignature(signingService.sign(response, association));
 			response.put("go_to", authenticationRequest.getReturnTo());
+
+			Identity identity = identityService.getById(authenticationRequest
+					.getIdentity());
+			if (identity == null) {
+				// negative response
+			}
+
+			authenticationProcessor.process(authenticationRequest, response,
+					identity);
 			return response;
 		}
 		return null;
 	}
-
 }

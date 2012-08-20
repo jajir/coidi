@@ -4,10 +4,10 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.rp.base.AuthRespExtension;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthenticationService;
 import com.coroptis.coidi.rp.util.AbstractIntegrationTest;
 
@@ -26,7 +26,7 @@ public class ProcessAuthResponseTest extends AbstractIntegrationTest {
 		Map<String, AuthRespExtension> resp = authenticationService
 				.generateResponse(map);
 		logger.debug(resp.size());
-		AuthRespExtension ex = resp.get(XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		AuthRespExtension ex = resp.get(OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 		assertNotNull(ex);
 		logger.debug(ex.getValueForName("email"));
 		assertEquals("kachna@gmail.com", ex.getValueForName("email"));
@@ -40,7 +40,7 @@ public class ProcessAuthResponseTest extends AbstractIntegrationTest {
 		Map<String, AuthRespExtension> resp = authenticationService
 				.generateResponse(new AuthenticationResponse(map));
 		logger.debug(resp.size());
-		AuthRespExtension ex = resp.get(XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		AuthRespExtension ex = resp.get(OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 		assertNotNull(ex);
 		logger.debug(ex.getValueForName("email"));
 		assertEquals("kachna@gmail.com", ex.getValueForName("email"));

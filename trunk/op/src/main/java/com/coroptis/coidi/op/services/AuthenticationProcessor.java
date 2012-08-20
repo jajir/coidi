@@ -15,32 +15,23 @@
  */
 package com.coroptis.coidi.op.services;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
+ * Interface define chain of commands that process incoming authentication
+ * request and helps produce authentication respose.
+ * <p>
+ * Each parts of chain of command change response, only terminator return non
+ * null value.
+ * </p>
  * 
- * @author jan
+ * @author jirout
  * 
  */
-public interface IdentityService {
+public interface AuthenticationProcessor {
 
-	/**
-	 * Get identity by it's name. Name is unique within OP.
-	 * 
-	 * @param idIdentity
-	 *            required idenitity's name (id)
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	Identity getIdentityByName(String idIdentity);
-
-	/**
-	 * Get identity by it's id. Id is composed 'op.idenity.prefix'/name.
-	 * 
-	 * @param id
-	 *            required identity id
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	Identity getById(String id);
+	AbstractMessage process(AuthenticationRequest authenticationRequest,
+			AbstractMessage response, Identity identity);
 }

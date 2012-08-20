@@ -62,14 +62,17 @@ public class DiscoverySupportImpl implements DiscoverySupport {
 	}
 
 	@Override
-	public DiscoveryResult getXrdsDocument(final String xrdsDocumentUrl)
-			throws AuthenticationProcessException {
+	public DiscoveryResult getXrdsDocument(final String xrdsDocumentUrl,
+			final String claimedId) throws AuthenticationProcessException {
 		try {
 			HttpGet httpget = new HttpGet(xrdsDocumentUrl);
 			httpget.setHeader("Accept", "application/xrds+xml");
 			HttpResponse resp = httpService.getHttpClient().execute(httpget);
-			return xrdsService.extractDiscoveryResult(EntityUtils.toString(resp
-					.getEntity()));
+			DiscoveryResult out = xrdsService
+					.extractDiscoveryResult(EntityUtils.toString(resp
+							.getEntity()));
+			out.setClaimedId(claimedId);
+			return out;
 		} catch (IllegalArgumentException e) {
 			logger.error(e.getMessage(), e);
 			throw new AuthenticationProcessException(

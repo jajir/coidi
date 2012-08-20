@@ -36,12 +36,14 @@ public interface DiscoverySupport {
 	 * 
 	 * @param xrdsDocumentUrl
 	 *            required XRDS document URL
+	 * @param claimedId
+	 *            required claimed user's id
 	 * @return resolved XRDS document
 	 * @throws AuthenticationProcessException
 	 *             When exception occurs during obtaining discovery result than
 	 *             this exception with proper description is throws
 	 */
-	DiscoveryResult getXrdsDocument(String xrdsDocumentUrl)
+	DiscoveryResult getXrdsDocument(String xrdsDocumentUrl, String claimedId)
 			throws AuthenticationProcessException;
 
 	/**

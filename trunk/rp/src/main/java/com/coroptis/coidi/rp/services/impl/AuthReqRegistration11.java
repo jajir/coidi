@@ -21,9 +21,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
 /**
@@ -39,14 +39,6 @@ public class AuthReqRegistration11 implements AuthReq {
 	private Logger logger;
 
 	@Inject
-	@Symbol("common.extension.registration.requiredFields")
-	private String requiredFields;
-
-	@Inject
-	@Symbol("common.extension.registration.optionalFields")
-	private String optionalFields;
-
-	@Inject
 	@Symbol("common.extension.registration.policyUrl")
 	private String policyUrl;
 
@@ -54,17 +46,15 @@ public class AuthReqRegistration11 implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_SREG_1_1)
-				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
+				OpenIdNs.TYPE_SREG_1_1)
+				&& OpenIdNs.TYPE_SREG_1_1.equals(parameters.get("sreg.ns"))) {
 			logger.debug("Registration extension 1.1 will be applied");
-			authenticationRequest.put("openid.ns.sreg",
-					XrdService.TYPE_SREG_1_1);
+			authenticationRequest.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
 			authenticationRequest.putIgnoreEmpty("sreg.required",
-					requiredFields);
+					parameters.get("sreg.required"));
 			authenticationRequest.putIgnoreEmpty("sreg.optional",
-					optionalFields);
-			authenticationRequest.putIgnoreEmpty("sreg.policy_url",
-					policyUrl);
+					parameters.get("sreg.optional"));
+			authenticationRequest.putIgnoreEmpty("sreg.policy_url", policyUrl);
 		}
 		return false;
 	}

@@ -48,6 +48,19 @@ public class UserDaoTest extends AbstractDaoTest {
 		assertNull(ret);
 	}
 
+	public void testGetById() throws Exception {
+		User ret = dao.getById(1);
+
+		assertNotNull(ret);
+		assertEquals("Jane", ret.getName());
+	}
+
+	public void testGetById_noSuchUser() throws Exception {
+		User ret = dao.getById(786876);
+
+		assertNull(ret);
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

@@ -18,15 +18,22 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
+
 import com.coroptis.coidi.op.services.AssociationService;
 
 public class AssociationServiceImpl implements AssociationService {
+
+	@Inject
+	@Symbol("op.nonce.timeToLiveInSeconds")
+	private Integer timeToLiveInSeconds;
 
 	@Override
 	public Date getTimeToLive() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
-		cal.add(Calendar.MINUTE, 30);
+		cal.add(Calendar.SECOND, timeToLiveInSeconds);
 		return cal.getTime();
 	}
 

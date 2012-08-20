@@ -4,6 +4,9 @@
 	</openid>
 	<common>
 		<property name="return_to">http://localhost:8081/</property>
+		<property name="extension.registration.requiredFields">name</property>
+		<property name="extension.registration.optionalFields">email</property>
+		<property name="extension.registration.policyUrl">http://www.trainindex.com/</property>
 	</common>
 	<!-- 
 	<proxy>

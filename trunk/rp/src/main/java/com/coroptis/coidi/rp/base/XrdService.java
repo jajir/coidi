@@ -18,23 +18,17 @@ package com.coroptis.coidi.rp.base;
 import java.util.HashSet;
 import java.util.Set;
 
-public class XrdService {
+import com.coroptis.coidi.OpenIdNs;
+
+public class XrdService implements OpenIdNs {
 
 	private Integer priority;
 
 	private String url;
 
-	private final Set<String> types = new HashSet<String>();
+	private String localId;
 
-	public static final String TYPE_OPENID_2_0 = "http://specs.openid.net/auth/2.0/server";
-	public static final String TYPE_ATTRIBUTE_EXCHANGE_1_0 = "http://openid.net/srv/ax/1.0";
-	public static final String TYPE_UI_POPUP_1_0 = "http://specs.openid.net/extensions/ui/1.0/mode/popup";
-	public static final String TYPE_UI_ICON_1_0 = "http://specs.openid.net/extensions/ui/1.0/icon";
-	public static final String TYPE_PAPE_1_0 = "http://specs.openid.net/extensions/pape/1.0";
-	public static final String TYPE_SREG_1_0 = "http://openid.net/sreg/1.0";
-	public static final String TYPE_SREG_1_1 = "http://openid.net/sreg/1.1";
-	public static final String TYPE_CLAIMED_IDENTIFIER_ELEMENT_1_0 = "http://openid.net/signon/1.0";
-	public static final String TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0 = "http://specs.openid.net/auth/2.0/signon";
+	private final Set<String> types = new HashSet<String>();
 
 	public Boolean idPresent(String serviceType) {
 		return types.contains(serviceType);
@@ -79,6 +73,21 @@ public class XrdService {
 	 */
 	public Set<String> getTypes() {
 		return types;
+	}
+
+	/**
+	 * @return the localID
+	 */
+	public String getLocalId() {
+		return localId;
+	}
+
+	/**
+	 * @param localID
+	 *            the localID to set
+	 */
+	public void setLocalId(String localID) {
+		this.localId = localID;
 	}
 
 }

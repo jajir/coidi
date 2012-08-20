@@ -18,8 +18,12 @@ package com.coroptis.coidi.op.view.pages;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
+import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.XrdsService;
 import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 
@@ -32,17 +36,38 @@ import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 public class User { // NO_UCD
 
 	@Inject
+	private Logger logger;
+
+	@Inject
+	private IdentityService identityService;
+
+	@Inject
 	private XrdsService xrdsService;
 
-	@Property
+	@Inject
+	private Request request;
+
 	private String userName;
+
+	@Property
+	private Identity identity;
 
 	StreamResponse onActivate(final String userName) {
 		this.userName = userName;
+		logger.debug("Requested identity id '" + userName + "'");
 		if (userName == null) {
-			new CoidiException("user not found");
+			throw new CoidiException("user name '" + userName + "' is null");
 		}
-		return new XrdsStreamResponse(xrdsService.getDocument(userName));
+		identity = identityService.getIdentityByName(userName);
+		if (identity == null) {
+			throw new CoidiException("identity '" + userName + "' is null");
+		}
+		if (request.getHeader("Accept") != null
+				&& request.getHeader("Accept").toString()
+						.indexOf("application/xrds+xml") >= 0) {
+			return new XrdsStreamResponse(xrdsService.getDocument(userName));
+		}
+		return null;
 	}
 
 	String onPassivate() {

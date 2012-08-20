@@ -15,8 +15,12 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.tapestry5.ioc.ServiceBinder;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
@@ -34,11 +38,30 @@ public class AuthenticationServiceTest extends BaseJunitTest {
 		request.setIdentity("http://www.oid.com/user/karel");
 		assertTrue(service.isAuthenticationRequest(request));
 	}
-	
+
 	public void testIsAuthenticationRequest_noIdent() throws Exception {
 		AuthenticationRequest request = new AuthenticationRequest();
 		request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
 		assertFalse(service.isAuthenticationRequest(request));
+	}
+
+	public void testGetNameSpace() throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("openid.ns.ax", OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		AuthenticationRequest request = new AuthenticationRequest(map);
+		String ret = service.getNameSpace(request,
+				OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+
+		assertEquals("ax", ret);
+	}
+
+	public void testGetNameSpace_noSuchNameSpace() throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		AuthenticationRequest request = new AuthenticationRequest(map);
+		String ret = service.getNameSpace(request,
+				OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+
+		assertNull(ret);
 	}
 
 	@Override

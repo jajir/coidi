@@ -13,34 +13,25 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.services.impl;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 
 /**
+ * Class just return back already processes authentication response.
  * 
- * @author jan
+ * @author jirout
  * 
  */
-public interface IdentityService {
+public class AuthenticationFilterTerminator implements AuthenticationProcessor {
 
-	/**
-	 * Get identity by it's name. Name is unique within OP.
-	 * 
-	 * @param idIdentity
-	 *            required idenitity's name (id)
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	Identity getIdentityByName(String idIdentity);
+	@Override
+	public AbstractMessage process(AuthenticationRequest authenticationRequest,
+			AbstractMessage response, Identity identity) {
+		return response;
+	}
 
-	/**
-	 * Get identity by it's id. Id is composed 'op.idenity.prefix'/name.
-	 * 
-	 * @param id
-	 *            required identity id
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	Identity getById(String id);
 }

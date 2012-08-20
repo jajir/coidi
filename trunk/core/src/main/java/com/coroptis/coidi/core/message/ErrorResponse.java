@@ -23,6 +23,8 @@ public class ErrorResponse extends AbstractOpenIdResponse {
 
 	public final static String CONTACT = "contact";
 
+	public final static String REFERENCE = "reference";
+
 	public ErrorResponse(final Boolean isUrl) {
 		super();
 		setUrl(isUrl);
@@ -63,8 +65,16 @@ public class ErrorResponse extends AbstractOpenIdResponse {
 		return get(CONTACT);
 	}
 
-	public void setContact(String error) {
-		put(CONTACT, error);
+	public void setContact(String contact) {
+		put(CONTACT, contact);
+	}
+
+	public String getReference() {
+		return get(REFERENCE);
+	}
+
+	public void setReference(String refrence) {
+		put(REFERENCE, refrence);
 	}
 
 }
