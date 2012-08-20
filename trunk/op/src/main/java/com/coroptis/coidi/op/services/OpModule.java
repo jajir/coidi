@@ -53,6 +53,8 @@ import com.coroptis.coidi.op.dao.impl.IdentityDaoImpl;
 import com.coroptis.coidi.op.dao.impl.StatelessModeNonceDaoImpl;
 import com.coroptis.coidi.op.dao.impl.UserDaoImpl;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
+import com.coroptis.coidi.op.services.impl.AuthenticationFilterSreg10;
+import com.coroptis.coidi.op.services.impl.AuthenticationFilterTerminator;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
@@ -151,6 +153,29 @@ public class OpModule {// NO_UCD
 				openIdDispatcherCheckAuthentication);
 		configuration.add("openIdDispatcherTerminator",
 				openIdDispatcherTerminator);
+	}
+
+	/**
+	 * Chain of commands process authentication response.
+	 * 
+	 * @param commands
+	 * @param chainBuilder
+	 * @return
+	 */
+	public static AuthenticationProcessor buildAuthenticationProcessor(
+			List<AuthenticationProcessor> commands,
+			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+		return chainBuilder.build(AuthenticationProcessor.class, commands);
+	}
+
+	public static void contributeAuthenticationProcessor(
+			OrderedConfiguration<AuthenticationProcessor> configuration,
+			@Autobuild AuthenticationFilterSreg10 authenticationFilterSreg10,
+			@Autobuild AuthenticationFilterTerminator authenticationFilterTerminator) {
+		configuration.add("authenticationFilterSreg10",
+				authenticationFilterSreg10);
+		configuration.add("authenticationFilterTerminator",
+				authenticationFilterTerminator);
 	}
 
 	@Match("*Dao")

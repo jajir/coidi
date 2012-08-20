@@ -23,7 +23,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,7 +37,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NonVisual
-	@Column(name="id_user")
+	@Column(name = "id_user")
 	private Integer idUser;
 
 	@Column(unique = true, nullable = false, length = 50)
@@ -47,8 +46,7 @@ public class User {
 	@Column(nullable = false, length = 50)
 	private String password;
 
-	 @OneToMany(cascade = CascadeType.ALL)
-	 @JoinTable()
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Identity> identities;
 
 	@Override

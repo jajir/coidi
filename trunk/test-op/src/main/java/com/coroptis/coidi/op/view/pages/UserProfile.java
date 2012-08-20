@@ -15,8 +15,10 @@
  */
 package com.coroptis.coidi.op.view.pages;
 
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
+import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.util.UserSession;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
@@ -33,6 +35,10 @@ public class UserProfile { // NO_UCD
 	@SessionState
 	private UserSession userSession;
 
+	@SuppressWarnings("unused")
+	@Property
+	private Identity identity;
+	
 	public User getUser() {
 		return userSession.getUser();
 	}

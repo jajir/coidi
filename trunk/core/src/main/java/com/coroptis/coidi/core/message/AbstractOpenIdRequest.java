@@ -34,7 +34,7 @@ public class AbstractOpenIdRequest extends AbstractMessage {
 	}
 	
 	@Override
-	protected Map<String, String> getMap() {
+	public Map<String, String> getMap() {
 		Map<String, String> out = new HashMap<String, String>();
 		for (Entry<String, String> entry : super.getMap().entrySet()) {
 			out.put(OPENID + entry.getKey(), entry.getValue());

@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.classextension.EasyMock;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
@@ -52,7 +53,7 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 	}
 
 	public void testProcess_invalid_regNewIdentityParam() throws Exception {
-		xrdService.getTypes().add(XrdService.TYPE_SREG_1_1);
+		xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
 				.andReturn(xrdService);
 
@@ -79,7 +80,7 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 
 	public void testProcess() throws Exception {
 		params.put(AuthReq.REG_NEW_IDENTITY, "true");
-		xrdService.getTypes().add(XrdService.TYPE_SREG_1_1);
+		xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
 				.andReturn(xrdService);
 
@@ -88,7 +89,7 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 				params);
 
 		services.verify();
-		assertEquals(XrdService.TYPE_SREG_1_1,
+		assertEquals(OpenIdNs.TYPE_SREG_1_1,
 				authenticationRequest.get("openid.ns.sreg"));
 		assertEquals("name", authenticationRequest.get("sreg.required"));
 		assertEquals("email", authenticationRequest.get("sreg.optional"));

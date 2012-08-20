@@ -21,9 +21,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
 /**
@@ -58,7 +58,7 @@ public class AuthReqRegistration10 implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_SREG_1_0)
+				OpenIdNs.TYPE_SREG_1_0)
 				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
 			logger.debug("Registration extension 1.0 will be applied");
 			authenticationRequest.putIgnoreEmpty("sreg.required",

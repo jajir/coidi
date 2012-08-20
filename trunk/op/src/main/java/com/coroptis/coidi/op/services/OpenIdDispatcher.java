@@ -20,7 +20,8 @@ import java.util.Map;
 import com.coroptis.coidi.core.message.AbstractMessage;
 
 /**
- * Allows to process one specific openID message.
+ * Allows to process one specific openID message that are coming to technical
+ * OpenID end point.
  * 
  * @author jan
  * 

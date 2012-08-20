@@ -15,17 +15,23 @@
  */
 package com.coroptis.coidi.op.util;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.services.UserService;
 
 public class UserSession {
 
-	private User user;
+	@Inject
+	private UserService userService;
+	
+	private Integer idUser;
 
 	private AuthenticationRequest authenticationRequest;
-
+	
 	public boolean isLogged() {
-		return user != null;
+		return idUser != null;
 	}
 
 	/**
@@ -33,7 +39,7 @@ public class UserSession {
 	 * @return the user
 	 */
 	public User getUser() {
-		return user;
+		return userService.getById(idUser);
 	}
 
 	/**
@@ -41,7 +47,7 @@ public class UserSession {
 	 *            the user to set
 	 */
 	public void setUser(User user) {
-		this.user = user;
+		this.idUser = user.getIdUser();
 	}
 
 	/**

@@ -17,9 +17,9 @@ package com.coroptis.coidi.rp.services.impl;
 
 import java.util.Map;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
 /**
@@ -34,9 +34,9 @@ public class AuthReqUiIcon implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_UI_ICON_1_0)) {
+				OpenIdNs.TYPE_UI_ICON_1_0)) {
 			authenticationRequest.put("openid.ns.ui",
-					XrdService.TYPE_UI_ICON_1_0);
+					OpenIdNs.TYPE_UI_ICON_1_0);
 			authenticationRequest.put("openid.ui.mode", "x-has-session");
 			authenticationRequest.put("openid.ui.icon", "true");
 		}

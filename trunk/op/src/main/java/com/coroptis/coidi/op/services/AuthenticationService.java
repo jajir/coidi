@@ -18,6 +18,9 @@ package com.coroptis.coidi.op.services;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 
+/**
+ * This service produce authentication response that is send in redirect to RP.
+ */
 public interface AuthenticationService {
 
 	/**
@@ -31,5 +34,26 @@ public interface AuthenticationService {
 	 */
 	boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
 
+	/**
+	 * Process authentication request from RP and generate positive or negative
+	 * authentication response according to OpenID specifications.
+	 * 
+	 * @param authenticationRequest
+	 *            required {@link AuthenticationRequest}
+	 * @return {@link AuthenticationResponse} object
+	 */
 	AuthenticationResponse process(AuthenticationRequest authenticationRequest);
+
+	/**
+	 * Method return used name space in open id authentication request for given
+	 * name space extension. For 'openid.ns.ax=http://openid.net/srv/ax/1.0'
+	 * from authentication request return 'ax'. If in requestis not given name
+	 * space URL than return null.
+	 * 
+	 * @param authenticationRequest
+	 * @param nameSpaceUrl
+	 * @return
+	 */
+	String getNameSpace(AuthenticationRequest authenticationRequest,
+			String nameSpaceUrl);
 }

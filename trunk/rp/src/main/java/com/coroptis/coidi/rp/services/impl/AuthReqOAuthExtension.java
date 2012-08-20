@@ -20,9 +20,9 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.AuthReq;
 
 public class AuthReqOAuthExtension implements AuthReq {
@@ -35,7 +35,7 @@ public class AuthReqOAuthExtension implements AuthReq {
 	public boolean process(AuthenticationRequest authenticationRequest,
 			DiscoveryResult discoveryResult, Map<String, String> parameters) {
 		if (discoveryResult.getPreferedService().idPresent(
-				XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0)) {
+				OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0)) {
 			authenticationRequest.put("openid.ns.ext2",
 					"http://spec.openid.net/extensions/oauth/1.0");
 			authenticationRequest.put("openid.ext2.consumer", realm);

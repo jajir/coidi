@@ -22,6 +22,7 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.op.services.XrdsService;
 import com.google.common.base.Preconditions;
@@ -49,6 +50,7 @@ public class XrdsServiceImpl implements XrdsService {
 		buff.append("  <XRD>\n");
 		buff.append("    <Service priority=\"100\" xmlns=\"xri://$xrd*($v*2.0)\">\n");
 		buff.append("      <Type>http://specs.openid.net/auth/2.0/signon</Type>\n");
+		buff.append("      <Type>" + OpenIdNs.TYPE_SREG_1_1 + "</Type>\n");
 		buff.append("      <URI>");
 		buff.append(conf.get("server"));
 		buff.append("openid</URI>\n");
@@ -60,6 +62,7 @@ public class XrdsServiceImpl implements XrdsService {
 		buff.append("    </Service>\n");
 		buff.append("    <Service priority=\"10\" xmlns=\"xri://$xrd*($v*2.0)\">\n");
 		buff.append("      <Type>http://specs.openid.net/auth/2.0/server</Type>\n");
+		buff.append("      <Type>" + OpenIdNs.TYPE_SREG_1_1 + "</Type>\n");
 		buff.append("      <URI>");
 		buff.append(conf.get("server"));
 		buff.append("openid</URI>\n");

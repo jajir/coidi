@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.Map.Entry;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
@@ -115,5 +117,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		response.setSigned("identity,nonce,return_to");
 		response.setSignature(signingService.sign(response,
 				statelessModeNonce.getMacKey(), statelesModeAssociationType));
+	}
+
+	@Override
+	public String getNameSpace(AuthenticationRequest authenticationRequest,
+			String nameSpaceUrl) {
+		Preconditions.checkNotNull(nameSpaceUrl, "nameSpaceUrl");
+		for (Entry<String, String> entry : authenticationRequest.getMap()
+				.entrySet()) {
+			if (nameSpaceUrl.equals(entry.getValue())) {
+				// key is in format 'openid.ns.name', 'openid.ns.' should be extracted
+				return entry.getKey().substring("openid.ns.".length());
+			}
+		}
+		return null;
 	}
 }

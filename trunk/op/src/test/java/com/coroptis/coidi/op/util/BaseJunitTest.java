@@ -48,6 +48,7 @@ public abstract class BaseJunitTest extends AbstractJunitTest {
 	protected void setUp() throws Exception {
 		System.setProperty("op.stateless.mode.association.type", "HMAC-SHA1");
 		System.setProperty("op.server", "http://localhost:8080/");
+		System.setProperty("op.nonce.timeToLiveInSeconds", "1800");
 		services = Services.getServices();
 		services.reset();
 		super.setUp();

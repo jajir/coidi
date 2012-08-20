@@ -15,10 +15,10 @@
  */
 package com.coroptis.coidi.rp.util;
 
-
 import org.easymock.classextension.EasyMock;
 
 import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.XrdsService;
@@ -34,6 +34,8 @@ public class Services {
 			.createMock(HttpService.class);
 	private final XrdsService xrdsService = EasyMock
 			.createMock(XrdsService.class);
+	private final ConvertorService convertorService = EasyMock
+			.createMock(ConvertorService.class);
 
 	/**
 	 * Other services
@@ -42,7 +44,8 @@ public class Services {
 			.createMock(DiscoveryResult.class);
 
 	private final Object[] mocks = new Object[] { getConfigurationService(),
-			getHttpService(), getXrdsService(), getDiscoveryResult() };
+			getHttpService(), getXrdsService(), getDiscoveryResult(),
+			getConvertorService() };
 
 	private static Services services;
 
@@ -100,5 +103,12 @@ public class Services {
 	 */
 	public DiscoveryResult getDiscoveryResult() {
 		return discoveryResult;
+	}
+
+	/**
+	 * @return the convertorService
+	 */
+	public ConvertorService getConvertorService() {
+		return convertorService;
 	}
 }

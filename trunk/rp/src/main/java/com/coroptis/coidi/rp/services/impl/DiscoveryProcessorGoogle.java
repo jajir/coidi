@@ -41,8 +41,8 @@ public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
 		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 		if (discoverySupport.isItEmail(userSuppliedId)) {
 			logger.debug("It's gmail id '" + userSuppliedId + "'");
-			return discoverySupport
-					.getXrdsDocument("https://www.google.com/accounts/o8/id");
+			return discoverySupport.getXrdsDocument(
+					"https://www.google.com/accounts/o8/id", userSuppliedId);
 		} else {
 			return null;
 		}

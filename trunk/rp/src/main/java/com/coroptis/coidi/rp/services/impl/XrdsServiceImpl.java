@@ -45,7 +45,7 @@ public class XrdsServiceImpl implements XrdsService {
 	private ConvertorService convertorService;
 
 	@Override
-	public DiscoveryResult extractDiscoveryResult(String xrdsDocument) {
+	public DiscoveryResult extractDiscoveryResult(final String xrdsDocument) {
 		logger.debug("Starting processing XRDS document: " + xrdsDocument);
 		try {
 			DocumentBuilderFactory builderFactory = DocumentBuilderFactory
@@ -96,6 +96,9 @@ public class XrdsServiceImpl implements XrdsService {
 			}
 			if (node.getNodeName().equals("URI")) {
 				out.setUrl(node.getTextContent());
+			}
+			if (node.getNodeName().equals("LocalID")) {
+				out.setLocalId(node.getTextContent());
 			}
 		}
 		if (serviceNode.getAttributes().getNamedItem("priority") != null) {

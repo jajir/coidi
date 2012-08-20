@@ -4,8 +4,8 @@
 	<div>
 		Private user profiles:
 		<ul>
-			<li><t:pageLink page="userProfile" context="literal:karel">http://localhost:8080/userProfile/juan</t:pageLink></li>
-			<li><t:pageLink page="userProfile" context="literal:karel">http://localhost:8080/userProfile/karel</t:pageLink></li>
+			<li><t:pageLink page="user" context="literal:karel">http://localhost:8080/user/karel</t:pageLink></li>
+			<li><t:pageLink page="user" context="literal:juan">http://localhost:8080/user/juan</t:pageLink></li>
 		</ul>
 	</div>
 </html>

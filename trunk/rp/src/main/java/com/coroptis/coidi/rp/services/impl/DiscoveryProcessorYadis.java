@@ -70,7 +70,8 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 		if (header == null) {
 			return doGet(userSuppliedId);
 		} else {
-			return discoverySupport.getXrdsDocument(header.getValue());
+			return discoverySupport.getXrdsDocument(header.getValue(),
+					userSuppliedId);
 		}
 	}
 
@@ -94,7 +95,9 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 			String body = EntityUtils.toString(response.getEntity());
 			if (isContentType(headerContentType)) {
 				// it's XRDS document
-				return xrdsService.extractDiscoveryResult(body);
+				DiscoveryResult out = xrdsService.extractDiscoveryResult(body);
+				out.setClaimedId(userSuppliedId);
+				return out;
 			} else {
 				// try if it's HTML with meta
 				String meta = xmlProcessing.getMetaContent(body,
@@ -103,12 +106,13 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 					throw new AuthenticationProcessException(
 							"Unable to find XRDS document.");
 				} else {
-					return discoverySupport.getXrdsDocument(meta);
+					return discoverySupport.getXrdsDocument(meta,
+							userSuppliedId);
 				}
 			}
 		} else {
-			return discoverySupport.getXrdsDocument(headerXrdsLocation
-					.getValue());
+			return discoverySupport.getXrdsDocument(
+					headerXrdsLocation.getValue(), userSuppliedId);
 		}
 	}
 

@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
@@ -41,12 +42,12 @@ public class AuthReqChainProcessorTest extends AbstractIntegrationTest {
 		XrdService service = new XrdService();
 		service.setPriority(2);
 		service.setUrl("http://localhost:8080/");
-		service.getTypes().add(XrdService.TYPE_ATTRIBUTE_EXCHANGE_1_0);
-		service.getTypes().add(XrdService.TYPE_OPENID_2_0);
-		service.getTypes().add(XrdService.TYPE_PAPE_1_0);
-		service.getTypes().add(XrdService.TYPE_SREG_1_0);
-		service.getTypes().add(XrdService.TYPE_UI_ICON_1_0);
-		service.getTypes().add(XrdService.TYPE_UI_POPUP_1_0);
+		service.getTypes().add(OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		service.getTypes().add(OpenIdNs.TYPE_OPENID_2_0);
+		service.getTypes().add(OpenIdNs.TYPE_PAPE_1_0);
+		service.getTypes().add(OpenIdNs.TYPE_SREG_1_0);
+		service.getTypes().add(OpenIdNs.TYPE_UI_ICON_1_0);
+		service.getTypes().add(OpenIdNs.TYPE_UI_POPUP_1_0);
 		discoveryResult.getServices().add(service);
 		authReq.process(authenticationRequest, discoveryResult,
 				new HashMap<String, String>());

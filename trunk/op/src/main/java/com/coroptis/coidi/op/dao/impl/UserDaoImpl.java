@@ -58,4 +58,9 @@ public class UserDaoImpl implements UserDao {
 				.add(Restrictions.eq("name", userName)).uniqueResult();
 	}
 
+	@Override
+	public User getById(final Integer idUser) {
+		return (User) session.createCriteria(User.class)
+				.add(Restrictions.eq("idUser", idUser)).uniqueResult();
+	}
 }

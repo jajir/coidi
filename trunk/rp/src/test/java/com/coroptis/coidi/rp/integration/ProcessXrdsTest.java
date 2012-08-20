@@ -25,6 +25,8 @@ import com.google.common.io.Files;
 
 public class ProcessXrdsTest extends AbstractIntegrationTest {
 
+	// TODO convert it to junit test
+
 	public void testProcessExample1() throws Exception {
 		DiscoveryResult ret = readValue("src/test/resources/example-xrds1.xml");
 
@@ -34,7 +36,8 @@ public class ProcessXrdsTest extends AbstractIntegrationTest {
 	public void testProcessExample2() throws Exception {
 		DiscoveryResult ret = readValue("src/test/resources/example-xrds2.xml");
 
-		assertEquals("http://www.livejournal.com/openid/server.bml", ret.getEndPoint());
+		assertEquals("http://www.livejournal.com/openid/server.bml",
+				ret.getEndPoint());
 	}
 
 	public void testProcessExample3() throws Exception {

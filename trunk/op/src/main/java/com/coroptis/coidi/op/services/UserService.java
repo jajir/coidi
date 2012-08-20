@@ -25,4 +25,14 @@ public interface UserService {
 
 	User getUserByName(String userName);
 
+	/**
+	 * Get user by it's id.
+	 * 
+	 * @param idUser
+	 *            required is of user
+	 * @return found {@link User} object of <code>null</code> if there is no
+	 *         such user
+	 */
+	User getById(Integer idUser);
+
 }
