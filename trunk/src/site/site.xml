@@ -2,13 +2,13 @@
 <project name="Coidi">
 	<bannerLeft>
 		<name>Coidi</name>
-		<src>./maven-feather.png</src>
+		<src>./coidi-logo.png</src>
 		<href>http://coidi.sourceforge.net/</href>
 	</bannerLeft>
 
 	<publishDate format="dd MMM yyyy" position="right" />
 
-	<version position="right" />
+	<version position="none" />
 
 	<skin>
 		<groupId>org.apache.tapestry</groupId>
