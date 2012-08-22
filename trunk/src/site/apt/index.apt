@@ -39,7 +39,7 @@ Development status
 *--------+------+------+------+
 ||Feature||Implementen on RP|| Implemented on OP||Descriptions||
 *--------+------+------+------+
-|OpenID specification|yes|yes|Core functionality that allows verify users identity| 
+|OpenID specification|80%|80%|Core functionality that allows verify users identity| 
 *--------+------+------+------+
 |Normalization|yes|not meaningful|Process when user supplied id is verified and formated|
 *--------+------+------+------+
@@ -49,15 +49,15 @@ Development status
 *--------+------+------+------+
 |Google federated login|yes|not meaningful|Allows use google email in RP|
 *--------+------+------+------+
-|Extension Registration 1.0|yes|no| |
+|Simple Registration Extension 1.0|20%|40%|Allows to get some predefined fields values on RP from OP |
 *--------+------+------+------+
-|Extension Registration 1.1|yes|no| |
+|Simple Registration Extension 1.1|70%|40%|Allows to get some predefined fields values on RP from OP |
 *--------+------+------+------+
-|Extension OAuth 1.1|yes|no| |
+|Extension OAuth 1.1|no|no| |
 *--------+------+------+------+
-|Extension UI Icon|yes|no| |
+|Extension UI Icon|no|no| |
 *--------+------+------+------+
-|Attribute exchange extension|yes|no|Provide extra attributes to RP|
+|Attribute exchange extension|no|no|Provide extra attributes to RP|
 *--------+------+------+------+
 Development status
 
