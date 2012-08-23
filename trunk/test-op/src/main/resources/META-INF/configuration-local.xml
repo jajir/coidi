@@ -1,7 +1,7 @@
 <configuration>
 	<op>
 		<property name="server">http://localhost:8080/</property>
-		<property name="idenity.prefix">http://localhost:8080/user</property>
+		<property name="idenity.prefix">http://localhost:8080/user/</property>
 		<property name="fill.with.data.on.startup">true</property>
 		<property name="init.sql.data">src/main/resources/data.sql</property>
 		<property name="stateless.mode.association.type">HMAC-SHA1</property>

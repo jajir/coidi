@@ -58,6 +58,8 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 		System.setProperty("server.role", "junit");
 		System.setProperty("system.property.configuration.directory",
 				"non-existing");
+		System.setProperty("op.err.contact", "john@yahoo.com");
+		System.setProperty("op.idenity.prefix", "http://www.myid.com/user/");
 		logger.debug("loading T5 registry with server.role.junit: "
 				+ System.getProperty("server.role"));
 

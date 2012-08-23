@@ -19,20 +19,24 @@ import java.util.Map;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
+
 /**
  * 
  * @author jan
- *
+ * 
  */
 public interface AuthReq {
-	
+
 	final static String REG_NEW_IDENTITY = "registration.itIsNewIdentity";
-	
+
 	/**
 	 * 
 	 * @param authenticationRequest
 	 * @param discoveryResult
 	 * @param parameters
+	 *            required map of parameters, this parameters will be used by
+	 *            particular implementations, parameters will be used for
+	 *            passing values from front-end.
 	 * @return
 	 */
 	boolean process(AuthenticationRequest authenticationRequest,

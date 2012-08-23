@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services;
 import java.util.Map;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 
 /**
  * Allows to process one specific openID message that are coming to technical
@@ -38,6 +39,7 @@ public interface OpenIdDispatcher {
 	 * @param requestParams
 	 * @return
 	 */
-	AbstractMessage process(Map<String, String> requestParams);
+	AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession);
 
 }

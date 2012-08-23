@@ -18,8 +18,10 @@ package com.coroptis.coidi.op.services.impl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.op.dao.UserDao;
+import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.UserService;
+import com.google.common.base.Preconditions;
 
 public class UserServiceImpl implements UserService {
 
@@ -45,5 +47,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getById(Integer idUser) {
 		return userDao.getById(idUser);
+	}
+
+	@Override
+	public Boolean isUsersIdentity(final Integer idUser,final  String identityName) {
+		User user = Preconditions.checkNotNull(userDao.getById(idUser),
+				"user is null");
+		Preconditions.checkNotNull(identityName, "identityName is null");
+
+		for (Identity identity : user.getIdentities()) {
+			if (identityName.equals(identity.getIdIdentity())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

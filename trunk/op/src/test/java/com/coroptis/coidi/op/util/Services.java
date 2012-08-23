@@ -22,6 +22,7 @@ import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
@@ -38,10 +39,13 @@ public class Services {
 			.createMock(SigningService.class);
 	private final StatelessModeNonceService statelessModeNonceService = EasyMock
 			.createMock(StatelessModeNonceService.class);
+	private final AuthenticationProcessor authenticationProcessor = EasyMock
+			.createMock(AuthenticationProcessor.class);
 
 	private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
 			getConfigurationService(), getNonceService(), getAssociationDao(),
-			getSigningService(), getStatelessModeNonceService() };
+			getSigningService(), getStatelessModeNonceService(),
+			getAuthenticationProcessor() };
 
 	private static Services services;
 
@@ -113,5 +117,12 @@ public class Services {
 	 */
 	public StatelessModeNonceService getStatelessModeNonceService() {
 		return statelessModeNonceService;
+	}
+
+	/**
+	 * @return the authenticationProcessor
+	 */
+	public AuthenticationProcessor getAuthenticationProcessor() {
+		return authenticationProcessor;
 	}
 }

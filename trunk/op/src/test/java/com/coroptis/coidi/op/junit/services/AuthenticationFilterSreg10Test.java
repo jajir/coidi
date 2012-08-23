@@ -3,7 +3,7 @@ package com.coroptis.coidi.op.junit.services;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.impl.AuthenticationFilterSreg10;
+import com.coroptis.coidi.op.services.impl.AuthenticationProcessorSreg10;
 import com.coroptis.coidi.op.util.BaseJunitTest;
 
 public class AuthenticationFilterSreg10Test extends BaseJunitTest {
@@ -19,7 +19,7 @@ public class AuthenticationFilterSreg10Test extends BaseJunitTest {
 	@Override
 	public void bind(ServiceBinder binder) {
 		binder.bind(AuthenticationProcessor.class,
-				AuthenticationFilterSreg10.class).withId(SERVICE_NAME);
+				AuthenticationProcessorSreg10.class).withId(SERVICE_NAME);
 	}
 
 	@Override

@@ -27,9 +27,9 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.op.util.UserSession;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * Dispatcher that handle access rights for site resources.

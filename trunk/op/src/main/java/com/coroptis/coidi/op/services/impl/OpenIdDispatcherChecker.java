@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 /**
@@ -39,7 +40,8 @@ public class OpenIdDispatcherChecker implements OpenIdDispatcher {
 			+ AbstractMessage.OPENID_NS;
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE) == null) {
 			StringBuilder buff = new StringBuilder();
 			buff.append("key value '");

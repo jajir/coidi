@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 /**
@@ -43,7 +44,8 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 	private String contact;
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		ErrorResponse errorResponse = new ErrorResponse(false);
 		StringBuilder buff = new StringBuilder();
 		buff.append("Unable to process incoming message, incorrect 'openid.mode'");

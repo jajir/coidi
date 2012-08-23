@@ -15,8 +15,11 @@
  */
 package com.coroptis.coidi.op.services;
 
+import java.util.Set;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
@@ -32,6 +35,17 @@ import com.coroptis.coidi.op.entities.Identity;
  */
 public interface AuthenticationProcessor {
 
+	/**
+	 * 
+	 * @param authenticationRequest
+	 * @param response
+	 * @param identity
+	 * @param fieldsToSign
+	 *            required parameter where will be added all fields from message
+	 *            that should be signed
+	 * @return
+	 */
 	AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AbstractMessage response, Identity identity);
+			AuthenticationResponse response, Identity identity,
+			Set<String> fieldsToSign);
 }

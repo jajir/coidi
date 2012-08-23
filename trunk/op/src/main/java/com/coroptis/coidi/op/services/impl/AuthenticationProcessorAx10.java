@@ -15,23 +15,39 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.Set;
+
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.slf4j.Logger;
+
+import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthenticationService;
 
-/**
- * Class just return back already processes authentication response.
- * 
- * @author jirout
- * 
- */
-public class AuthenticationFilterTerminator implements AuthenticationProcessor {
+public class AuthenticationProcessorAx10 implements AuthenticationProcessor {
+
+	@Inject
+	private Logger logger;
+
+	@Inject
+	private AuthenticationService authenticationService;
 
 	@Override
 	public AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AbstractMessage response, Identity identity) {
-		return response;
+			AuthenticationResponse response, Identity identity,
+			Set<String> fieldsToSign) {
+		String nameSpaceName = authenticationService.getNameSpace(
+				authenticationRequest, OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		if (nameSpaceName != null) {
+			logger.debug("name space '" + nameSpaceName + "' for "
+					+ OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+		
+		}
+		return null;
 	}
 
 }

@@ -29,11 +29,23 @@ import com.coroptis.coidi.rp.services.AuthReq;
 /**
  * Add registration request 1.1 to authentication request. Process is added
  * based on requirement specified in discovery.
+ * <p>
+ * Simple registration extension is applied just when is supported by OP and in
+ * parameters under key 'sreg.ns' is value OpenIdNs.TYPE_SREG_1_1. Required
+ * fields are in comma separated list under the key 'sreg.required'. Optional
+ * fields are in comma separated list under the key 'sreg.optional'.
+ * </p>
  * 
  * @author jan
  * 
  */
 public class AuthReqRegistration11 implements AuthReq {
+
+	public final static String SREG_REQUIRED = "sreg.required";
+
+	public final static String SREG_OPTIONAL = "sreg.optional";
+
+	public final static String SREG_POLICY_URL = "sreg.policy_url";
 
 	@Inject
 	private Logger logger;
@@ -50,11 +62,11 @@ public class AuthReqRegistration11 implements AuthReq {
 				&& OpenIdNs.TYPE_SREG_1_1.equals(parameters.get("sreg.ns"))) {
 			logger.debug("Registration extension 1.1 will be applied");
 			authenticationRequest.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
-			authenticationRequest.putIgnoreEmpty("sreg.required",
-					parameters.get("sreg.required"));
-			authenticationRequest.putIgnoreEmpty("sreg.optional",
-					parameters.get("sreg.optional"));
-			authenticationRequest.putIgnoreEmpty("sreg.policy_url", policyUrl);
+			authenticationRequest.putIgnoreEmpty(SREG_REQUIRED,
+					parameters.get(SREG_REQUIRED));
+			authenticationRequest.putIgnoreEmpty(SREG_OPTIONAL,
+					parameters.get(SREG_OPTIONAL));
+			authenticationRequest.putIgnoreEmpty(SREG_POLICY_URL, policyUrl);
 		}
 		return false;
 	}

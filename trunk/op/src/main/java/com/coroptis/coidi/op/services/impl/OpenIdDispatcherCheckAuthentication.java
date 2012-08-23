@@ -24,6 +24,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
@@ -46,7 +47,8 @@ public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
 	private StatelessModeNonceService statelessModeNonceService;
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE).equals(
 				CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 			CheckAuthenticationRequest request = new CheckAuthenticationRequest(

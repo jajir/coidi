@@ -43,7 +43,7 @@ public class ProcessXrdsTest extends AbstractIntegrationTest {
 	public void testProcessExample3() throws Exception {
 		DiscoveryResult ret = readValue("src/test/resources/example-xrds3.xml");
 
-		assertEquals("http://localhost:8080/endpoint", ret.getEndPoint());
+		assertEquals("http://localhost:8080/openid", ret.getEndPoint());
 	}
 
 	public void testProcessExample4() throws Exception {

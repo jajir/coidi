@@ -35,4 +35,16 @@ public interface UserService {
 	 */
 	User getById(Integer idUser);
 
+	/**
+	 * Verify that identity belongs to user.
+	 * 
+	 * @param idUser
+	 *            required user's id
+	 * @param identityName
+	 *            required identity id, usually URL
+	 * @return <code>true</code> if identity belongs to user otherwise return
+	 *         <code>false</code>
+	 */
+	Boolean isUsersIdentity(final Integer idUser, final String identityName);
+
 }

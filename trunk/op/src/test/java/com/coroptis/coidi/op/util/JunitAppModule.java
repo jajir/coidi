@@ -21,6 +21,7 @@ import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.AssociationDao;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
 import com.coroptis.coidi.test.EasyMockServicebuilder;
@@ -55,5 +56,9 @@ public class JunitAppModule {
 				StatelessModeNonceService.class,
 				new EasyMockServicebuilder<StatelessModeNonceService>(services
 						.getStatelessModeNonceService()));
+		binder.bind(
+				AuthenticationProcessor.class,
+				new EasyMockServicebuilder<AuthenticationProcessor>(services
+						.getAuthenticationProcessor()));
 	}
 }

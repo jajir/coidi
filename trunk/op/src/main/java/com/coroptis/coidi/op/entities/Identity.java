@@ -32,7 +32,7 @@ import com.google.common.base.Objects;
 @Entity
 @Table(name = "identity")
 public class Identity extends AbstractEntity<Identity> {
-	enum Gendre {
+	public enum Gendre {
 		M, F
 	}
 

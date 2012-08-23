@@ -79,7 +79,9 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 	}
 
 	public void testProcess() throws Exception {
-		params.put(AuthReq.REG_NEW_IDENTITY, "true");
+		params.put("sreg.ns", OpenIdNs.TYPE_SREG_1_1);
+		params.put("sreg.required", "name");
+		params.put("sreg.optional", "email");
 		xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
 				.andReturn(xrdService);
@@ -90,7 +92,7 @@ public class AuthReqRegistration11Test extends AbstractLocalJunitTest {
 
 		services.verify();
 		assertEquals(OpenIdNs.TYPE_SREG_1_1,
-				authenticationRequest.get("openid.ns.sreg"));
+				authenticationRequest.get("ns.sreg"));
 		assertEquals("name", authenticationRequest.get("sreg.required"));
 		assertEquals("email", authenticationRequest.get("sreg.optional"));
 		assertEquals("http://www.example.com/policy-description",

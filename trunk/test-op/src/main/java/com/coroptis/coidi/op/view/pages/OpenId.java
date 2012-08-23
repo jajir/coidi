@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
@@ -29,6 +30,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.view.utils.TextResponse;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * This end point will accept and process all OpenID (direct and indirect)
@@ -51,6 +53,9 @@ public class OpenId { // NO_UCD
 	@Inject
 	private OpenIdDispatcher openIdRequestDispatcher;
 
+	@SessionState
+	private UserSession userSession;
+
 	public StreamResponse onActivate() {
 		try {
 			HttpServletRequest httpRequest = request.getHTTPServletRequest();
@@ -61,8 +66,8 @@ public class OpenId { // NO_UCD
 						+ request.getRequest().getParameter(key) + "'");
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
-			AbstractMessage requestResponse = openIdRequestDispatcher
-					.process(map);
+			AbstractMessage requestResponse = openIdRequestDispatcher.process(
+					map, userSession);
 			logger.debug("openId response: " + requestResponse.getMessage());
 			if (requestResponse.isUrl()) {
 				String redirUrl = requestResponse.getMessage();

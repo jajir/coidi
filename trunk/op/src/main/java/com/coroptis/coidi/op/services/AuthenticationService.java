@@ -42,6 +42,7 @@ public interface AuthenticationService {
 	 *            required {@link AuthenticationRequest}
 	 * @return {@link AuthenticationResponse} object
 	 */
+	@Deprecated
 	AuthenticationResponse process(AuthenticationRequest authenticationRequest);
 
 	/**
