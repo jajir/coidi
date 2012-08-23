@@ -42,5 +42,6 @@ public interface IdentityService {
 	 * @return {@link Identity} object if there is any otherwise
 	 *         <code>null</code>
 	 */
+	@Deprecated
 	Identity getById(String id);
 }

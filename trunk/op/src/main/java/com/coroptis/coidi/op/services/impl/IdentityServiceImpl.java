@@ -27,13 +27,22 @@ public class IdentityServiceImpl implements IdentityService {
 	@Inject
 	private IdentityDao identityDao;
 
+	/**
+	 * OpenID identity is stored in URL form. In database is stored just prefix
+	 * part of it. For example prefix is http://www.myid.com/user/
+	 */
 	@Inject
 	@Symbol("op.idenity.prefix")
 	private String idenityPrefix;
 
 	@Override
 	public Identity getIdentityByName(final String idIdentity) {
-		return identityDao.getIdentityByName(idIdentity);
+		if (idIdentity.startsWith(idenityPrefix)) {
+			return identityDao.getIdentityByName(idIdentity
+					.substring(idenityPrefix.length()));
+		} else {
+			return identityDao.getIdentityByName(idIdentity);
+		}
 	}
 
 	@Override

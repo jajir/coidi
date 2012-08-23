@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -24,11 +22,12 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.AuthenticationService;
+import com.coroptis.coidi.op.services.SregService;
 
-public class AuthenticationFilterSreg10 implements AuthenticationProcessor {
+public class AuthenticationProcessorSreg10 implements AuthenticationProcessor {
 
 	public static final String SREG_REQUIRED = "openid.sreg.required";
 
@@ -36,39 +35,30 @@ public class AuthenticationFilterSreg10 implements AuthenticationProcessor {
 
 	public static final String SREG_POLICY_URL = "openid.sreg.policy_url";
 
-	public static final String SREG_NICKNAME = "nickname";
-	public static final String SREG_EMAIL = "email";
-	public static final String SREG_FULLNAME = "fullname";
-	public static final String SREG_DOB = "dob";
-	public static final String SREG_GENDRE = "gendre";
-	public static final String SREG_POSTCODE = "postcode";
-	public static final String SREG_COUNTRY = "country";
-	public static final String SREG_LANGUAGE = "language";
-	public static final String SREG_TIMEZONE = "timezone";
+	public static final String SREG_NICKNAME = "sreg.nickname";
+	public static final String SREG_EMAIL = "sreg.email";
+	public static final String SREG_FULLNAME = "sreg.fullname";
+	public static final String SREG_DOB = "sreg.dob";
+	public static final String SREG_GENDRE = "sreg.gendre";
+	public static final String SREG_POSTCODE = "sreg.postcode";
+	public static final String SREG_COUNTRY = "sreg.country";
+	public static final String SREG_LANGUAGE = "sreg.language";
+	public static final String SREG_TIMEZONE = "sreg.timezone";
 
 	@Inject
 	private Logger logger;
 
 	@Inject
-	private AuthenticationService authenticationService;
+	private SregService sregService;
 
 	@Override
 	public AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AbstractMessage response, Identity identity) {
-		if (authenticationRequest.getMap().get(SREG_OPTIONAL) != null
-				&& authenticationRequest.getMap().get(SREG_REQUIRED) != null) {
+			AuthenticationResponse response, Identity identity,
+			Set<String> fieldsToSign) {
+		Set<String> keys = sregService
+				.extractRequestedKeys(authenticationRequest);
+		if (!keys.isEmpty()) {
 			logger.debug("simple registration extension 1.0 was detected");
-			Set<String> keys = new HashSet<String>();
-			if (authenticationRequest.getMap().get(SREG_OPTIONAL) != null) {
-				Collections.addAll(keys,
-						authenticationRequest.getMap().get(SREG_OPTIONAL)
-								.split(","));
-			}
-			if (authenticationRequest.getMap().get(SREG_REQUIRED) != null) {
-				Collections.addAll(keys,
-						authenticationRequest.getMap().get(SREG_REQUIRED)
-								.split(","));
-			}
 			for (String key : keys) {
 				if (SREG_NICKNAME.equals(key) && identity.getNickname() != null) {
 					response.put(SREG_NICKNAME, identity.getNickname());

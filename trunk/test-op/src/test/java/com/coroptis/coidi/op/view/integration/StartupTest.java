@@ -79,7 +79,7 @@ public class StartupTest extends AbstractIntegrationDaoTest {
 		req.put("openid.return_to", "http://localhost:8081/somePage");
 
 		OpenIdDispatcher authentication = getService(OpenIdDispatcher.class);
-		AbstractMessage ret = authentication.process(req);
+		AbstractMessage ret = authentication.process(req, null);
 
 		assertNotNull(ret);
 		System.out.println(ret.isUrl());

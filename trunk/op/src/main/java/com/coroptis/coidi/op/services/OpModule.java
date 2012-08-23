@@ -53,8 +53,9 @@ import com.coroptis.coidi.op.dao.impl.IdentityDaoImpl;
 import com.coroptis.coidi.op.dao.impl.StatelessModeNonceDaoImpl;
 import com.coroptis.coidi.op.dao.impl.UserDaoImpl;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
-import com.coroptis.coidi.op.services.impl.AuthenticationFilterSreg10;
-import com.coroptis.coidi.op.services.impl.AuthenticationFilterTerminator;
+import com.coroptis.coidi.op.services.impl.AuthenticationProcessorResponse;
+import com.coroptis.coidi.op.services.impl.AuthenticationProcessorSreg11;
+import com.coroptis.coidi.op.services.impl.AuthenticationProcessorTerminator;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
@@ -64,6 +65,7 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup;
+import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
 import com.coroptis.coidi.op.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.services.impl.XrdsServiceImpl;
@@ -95,6 +97,7 @@ public class OpModule {// NO_UCD
 				AuthenticationServiceImpl.class);
 		binder.bind(StatelessModeNonceService.class,
 				StatelessModeNonceServiceImpl.class);
+		binder.bind(SregService.class, SregServiceImpl.class);
 	}
 
 	@Startup
@@ -170,10 +173,13 @@ public class OpModule {// NO_UCD
 
 	public static void contributeAuthenticationProcessor(
 			OrderedConfiguration<AuthenticationProcessor> configuration,
-			@Autobuild AuthenticationFilterSreg10 authenticationFilterSreg10,
-			@Autobuild AuthenticationFilterTerminator authenticationFilterTerminator) {
-		configuration.add("authenticationFilterSreg10",
-				authenticationFilterSreg10);
+			@Autobuild AuthenticationProcessorSreg11 authenticationFilterSreg11,
+			@Autobuild AuthenticationProcessorTerminator authenticationFilterTerminator,
+			@Autobuild AuthenticationProcessorResponse authenticationProcessorResponse) {
+		configuration.add("authenticationProcessorResponse",
+				authenticationProcessorResponse);
+		configuration.add("authenticationFilterSreg11",
+				authenticationFilterSreg11);
 		configuration.add("authenticationFilterTerminator",
 				authenticationFilterTerminator);
 	}

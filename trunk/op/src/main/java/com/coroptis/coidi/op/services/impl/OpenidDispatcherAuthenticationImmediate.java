@@ -15,7 +15,9 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
@@ -26,6 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
@@ -59,7 +62,8 @@ public class OpenidDispatcherAuthenticationImmediate implements
 	private IdentityService identityService;
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE).equals(
 				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
@@ -96,9 +100,10 @@ public class OpenidDispatcherAuthenticationImmediate implements
 				// negative response
 			}
 
-			authenticationProcessor.process(authenticationRequest, response,
-					identity);
-			return response;
+			Set<String> fieldToSign = new HashSet<String>();
+			AbstractMessage out = authenticationProcessor.process(
+					authenticationRequest, response, identity, fieldToSign);
+			return out;
 		}
 		return null;
 	}

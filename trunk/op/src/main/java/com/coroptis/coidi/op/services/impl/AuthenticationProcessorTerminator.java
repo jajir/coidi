@@ -15,31 +15,38 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.StatelessModeNonce;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
-import com.google.common.base.Preconditions;
+import com.google.common.base.Joiner;
 
-public class AuthenticationServiceImpl implements AuthenticationService {
-
-	private final Logger logger;
+/**
+ * Class just return back already processes authentication response. If
+ * processing comes here it means that there wasn't any errors and message could
+ * be signed.
+ * 
+ * @author jirout
+ * 
+ */
+public class AuthenticationProcessorTerminator implements
+		AuthenticationProcessor {
 
 	@Inject
-	private NonceService nonceService;
+	private Logger logger;
 
 	@Inject
 	private AssociationDao associationDao;
@@ -49,17 +56,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Inject
 	private StatelessModeNonceService statelessModeNonceService;
-	
-	@Inject
-	private AuthenticationProcessor authenticationProcessor;
-
-	@Inject
-	@Symbol("op.server")
-	private String opServer;
 
 	private final AssociationType statelesModeAssociationType;
 
-	public AuthenticationServiceImpl(
+	private final Joiner joiner = Joiner.on(",").skipNulls();
+
+	public AuthenticationProcessorTerminator(
 			// NO_UCD
 			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 			final Logger logger) {
@@ -70,29 +72,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public boolean isAuthenticationRequest(
-			final AuthenticationRequest authenticationRequest) {
-		Preconditions.checkNotNull(authenticationRequest,
-				"authenticationRequest");
-		if (AuthenticationRequest.MODE_CHECKID_SETUP
-				.equals(authenticationRequest.getMode())
-				|| AuthenticationRequest.MODE_CHECKID_IMMEDIATE
-						.equals(authenticationRequest.getMode())) {
-			return authenticationRequest.getIdentity() != null
-					|| authenticationRequest.getClaimedId() != null;
-		}
-		return false;
-	}
-
-	@Override
-	public AuthenticationResponse process(
-			AuthenticationRequest authenticationRequest) {
-		AuthenticationResponse response = new AuthenticationResponse();
-		response.setIdentity(authenticationRequest.getIdentity());
-		response.setNonce(nonceService.createNonce());
-		response.setReturnTo(authenticationRequest.getReturnTo());
-		response.put("go_to", authenticationRequest.getReturnTo());
-		response.setOpEndpoint(opServer + "openid");
+	public AbstractMessage process(AuthenticationRequest authenticationRequest,
+			AuthenticationResponse response, Identity identity,
+			Set<String> fieldsToSign) {
+		response.setSigned(joiner.join(fieldsToSign));
 		if (authenticationRequest.getAssocHandle() == null) {
 			// state less mode
 			signInStatelessMode(response);
@@ -106,35 +89,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				signInStatelessMode(response);
 				response.setInvalidateHandle(authenticationRequest
 						.getAssocHandle());
+			} else {
+				response.setAssocHandle(authenticationRequest.getAssocHandle());
+				response.setSignature(signingService
+						.sign(response, association));
 			}
-			response.setAssocHandle(authenticationRequest.getAssocHandle());
-			response.setSigned("assoc_handle,identity,nonce,return_to");
-			response.setSignature(signingService.sign(response, association));
 		}
-		logger.debug("authentication response: " + response.getMessage());
 		return response;
 	}
 
 	private void signInStatelessMode(final AuthenticationResponse response) {
 		StatelessModeNonce statelessModeNonce = statelessModeNonceService
 				.createStatelessModeNonce(response.getNonce());
-		response.setSigned("identity,nonce,return_to");
 		response.setSignature(signingService.sign(response,
 				statelessModeNonce.getMacKey(), statelesModeAssociationType));
-	}
-
-	@Override
-	public String getNameSpace(AuthenticationRequest authenticationRequest,
-			String nameSpaceUrl) {
-		Preconditions.checkNotNull(nameSpaceUrl, "nameSpaceUrl");
-		for (Entry<String, String> entry : authenticationRequest.getMap()
-				.entrySet()) {
-			if (nameSpaceUrl.equals(entry.getValue())) {
-				// key is in format 'openid.ns.name', 'openid.ns.' should be
-				// extracted
-				return entry.getKey().substring("openid.ns.".length());
-			}
-		}
-		return null;
 	}
 }

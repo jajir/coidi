@@ -13,33 +13,36 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.util;
+package com.coroptis.coidi.op.view.utils;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.UserService;
 
-public class UserSession {
+public class UserSession implements UserSessionSkeleton {
 
 	@Inject
 	private UserService userService;
-	
+
 	private Integer idUser;
 
 	private AuthenticationRequest authenticationRequest;
-	
+
+	@Override
 	public boolean isLogged() {
 		return idUser != null;
 	}
 
-	/**
-	 * 
-	 * @return the user
-	 */
+	@Override
 	public User getUser() {
-		return userService.getById(idUser);
+		if (idUser == null) {
+			return null;
+		} else {
+			return userService.getById(idUser);
+		}
 	}
 
 	/**
@@ -61,9 +64,23 @@ public class UserSession {
 	 * @param authenticationRequest
 	 *            the authenticationRequest to set
 	 */
+	@Override
 	public void setAuthenticationRequest(
 			AuthenticationRequest authenticationRequest) {
 		this.authenticationRequest = authenticationRequest;
+	}
+
+	@Override
+	public Integer getIdUser() {
+		return idUser;
+	}
+
+	/**
+	 * @param idUser
+	 *            the idUser to set
+	 */
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 
 }

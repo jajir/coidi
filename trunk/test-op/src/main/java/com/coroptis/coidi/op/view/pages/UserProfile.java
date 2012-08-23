@@ -20,8 +20,8 @@ import org.apache.tapestry5.annotations.SessionState;
 
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
-import com.coroptis.coidi.op.util.UserSession;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * Main public profile page.

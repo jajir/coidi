@@ -15,11 +15,12 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.ApplicationStateManager;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -27,12 +28,13 @@ import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.UserSession;
+import com.coroptis.coidi.op.services.UserService;
 
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
@@ -43,16 +45,17 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 	private AuthenticationService authenticationService;
 
 	@Inject
-	private ApplicationStateManager applicationStateManager;
-
-	@Inject
 	private IdentityService identityService;
 
 	@Inject
 	private AuthenticationProcessor authenticationProcessor;
 
+	@Inject
+	private UserService userService;
+
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE).equals(
 				AuthenticationRequest.MODE_CHECKID_SETUP)) {
 			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
@@ -84,21 +87,14 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 				}
 			}
 
-			if (!applicationStateManager.exists(UserSession.class)) {
-				applicationStateManager.set(UserSession.class,
-						new UserSession());
-			}
-			UserSession userSession = applicationStateManager
-					.get(UserSession.class);
-
 			if (!userSession.isLogged()) {
 				logger.debug("User is not logged in.");
 				userSession.setAuthenticationRequest(authenticationRequest);
 				return new RedirectResponse();
 			}
 
-			Identity identity = identityService.getById(authenticationRequest
-					.getIdentity());
+			Identity identity = identityService
+					.getIdentityByName(authenticationRequest.getIdentity());
 
 			if (identity == null) {
 				logger.debug("Unable to find idenity by '"
@@ -106,13 +102,19 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 				return new RedirectResponse();
 			}
 
-			AuthenticationResponse response = authenticationService
-					.process(authenticationRequest);
+			if (!userService.isUsersIdentity(userSession.getIdUser(),
+					identity.getIdIdentity())) {
+				logger.debug("Identity '" + authenticationRequest.getIdentity()
+						+ "' doesn't belongs to user '"
+						+ userSession.getIdUser() + "'.");
+				return new RedirectResponse();
+			}
 
-			authenticationProcessor.process(authenticationRequest, response,
-					identity);
-
-			return response;
+			Set<String> fieldToSign = new HashSet<String>();
+			AbstractMessage out = authenticationProcessor.process(
+					authenticationRequest, new AuthenticationResponse(),
+					identity, fieldToSign);
+			return out;
 		}
 		return null;
 	}

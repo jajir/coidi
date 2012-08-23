@@ -28,6 +28,7 @@ import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationImpl;
@@ -59,7 +60,8 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 	private ConvertorService convertorService;
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams) {
+	public AbstractMessage process(Map<String, String> requestParams,
+			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE).equals(
 				AbstractMessage.MODE_ASSOCIATE)) {
 			AssociationRequest request = new AssociationRequest(requestParams);

@@ -21,8 +21,8 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
-import com.coroptis.coidi.op.util.UserSession;
 import com.coroptis.coidi.op.view.pages.Index;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 @Import(stylesheet = "context:css/layout.css")
 public class Layout { // NO_UCD
