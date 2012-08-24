@@ -15,22 +15,15 @@
  */
 package com.coroptis.coidi.rp.services;
 
-import java.util.Map;
-
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.rp.base.AuthRespExtension;
+import com.coroptis.coidi.rp.base.AuthenticationResult;
 
 public interface AuthenticationService {
 
 	public final static Integer NONCE_EXPIRATION_TIME_IN_MINUTES = 30;
 
-	Map<String, AuthRespExtension> generateResponse(Map<String, String> map);
-
-	Map<String, AuthRespExtension> generateResponse(
-			AuthenticationResponse authenticationResponse);
-
-	Boolean verify(AuthenticationResponse authenticationResponse,
+	AuthenticationResult verify(AuthenticationResponse authenticationResponse,
 			Association association);
 
 }

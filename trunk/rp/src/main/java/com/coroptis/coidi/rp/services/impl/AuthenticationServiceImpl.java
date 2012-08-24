@@ -15,21 +15,15 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.services.NonceService;
-import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.rp.base.AuthRespExtension;
+import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthenticationService;
-import com.coroptis.coidi.rp.services.NonceDao;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -37,69 +31,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private Logger logger;
 
 	@Inject
-	private NonceService nonceService;
-
-	@Inject
-	private SigningService signingService;
-
-	@Inject
-	private NonceDao nonceDao;
-
-	@Inject
 	private AuthRespDecoder authRespDecoder;
 
 	@Override
-	public Map<String, AuthRespExtension> generateResponse(
-			final AuthenticationResponse authenticationResponse) {
-		Map<String, AuthRespExtension> extensions = new HashMap<String, AuthRespExtension>();
-		for (Entry<String, String> entry : authenticationResponse.getMap()
-				.entrySet()) {
-			if (entry.getKey().startsWith("openid.ns")) {
-				AuthRespExtension extension = authRespDecoder.decode(
-						authenticationResponse, entry.getKey(),
-						entry.getValue());
-				if (extension == null) {
-					logger.warn("There is no available processor for extension '"
-							+ entry.getKey() + "'");
-				}
-				extensions.put(entry.getValue(), extension);
-			}
-		}
-		return extensions;
-	}
-
-	@Override
-	public Map<String, AuthRespExtension> generateResponse(
-			final Map<String, String> map) {
-		return generateResponse(new AuthenticationResponse(map));
-	}
-
-	@Override
-	public Boolean verify(final AuthenticationResponse authenticationResponse,
+	public AuthenticationResult verify(
+			final AuthenticationResponse authenticationResponse,
 			final Association association) {
-		if (authenticationResponse.getMode() != null
-				&& authenticationResponse.getMode().equals("id_res")) {
-			if (nonceService.verifyNonce(authenticationResponse.getNonce(),
-					NONCE_EXPIRATION_TIME_IN_MINUTES)) {
-				nonceDao.storeNonce(authenticationResponse.getNonce());
-			} else {
-				logger.info("nonce is expired. '"
-						+ authenticationResponse.getNonce() + "'");
-				return false;
-			}
-			String signature = signingService.sign(authenticationResponse,
-					association);
-			if (!signature.equals(authenticationResponse.getSignature())) {
-				logger.info("Signature in authentication response '"
-						+ authenticationResponse.getSignature()
-						+ "' is not same as computed '" + signature
-						+ "', used association: " + association);
-				return false;
-			}
-			return true;
+		AuthenticationResult authenticationResult = new AuthenticationResult();
+		if (authRespDecoder.decode(authenticationResponse, association,
+				authenticationResult)) {
+			return authenticationResult;
 		} else {
-			logger.debug("authentication response doesn't contains mode");
+			logger.debug("message error");
+			throw new CoidiException("There was some error in message");
 		}
-		return false;
 	}
 }

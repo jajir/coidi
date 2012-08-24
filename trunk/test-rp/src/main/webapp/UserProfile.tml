@@ -2,5 +2,25 @@
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	<h3>Your identity</h3>
 	OpenID Identity: ${userSession.ssoIdentity}
+	<div>
+		<t:if test="userSession.authenticationResult">
+			Authentication result: ${userSession.authenticationResult.status}
+			<br />
+			<t:if test="userSession.authenticationResult.sreg">
+				Simple registration attributes:
+				Nickname: ${userSession.authenticationResult.sreg.nickname}<br />
+				Email: ${userSession.authenticationResult.sreg.email}<br />
+				Full name: ${userSession.authenticationResult.sreg.fullname}<br />
+				Date of birth: ${userSession.authenticationResult.sreg.dob}<br />
+				Gendre: ${userSession.authenticationResult.sreg.gendre}<br />
+				Post code: ${userSession.authenticationResult.sreg.postcode}<br />
+				Country: ${userSession.authenticationResult.sreg.country}<br />
+				Language: ${userSession.authenticationResult.sreg.language}<br />
+				Timezone: ${userSession.authenticationResult.sreg.timezone}<br />
+				<br />
+				<br />
+			</t:if>
+		</t:if>
+	</div>
 	<h3>Here should be some private content</h3>
 </html>

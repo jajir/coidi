@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.rp.view.util;
 
+import com.coroptis.coidi.rp.base.AuthenticationResult;
+
 /**
  * Object represents user's http session.
  * 
@@ -24,6 +26,11 @@ package com.coroptis.coidi.rp.view.util;
 public class UserSession {
 
 	private String ssoIdentity;
+
+	/**
+	 * When it comes from OP it's stored here.
+	 */
+	private AuthenticationResult authenticationResult;
 
 	public boolean isLogged() {
 		return ssoIdentity != null;
@@ -37,10 +44,27 @@ public class UserSession {
 	}
 
 	/**
-	 * @param ssoIdentity the ssoIdentity to set
+	 * @param ssoIdentity
+	 *            the ssoIdentity to set
 	 */
 	public void setSsoIdentity(String ssoIdentity) {
 		this.ssoIdentity = ssoIdentity;
+	}
+
+	/**
+	 * @return the authenticationResult
+	 */
+	public AuthenticationResult getAuthenticationResult() {
+		return authenticationResult;
+	}
+
+	/**
+	 * @param authenticationResult
+	 *            the authenticationResult to set
+	 */
+	public void setAuthenticationResult(
+			AuthenticationResult authenticationResult) {
+		this.authenticationResult = authenticationResult;
 	}
 
 }

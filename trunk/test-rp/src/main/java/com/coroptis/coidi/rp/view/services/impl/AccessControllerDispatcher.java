@@ -32,7 +32,8 @@ import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
 /**
- * Dispatcher that handle access rights for site resources.
+ * Dispatcher that handle access rights for site resources. Some pages could
+ * prevent unsigned user access.
  * 
  * @author jan
  * 

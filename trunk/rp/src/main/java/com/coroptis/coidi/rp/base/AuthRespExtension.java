@@ -2,6 +2,7 @@ package com.coroptis.coidi.rp.base;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 
+@Deprecated
 public class AuthRespExtension {
 
 	private final String extensionAlias;
