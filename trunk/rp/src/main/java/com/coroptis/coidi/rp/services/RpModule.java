@@ -31,7 +31,9 @@ import com.coroptis.coidi.rp.services.impl.AuthReqRegistration10;
 import com.coroptis.coidi.rp.services.impl.AuthReqRegistration11;
 import com.coroptis.coidi.rp.services.impl.AuthReqTerminator;
 import com.coroptis.coidi.rp.services.impl.AuthReqUiIcon;
-import com.coroptis.coidi.rp.services.impl.AuthRespDecoderExtension10;
+import com.coroptis.coidi.rp.services.impl.AuthRespDecoderOpenId;
+import com.coroptis.coidi.rp.services.impl.AuthRespDecoderSreg;
+import com.coroptis.coidi.rp.services.impl.AuthRespDecoderTerminator;
 import com.coroptis.coidi.rp.services.impl.AuthRespSupportImpl;
 import com.coroptis.coidi.rp.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.rp.services.impl.DiscoveryProcessorGoogle;
@@ -117,7 +119,12 @@ public class RpModule {
 
 	public static void contributeAuthRespDecoderChainProcessor(
 			OrderedConfiguration<AuthRespDecoder> configuration,
-			@Autobuild AuthRespDecoderExtension10 respDecoderExtension10) {
-		configuration.add("respDecoderExtension10", respDecoderExtension10);
+			@Autobuild AuthRespDecoderOpenId authRespDecoderOpenId,
+			@Autobuild AuthRespDecoderSreg authRespDecoderSreg,
+			@Autobuild AuthRespDecoderTerminator authRespDecoderTerminator) {
+		configuration.add("authRespDecoderOpenId", authRespDecoderOpenId);
+		configuration.add("authRespDecoderSreg", authRespDecoderSreg);
+		configuration.add("authRespDecoderTerminator",
+				authRespDecoderTerminator);
 	}
 }

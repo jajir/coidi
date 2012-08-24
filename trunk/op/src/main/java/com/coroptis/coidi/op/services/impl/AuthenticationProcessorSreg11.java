@@ -62,6 +62,7 @@ public class AuthenticationProcessorSreg11 extends
 					fieldsToSign.add(SREG_FULLNAME);
 				}
 				if (SREG_DOB.equals(sregKey) && identity.getDob() != null) {
+					//TODO replace date constant
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					response.put(SREG_DOB, sdf.format(identity.getDob()));
 					fieldsToSign.add(SREG_DOB);

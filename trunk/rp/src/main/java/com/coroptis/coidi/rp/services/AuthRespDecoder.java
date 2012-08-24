@@ -1,10 +1,11 @@
 package com.coroptis.coidi.rp.services;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.rp.base.AuthRespExtension;
+import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.rp.base.AuthenticationResult;
 
 /**
- * Object hold information from one extension. Each OpenID extension have one
+ * Object hold information about one extension. Each OpenID extension have one
  * implementation. When implementation detect and decode concrete extension than
  * resolved object is returned.
  * 
@@ -16,11 +17,9 @@ public interface AuthRespDecoder {
 	/**
 	 * 
 	 * @param authenticationResponse
-	 * @param key
-	 * @param nameSpace
 	 * @return
 	 */
-	AuthRespExtension decode(AuthenticationResponse authenticationResponse,
-			String key, String nameSpace);
+	Boolean decode(AuthenticationResponse authenticationResponse,Association association,
+			AuthenticationResult authenticationResult);
 
 }

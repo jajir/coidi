@@ -33,10 +33,18 @@ import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.services.AuthenticationService;
 import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
+/**
+ * This dispatcher works more like filter. It examine all incoming requests if
+ * it's part of OpenID protocol. If it is OpenID request than it process.
+ * 
+ * @author jirout
+ * 
+ */
 public class AuthenticationResponseDispatcher implements Dispatcher {
 
 	@Inject
@@ -76,14 +84,17 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 
 			if (asm.exists(Association.class)) {
 				logger.debug("there is association.");
-				if (authenticationService.verify(authenticationResponse,
-						asm.get(Association.class))) {
+				AuthenticationResult authenticationResult = authenticationService
+						.verify(authenticationResponse,
+								asm.get(Association.class));
+				if (authenticationResult.isPositive()) {
 					UserSession session = asm.get(UserSession.class);
+					session.setAuthenticationResult(authenticationResult);
 					session.setSsoIdentity(authenticationResponse.getIdentity());
 				}
 			} else {
 				logger.debug("there is no association - stateless mode.");
-				// TODO finish stateless mode
+				// TODO finish stateless mode, move it to RP library
 				CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
 				checkAuthenticationRequest.setIdentity(authenticationResponse
 						.getIdentity());
