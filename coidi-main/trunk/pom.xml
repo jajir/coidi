@@ -26,13 +26,10 @@
 	</description>
 	<url>http://sourceforge.net/p/coidi/</url>
 	<modules>
-		<module>core</module>
-		<module>op</module>
-		<module>rp</module>
-		<module>test-rp</module>
-		<module>test-op</module>
-		<module>dist</module>
-		<module>test</module>
+		<module>coidi-core</module>
+		<module>coidi-op</module>
+		<module>coidi-rp</module>
+		<module>coidi-test-support</module>
 	</modules>
 	<dependencies>
 	</dependencies>
