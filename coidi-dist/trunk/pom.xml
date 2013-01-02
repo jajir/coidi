@@ -13,8 +13,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<modules>
-		<module>test-op</module>
-		<module>test-rp</module>
+		<module>coidi-test-op</module>
+		<module>coidi-test-rp</module>
 	</modules>
 	<dependencies>
 		<dependency>
