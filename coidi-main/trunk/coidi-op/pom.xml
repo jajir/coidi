@@ -6,7 +6,7 @@
 		<artifactId>coidi</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>op</artifactId>
+	<artifactId>coidi-op</artifactId>
 	<packaging>jar</packaging>
 	<name>OpendId provider library</name>
 	<properties>
@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>cz.coroptis.coidi</groupId>
 			<artifactId>core</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -49,6 +49,14 @@
 					<groupId>log4j</groupId>
 					<artifactId>log4j</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>xalan</groupId>
+					<artifactId>xalan</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -62,6 +70,12 @@
 			<artifactId>xml-apis</artifactId>
 			<version>${xml-apis.version}</version>
 			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>xalan</groupId>
+					<artifactId>xalan</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.ibm.icu</groupId>
@@ -140,7 +154,7 @@
 		<dependency>
 			<groupId>cz.coroptis.coidi</groupId>
 			<artifactId>coidi-test-support</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
