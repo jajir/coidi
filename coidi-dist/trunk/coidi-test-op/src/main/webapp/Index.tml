@@ -1,11 +1,11 @@
 <html t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-	this is iandex page
 	<div>
-		Private user profiles:
+		Registered profiles:
 		<ul>
 			<li><t:pageLink page="user" context="literal:karel">http://localhost:8080/user/karel</t:pageLink></li>
 			<li><t:pageLink page="user" context="literal:juan">http://localhost:8080/user/juan</t:pageLink></li>
 		</ul>
 	</div>
+	<div>In other words it's list of user's that are registered here at OpenID Provider (OP).</div>
 </html>

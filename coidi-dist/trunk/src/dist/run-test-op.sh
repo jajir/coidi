@@ -1,3 +1,10 @@
 #!/bin/sh
+#
+# Starts OpenID provider
+#
 
-java -Dserver.role=op -Dop.conf.dir=conf -cp classes:lib/jetty-6.1.25.jar:lib/jetty-util-6.1.25.jar:lib/servlet-api-2.5-20081211.jar Start lib/test-op-${coidi.version}.war 8080
+java -Dserver.role=op \
+     -Dop.conf.dir=conf \
+     -jar lib/jetty-runner-8.1.9.v20130131.jar \
+     --port 8080 ./lib/test-rp-1.0-SNAPSHOT.war
+     

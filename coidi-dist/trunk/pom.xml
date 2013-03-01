@@ -6,7 +6,7 @@
 		<artifactId>coidi</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>dist</artifactId>
+	<artifactId>coidi-dist</artifactId>
 	<packaging>pom</packaging>
 	<name>Create Coidi distribution</name>
 	<properties>
@@ -18,10 +18,27 @@
 	</modules>
 	<dependencies>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>r09</version>
-			<scope>compile</scope>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-runner</artifactId>
+			<version>8.1.9.v20130131</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-plus</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-jndi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-jsp</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>${groupid}</groupId>

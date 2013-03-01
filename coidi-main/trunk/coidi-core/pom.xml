@@ -6,7 +6,7 @@
 		<artifactId>coidi</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>core</artifactId>
+	<artifactId>coidi-core</artifactId>
 	<packaging>jar</packaging>
 	<name>Core library</name>
 	<properties>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>cz.coroptis.coidi</groupId>
 			<artifactId>coidi-test-support</artifactId>
-			<version>${parent.version}</version>
+			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
