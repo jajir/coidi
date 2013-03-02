@@ -1,11 +1,8 @@
-<html t:title="message:title" t:type="layout"
+<html t:title="Identities of user: ${user.name}" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-   	<h2>User name: ${user.name}</h2>
-   	<br />
-   	Identities:
    	<t:loop source="user.identities" value="identity">
    		<div>	
-   			<h3>Identity: ${identity.idIdentity}</h3>
+   			<p>Identity: <b>${identity.idIdentity}</b></p>
    			<p>Nickname: ${identity.nickname}</p>
    			<p>email: ${identity.email}</p>
    			<p>fullname: ${identity.fullname}</p>
@@ -16,5 +13,6 @@
    			<p>language: ${identity.language}</p>
    			<p>timezone: ${identity.timezone}</p>
    		</div>
+   		<br />
    	</t:loop>
 </html>
