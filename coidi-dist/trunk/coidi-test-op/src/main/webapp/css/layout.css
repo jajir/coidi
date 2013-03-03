@@ -6,7 +6,7 @@ td{vertical-align:top;}
 /* general layout */
 .cp{width:770px;margin-left:auto;margin-right:auto;padding:0.5em 0 1em 0;}
 .bg{background-color:#e7eaff;}
-h1{padding:0px 0 0px 0px;margin: 0.3em 0 1.5em 0;font-weight:bold;font-size:15px; color:#499e43;border-bottom:solid 1px #087400;}
+h1{padding:0px 0 0px 0px;margin: 0.3em 0 1.5em 0;font-weight:bold;font-size:15px; color:#499e43;}
 h2{font-size:14px;padding:0.5em 0 0em 0;margin: 0 0 0 0;}
 div.logo a{font-size:24px;color:#499e43;text-decoration:none}
 div.menu{float:right;}

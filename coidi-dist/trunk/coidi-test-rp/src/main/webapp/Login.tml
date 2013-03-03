@@ -64,8 +64,8 @@
 		<h3>Identities for testing</h3>
 		This identities could be used as 'User Supplied Id' for testing purposes
 		<ul>
-			<li>http://localhost:8080/user/juan  (asd/asd)</li>
-			<li>http://localhost:8080/user/karel  (qwe/qwe)</li>
+			<li>http://localhost:8080/identity/juan  (asd/asd)</li>
+			<li>http://localhost:8080/identity/karel  (qwe/qwe)</li>
 		</ul>
 	</div>
 </html>

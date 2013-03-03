@@ -80,9 +80,9 @@ public class RpModule {
 			@Autobuild DiscoveryProcessorGoogle discoveryProcessorGoogle,
 			@Autobuild DiscoveryProcessorTerminator discoveryProcessorTerminator,
 			@Autobuild DiscoveryProcessorYadis discoveryProcessorYadis) {
-		configuration.add("discoveryProcessorHtml", discoveryProcessorHtml);
 		configuration.add("discoveryProcessorGoogle", discoveryProcessorGoogle);
 		configuration.add("discoveryProcessorYadis", discoveryProcessorYadis);
+		configuration.add("discoveryProcessorHtml", discoveryProcessorHtml);
 		configuration.add("discoveryProcessorTerminator",
 				discoveryProcessorTerminator);
 	}

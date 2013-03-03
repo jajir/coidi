@@ -18,13 +18,27 @@ package com.coroptis.coidi.rp.services;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 
 /**
- * Chain of command definition.
+ * Implementation try to discover OP Endpoint URL and other information
+ * necessary for further authentication.
+ * <p>
+ * Implementations of this interface are called in chain of command. When
+ * {@link #dicovery(String)} methods return <code>null</code> next
+ * implementation in chain is called.
+ * </p>
  * 
  * @author jan
  * 
  */
 public interface DiscoveryProcessor {
 
-	DiscoveryResult dicovery(String userSuppliedId);
+    /**
+     * Try perform discovery with selected technology.
+     * 
+     * @param userSuppliedId
+     *            required user supplied ID
+     * @return discovery result object when process is successful otherwise
+     *         return <code>null</code>
+     */
+    DiscoveryResult dicovery(String userSuppliedId);
 
 }
