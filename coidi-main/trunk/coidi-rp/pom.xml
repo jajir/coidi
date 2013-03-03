@@ -14,8 +14,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>cz.coroptis.coidi</groupId>
-			<artifactId>core</artifactId>
+			<groupId>com.coroptis.coidi</groupId>
+			<artifactId>coidi-core</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
@@ -105,7 +105,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>cz.coroptis.coidi</groupId>
+			<groupId>com.coroptis.coidi</groupId>
 			<artifactId>coidi-test-support</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>test</scope>
