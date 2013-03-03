@@ -3,8 +3,8 @@
 	<div>
 		Registered profiles:
 		<ul>
-			<li><t:pageLink page="user" context="literal:karel">http://localhost:8080/user/karel</t:pageLink></li>
-			<li><t:pageLink page="user" context="literal:juan">http://localhost:8080/user/juan</t:pageLink></li>
+			<li><t:pageLink page="identity" context="literal:karel">http://localhost:8080/identity/karel</t:pageLink></li>
+			<li><t:pageLink page="identity" context="literal:juan">http://localhost:8080/identity/juan</t:pageLink></li>
 		</ul>
 	</div>
 	<div>In other words it's list of user's that are registered here at OpenID Provider (OP).</div>

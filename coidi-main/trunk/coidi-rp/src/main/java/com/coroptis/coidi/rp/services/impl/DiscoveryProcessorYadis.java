@@ -18,6 +18,8 @@ package com.coroptis.coidi.rp.services.impl;
 import java.io.IOException;
 import java.net.ConnectException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -66,11 +68,17 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 	HttpHead httpHead = new HttpHead(userSuppliedId);
 	httpHead.setHeader("Accept", "application/xrds+xml");
 	HttpResponse response = httpClient.execute(httpHead);
-	Header header = response.getFirstHeader("X-XRDS-Location");
-	if (header == null) {
-	    return doGet(userSuppliedId);
+	if (HttpServletResponse.SC_OK == response.getStatusLine().getStatusCode()) {
+	    Header header = response.getFirstHeader("X-XRDS-Location");
+	    if (header == null) {
+		return doGet(userSuppliedId);
+	    } else {
+		return discoverySupport.getXrdsDocument(header.getValue(), userSuppliedId);
+	    }
 	} else {
-	    return discoverySupport.getXrdsDocument(header.getValue(), userSuppliedId);
+	    logger.info("OpendID provider response for YADIS HEAD request is:"
+		    + response.toString());
+	    return null;
 	}
     }
 
