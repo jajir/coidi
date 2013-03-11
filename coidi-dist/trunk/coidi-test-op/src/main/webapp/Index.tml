@@ -1,11 +1,12 @@
-<html t:title="message:title" t:type="layout"
+<div t:title="message:title" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	<div>
-		Registered profiles:
+		First 10 registered identities:
 		<ul>
-			<li><t:pageLink page="identity" context="literal:karel">http://localhost:8080/identity/karel</t:pageLink></li>
-			<li><t:pageLink page="identity" context="literal:juan">http://localhost:8080/identity/juan</t:pageLink></li>
+			<t:loop source="identities" value="identity">
+			<li><t:pageLink page="identity" context="identity.idIdentity">http://localhost:8080/identity/${identity.idIdentity}</t:pageLink></li>
+			</t:loop>
 		</ul>
+		To see all of them go <t:pageLink page="identities">there &gt;&gt;</t:pageLink>
 	</div>
-	<div>In other words it's list of user's that are registered here at OpenID Provider (OP).</div>
-</html>
+</div>
