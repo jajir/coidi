@@ -102,6 +102,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 				return new RedirectResponse();
 			}
 
+			//TODO isUsersIdentity thrown NPE, it should not. it should be OpenID error messages
 			if (!userService.isUsersIdentity(userSession.getIdUser(),
 					identity.getIdIdentity())) {
 				logger.debug("Identity '" + authenticationRequest.getIdentity()

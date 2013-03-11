@@ -13,24 +13,25 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.dao;
+package com.coroptis.coidi.op.services;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-
-import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.op.entities.AssociationImpl;
+import com.coroptis.coidi.core.message.ErrorResponse;
 
 /**
- * Allows to persist associations.
+ * Helps to generate error messages during authentication process.
  * 
  * @author jirout
  * 
  */
-public interface AssociationDao {
+public interface NegativeResponseGenerator {
 
-    @CommitAfter
-    void create(AssociationImpl association);
-
-    Association getByAssocHandle(String assoc_handle);
+    /**
+     * Generated error with given message.
+     * 
+     * @param message
+     *            required error message
+     * @return created instance of {@link ErrorResponse} class
+     */
+    ErrorResponse simpleError(String message);
 
 }

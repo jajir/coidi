@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
@@ -35,76 +34,80 @@ import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
-public class OpenidDispatcherAuthenticationImmediate implements
-		OpenIdDispatcher {
+public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private NonceService nonceService;
+    @Inject
+    private NonceService nonceService;
 
-	@Inject
-	private AssociationDao associationDao;
+    @Inject
+    private AssociationDao associationDao;
 
-	@Inject
-	private AuthenticationService authenticationService;
+    @Inject
+    private AuthenticationService authenticationService;
 
-	@Inject
-	private SigningService signingService;
+    @Inject
+    private SigningService signingService;
 
-	@Inject
-	private AuthenticationProcessor authenticationProcessor;
+    @Inject
+    private AuthenticationProcessor authenticationProcessor;
 
-	@Inject
-	private IdentityService identityService;
+    @Inject
+    private IdentityService identityService;
 
-	@Override
-	public AbstractMessage process(Map<String, String> requestParams,
-			UserSessionSkeleton userSession) {
-		if (requestParams.get(OPENID_MODE).equals(
-				AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
-			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
-					requestParams);
-			if (!authenticationService
-					.isAuthenticationRequest(authenticationRequest)) {
-				logger.debug("authentication request doesn't contains any idenity field");
-				return null;
-			}
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
 
-			Association association = associationDao
-					.getByAssocHandle(authenticationRequest.getAssocHandle());
-			if (association == null) {
-				ErrorResponse errorResponse = new ErrorResponse(false);
-				String msg = "Unable to find association handle '"
-						+ authenticationRequest.getAssocHandle() + "'";
-				logger.warn(msg);
-				errorResponse.setError(msg);
-				return errorResponse;
-			}
-
-			AuthenticationResponse response = new AuthenticationResponse();
-			response.setAssocHandle(authenticationRequest.getAssocHandle());
-			response.setIdentity(authenticationRequest.getIdentity());
-			response.setNonce(nonceService.createNonce());
-			response.setReturnTo(authenticationRequest.getReturnTo());
-			response.setSigned("assoc_handle,identity,nonce,return_to");
-			response.setSignature(signingService.sign(response, association));
-			response.put("go_to", authenticationRequest.getReturnTo());
-
-			Identity identity = identityService.getById(authenticationRequest
-					.getIdentity());
-			if (identity == null) {
-				// negative response
-			}
-
-			Set<String> fieldToSign = new HashSet<String>();
-			AbstractMessage out = authenticationProcessor.process(
-					authenticationRequest, response, identity, fieldToSign);
-			return out;
-		}
+    @Override
+    public AbstractMessage process(Map<String, String> requestParams,
+	    UserSessionSkeleton userSession) {
+	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
+	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
+	    if (!authenticationService.isAuthenticationRequest(authenticationRequest)) {
+		logger.debug("authentication request doesn't contains any idenity field");
 		return null;
+	    }
+
+	    Association association = associationDao.getByAssocHandle(authenticationRequest
+		    .getAssocHandle());
+	    // FIXME add association validation
+	    if (association == null) {
+		return negativeResponseGenerator.simpleError("Unable to find association handle '"
+			+ authenticationRequest.getAssocHandle() + "'");
+	    }
+
+	    Identity identity = identityService.getIdentityByName(authenticationRequest
+		    .getIdentity());
+	    if (identity == null) {
+		return negativeResponseGenerator.simpleError("There is no such identity '"
+			+ authenticationRequest.getIdentity() + "'");
+	    }
+
+	    if (!identityService.isIdentityLogged(userSession, identity)) {
+		return negativeResponseGenerator.simpleError("Idenity '"
+			+ authenticationRequest.getIdentity() + "' is not logged in");
+	    }
+
+	    AuthenticationResponse response = new AuthenticationResponse();
+	    response.setAssocHandle(authenticationRequest.getAssocHandle());
+	    response.setIdentity(authenticationRequest.getIdentity());
+	    response.setNonce(nonceService.createNonce());
+	    response.setReturnTo(authenticationRequest.getReturnTo());
+	    response.setSigned("assoc_handle,identity,nonce,return_to");
+	    response.setSignature(signingService.sign(response, association));
+	    response.put("go_to", authenticationRequest.getReturnTo());
+
+	    Set<String> fieldToSign = new HashSet<String>();
+	    //FIXME fields to sign are null !!!??
+	    AbstractMessage out = authenticationProcessor.process(authenticationRequest, response,
+		    identity, fieldToSign);
+	    return out;
 	}
+	return null;
+    }
 }

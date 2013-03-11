@@ -59,6 +59,7 @@ import com.coroptis.coidi.op.services.impl.AuthenticationProcessorTerminator;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
+import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker;
@@ -73,138 +74,124 @@ import com.google.common.io.Files;
 
 public class OpModule {// NO_UCD
 
-	private final static Logger logger = Logger.getLogger(OpModule.class);
+    private final static Logger logger = Logger.getLogger(OpModule.class);
 
-	public static void bind(ServiceBinder binder) {
-		/**
-		 * DAO
-		 */
-		binder.bind(StatelessModeNonceDao.class,
-				StatelessModeNonceDaoImpl.class);
-		binder.bind(AssociationDao.class, AssociationDaoImpl.class);
-		binder.bind(IdentityDao.class, IdentityDaoImpl.class);
-		binder.bind(UserDao.class, UserDaoImpl.class);
-
-		/**
-		 * Services
-		 */
-		binder.bind(XrdsService.class, XrdsServiceImpl.class);
-		binder.bind(IdentityService.class, IdentityServiceImpl.class);
-		binder.bind(AssociationService.class, AssociationServiceImpl.class);
-		binder.bind(CryptoService.class, CryptoServiceImpl.class);
-		binder.bind(UserService.class, UserServiceImpl.class);
-		binder.bind(AuthenticationService.class,
-				AuthenticationServiceImpl.class);
-		binder.bind(StatelessModeNonceService.class,
-				StatelessModeNonceServiceImpl.class);
-		binder.bind(SregService.class, SregServiceImpl.class);
-	}
-
-	@Startup
-	public static void initDatabase(
-			final @Inject @Symbol("op.fill.with.data.on.startup") Boolean initDatabase,
-			final @Inject @Symbol("op.init.sql.data") String initSqlFile,
-			final @InjectService("session") Session session) throws IOException {
-		if (initDatabase) {
-			for (final String line : Files.readLines(new File(initSqlFile),
-					Charset.forName("UTF-8"))) {
-				if (line.length() > 0) {
-					logger.debug("executing: " + line);
-					session.doWork(new Work() {
-
-						@Override
-						public void execute(Connection connection)
-								throws SQLException {
-							connection.createStatement().execute(line);
-							connection.commit();
-						}
-					});
-				}
-			}
-		}
-	}
-
-	public static void contributeMasterDispatcher(
-			OrderedConfiguration<Dispatcher> configuration,
-			@InjectService("accessControllerDispatcher") Dispatcher accessController) {
-		configuration.add("accessControllerDispatcher", accessController,
-				"before:PageRender");
-	}
-
-	public static OpenIdDispatcher buildOpenIdDispatcher(
-			List<OpenIdDispatcher> commands,
-			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
-		return chainBuilder.build(OpenIdDispatcher.class, commands);
-	}
-
-	public static void contributeOpenIdDispatcher(
-			OrderedConfiguration<OpenIdDispatcher> configuration,
-			@Autobuild OpenIdDispatcherChecker openIdDispatcherChecker,
-			@Autobuild OpenidDispatcherAuthenticationImmediate openidDispatcherAuthenticationImmediate,
-			@Autobuild OpenidDispatcherAuthenticationSetup openidDispatcherAuthenticationSetup,
-			@Autobuild OpenIdDispatcherCheckAuthentication openIdDispatcherCheckAuthentication,
-			@Autobuild OpenIdDispatcherAssociation openIdDispatcherAssociation,
-			@Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
-		configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
-		configuration.add("openidDispatcherAuthenticationImmediate",
-				openidDispatcherAuthenticationImmediate);
-		configuration.add("openidDispatcherAuthenticationSetup",
-				openidDispatcherAuthenticationSetup);
-		configuration.add("openIdDispatcherAssociation",
-				openIdDispatcherAssociation);
-		configuration.add("openIdDispatcherCheckAuthentication",
-				openIdDispatcherCheckAuthentication);
-		configuration.add("openIdDispatcherTerminator",
-				openIdDispatcherTerminator);
-	}
+    public static void bind(ServiceBinder binder) {
+	/**
+	 * DAO
+	 */
+	binder.bind(StatelessModeNonceDao.class, StatelessModeNonceDaoImpl.class);
+	binder.bind(AssociationDao.class, AssociationDaoImpl.class);
+	binder.bind(IdentityDao.class, IdentityDaoImpl.class);
+	binder.bind(UserDao.class, UserDaoImpl.class);
 
 	/**
-	 * Chain of commands process authentication response.
-	 * 
-	 * @param commands
-	 * @param chainBuilder
-	 * @return
+	 * Services
 	 */
-	public static AuthenticationProcessor buildAuthenticationProcessor(
-			List<AuthenticationProcessor> commands,
-			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
-		return chainBuilder.build(AuthenticationProcessor.class, commands);
-	}
+	binder.bind(XrdsService.class, XrdsServiceImpl.class);
+	binder.bind(IdentityService.class, IdentityServiceImpl.class);
+	binder.bind(AssociationService.class, AssociationServiceImpl.class);
+	binder.bind(CryptoService.class, CryptoServiceImpl.class);
+	binder.bind(UserService.class, UserServiceImpl.class);
+	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
+	binder.bind(StatelessModeNonceService.class, StatelessModeNonceServiceImpl.class);
+	binder.bind(SregService.class, SregServiceImpl.class);
+	binder.bind(NegativeResponseGenerator.class, NegativeResponseGeneratorImpl.class);
+    }
 
-	public static void contributeAuthenticationProcessor(
-			OrderedConfiguration<AuthenticationProcessor> configuration,
-			@Autobuild AuthenticationProcessorSreg11 authenticationFilterSreg11,
-			@Autobuild AuthenticationProcessorTerminator authenticationFilterTerminator,
-			@Autobuild AuthenticationProcessorResponse authenticationProcessorResponse) {
-		configuration.add("authenticationProcessorResponse",
-				authenticationProcessorResponse);
-		configuration.add("authenticationFilterSreg11",
-				authenticationFilterSreg11);
-		configuration.add("authenticationFilterTerminator",
-				authenticationFilterTerminator);
-	}
-
-	@Match("*Dao")
-	public static void adviseDaoTransactions(
-			HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
-		advisor.addTransactionCommitAdvice(receiver);
-	}
-
-	@Contribute(HibernateSessionSource.class)
-	public static void loadHibernateConf(
-			OrderedConfiguration<HibernateConfigurer> config,
-			@Inject final ConfigurationService configurationService) {
-		final Resource configFile = configurationService
-				.getConfiguration("hibernate");
-		logger.debug("Applying special hibernate conf from "
-				+ configFile.getFile());
-		config.override("Default", new HibernateConfigurer() {
+    @Startup
+    public static void initDatabase(
+	    final @Inject @Symbol("op.fill.with.data.on.startup") Boolean initDatabase,
+	    final @Inject @Symbol("op.init.sql.data") String initSqlFile,
+	    final @InjectService("session") Session session) throws IOException {
+	if (initDatabase) {
+	    for (final String line : Files.readLines(new File(initSqlFile),
+		    Charset.forName("UTF-8"))) {
+		if (line.length() > 0) {
+		    logger.debug("executing: " + line);
+		    session.doWork(new Work() {
 
 			@Override
-			public void configure(Configuration configuration) {
-				configuration.configure(configFile.toURL());
+			public void execute(Connection connection) throws SQLException {
+			    connection.createStatement().execute(line);
+			    connection.commit();
 			}
-		});
+		    });
+		}
+	    }
 	}
+    }
+
+    public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
+	    @InjectService("accessControllerDispatcher") Dispatcher accessController) {
+	configuration.add("accessControllerDispatcher", accessController, "before:PageRender");
+    }
+
+    public static OpenIdDispatcher buildOpenIdDispatcher(List<OpenIdDispatcher> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(OpenIdDispatcher.class, commands);
+    }
+
+    public static void contributeOpenIdDispatcher(
+	    OrderedConfiguration<OpenIdDispatcher> configuration,
+	    @Autobuild OpenIdDispatcherChecker openIdDispatcherChecker,
+	    @Autobuild OpenidDispatcherAuthenticationImmediate openidDispatcherAuthenticationImmediate,
+	    @Autobuild OpenidDispatcherAuthenticationSetup openidDispatcherAuthenticationSetup,
+	    @Autobuild OpenIdDispatcherCheckAuthentication openIdDispatcherCheckAuthentication,
+	    @Autobuild OpenIdDispatcherAssociation openIdDispatcherAssociation,
+	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
+	configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
+	configuration.add("openidDispatcherAuthenticationImmediate",
+		openidDispatcherAuthenticationImmediate);
+	configuration.add("openidDispatcherAuthenticationSetup",
+		openidDispatcherAuthenticationSetup);
+	configuration.add("openIdDispatcherAssociation", openIdDispatcherAssociation);
+	configuration.add("openIdDispatcherCheckAuthentication",
+		openIdDispatcherCheckAuthentication);
+	configuration.add("openIdDispatcherTerminator", openIdDispatcherTerminator);
+    }
+
+    /**
+     * Chain of commands process authentication response.
+     * 
+     * @param commands
+     * @param chainBuilder
+     * @return
+     */
+    public static AuthenticationProcessor buildAuthenticationProcessor(
+	    List<AuthenticationProcessor> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthenticationProcessor.class, commands);
+    }
+
+    public static void contributeAuthenticationProcessor(
+	    OrderedConfiguration<AuthenticationProcessor> configuration,
+	    @Autobuild AuthenticationProcessorSreg11 authenticationFilterSreg11,
+	    @Autobuild AuthenticationProcessorTerminator authenticationFilterTerminator,
+	    @Autobuild AuthenticationProcessorResponse authenticationProcessorResponse) {
+	configuration.add("authenticationProcessorResponse", authenticationProcessorResponse);
+	configuration.add("authenticationFilterSreg11", authenticationFilterSreg11);
+	configuration.add("authenticationFilterTerminator", authenticationFilterTerminator);
+    }
+
+    @Match("*Dao")
+    public static void adviseDaoTransactions(HibernateTransactionAdvisor advisor,
+	    MethodAdviceReceiver receiver) {
+	advisor.addTransactionCommitAdvice(receiver);
+    }
+
+    @Contribute(HibernateSessionSource.class)
+    public static void loadHibernateConf(OrderedConfiguration<HibernateConfigurer> config,
+	    @Inject final ConfigurationService configurationService) {
+	final Resource configFile = configurationService.getConfiguration("hibernate");
+	logger.debug("Applying special hibernate conf from " + configFile.getFile());
+	config.override("Default", new HibernateConfigurer() {
+
+	    @Override
+	    public void configure(Configuration configuration) {
+		configuration.configure(configFile.toURL());
+	    }
+	});
+    }
 
 }

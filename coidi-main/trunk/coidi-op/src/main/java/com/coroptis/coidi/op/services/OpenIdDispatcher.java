@@ -29,17 +29,21 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
  */
 public interface OpenIdDispatcher {
 
-	final static String OPENID_MODE = AbstractMessage.OPENID
-			+ AbstractMessage.MODE;
+    final static String OPENID_MODE = AbstractMessage.OPENID + AbstractMessage.MODE;
 
-	/**
-	 * Process message. If return value is <code>null</code> then next openID
-	 * request dispatcher is used. It will be used in chain of command patter.
-	 * 
-	 * @param requestParams
-	 * @return
-	 */
-	AbstractMessage process(Map<String, String> requestParams,
-			UserSessionSkeleton userSession);
+    /**
+     * Process message. If return value is <code>null</code> then next openID
+     * request dispatcher is used. It will be used in chain of command patter.
+     * 
+     * @param requestParams
+     *            required contains key value OpenID request parameters.
+     * @param userSession
+     *            optional, contains data about logged user from users HTPP
+     *            session.
+     * @return {@link AbstractMessage} object containing positive some OpenID
+     *         response. When it's <code>null</code> next dispatcher will be
+     *         called to process request.
+     */
+    AbstractMessage process(Map<String, String> requestParams, UserSessionSkeleton userSession);
 
 }

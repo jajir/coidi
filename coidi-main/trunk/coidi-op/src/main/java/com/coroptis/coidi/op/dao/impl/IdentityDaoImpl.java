@@ -15,8 +15,13 @@
  */
 package com.coroptis.coidi.op.dao.impl;
 
+import java.util.List;
+
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.coroptis.coidi.op.dao.IdentityDao;
@@ -24,13 +29,36 @@ import com.coroptis.coidi.op.entities.Identity;
 
 public class IdentityDaoImpl implements IdentityDao {
 
-	@Inject
-	private Session session;
+    @Inject
+    private Session session;
 
-	@Override
-	public Identity getIdentityByName(final String idIdentity) {
-		return (Identity) session.createCriteria(Identity.class)
-				.add(Restrictions.eq("idIdentity", idIdentity)).uniqueResult();
+    @Override
+    public Identity getIdentityByName(final String idIdentity) {
+	return (Identity) session.createCriteria(Identity.class)
+		.add(Restrictions.eq("idIdentity", idIdentity)).uniqueResult();
+    }
+
+    @Override
+    public Integer getCount() {
+	return ((Long) session.createCriteria(Identity.class).setProjection(Projections.rowCount())
+		.uniqueResult()).intValue();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Identity> getChunk(Integer startIndex, Integer endIndex) {
+	Criteria criteria = session.createCriteria(Identity.class)
+		.addOrder(Order.asc("idIdentity"));
+	if (startIndex != null) {
+	    criteria.setFirstResult(startIndex);
 	}
-
+	if (endIndex != null) {
+	    if (startIndex == null) {
+		criteria.setMaxResults(endIndex);
+	    } else {
+		criteria.setMaxResults(endIndex - startIndex + 1);
+	    }
+	}
+	return criteria.list();
+    }
 }
