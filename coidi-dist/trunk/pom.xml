@@ -21,162 +21,12 @@
 	<modules>
 		<module>coidi-test-op</module>
 		<module>coidi-test-rp</module>
+		<module>coidi-dist</module>
 	</modules>
 	<dependencies>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-runner</artifactId>
-			<version>8.1.9.v20130131</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-plus</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-annotations</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-jndi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-jsp</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- <dependency> <groupId>com.coroptis.coidi</groupId> <artifactId>coidi-test-rp</artifactId> 
-			<version>${project.version}</version> <type>war</type> </dependency> <dependency> 
-			<groupId>com.coroptis.coidi</groupId> <artifactId>coidi-test-op</artifactId> 
-			<version>${project.version}</version> <type>war</type> </dependency> -->
-		<!-- <dependency> </dependency> -->
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>${basedir}/src/main/assembly/coidi-dist.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<inherited>true</inherited>
-				<executions>
-					<execution>
-						<id>build-version</id>
-						<phase>prepare-package</phase>
-						<configuration>
-							<!-- this task replaces version placeholder in build.xml -->
-							<tasks>
-								<echo>Property replacement started </echo>
-								<copy todir="${project.build.directory}/dist">
-									<fileset dir="${basedir}/src/dist">
-										<include name="**/*" />
-									</fileset>
-								</copy>
-								<replace dir="${project.build.directory}/dist" token="${coidi.version}"
-									value="${project.version}">
-									<include name="**/*.sh" />
-								</replace>
-								<echo>Property replacement is done</echo>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>fix-crlf</id>
-						<phase>prepare-package</phase>
-						<configuration>
-							<tasks>
-								<fixcrlf srcdir="${project.build.directory}" includes="**/*sh,**/*.properties"
-									eol="unix" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
-						<goals>
-							<goal>unpack</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${groupid}</groupId>
-									<artifactId>coidi</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<classifier>site</classifier>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/dist/doc</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-dependency-plugin
-										</artifactId>
-										<versionRange>
-											[2.0,)
-										</versionRange>
-										<goals>
-											<goal>unpack</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 	<mailingLists>
 		<mailingList>
@@ -196,12 +46,6 @@
 		<system>Sourceforge ticketing system</system>
 		<url>https://sourceforge.net/p/coidi/tickets/</url>
 	</issueManagement>
-	<developers>
-		<developer>
-			<id>jan</id>
-			<name>Jan Jirout</name>
-		</developer>
-	</developers>
 	<scm>
 		<connection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</connection>
 		<developerConnection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</developerConnection>
