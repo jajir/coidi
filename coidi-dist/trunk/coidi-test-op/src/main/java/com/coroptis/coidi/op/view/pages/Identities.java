@@ -15,23 +15,36 @@
  */
 package com.coroptis.coidi.op.view.pages;
 
-import java.util.List;
-
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.Service;
+import org.apache.tapestry5.beaneditor.BeanModel;
+import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.BeanModelSource;
 
-import com.coroptis.coidi.op.dao.IdentityDao;
+public class Identities {
 
-public class Index {
+    @SuppressWarnings("unused")
+    @Inject
+    @Service("identityGds")
+    @Property
+    private GridDataSource source;
 
     @Inject
-    private IdentityDao identityDao;
+    private BeanModelSource beanModelSource;
+
+    @Inject
+    private ComponentResources resources;
 
     @SuppressWarnings("unused")
     @Property
     private com.coroptis.coidi.op.entities.Identity identity;
 
-    public List<com.coroptis.coidi.op.entities.Identity> getIdentities() {
-	return identityDao.getChunk(0, 10);
+    public BeanModel<com.coroptis.coidi.op.entities.Identity> getModel() {
+	BeanModel<com.coroptis.coidi.op.entities.Identity> model = beanModelSource
+		.createDisplayModel(com.coroptis.coidi.op.entities.Identity.class,
+			resources.getMessages());
+	return model;
     }
 }
