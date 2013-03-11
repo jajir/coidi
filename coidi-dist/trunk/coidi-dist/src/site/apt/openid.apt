@@ -1,0 +1,62 @@
+ ----
+ Introduction
+ ----
+
+OpenID - introduction
+
+ Following page quickly describe OpenID protocol.
+
+* Main use case
+
+ OpenID protocol help to solve one use case - authenticate.
+
+** Authenticate use case
+ 
+ Next diagram shows fundamental use case - authenticate. 
+ This allows to RP verify that User's identity is correct.
+ In other words it's about answering question "Is user who say he is?".
+ This verification can't by based on user's claim it have to be verified on OP.  
+
+[uc-authenticate.png] Authenticate use case.
+
+** Authenticate process description
+
+ How it work when user tries to access his user profile on RP site.
+ User is logged on OP but not on RP.
+ 
+[uc-access-rp-logged.png] user access profile page
+
+ [[1]] user tries to access his user profile page, user profile page requires logged user
+
+ [[1]] user is not logged in (or authenticated) on RP so RP ask user for his identity 
+
+ [[1]] user provides his OpenID identity, it could be URL (http://john.somepage.com) or in some cases email
+
+ [[1]] PR based on provided identity find OP and than ask OP to verify claimed identity 
+
+ [[1]] OP confirm that identity belong to user that used it 
+
+ [[1]] RP knows user's identity and can trust it. Because of this RP can provide user's profile page
+ 
+[]
+ 
+* OpenID extensions
+
+ Extensions helps to provide mode informations about user to RP or helps to improve user experience with OpenID.   
+
+** Protocol extensions
+ 
+ Main part of extensions use extension mechanism of of OpenID protocol.
+ This extensions transfer move information during authentication process from RP to OP and in opposite direction.  
+
+** Other extensions
+ 
+  There are also extensions which are not compatible with OpenID protocol and still are important.
+  For example it's integration google account in OpenID.
+  Google identified user not by URL which is valid user identifier but with email address.
+  Your Google account is john@google.com not http://john.google.com.
+  When RP have to support google account then have to discovery process have to extended to resolve google accounts.
+  
+  
+    
+

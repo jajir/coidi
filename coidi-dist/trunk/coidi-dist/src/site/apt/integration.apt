@@ -1,0 +1,22 @@
+ ----
+ Integration
+ ----
+
+How to Integrate coidi to you application
+ 
+ This document describe how to integrate coidi OpenID implementation with your project.
+  
+* Early steps - preconditions
+
+ First question that have to be decided if you want to integrate OpenID provider or Relaying party.
+
+ * OpenID provider - your application should provide all identity management usecases (login, change login ...),
+ your application also should be able to provide it's identities to other applications
+ 
+ * Relaying party - you would like to allows to enter to you site to people with already existing identities.
+ If you fully relay on OpenID that your application save usecase like login, change login and password ...
+
+[]
+
+ For successful coidi impementation you should be familiar with 
+ {{{http://tapestry.apache.org/}Tapestry 5}}mostly with{{{http://tapestry.apache.org/ioc.html}IoC}}.

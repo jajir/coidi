@@ -1,0 +1,62 @@
+ ----
+ Introduction
+ ----
+
+OpenID - introduction
+ 
+* Authentication - high level
+
+** Authenticate use case usage
+
+ When user try to access some protected page as user profile on RP than RP have to get user's identity.
+ RP ask user for entering some identifier.
+ It could be OpendID of google email (when appropriate OpenID extension is used).
+ Based on that identifier RP discover which server (OP) is responsible for managing this identity and ask this server (OP) to authenticate this identity.
+ When OP positively authenticate user's identity than RP allows user to get requested page.
+ This process in on next diagram. 
+ 
+[openid-role.png] Role of OpenID protocol.
+
+* Authentication - more details
+
+ Previously described use cases are here describe in more details.
+
+** Main use cases solved by library
+
+ Following diagram shows main use cases solved by library.  
+
+[use-cases-high-level.png] use cases for OpenID
+
+ Use cases are described in order how they are invoked.
+ OpenId protocol contain few other alternative flows but following one is most important.   
+
+ * provide user supplied id - RP ask user to enter his 'user supplied id'.
+  By definition it's URL or XRI, but extensions allows to understand email addresses.  
+ 
+ * normalization - When RP accept 'user supplied ID' than it's have to adjusted to fit following process.
+  This process include some basic string operations like removing/adding trailing slash.
+  Result of this process is 'claimed id'.
+ 
+ * discovery - this process get information about OP that is responsible for given claimed id.
+  Result of discovery process is XRDS document that describe OP.
+  Usually it contains information which extension are available at this OP and what is technical end point for further communication.     
+ 
+ * association -  this process establish shared secret between OP and RP. This secret could be used for signing messages. 
+ 
+ * authentication request - It's message send from RP via redirect to OP in which PR ask OP to confirm user's identity.
+ 
+ * authentication response - I't message send from OP via redirect to RP in which RP could confirm end user's identity. 
+
+[]
+
+** Authentication request/response
+
+ It's key concept that allows user to get identity.
+
+ Following diagrams show situation when user access relaying party and provide his identification.
+ Relaying party determine correct OpenId provider and redirect user there with authentication request.
+ OpenId provider select corresponding user if this user is not logged in than ask for credential and perform login operation.
+ Than OpenId provider create authentication response and send it back through redirect to relaying party.
+ When relaying party get authentication response extract identity and verify signature with secret key. 
+
+[authentication-detail.png] Authentication detail
