@@ -10,19 +10,13 @@ Both are stand alone web applications.
 
 # How to start
 
-Open two shell windows on linux and execute:
+Open  shell terminal and run:
 
-./run-test-op.sh
-
-and in second shell:
-
-./run-test-rp.sh
-
-after that in both window should start servers
+./coidi.sh start
 
 # verify that it's running
 
-1) Check that there are no exception in both shells
+1) Check that there are no exception in log files in directory log
 2) try to access testing OpenID at: provider http://localhost:8080
    try to access relaying party at: http://localhost:8081
    If both are running than both started correctly
