@@ -75,7 +75,7 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 				.getByNonce(request.getNonce());
 		Preconditions.checkNotNull(statelessModeNonce,
 				"nonce '" + request.getNonce()
-						+ "' wasn't fourn during sateles authentication");
+						+ "' wasn't found during sateless authentication");
 		String signature = signingService.sign(request,
 				statelessModeNonce.getMacKey(), statelesModeAssociationType);
 		if (signature.equals(request.getSignature())) {

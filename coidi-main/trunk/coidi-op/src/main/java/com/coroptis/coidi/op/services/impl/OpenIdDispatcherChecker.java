@@ -43,6 +43,7 @@ public class OpenIdDispatcherChecker implements OpenIdDispatcher {
 	public AbstractMessage process(Map<String, String> requestParams,
 			UserSessionSkeleton userSession) {
 		if (requestParams.get(OPENID_MODE) == null) {
+		    //TODO move to negative response generator
 			StringBuilder buff = new StringBuilder();
 			buff.append("key value '");
 			buff.append(OPENID_MODE);

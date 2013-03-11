@@ -18,36 +18,60 @@ package com.coroptis.coidi.op.services.impl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.IdentityDao;
+import com.coroptis.coidi.op.dao.UserDao;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.IdentityService;
+import com.google.common.base.Preconditions;
 
 public class IdentityServiceImpl implements IdentityService {
 
-	@Inject
-	private IdentityDao identityDao;
+    @Inject
+    private IdentityDao identityDao;
 
-	/**
-	 * OpenID identity is stored in URL form. In database is stored just prefix
-	 * part of it. For example prefix is http://www.myid.com/user/
-	 */
-	@Inject
-	@Symbol("op.idenity.prefix")
-	private String idenityPrefix;
+    @Inject
+    private UserDao userDao;
 
-	@Override
-	public Identity getIdentityByName(final String idIdentity) {
-		if (idIdentity.startsWith(idenityPrefix)) {
-			return identityDao.getIdentityByName(idIdentity
-					.substring(idenityPrefix.length()));
-		} else {
-			return identityDao.getIdentityByName(idIdentity);
-		}
+    /**
+     * OpenID identity is stored in URL form. In database is stored just prefix
+     * part of it. For example prefix is http://www.myid.com/user/
+     */
+    @Inject
+    @Symbol("op.idenity.prefix")
+    private String idenityPrefix;
+
+    @Override
+    public Identity getIdentityByName(final String idIdentity) {
+	if (idIdentity.startsWith(idenityPrefix)) {
+	    return identityDao.getIdentityByName(idIdentity.substring(idenityPrefix.length()));
+	} else {
+	    return identityDao.getIdentityByName(idIdentity);
 	}
+    }
 
-	@Override
-	public Identity getById(final String id) {
-		return identityDao.getIdentityByName(idenityPrefix + id);
+    @Override
+    public Identity getById(final String id) {
+	return identityDao.getIdentityByName(idenityPrefix + id);
+    }
+
+    @Override
+    public Boolean isIdentityLogged(final UserSessionSkeleton userSession,
+	    final Identity claimedIdentity) {
+	Preconditions.checkNotNull(claimedIdentity, "claimedIdentity is null");
+	if (userSession == null) {
+	    return false;
 	}
-
+	User user = userDao.getById(userSession.getIdUser());
+	if (user == null) {
+	    return false;
+	}
+	for (final Identity identity : user.getIdentities()) {
+	    if (identity.equals(claimedIdentity)) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

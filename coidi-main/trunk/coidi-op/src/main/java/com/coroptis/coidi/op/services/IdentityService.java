@@ -15,6 +15,7 @@
  */
 package com.coroptis.coidi.op.services;
 
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
@@ -24,24 +25,37 @@ import com.coroptis.coidi.op.entities.Identity;
  */
 public interface IdentityService {
 
-	/**
-	 * Get identity by it's name. Name is unique within OP.
-	 * 
-	 * @param idIdentity
-	 *            required idenitity's name (id)
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	Identity getIdentityByName(String idIdentity);
+    /**
+     * Get identity by it's name. Name is unique within OP.
+     * 
+     * @param idIdentity
+     *            required idenitity's name (id)
+     * @return {@link Identity} object if there is any otherwise
+     *         <code>null</code>
+     */
+    Identity getIdentityByName(String idIdentity);
 
-	/**
-	 * Get identity by it's id. Id is composed 'op.idenity.prefix'/name.
-	 * 
-	 * @param id
-	 *            required identity id
-	 * @return {@link Identity} object if there is any otherwise
-	 *         <code>null</code>
-	 */
-	@Deprecated
-	Identity getById(String id);
+    /**
+     * Get identity by it's id. Id is composed 'op.idenity.prefix'/name.
+     * 
+     * @param id
+     *            required identity id
+     * @return {@link Identity} object if there is any otherwise
+     *         <code>null</code>
+     */
+    @Deprecated
+    Identity getById(String id);
+
+    /**
+     * Verify that claimed identity is logged into given user session.
+     * 
+     * @param userSession
+     *            optional user session
+     * @param claimedIdentity
+     *            required claimed identity
+     * @return return <code>true</code> when user session is not
+     *         <code>null</code> and contains user that owns claimed identity
+     *         otherwise return <code>false</code>
+     */
+    Boolean isIdentityLogged(UserSessionSkeleton userSession, Identity claimedIdentity);
 }

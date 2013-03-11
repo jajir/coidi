@@ -28,57 +28,63 @@ import com.coroptis.coidi.op.util.BaseJunitTest;
 
 public class AuthenticationServiceTest extends BaseJunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private AuthenticationService service;
+    private AuthenticationService service;
 
-	public void testIsAuthenticationRequest() throws Exception {
-		AuthenticationRequest request = new AuthenticationRequest();
-		request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
-		request.setIdentity("http://www.oid.com/user/karel");
-		assertTrue(service.isAuthenticationRequest(request));
-	}
+    public void testIsAuthenticationRequest_missingClaimedId() throws Exception {
+	AuthenticationRequest request = new AuthenticationRequest();
+	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
+	request.setIdentity("http://www.oid.com/user/karel");
+	assertFalse(service.isAuthenticationRequest(request));
+    }
 
-	public void testIsAuthenticationRequest_noIdent() throws Exception {
-		AuthenticationRequest request = new AuthenticationRequest();
-		request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
-		assertFalse(service.isAuthenticationRequest(request));
-	}
+    public void testIsAuthenticationRequest() throws Exception {
+	AuthenticationRequest request = new AuthenticationRequest();
+	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
+	request.setIdentity("http://www.oid.com/user/karel");
+	request.setClaimedId("http://www.oid.com/user/karel");
+	assertTrue(service.isAuthenticationRequest(request));
+    }
 
-	public void testGetNameSpace() throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("openid.ns.ax", OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
-		AuthenticationRequest request = new AuthenticationRequest(map);
-		String ret = service.getNameSpace(request,
-				OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+    public void testIsAuthenticationRequest_noIdent() throws Exception {
+	AuthenticationRequest request = new AuthenticationRequest();
+	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
+	assertFalse(service.isAuthenticationRequest(request));
+    }
 
-		assertEquals("ax", ret);
-	}
+    public void testGetNameSpace() throws Exception {
+	Map<String, String> map = new HashMap<String, String>();
+	map.put("openid.ns.ax", OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+	AuthenticationRequest request = new AuthenticationRequest(map);
+	String ret = service.getNameSpace(request, OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 
-	public void testGetNameSpace_noSuchNameSpace() throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
-		AuthenticationRequest request = new AuthenticationRequest(map);
-		String ret = service.getNameSpace(request,
-				OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+	assertEquals("ax", ret);
+    }
 
-		assertNull(ret);
-	}
+    public void testGetNameSpace_noSuchNameSpace() throws Exception {
+	Map<String, String> map = new HashMap<String, String>();
+	AuthenticationRequest request = new AuthenticationRequest(map);
+	String ret = service.getNameSpace(request, OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(AuthenticationService.class,
-				AuthenticationServiceImpl.class).withId(SERVICE_NAME);
-	}
+	assertNull(ret);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		service = getService(SERVICE_NAME, AuthenticationService.class);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class).withId(
+		SERVICE_NAME);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		service = null;
-		super.tearDown();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	service = getService(SERVICE_NAME, AuthenticationService.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+	service = null;
+	super.tearDown();
+    }
 }
