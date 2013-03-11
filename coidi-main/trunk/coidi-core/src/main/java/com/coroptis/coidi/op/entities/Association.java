@@ -17,147 +17,156 @@ package com.coroptis.coidi.op.entities;
 
 import java.util.Date;
 
+/**
+ * Interface define association behavior.
+ * <p>
+ * {@link Association} is defined as interface because further extension could
+ * use different persisting strategy and will need different object.
+ * </p>
+ * 
+ * @author jirout
+ * 
+ */
 public interface Association {
 
+    /**
+     * This define algorithm used for signing message with secret mac key.
+     * 
+     * @author jan
+     * 
+     */
+    public static enum AssociationType {
+	HMAC_SHA1("HMAC-SHA1", "HmacSHA1", 20), HMAC_SHA256("HMAC-SHA256", "HmacSHA256", 32);
+
 	/**
-	 * This define algorithm used for signing message with secret mac key.
-	 * 
-	 * @author jan
-	 * 
+	 * Open id name. It's identification from open id specification.
 	 */
-	public static enum AssociationType {
-		HMAC_SHA1("HMAC-SHA1", "HmacSHA1", 20), HMAC_SHA256("HMAC-SHA256",
-				"HmacSHA256", 32);
+	private final String name;
 
-		/**
-		 * Open id name. It's identification from open id specification.
-		 */
-		private final String name;
+	/**
+	 * Name of algorithm in Java word in JCE.
+	 */
+	private final String algorithmName;
 
-		/**
-		 * Name of algorithm in Java word in JCE.
-		 */
-		private final String algorithmName;
+	/**
+	 * Length of digest in bytes computed with defined algorithm from
+	 * message.
+	 */
+	private final Integer sectetLength;
 
-		/**
-		 * Length of digest in bytes computed with defined algorithm from
-		 * message.
-		 */
-		private final Integer sectetLength;
-
-		private AssociationType(final String name, final String algorithmName,
-				final Integer sectetLength) {
-			this.name = name;
-			this.algorithmName = algorithmName;
-			this.sectetLength = sectetLength;
-		}
-
-		/**
-		 * @return the name
-		 */
-		public String getName() {
-			return name;
-		}
-
-		public static final AssociationType convert(String str) {
-			if (HMAC_SHA1.getName().equals(str)) {
-				return HMAC_SHA1;
-			} else if (HMAC_SHA256.getName().equals(str)) {
-				return HMAC_SHA256;
-			}
-			return null;
-		}
-
-		/**
-		 * @return the sectetLength
-		 */
-		public Integer getSectetLength() {
-			return sectetLength;
-		}
-
-		/**
-		 * @return the algorithmName
-		 */
-		public String getAlgorithmName() {
-			return algorithmName;
-		}
-
+	private AssociationType(final String name, final String algorithmName,
+		final Integer sectetLength) {
+	    this.name = name;
+	    this.algorithmName = algorithmName;
+	    this.sectetLength = sectetLength;
 	}
 
 	/**
-	 * This define algorithm used for generating secret mac key.
-	 * 
-	 * @author jan
-	 * 
+	 * @return the name
 	 */
-	public static enum SessionType {
-		no_encription("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
-				"DH-SHA256", "SHA-256", 32);
-
-		/**
-		 * Open id name. It's identification from open id specification.
-		 */
-		private final String name;
-
-		/**
-		 * Name of algorithm in Java word in JCE.
-		 */
-		private final String algorithmName;
-
-		/**
-		 * Length of digest in bytes computed with defined algorithm from
-		 * message.
-		 */
-		private final Integer sectetLength;
-
-		private SessionType(final String name, final String algorithmName,
-				final Integer sectetLength) {
-			this.name = name;
-			this.algorithmName = algorithmName;
-			this.sectetLength = sectetLength;
-		}
-
-		public static final SessionType convert(String str) {
-			if (DH_SHA1.getName().equals(str)) {
-				return DH_SHA1;
-			} else if (DH_SHA256.getName().equals(str)) {
-				return DH_SHA256;
-			} else if (no_encription.getName().equals(str)) {
-				return no_encription;
-			}
-			return null;
-		}
-
-		/**
-		 * @return the name
-		 */
-		public String getName() {
-			return name;
-		}
-
-		/**
-		 * @return the sectetLength
-		 */
-		public Integer getSectetLength() {
-			return sectetLength;
-		}
-
-		/**
-		 * @return the algorithmName
-		 */
-		public String getAlgorithmName() {
-			return algorithmName;
-		}
+	public String getName() {
+	    return name;
 	}
 
-	String getAssocHandle();
+	public static final AssociationType convert(String str) {
+	    if (HMAC_SHA1.getName().equals(str)) {
+		return HMAC_SHA1;
+	    } else if (HMAC_SHA256.getName().equals(str)) {
+		return HMAC_SHA256;
+	    }
+	    return null;
+	}
 
-	AssociationType getAssociationType();
+	/**
+	 * @return the sectetLength
+	 */
+	public Integer getSectetLength() {
+	    return sectetLength;
+	}
 
-	SessionType getSessionType();
+	/**
+	 * @return the algorithmName
+	 */
+	public String getAlgorithmName() {
+	    return algorithmName;
+	}
 
-	Date getExpiredIn();
+    }
 
-	String getMacKey();
+    /**
+     * This define algorithm used for generating secret mac key.
+     * 
+     * @author jan
+     * 
+     */
+    public static enum SessionType {
+	no_encription("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
+		"DH-SHA256", "SHA-256", 32);
+
+	/**
+	 * Open id name. It's identification from open id specification.
+	 */
+	private final String name;
+
+	/**
+	 * Name of algorithm in Java word in JCE.
+	 */
+	private final String algorithmName;
+
+	/**
+	 * Length of digest in bytes computed with defined algorithm from
+	 * message.
+	 */
+	private final Integer sectetLength;
+
+	private SessionType(final String name, final String algorithmName,
+		final Integer sectetLength) {
+	    this.name = name;
+	    this.algorithmName = algorithmName;
+	    this.sectetLength = sectetLength;
+	}
+
+	public static final SessionType convert(String str) {
+	    if (DH_SHA1.getName().equals(str)) {
+		return DH_SHA1;
+	    } else if (DH_SHA256.getName().equals(str)) {
+		return DH_SHA256;
+	    } else if (no_encription.getName().equals(str)) {
+		return no_encription;
+	    }
+	    return null;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+	    return name;
+	}
+
+	/**
+	 * @return the sectetLength
+	 */
+	public Integer getSectetLength() {
+	    return sectetLength;
+	}
+
+	/**
+	 * @return the algorithmName
+	 */
+	public String getAlgorithmName() {
+	    return algorithmName;
+	}
+    }
+
+    String getAssocHandle();
+
+    AssociationType getAssociationType();
+
+    SessionType getSessionType();
+
+    Date getExpiredIn();
+
+    String getMacKey();
 
 }
