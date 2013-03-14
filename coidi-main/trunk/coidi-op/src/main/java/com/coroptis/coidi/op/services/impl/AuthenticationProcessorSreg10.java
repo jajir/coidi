@@ -27,6 +27,11 @@ import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.SregService;
 
+/**
+ * Simple Registration Extension 1.0.
+ * @author jirout
+ *
+ */
 public class AuthenticationProcessorSreg10 implements AuthenticationProcessor {
 
 	public static final String SREG_REQUIRED = "openid.sreg.required";

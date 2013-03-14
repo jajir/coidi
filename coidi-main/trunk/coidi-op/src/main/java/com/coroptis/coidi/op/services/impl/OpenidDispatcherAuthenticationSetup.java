@@ -38,98 +38,91 @@ import com.coroptis.coidi.op.services.UserService;
 
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private AuthenticationService authenticationService;
+    @Inject
+    private AuthenticationService authenticationService;
 
-	@Inject
-	private IdentityService identityService;
+    @Inject
+    private IdentityService identityService;
 
-	@Inject
-	private AuthenticationProcessor authenticationProcessor;
+    @Inject
+    private AuthenticationProcessor authenticationProcessor;
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
+
+    @Override
+    public AbstractMessage process(Map<String, String> requestParams,
+	    UserSessionSkeleton userSession) {
+	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
+	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
+	    if (!authenticationService.isAuthenticationRequest(authenticationRequest)) {
+		logger.debug("authentication request doesn't contains any idenity field");
+		return null;
+	    }
+
+	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
+		if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+		    logger.debug("it's not authentication request,"
+			    + " probably it's authentication extension");
+		    return null;
+		} else {
+		    return new ErrorResponse(false,
+			    "In authentication request is not filled openid.claimed_id"
+				    + " but openid.identity is empty" + " It's invalid combination");
+		}
+	    } else {
+		if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+		    /**
+		     * Use openid.claimed_id as openid.identity.
+		     */
+		    authenticationRequest.setIdentity(authenticationRequest.getClaimedId());
+		}
+	    }
+
+	    if (!userSession.isLogged()) {
+		logger.debug("User is not logged in.");
+		userSession.setAuthenticationRequest(authenticationRequest);
+		return new RedirectResponse();
+	    }
+
+	    Identity identity = identityService.getIdentityByName(authenticationRequest
+		    .getIdentity());
+
+	    if (identity == null) {
+		logger.debug("Unable to find idenity by '" + authenticationRequest.getIdentity()
+			+ "'.");
+		return new RedirectResponse();
+	    }
+
+	    // TODO isUsersIdentity thrown NPE, it should not. it should be
+	    // OpenID error messages
+	    if (!userService.isUsersIdentity(userSession.getIdUser(), identity.getIdIdentity())) {
+		logger.debug("Identity '" + authenticationRequest.getIdentity()
+			+ "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
+		return new RedirectResponse();
+	    }
+
+	    Set<String> fieldToSign = new HashSet<String>();
+	    AbstractMessage out = authenticationProcessor.process(authenticationRequest,
+		    new AuthenticationResponse(), identity, fieldToSign);
+	    return out;
+	}
+	return null;
+    }
+
+    class RedirectResponse extends AbstractOpenIdResponse {
 
 	@Override
-	public AbstractMessage process(Map<String, String> requestParams,
-			UserSessionSkeleton userSession) {
-		if (requestParams.get(OPENID_MODE).equals(
-				AuthenticationRequest.MODE_CHECKID_SETUP)) {
-			AuthenticationRequest authenticationRequest = new AuthenticationRequest(
-					requestParams);
-			if (!authenticationService
-					.isAuthenticationRequest(authenticationRequest)) {
-				logger.debug("authentication request doesn't contains any idenity field");
-				return null;
-			}
-
-			if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
-				if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-					logger.debug("it's not authentication request,"
-							+ " probably it's authentication extension");
-					return null;
-				} else {
-					return new ErrorResponse(false,
-							"In authentication request is not filled openid.claimed_id"
-									+ " but openid.identity is empty"
-									+ " It's invalid combination");
-				}
-			} else {
-				if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-					/**
-					 * Use openid.claimed_id as openid.identity.
-					 */
-					authenticationRequest.setIdentity(authenticationRequest
-							.getClaimedId());
-				}
-			}
-
-			if (!userSession.isLogged()) {
-				logger.debug("User is not logged in.");
-				userSession.setAuthenticationRequest(authenticationRequest);
-				return new RedirectResponse();
-			}
-
-			Identity identity = identityService
-					.getIdentityByName(authenticationRequest.getIdentity());
-
-			if (identity == null) {
-				logger.debug("Unable to find idenity by '"
-						+ authenticationRequest.getIdentity() + "'.");
-				return new RedirectResponse();
-			}
-
-			//TODO isUsersIdentity thrown NPE, it should not. it should be OpenID error messages
-			if (!userService.isUsersIdentity(userSession.getIdUser(),
-					identity.getIdIdentity())) {
-				logger.debug("Identity '" + authenticationRequest.getIdentity()
-						+ "' doesn't belongs to user '"
-						+ userSession.getIdUser() + "'.");
-				return new RedirectResponse();
-			}
-
-			Set<String> fieldToSign = new HashSet<String>();
-			AbstractMessage out = authenticationProcessor.process(
-					authenticationRequest, new AuthenticationResponse(),
-					identity, fieldToSign);
-			return out;
-		}
-		return null;
+	public boolean isUrl() {
+	    return true;
 	}
 
-	class RedirectResponse extends AbstractOpenIdResponse {
-
-		@Override
-		public boolean isUrl() {
-			return true;
-		}
-
-		@Override
-		public String getMessage() {
-			return "./login";
-		}
-	};
+	@Override
+	public String getMessage() {
+	    return "./login";
+	}
+    };
 }

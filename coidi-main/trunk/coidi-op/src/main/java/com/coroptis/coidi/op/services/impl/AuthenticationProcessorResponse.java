@@ -60,6 +60,7 @@ public class AuthenticationProcessorResponse implements AuthenticationProcessor 
 			 * OP side, not will be send to RP
 			 */
 		} else {
+		    	response.setAssocHandle(authenticationRequest.getAssocHandle());
 			fieldsToSign.add("assoc_handle");
 		}
 		return null;
