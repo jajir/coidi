@@ -42,66 +42,62 @@ import com.google.common.base.Joiner;
  * @author jirout
  * 
  */
-public class AuthenticationProcessorTerminator implements
-		AuthenticationProcessor {
+public class AuthenticationProcessorTerminator implements AuthenticationProcessor {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private AssociationDao associationDao;
+    @Inject
+    private AssociationDao associationDao;
 
-	@Inject
-	private SigningService signingService;
+    @Inject
+    private SigningService signingService;
 
-	@Inject
-	private StatelessModeNonceService statelessModeNonceService;
+    @Inject
+    private StatelessModeNonceService statelessModeNonceService;
 
-	private final AssociationType statelesModeAssociationType;
+    private final AssociationType statelesModeAssociationType;
 
-	private final Joiner joiner = Joiner.on(",").skipNulls();
+    private final Joiner joiner = Joiner.on(",").skipNulls();
 
-	public AuthenticationProcessorTerminator(
-			// NO_UCD
-			@Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
-			final Logger logger) {
-		statelesModeAssociationType = AssociationType.convert(assocTypeStr);
-		this.logger = logger;
-		logger.debug("stateless mode association type: "
-				+ statelesModeAssociationType);
+    public AuthenticationProcessorTerminator(
+	    // NO_UCD
+	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
+	    final Logger logger) {
+	statelesModeAssociationType = AssociationType.convert(assocTypeStr);
+	this.logger = logger;
+	logger.debug("stateless mode association type: " + statelesModeAssociationType);
+    }
+
+    @Override
+    public AbstractMessage process(AuthenticationRequest authenticationRequest,
+	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	response.setSigned(joiner.join(fieldsToSign));
+	if (authenticationRequest.getAssocHandle() == null) {
+	    /**
+	     * State-less mode.
+	     */
+	    signInStatelessMode(response);
+	} else {
+	    Association association = associationDao.getByAssocHandle(authenticationRequest
+		    .getAssocHandle());
+	    if (association == null) {
+		logger.info("Invalid assoc handle '" + authenticationRequest.getAssocHandle()
+			+ "', let's try to response in stateless mode.");
+		signInStatelessMode(response);
+		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
+	    } else {
+		response.setAssocHandle(authenticationRequest.getAssocHandle());
+		response.setSignature(signingService.sign(response, association));
+	    }
 	}
+	return response;
+    }
 
-	@Override
-	public AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AuthenticationResponse response, Identity identity,
-			Set<String> fieldsToSign) {
-		response.setSigned(joiner.join(fieldsToSign));
-		if (authenticationRequest.getAssocHandle() == null) {
-			// state less mode
-			signInStatelessMode(response);
-		} else {
-			Association association = associationDao
-					.getByAssocHandle(authenticationRequest.getAssocHandle());
-			if (association == null) {
-				logger.info("Invalid assoc handle '"
-						+ authenticationRequest.getAssocHandle()
-						+ "', let's try to response in stateless mode.");
-				signInStatelessMode(response);
-				response.setInvalidateHandle(authenticationRequest
-						.getAssocHandle());
-			} else {
-				response.setAssocHandle(authenticationRequest.getAssocHandle());
-				response.setSignature(signingService
-						.sign(response, association));
-			}
-		}
-		return response;
-	}
-
-	private void signInStatelessMode(final AuthenticationResponse response) {
-		StatelessModeNonce statelessModeNonce = statelessModeNonceService
-				.createStatelessModeNonce(response.getNonce());
-		response.setSignature(signingService.sign(response,
-				statelessModeNonce.getMacKey(), statelesModeAssociationType));
-	}
+    private void signInStatelessMode(final AuthenticationResponse response) {
+	StatelessModeNonce statelessModeNonce = statelessModeNonceService
+		.createStatelessModeNonce(response.getNonce());
+	response.setSignature(signingService.sign(response, statelessModeNonce.getMacKey(),
+		statelesModeAssociationType));
+    }
 }

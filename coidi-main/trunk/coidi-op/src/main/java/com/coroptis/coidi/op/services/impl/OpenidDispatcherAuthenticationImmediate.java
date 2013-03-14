@@ -15,18 +15,16 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.services.NonceService;
-import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -37,22 +35,19 @@ import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
+/**
+ * Process openid.more=checkid_immediate.
+ * 
+ * @author jirout
+ * 
+ */
 public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher {
-
-    @Inject
-    private Logger logger;
-
-    @Inject
-    private NonceService nonceService;
 
     @Inject
     private AssociationDao associationDao;
 
     @Inject
     private AuthenticationService authenticationService;
-
-    @Inject
-    private SigningService signingService;
 
     @Inject
     private AuthenticationProcessor authenticationProcessor;
@@ -69,16 +64,20 @@ public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
 	    if (!authenticationService.isAuthenticationRequest(authenticationRequest)) {
-		logger.debug("authentication request doesn't contains any idenity field");
-		return null;
+		return negativeResponseGenerator
+			.simpleError("authentication request doesn't contains any idenity field");
 	    }
 
 	    Association association = associationDao.getByAssocHandle(authenticationRequest
 		    .getAssocHandle());
-	    // FIXME add association validation
 	    if (association == null) {
 		return negativeResponseGenerator.simpleError("Unable to find association handle '"
 			+ authenticationRequest.getAssocHandle() + "'");
+	    }
+	    if (association.getExpiredIn().before(new Date())) {
+		return negativeResponseGenerator.simpleError("Assocition handle '"
+			+ authenticationRequest.getAssocHandle() + "' expires at "
+			+ association.getExpiredIn());
 	    }
 
 	    Identity identity = identityService.getIdentityByName(authenticationRequest
@@ -94,16 +93,7 @@ public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher
 	    }
 
 	    AuthenticationResponse response = new AuthenticationResponse();
-	    response.setAssocHandle(authenticationRequest.getAssocHandle());
-	    response.setIdentity(authenticationRequest.getIdentity());
-	    response.setNonce(nonceService.createNonce());
-	    response.setReturnTo(authenticationRequest.getReturnTo());
-	    response.setSigned("assoc_handle,identity,nonce,return_to");
-	    response.setSignature(signingService.sign(response, association));
-	    response.put("go_to", authenticationRequest.getReturnTo());
-
 	    Set<String> fieldToSign = new HashSet<String>();
-	    //FIXME fields to sign are null !!!??
 	    AbstractMessage out = authenticationProcessor.process(authenticationRequest, response,
 		    identity, fieldToSign);
 	    return out;

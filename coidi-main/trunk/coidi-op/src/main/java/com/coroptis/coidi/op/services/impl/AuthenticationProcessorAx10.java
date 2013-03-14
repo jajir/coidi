@@ -28,6 +28,11 @@ import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 
+/**
+ * Attribute exchange extension version 1.0.
+ * @author jirout
+ *
+ */
 public class AuthenticationProcessorAx10 implements AuthenticationProcessor {
 
 	@Inject

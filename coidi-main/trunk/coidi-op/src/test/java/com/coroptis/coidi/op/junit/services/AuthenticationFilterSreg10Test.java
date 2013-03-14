@@ -13,7 +13,7 @@ public class AuthenticationFilterSreg10Test extends BaseJunitTest {
 	private AuthenticationProcessor service;
 
 	public void testProcess() throws Exception {
-
+	    //FIXME finish that
 	}
 
 	@Override
