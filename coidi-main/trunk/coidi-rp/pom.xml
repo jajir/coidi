@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>coidi-rp</artifactId>
 	<packaging>jar</packaging>
-	<name>Relaying party library</name>
+	<name>OpenID Relaying party library</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -18,12 +18,6 @@
 			<artifactId>coidi-core</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymockclassextension</artifactId>
-			<version>${easymock.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.openxri</groupId>
@@ -66,12 +60,6 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.ibm.icu</groupId>
-			<artifactId>icu4j</artifactId>
-			<version>${icu4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
@@ -105,10 +93,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymockclassextension</artifactId>
+			<version>${easymock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
 			<artifactId>coidi-test-support</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+	</build>
 </project>

@@ -127,8 +127,8 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 	EasyMock.expect(services.getAssociationDao().getByAssocHandle("324guy4321j")).andReturn(
 		associationInvalid);
 	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError(
-			EasyMock.anyObject(String.class))).andReturn(errorResponse);
+		services.getNegativeResponseGenerator().simpleError((String)
+			EasyMock.anyObject())).andReturn(errorResponse);
 	services.replay();
 	AbstractMessage ret = service.process(params, userSession);
 
