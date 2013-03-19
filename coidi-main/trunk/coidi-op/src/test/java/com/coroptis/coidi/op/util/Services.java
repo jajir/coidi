@@ -18,10 +18,12 @@ package com.coroptis.coidi.op.util;
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.AssociationDao;
 import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
+import com.coroptis.coidi.op.dao.UserDao;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
@@ -34,6 +36,8 @@ public class Services {
 	    .createMock(StatelessModeNonceDao.class);
     private final ConfigurationService configurationService = EasyMock
 	    .createMock(ConfigurationService.class);
+    private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
+    private final UserDao userDao = EasyMock.createMock(UserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
     private final AssociationDao associationDao = EasyMock.createMock(AssociationDao.class);
     private final SigningService signingService = EasyMock.createMock(SigningService.class);
@@ -50,7 +54,8 @@ public class Services {
     private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
 	    getConfigurationService(), getNonceService(), getAssociationDao(), getSigningService(),
 	    getStatelessModeNonceService(), getAuthenticationProcessor(),
-	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator() };
+	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator(),
+	    getUserDao(), getConvertorService() };
 
     private static Services services;
 
@@ -150,5 +155,19 @@ public class Services {
      */
     public NegativeResponseGenerator getNegativeResponseGenerator() {
 	return negativeResponseGenerator;
+    }
+
+    /**
+     * @return the userDao
+     */
+    public UserDao getUserDao() {
+	return userDao;
+    }
+
+    /**
+     * @return the convertorService
+     */
+    public ConvertorService getConvertorService() {
+	return convertorService;
     }
 }

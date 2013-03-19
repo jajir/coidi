@@ -17,8 +17,8 @@
 delete from identity;
 delete from user;
 
-insert into user (id_user, name, password) values (1, 'qwe', 'qwe' );
+insert into user (id_user, name, password) values (1, 'qwe', 'G2ldfSlQFelXQ6t3Os5+qw==' );
 insert into identity (id_identity, id_user, country, email, fullname, gendre, language, nickname, postcode, timezone) values ('karel', 1, 'cz', 'karel@gmail.com', 'Karel Black', 0, 'cs', 'Charles', '120 00', 'Prague');
 
-insert into user (id_user, name, password) values (2, 'asd', 'asd' );
+insert into user (id_user, name, password) values (2, 'asd', 'FMZfye8t8FmStyzVwWhBCQ==' );
 insert into identity (id_identity, id_user, country, email, fullname, gendre, language, nickname, postcode, timezone) values ('juan', 2, 'es', 'juan@gmail.com', 'Juan Ceur', 1, 'es', 'Juan', '130 00', 'Madrid'), ('yan', 2, 'en', 'yan@gmail.com', 'Yan Ceur', 1, 'an', 'Yan', '130 00', 'London');

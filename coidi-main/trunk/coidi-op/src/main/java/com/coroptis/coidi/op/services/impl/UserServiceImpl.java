@@ -15,8 +15,15 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.slf4j.Logger;
+
+import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.op.dao.UserDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
@@ -25,41 +32,68 @@ import com.google.common.base.Preconditions;
 
 public class UserServiceImpl implements UserService {
 
-	@Inject
-	private UserDao userDao;
+    @Inject
+    private Logger logger;
 
-	@Override
-	public User login(final String name, final String password) {
-		return userDao.login(name, password);
+    @Inject
+    private UserDao userDao;
+
+    @Inject
+    private ConvertorService convertorService;
+    
+    public final static String SALT = "23t4bcdjs@()&d431f#";
+
+    @Override
+    public User login(final String name, final String password) {
+	return userDao.login(name, md5(password));
+    }
+
+    @Override
+    public User register(final String name, final String password, final String identityId) {
+	return userDao.register(name, md5(password), identityId);
+    }
+
+    @Override
+    public User getUserByName(final String userName) {
+	return userDao.getUserByName(userName);
+    }
+
+    @Override
+    public User getById(final Integer idUser) {
+	return userDao.getById(idUser);
+    }
+
+    @Override
+    public Boolean isUsersIdentity(final Integer idUser, final String identityName) {
+	User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
+	Preconditions.checkNotNull(identityName, "identityName is null");
+
+	for (Identity identity : user.getIdentities()) {
+	    if (identityName.equals(identity.getIdIdentity())) {
+		return true;
+	    }
 	}
+	return false;
+    }
 
-	@Override
-	public User register(final String name, final String password,
-			final String identityId) {
-		return userDao.register(name, password, identityId);
+    /**
+     * Return Base64 encoded MD5 from input password.
+     * 
+     * @param plainPassword
+     * @return
+     */
+    private String md5(String plainPassword) {
+	try {
+	    MessageDigest md = MessageDigest.getInstance("MD5");
+	    md.update(plainPassword.getBytes("UTF-8"));
+	    md.update(SALT.getBytes());
+	    return convertorService.convertToString(md.digest());
+	} catch (NoSuchAlgorithmException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
+	} catch (UnsupportedEncodingException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
 	}
-
-	@Override
-	public User getUserByName(final String userName) {
-		return userDao.getUserByName(userName);
-	}
-
-	@Override
-	public User getById(final Integer idUser) {
-		return userDao.getById(idUser);
-	}
-
-	@Override
-	public Boolean isUsersIdentity(final Integer idUser,final  String identityName) {
-		User user = Preconditions.checkNotNull(userDao.getById(idUser),
-				"user is null");
-		Preconditions.checkNotNull(identityName, "identityName is null");
-
-		for (Identity identity : user.getIdentities()) {
-			if (identityName.equals(identity.getIdIdentity())) {
-				return true;
-			}
-		}
-		return false;
-	}
+    }
 }
