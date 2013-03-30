@@ -15,15 +15,26 @@
  */
 package com.coroptis.coidi.op.dao;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import com.coroptis.coidi.op.entities.Association;
 
-import com.coroptis.coidi.op.entities.StatelessModeNonce;
+/**
+ * Allows to persist associations.
+ * 
+ * @author jirout
+ * 
+ */
+public interface BaseAssociationDao {
 
-public interface StatelessModeNonceDao {
+    void create(Association association);
 
-	@CommitAfter
-	void save(StatelessModeNonce statelessModeNonce);
+    Association getByAssocHandle(String assoc_handle);
 
-	StatelessModeNonce getByNonce(String noce);
+    /**
+     * Create new empty {@link Association} instance. Returned object is not
+     * persisted.
+     * 
+     * @return new {@link Association} object
+     */
+    Association createNewInstance();
 
 }

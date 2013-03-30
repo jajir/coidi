@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.dao.impl;
+package com.coroptis.coidi.op.view.dao.impl;
 
 import java.util.List;
 
@@ -24,31 +24,32 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.coroptis.coidi.op.dao.IdentityDao;
+import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.view.entities.IdentityImpl;
 
-public class IdentityDaoImpl implements IdentityDao {
+public class BaseIdentityDaoImpl implements BaseIdentityDao {
 
     @Inject
     private Session session;
 
     @Override
-    public Identity getIdentityByName(final String idIdentity) {
-	return (Identity) session.createCriteria(Identity.class)
+    public IdentityImpl getIdentityByName(final String idIdentity) {
+	return (IdentityImpl) session.createCriteria(IdentityImpl.class)
 		.add(Restrictions.eq("idIdentity", idIdentity)).uniqueResult();
     }
 
     @Override
     public Integer getCount() {
-	return ((Long) session.createCriteria(Identity.class).setProjection(Projections.rowCount())
-		.uniqueResult()).intValue();
+	return ((Long) session.createCriteria(IdentityImpl.class)
+		.setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Identity> getChunk(Integer startIndex, Integer endIndex) {
-	Criteria criteria = session.createCriteria(Identity.class)
-		.addOrder(Order.asc("idIdentity"));
+	Criteria criteria = session.createCriteria(IdentityImpl.class).addOrder(
+		Order.asc("idIdentity"));
 	if (startIndex != null) {
 	    criteria.setFirstResult(startIndex);
 	}

@@ -19,32 +19,32 @@ import com.coroptis.coidi.op.entities.User;
 
 public interface UserService {
 
-	User login(String name, String password);
+    User login(String name, String password);
 
-	User register(String name, String password, String identityId);
+    User register(String name, String password, String identityId);
 
-	User getUserByName(String userName);
+    User getUserByName(String userName);
 
-	/**
-	 * Get user by it's id.
-	 * 
-	 * @param idUser
-	 *            required is of user
-	 * @return found {@link User} object of <code>null</code> if there is no
-	 *         such user
-	 */
-	User getById(Integer idUser);
+    /**
+     * Get user by it's id.
+     * 
+     * @param idUser
+     *            required is of user
+     * @return found {@link UserImpl} object of <code>null</code> if there is no
+     *         such user
+     */
+    User getById(Integer idUser);
 
-	/**
-	 * Verify that identity belongs to user.
-	 * 
-	 * @param idUser
-	 *            required user's id
-	 * @param identityName
-	 *            required identity id, usually URL
-	 * @return <code>true</code> if identity belongs to user otherwise return
-	 *         <code>false</code>
-	 */
-	Boolean isUsersIdentity(final Integer idUser, final String identityName);
+    /**
+     * Verify that identity belongs to user.
+     * 
+     * @param idUser
+     *            required user's id
+     * @param identityName
+     *            required identity id, usually URL
+     * @return <code>true</code> if identity belongs to user otherwise return
+     *         <code>false</code>
+     */
+    Boolean isUsersIdentity(final Integer idUser, final String identityName);
 
 }

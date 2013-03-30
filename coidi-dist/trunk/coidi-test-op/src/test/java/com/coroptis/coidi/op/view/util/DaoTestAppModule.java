@@ -13,19 +13,19 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.util;
+package com.coroptis.coidi.op.view.util;
 
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
-import com.coroptis.coidi.op.dao.UserDao;
-import com.coroptis.coidi.op.dao.impl.StatelessModeNonceDaoImpl;
-import com.coroptis.coidi.op.dao.impl.UserDaoImpl;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
+import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
+import com.coroptis.coidi.op.view.dao.impl.BaseNonceDaoImpl;
+import com.coroptis.coidi.op.view.dao.impl.BaseUserDaoImpl;
 
 /**
  * Testing application module. This Testing module load DAO application layer.
@@ -40,16 +40,14 @@ import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
  */
 public class DaoTestAppModule {
 
-	private final static Logger logger = Logger
-			.getLogger(DaoTestAppModule.class);
+    private final static Logger logger = Logger.getLogger(DaoTestAppModule.class);
 
-	public static void bind(ServiceBinder binder) {
-		logger.debug("Starting test app module ....");
-		binder.bind(UserDao.class, UserDaoImpl.class);
-		binder.bind(IdentityService.class, IdentityServiceImpl.class);
-		binder.bind(AssociationService.class, AssociationServiceImpl.class);
-		binder.bind(StatelessModeNonceDao.class,
-				StatelessModeNonceDaoImpl.class);
-	}
+    public static void bind(ServiceBinder binder) {
+	logger.debug("Starting test app module ....");
+	binder.bind(BaseUserDao.class, BaseUserDaoImpl.class);
+	binder.bind(IdentityService.class, IdentityServiceImpl.class);
+	binder.bind(AssociationService.class, AssociationServiceImpl.class);
+	binder.bind(BaseNonceDao.class, BaseNonceDaoImpl.class);
+    }
 
 }

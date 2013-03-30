@@ -13,20 +13,20 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.junit.dao;
+package com.coroptis.coidi.op.view.dao;
 
 import java.util.Date;
 
-import com.coroptis.coidi.op.dao.AssociationDao;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.entities.AssociationImpl;
-import com.coroptis.coidi.op.util.AbstractDaoTest;
+import com.coroptis.coidi.op.view.entities.AssociationImpl;
+import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class AssociationDaoTest extends AbstractDaoTest {
 
-    AssociationDao associationService;
+    BaseAssociationDao associationService;
 
     public void testGetIdentityByName() throws Exception {
 	Association ret = associationService.getByAssocHandle("bbbb-bbbb-bbbb-bbbb");
@@ -50,14 +50,14 @@ public class AssociationDaoTest extends AbstractDaoTest {
 
 	associationService.create(assoc);
 
-	assertEquals(getConnection().getRowCount("association"),
-		getDataSet().getTable("association").getRowCount() + 1);
+	assertEquals(getDataSet().getTable("association").getRowCount() + 1, getConnection()
+		.getRowCount("association"));
     }
 
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
-	associationService = getService(AssociationDao.class);
+	associationService = getService(BaseAssociationDao.class);
     }
 
     @Override

@@ -19,8 +19,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.dao.IdentityDao;
-import com.coroptis.coidi.op.dao.UserDao;
+import com.coroptis.coidi.op.dao.BaseIdentityDao;
+import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.IdentityService;
@@ -29,10 +29,10 @@ import com.google.common.base.Preconditions;
 public class IdentityServiceImpl implements IdentityService {
 
     @Inject
-    private IdentityDao identityDao;
+    private BaseIdentityDao identityDao;
 
     @Inject
-    private UserDao userDao;
+    private BaseUserDao userDao;
 
     /**
      * OpenID identity is stored in URL form. In database is stored just prefix

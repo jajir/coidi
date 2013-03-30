@@ -30,7 +30,7 @@ public interface IdentityService {
      * 
      * @param idIdentity
      *            required idenitity's name (id)
-     * @return {@link Identity} object if there is any otherwise
+     * @return {@link IdentityImpl} object if there is any otherwise
      *         <code>null</code>
      */
     Identity getIdentityByName(String idIdentity);
@@ -40,7 +40,7 @@ public interface IdentityService {
      * 
      * @param id
      *            required identity id
-     * @return {@link Identity} object if there is any otherwise
+     * @return {@link IdentityImpl} object if there is any otherwise
      *         <code>null</code>
      */
     @Deprecated

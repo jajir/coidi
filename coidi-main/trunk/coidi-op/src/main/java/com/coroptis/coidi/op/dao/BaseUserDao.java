@@ -15,22 +15,23 @@
  */
 package com.coroptis.coidi.op.dao;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import com.coroptis.coidi.op.entities.User;
 
-import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.op.entities.AssociationImpl;
+public interface BaseUserDao {
 
-/**
- * Allows to persist associations.
- * 
- * @author jirout
- * 
- */
-public interface AssociationDao {
+    User login(String name, String password);
 
-    @CommitAfter
-    void create(AssociationImpl association);
+    User register(String name, String password, String identityId);
 
-    Association getByAssocHandle(String assoc_handle);
+    User getUserByName(String userName);
 
+    /**
+     * Get user by it's id.
+     * 
+     * @param idUser
+     *            required is of user
+     * @return found {@link UserImpl} object of <code>null</code> if there is no
+     *         such user
+     */
+    User getById(Integer idUser);
 }

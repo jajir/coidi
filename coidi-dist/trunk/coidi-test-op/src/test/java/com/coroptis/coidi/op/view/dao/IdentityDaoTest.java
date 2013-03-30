@@ -13,17 +13,17 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.junit.dao;
+package com.coroptis.coidi.op.view.dao;
 
 import java.util.List;
 
-import com.coroptis.coidi.op.dao.IdentityDao;
+import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.util.AbstractDaoTest;
+import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class IdentityDaoTest extends AbstractDaoTest {
 
-    IdentityDao identityDao;
+    BaseIdentityDao identityDao;
 
     public void testGetIdentityByName() throws Exception {
 	Identity ret = identityDao.getIdentityByName("jane");
@@ -79,7 +79,7 @@ public class IdentityDaoTest extends AbstractDaoTest {
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
-	identityDao = getService(IdentityDao.class);
+	identityDao = getService(BaseIdentityDao.class);
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.dao.AssociationDao;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
@@ -44,7 +44,7 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher {
 
     @Inject
-    private AssociationDao associationDao;
+    private BaseAssociationDao associationDao;
 
     @Inject
     private AuthenticationService authenticationService;

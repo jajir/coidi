@@ -13,39 +13,39 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.junit.dao;
+package com.coroptis.coidi.op.view.dao;
 
-import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.StatelessModeNonce;
-import com.coroptis.coidi.op.util.AbstractDaoTest;
+import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class StatelessModeNonceDaoTest extends AbstractDaoTest {
 
-	private StatelessModeNonceDao dao;
+    private BaseNonceDao dao;
 
-	public void testGetByNonce() throws Exception {
-		StatelessModeNonce ret = dao.getByNonce("nonce-string-value");
+    public void testGetByNonce() throws Exception {
+	StatelessModeNonce ret = dao.getByNonce("nonce-string-value");
 
-		assertNotNull(ret);
-		assertEquals("mac_key_value", ret.getMacKey());
-	}
+	assertNotNull(ret);
+	assertEquals("mac_key_value", ret.getMacKey());
+    }
 
-	public void testGetByNonce_notFound() throws Exception {
-		StatelessModeNonce ret = dao.getByNonce("no_such_nonce");
+    public void testGetByNonce_notFound() throws Exception {
+	StatelessModeNonce ret = dao.getByNonce("no_such_nonce");
 
-		assertNull(ret);
-	}
+	assertNull(ret);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		dao = getService(StatelessModeNonceDao.class);
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	dao = getService(BaseNonceDao.class);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		dao = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	dao = null;
+	super.tearDown();
+    }
 
 }

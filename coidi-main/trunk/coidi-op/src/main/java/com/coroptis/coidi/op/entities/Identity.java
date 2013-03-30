@@ -17,243 +17,131 @@ package com.coroptis.coidi.op.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.google.common.base.Objects;
-
-@Entity
-@Table(name = "identity")
-public class Identity extends AbstractEntity<Identity> {
+public interface Identity {
+    
     public enum Gendre {
 	M, F
-    }
-
-    @Id
-    @Column(nullable = false, length = 50, name = "id_identity")
-    private String idIdentity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
-    private User user;
-
-    @Column(length = 50)
-    private String nickname;
-
-    @Column(length = 250)
-    private String email;
-
-    @Column(length = 250)
-    private String fullname;
-
-    @Column()
-    private Date dob;
-
-    @Column()
-    private Gendre gendre;
-
-    @Column(length = 10)
-    private String postcode;
-
-    @Column(length = 50)
-    private String country;
-
-    @Column(length = 10)
-    private String language;
-
-    @Column(length = 50)
-    private String timezone;
-
-    @Override
-    public String toString() {
-	return Objects.toStringHelper(Identity.class).add("idIdentity", idIdentity).toString();
     }
 
     /**
      * @return the idIdentity
      */
-    public String getIdIdentity() {
-	return idIdentity;
-    }
+    String getIdIdentity();
 
     /**
      * @param idIdentity
      *            the idIdentity to set
      */
-    public void setIdIdentity(String idIdentity) {
-	this.idIdentity = idIdentity;
-    }
-
-    @Override
-    protected Object[] getHashCodeData() {
-	return new Object[] { idIdentity };
-    }
-
-    @Override
-    protected Identity getThis() {
-	return this;
-    }
-
-    @Override
-    protected boolean dataEquals(Identity other) {
-	if (!areEqual(idIdentity, other.getIdIdentity()))
-	    return false;
-	return true;
-    }
+    void setIdIdentity(String idIdentity);
 
     /**
      * @return the user
      */
-    public User getUser() {
-	return user;
-    }
+    User getUser();
 
     /**
      * @param user
      *            the user to set
      */
-    public void setUser(User user) {
-	this.user = user;
-    }
+    void setUser(User user);
 
     /**
      * @return the nickname
      */
-    public String getNickname() {
-	return nickname;
-    }
+    String getNickname();
 
     /**
      * @param nickname
      *            the nickname to set
      */
-    public void setNickname(String nickname) {
-	this.nickname = nickname;
-    }
+    void setNickname(String nickname);
 
     /**
      * @return the email
      */
-    public String getEmail() {
-	return email;
-    }
+    String getEmail();
 
     /**
      * @param email
      *            the email to set
      */
-    public void setEmail(String email) {
-	this.email = email;
-    }
+    void setEmail(String email);
 
     /**
      * @return the fullname
      */
-    public String getFullname() {
-	return fullname;
-    }
+    String getFullname();
 
     /**
      * @param fullname
      *            the fullname to set
      */
-    public void setFullname(String fullname) {
-	this.fullname = fullname;
-    }
+    void setFullname(String fullname);
 
     /**
      * @return the dob
      */
-    public Date getDob() {
-	return dob;
-    }
+    Date getDob();
 
     /**
      * @param dob
      *            the dob to set
      */
-    public void setDob(Date dob) {
-	this.dob = dob;
-    }
+    void setDob(Date dob);
 
     /**
      * @return the gendre
      */
-    public Gendre getGendre() {
-	return gendre;
-    }
+    Gendre getGendre();
 
     /**
      * @param gendre
      *            the gendre to set
      */
-    public void setGendre(Gendre gendre) {
-	this.gendre = gendre;
-    }
+    void setGendre(Gendre gendre);
 
     /**
      * @return the postcode
      */
-    public String getPostcode() {
-	return postcode;
-    }
+    String getPostcode();
 
     /**
      * @param postcode
      *            the postcode to set
      */
-    public void setPostcode(String postcode) {
-	this.postcode = postcode;
-    }
+    void setPostcode(String postcode);
 
     /**
      * @return the country
      */
-    public String getCountry() {
-	return country;
-    }
+    String getCountry();
 
     /**
      * @param country
      *            the country to set
      */
-    public void setCountry(String country) {
-	this.country = country;
-    }
+    void setCountry(String country);
 
     /**
      * @return the language
      */
-    public String getLanguage() {
-	return language;
-    }
+    String getLanguage();
 
     /**
      * @param language
      *            the language to set
      */
-    public void setLanguage(String language) {
-	this.language = language;
-    }
+    void setLanguage(String language);
 
     /**
      * @return the timezone
      */
-    public String getTimezone() {
-	return timezone;
-    }
+    String getTimezone();
 
     /**
      * @param timezone
      *            the timezone to set
      */
-    public void setTimezone(String timezone) {
-	this.timezone = timezone;
-    }
+    void setTimezone(String timezone);
 
 }

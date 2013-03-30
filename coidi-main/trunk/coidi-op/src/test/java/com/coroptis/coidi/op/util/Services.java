@@ -21,9 +21,9 @@ import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.op.dao.AssociationDao;
-import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
-import com.coroptis.coidi.op.dao.UserDao;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
+import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
@@ -32,14 +32,14 @@ import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
 
-    private final StatelessModeNonceDao statelessModeNonceDao = EasyMock
-	    .createMock(StatelessModeNonceDao.class);
+    private final BaseNonceDao statelessModeNonceDao = EasyMock
+	    .createMock(BaseNonceDao.class);
     private final ConfigurationService configurationService = EasyMock
 	    .createMock(ConfigurationService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-    private final UserDao userDao = EasyMock.createMock(UserDao.class);
+    private final BaseUserDao userDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
-    private final AssociationDao associationDao = EasyMock.createMock(AssociationDao.class);
+    private final BaseAssociationDao associationDao = EasyMock.createMock(BaseAssociationDao.class);
     private final SigningService signingService = EasyMock.createMock(SigningService.class);
     private final StatelessModeNonceService statelessModeNonceService = EasyMock
 	    .createMock(StatelessModeNonceService.class);
@@ -97,7 +97,7 @@ public class Services {
     /**
      * @return the statelessModeNonceDao
      */
-    public StatelessModeNonceDao getStatelessModeNonceDao() {
+    public BaseNonceDao getStatelessModeNonceDao() {
 	return statelessModeNonceDao;
     }
 
@@ -111,7 +111,7 @@ public class Services {
     /**
      * @return the associationDao
      */
-    public AssociationDao getAssociationDao() {
+    public BaseAssociationDao getAssociationDao() {
 	return associationDao;
     }
 
@@ -160,7 +160,7 @@ public class Services {
     /**
      * @return the userDao
      */
-    public UserDao getUserDao() {
+    public BaseUserDao getUserDao() {
 	return userDao;
     }
 

@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConvertorService;
-import com.coroptis.coidi.op.dao.UserDao;
+import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.UserService;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     private Logger logger;
 
     @Inject
-    private UserDao userDao;
+    private BaseUserDao userDao;
 
     @Inject
     private ConvertorService convertorService;

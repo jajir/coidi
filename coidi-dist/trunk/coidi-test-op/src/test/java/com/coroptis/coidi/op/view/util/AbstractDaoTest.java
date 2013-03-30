@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.util;
+package com.coroptis.coidi.op.view.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,6 +33,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
 import com.coroptis.coidi.core.services.CoreModule;
+import com.coroptis.coidi.op.view.services.OpViewModule;
 import com.coroptis.coidi.test.MockIDatabaseConnection;
 import com.google.common.base.Preconditions;
 
@@ -53,9 +54,9 @@ public abstract class AbstractDaoTest extends DatabaseTestCase {
 
     protected final static Logger logger = Logger.getLogger(AbstractDaoTest.class);
 
-    protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op";
+    protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op.view";
 
-    protected final static String T5_APPLICATION_NAME = "Op";
+    protected final static String T5_APPLICATION_NAME = "OpView";
 
     protected final static String T5_WEBAPP_BASE = "src/main/webapp";
 
@@ -65,7 +66,7 @@ public abstract class AbstractDaoTest extends DatabaseTestCase {
 	logger.debug("loading T5 registry with server.role.junit: "
 		+ System.getProperty("server.role"));
 	pageTester = new PageTester(T5_APPLICATION_PACKAGE, T5_APPLICATION_NAME, T5_WEBAPP_BASE,
-		CoreModule.class);
+		CoreModule.class, OpViewModule.class);
     }
 
     /**
