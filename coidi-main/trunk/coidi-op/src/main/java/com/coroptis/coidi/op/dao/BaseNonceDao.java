@@ -15,26 +15,23 @@
  */
 package com.coroptis.coidi.op.dao;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import com.coroptis.coidi.op.entities.StatelessModeNonce;
+/**
+ * It's for StatelessMode.
+ * @author jirout
+ *
+ */
+public interface BaseNonceDao {
 
-import com.coroptis.coidi.op.entities.User;
+    void save(StatelessModeNonce statelessModeNonce);
 
-public interface UserDao {
+    StatelessModeNonce getByNonce(String noce);
 
-	User login(String name, String password);
+    /**
+     * Just create new empty object instance. Instance is not presisted.
+     * 
+     * @return new {@link StatelessModeNonce} object instance
+     */
+    StatelessModeNonce createNewInstance();
 
-	@CommitAfter
-	User register(String name, String password, String identityId);
-
-	User getUserByName(String userName);
-
-	/**
-	 * Get user by it's id.
-	 * 
-	 * @param idUser
-	 *            required is of user
-	 * @return found {@link User} object of <code>null</code> if there is no
-	 *         such user
-	 */
-	User getById(Integer idUser);
 }

@@ -25,6 +25,7 @@ import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.UserService;
 import com.coroptis.coidi.op.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.util.BaseJunitTest;
+import com.coroptis.coidi.op.util.UserMock;
 
 /**
  * Tests for {@link UserServiceImpl}.
@@ -38,7 +39,7 @@ public class UserServiceTest extends BaseJunitTest {
 
     private UserService service;
 
-    private User user;
+    private UserMock user;
 
     public void testLogin() throws Exception {
 	MessageDigest md = MessageDigest.getInstance("MD5");
@@ -83,7 +84,7 @@ public class UserServiceTest extends BaseJunitTest {
     protected void setUp() throws Exception {
 	super.setUp();
 	service = getService(SERVICE_NAME, UserService.class);
-	user = new User();
+	user = new UserMock();
 	user.setIdUser(3);
 	user.setName("karel");
     }

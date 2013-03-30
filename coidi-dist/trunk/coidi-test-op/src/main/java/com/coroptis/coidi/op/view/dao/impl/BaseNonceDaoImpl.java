@@ -13,30 +13,37 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.dao.impl;
+package com.coroptis.coidi.op.view.dao.impl;
 
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.coroptis.coidi.op.dao.StatelessModeNonceDao;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.StatelessModeNonce;
+import com.coroptis.coidi.op.view.entities.StatelessModeNonceImpl;
 
-public class StatelessModeNonceDaoImpl implements StatelessModeNonceDao {
+public class BaseNonceDaoImpl implements BaseNonceDao {
 
-	@Inject
-	private Session session;
+    @Inject
+    private Session session;
 
-	@Override
-	public void save(StatelessModeNonce statelessModeNonce) {
-		session.save(statelessModeNonce);
-	}
+    @CommitAfter
+    @Override
+    public void save(StatelessModeNonce statelessModeNonce) {
+	session.save(statelessModeNonce);
+    }
 
-	@Override
-	public StatelessModeNonce getByNonce(String noce) {
-		return (StatelessModeNonce) session
-				.createCriteria(StatelessModeNonce.class)
-				.add(Restrictions.eq("nonce", noce)).uniqueResult();
-	}
+    @Override
+    public StatelessModeNonceImpl getByNonce(String noce) {
+	return (StatelessModeNonceImpl) session.createCriteria(StatelessModeNonceImpl.class)
+		.add(Restrictions.eq("nonce", noce)).uniqueResult();
+    }
+
+    @Override
+    public StatelessModeNonce createNewInstance() {
+	return new StatelessModeNonceImpl();
+    }
 
 }

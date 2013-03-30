@@ -21,8 +21,8 @@ import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.op.dao.AssociationDao;
-import com.coroptis.coidi.op.dao.UserDao;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
@@ -45,8 +45,8 @@ public class JunitAppModule {
 		services.getConfigurationService()));
 	binder.bind(NonceService.class,
 		new EasyMockServicebuilder<NonceService>(services.getNonceService()));
-	binder.bind(AssociationDao.class,
-		new EasyMockServicebuilder<AssociationDao>(services.getAssociationDao()));
+	binder.bind(BaseAssociationDao.class,
+		new EasyMockServicebuilder<BaseAssociationDao>(services.getAssociationDao()));
 	binder.bind(AuthenticationService.class, new EasyMockServicebuilder<AuthenticationService>(
 		services.getAuthenticationService()));
 	binder.bind(IdentityService.class,
@@ -65,7 +65,7 @@ public class JunitAppModule {
 		AuthenticationProcessor.class,
 		new EasyMockServicebuilder<AuthenticationProcessor>(services
 			.getAuthenticationProcessor()));
-	binder.bind(UserDao.class, new EasyMockServicebuilder<UserDao>(services.getUserDao()));
+	binder.bind(BaseUserDao.class, new EasyMockServicebuilder<BaseUserDao>(services.getUserDao()));
 	binder.bind(ConvertorService.class,
 		new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
     }

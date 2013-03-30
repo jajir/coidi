@@ -161,12 +161,22 @@ public interface Association {
 
     String getAssocHandle();
 
+    void setAssocHandle(String assocHandle);
+
     AssociationType getAssociationType();
+
+    void setAssociationType(AssociationType associationType);
 
     SessionType getSessionType();
 
+    void setSessionType(SessionType sessionType);
+
     Date getExpiredIn();
 
+    void setExpiredIn(Date date);
+
     String getMacKey();
+
+    void setMacKey(String macKey);
 
 }

@@ -25,7 +25,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.op.dao.AssociationDao;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Identity;
@@ -48,7 +48,7 @@ public class AuthenticationProcessorTerminator implements AuthenticationProcesso
     private Logger logger;
 
     @Inject
-    private AssociationDao associationDao;
+    private BaseAssociationDao associationDao;
 
     @Inject
     private SigningService signingService;

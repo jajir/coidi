@@ -20,12 +20,6 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-hibernate</artifactId>
-			<version>${t5.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.openxri</groupId>
 			<artifactId>openxri-client</artifactId>
 			<version>1.0.1</version>

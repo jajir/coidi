@@ -13,10 +13,10 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.entities.AssociationBean;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
 import com.coroptis.coidi.op.util.BaseJunitTest;
+import com.coroptis.coidi.op.util.IdentityMock;
 import com.coroptis.coidi.op.util.TestUserSession;
 
 /**
@@ -33,7 +33,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 
     private AssociationBean association, associationInvalid;
 
-    private Identity identity;
+    private IdentityMock identity;
 
     private TestUserSession userSession;
 
@@ -211,7 +211,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 	// next assoc handle should was invalidated before 1 hour.
 	associationInvalid.setExpiredIn(new Date(new Date().getTime() - 1000 * 60 * 60));
 
-	identity = new Identity();
+	identity = new IdentityMock();
 	identity.setEmail("duck@pond.com");
 
 	userSession = new TestUserSession();

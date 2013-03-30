@@ -119,4 +119,5 @@ public class AssociationBean implements Association {
 		.add("associationType", associationType).add("expiredIn", expiredIn)
 		.add("macKey", macKey).add("sessionType", sessionType).toString();
     }
+
 }
