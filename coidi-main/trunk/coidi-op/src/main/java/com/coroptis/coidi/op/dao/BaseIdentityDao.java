@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.op.dao;
 
-import java.util.List;
-
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
@@ -36,26 +34,5 @@ public interface BaseIdentityDao {
      *         <code>null</code>
      */
     Identity getIdentityByName(String idIdentity);
-
-    /**
-     * Get total number of identities.
-     * 
-     * @return number of persisted identities
-     */
-    Integer getCount();
-
-    /**
-     * Get sublist of identities ordered by it's id. All parameters are zero
-     * based.
-     * 
-     * @param startIndex
-     *            optional start index, when it's <code>null</code> it will get
-     *            records from 0.
-     * @param endIndex
-     *            optional end index of returned records, if it's
-     *            <code>null</code> it will return record until last one.
-     * @return
-     */
-    List<Identity> getChunk(Integer startIndex, Integer endIndex);
 
 }

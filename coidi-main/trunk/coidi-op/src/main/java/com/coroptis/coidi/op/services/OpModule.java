@@ -40,7 +40,6 @@ import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmedia
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
-import com.coroptis.coidi.op.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.services.impl.XrdsServiceImpl;
 
 public class OpModule {// NO_UCD
@@ -54,7 +53,6 @@ public class OpModule {// NO_UCD
 	binder.bind(IdentityService.class, IdentityServiceImpl.class);
 	binder.bind(AssociationService.class, AssociationServiceImpl.class);
 	binder.bind(CryptoService.class, CryptoServiceImpl.class);
-	binder.bind(UserService.class, UserServiceImpl.class);
 	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
 	binder.bind(StatelessModeNonceService.class, StatelessModeNonceServiceImpl.class);
 	binder.bind(SregService.class, SregServiceImpl.class);

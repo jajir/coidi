@@ -20,7 +20,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.User;
-import com.coroptis.coidi.op.services.UserService;
+import com.coroptis.coidi.op.view.services.UserService;
 
 public class UserSession implements UserSessionSkeleton {
 

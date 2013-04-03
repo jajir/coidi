@@ -27,62 +27,60 @@ import org.hibernate.jdbc.Work;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.UserService;
 import com.coroptis.coidi.op.services.XrdsService;
+import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 import com.google.common.io.Files;
 
 public class StartupTest extends AbstractIntegrationDaoTest {
 
-	public void testStartup() throws Exception {
-		XrdsService xrdsService = getService(XrdsService.class);
-		assertEquals("http://localhost:8080/userxrds/zdenek",
-				xrdsService.getXrdsLocation("zdenek"));
+    public void testStartup() throws Exception {
+	XrdsService xrdsService = getService(XrdsService.class);
+	assertEquals("http://localhost:8080/userxrds/zdenek", xrdsService.getXrdsLocation("zdenek"));
+    }
+
+    public void testLogin() throws Exception {
+	UserService userService = getService(UserService.class);
+
+	assertNull(userService.login("karel", "kachnicka"));
+    }
+
+    public void testLoadInitialData() throws Exception {
+	/**
+	 * Following code is copied from OpModule
+	 */
+	Session session = getService(Session.class);
+	for (final String line : Files.readLines(new File("src/main/resources/data.sql"),
+		Charset.forName("UTF-8"))) {
+	    if (line.length() > 0) {
+		logger.debug("executing: " + line);
+		session.doWork(new Work() {
+
+		    @Override
+		    public void execute(Connection connection) throws SQLException {
+			connection.createStatement().execute(line);
+			connection.commit();
+		    }
+		});
+	    }
 	}
+    }
 
-	public void testLogin() throws Exception {
-		UserService userService = getService(UserService.class);
+    public void testDispatchAuthentication() throws Exception {
+	Map<String, String> req = new HashMap<String, String>();
+	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
+	req.put("openid.identity", "http://localhost:8080/user/juan");
+	req.put("openid.claimed_id", "http://localhost:8080/user/juan");
+	req.put("openid.mode", "checkid_immediate");
+	req.put("openid.realm", "not in use");
+	req.put("openid.assoc_handle", "6a4129eb-1336-4970-9ca8-f2d56111eddc");
+	req.put("openid.return_to", "http://localhost:8081/somePage");
 
-		assertNull(userService.login("karel", "kachnicka"));
-	}
+	OpenIdDispatcher authentication = getService(OpenIdDispatcher.class);
+	AbstractMessage ret = authentication.process(req, null);
 
-	public void testLoadInitialData() throws Exception {
-		/**
-		 * Following code is copied from OpModule
-		 */
-		Session session = getService(Session.class);
-		for (final String line : Files.readLines(new File(
-				"src/main/resources/data.sql"), Charset.forName("UTF-8"))) {
-			if (line.length() > 0) {
-				logger.debug("executing: " + line);
-				session.doWork(new Work() {
-
-					@Override
-					public void execute(Connection connection)
-							throws SQLException {
-						connection.createStatement().execute(line);
-						connection.commit();
-					}
-				});
-			}
-		}
-	}
-
-	public void testDispatchAuthentication() throws Exception {
-		Map<String, String> req = new HashMap<String, String>();
-		req.put("openid.ns", "http://specs.openid.net/auth/2.0");
-		req.put("openid.identity", "http://localhost:8080/user/juan");
-		req.put("openid.claimed_id", "http://localhost:8080/user/juan");
-		req.put("openid.mode", "checkid_immediate");
-		req.put("openid.realm", "not in use");
-		req.put("openid.assoc_handle", "6a4129eb-1336-4970-9ca8-f2d56111eddc");
-		req.put("openid.return_to", "http://localhost:8081/somePage");
-
-		OpenIdDispatcher authentication = getService(OpenIdDispatcher.class);
-		AbstractMessage ret = authentication.process(req, null);
-
-		assertNotNull(ret);
-		System.out.println(ret.isUrl());
-		System.out.println(ret.getMessage());
-	}
+	assertNotNull(ret);
+	System.out.println(ret.isUrl());
+	System.out.println(ret.getMessage());
+    }
 }

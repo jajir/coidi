@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.junit.services;
+package com.coroptis.coidi.op.view.junit;
 
 import java.security.MessageDigest;
 
@@ -22,10 +22,10 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.op.entities.User;
-import com.coroptis.coidi.op.services.UserService;
-import com.coroptis.coidi.op.services.impl.UserServiceImpl;
-import com.coroptis.coidi.op.util.BaseJunitTest;
-import com.coroptis.coidi.op.util.UserMock;
+import com.coroptis.coidi.op.view.services.UserService;
+import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
+import com.coroptis.coidi.op.view.util.BaseJunitTest;
+import com.coroptis.coidi.op.view.util.UserMock;
 
 /**
  * Tests for {@link UserServiceImpl}.

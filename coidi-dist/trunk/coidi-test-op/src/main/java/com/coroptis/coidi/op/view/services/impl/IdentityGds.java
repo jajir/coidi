@@ -22,15 +22,15 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.view.dao.IdentityDao;
 
 public class IdentityGds implements GridDataSource {
 
     private final static Logger logger = Logger.getLogger(IdentityGds.class);
 
     @Inject
-    private BaseIdentityDao identityDao;
+    private IdentityDao identityDao;
 
     private List<Identity> currentPage;
 
