@@ -13,23 +13,39 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao.impl;
-
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+package com.coroptis.coidi.op.view.dao;
 
 import com.coroptis.coidi.op.dao.BaseUserDao;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
-public class BaseUserDaoImpl implements BaseUserDao {
+public class BaseUserDaoTest extends AbstractDaoTest {
+    
+    private BaseUserDao dao;
 
-    @Inject
-    private Session session;
+    public void testGetById() throws Exception {
+	User ret = dao.getById(1);
+
+	assertNotNull(ret);
+	assertEquals("Jane", ret.getName());
+    }
+
+    public void testGetById_noSuchUser() throws Exception {
+	User ret = dao.getById(786876);
+
+	assertNull(ret);
+    }
 
     @Override
-    public UserImpl getById(final Integer idUser) {
-	return (UserImpl) session.createCriteria(UserImpl.class)
-		.add(Restrictions.eq("idUser", idUser)).uniqueResult();
+    protected void setUp() throws Exception {
+	super.setUp();
+	dao = getService(BaseUserDao.class);
     }
+
+    @Override
+    protected void tearDown() throws Exception {
+	dao = null;
+	super.tearDown();
+    }
+
 }

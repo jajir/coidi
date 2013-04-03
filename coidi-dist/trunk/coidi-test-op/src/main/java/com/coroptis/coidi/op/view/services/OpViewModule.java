@@ -55,6 +55,7 @@ import com.coroptis.coidi.op.view.dao.impl.BaseNonceDaoImpl;
 import com.coroptis.coidi.op.view.dao.impl.BaseUserDaoImpl;
 import com.coroptis.coidi.op.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.op.view.services.impl.IdentityGds;
+import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.google.common.io.Files;
 
 public class OpViewModule {// NO_UCD
@@ -69,6 +70,8 @@ public class OpViewModule {// NO_UCD
 	binder.bind(BaseAssociationDao.class, BaseAssociationDaoImpl.class);
 	binder.bind(BaseIdentityDao.class, BaseIdentityDaoImpl.class);
 	binder.bind(BaseUserDao.class, BaseUserDaoImpl.class);
+
+	binder.bind(UserService.class, UserServiceImpl.class);
 
 	binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
 		"accessControllerDispatcher");

@@ -74,4 +74,18 @@ public class IdentityServiceImpl implements IdentityService {
 	}
 	return false;
     }
+
+    @Override
+    public Boolean isUsersIdentity(final Integer idUser, final String identityName) {
+	User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
+	Preconditions.checkNotNull(identityName, "identityName is null");
+
+	for (Identity identity : user.getIdentities()) {
+	    if (identityName.equals(identity.getIdIdentity())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

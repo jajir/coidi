@@ -34,7 +34,6 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.UserService;
 
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
@@ -49,9 +48,6 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
     @Inject
     private AuthenticationProcessor authenticationProcessor;
-
-    @Inject
-    private UserService userService;
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
@@ -99,7 +95,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
 	    // TODO isUsersIdentity thrown NPE, it should not. it should be
 	    // OpenID error messages
-	    if (!userService.isUsersIdentity(userSession.getIdUser(), identity.getIdIdentity())) {
+	    if (!identityService.isUsersIdentity(userSession.getIdUser(), identity.getIdIdentity())) {
 		logger.debug("Identity '" + authenticationRequest.getIdentity()
 			+ "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
 		return new RedirectResponse();

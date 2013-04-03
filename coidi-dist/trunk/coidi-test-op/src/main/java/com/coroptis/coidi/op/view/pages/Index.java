@@ -20,12 +20,12 @@ import java.util.List;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.op.dao.BaseIdentityDao;
+import com.coroptis.coidi.op.view.dao.IdentityDao;
 
 public class Index {
 
     @Inject
-    private BaseIdentityDao identityDao;
+    private IdentityDao identityDao;
 
     @SuppressWarnings("unused")
     @Property

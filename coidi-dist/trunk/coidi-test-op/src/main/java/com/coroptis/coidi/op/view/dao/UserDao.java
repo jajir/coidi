@@ -13,23 +13,15 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao.impl;
+package com.coroptis.coidi.op.view.dao;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import com.coroptis.coidi.op.entities.User;
 
-import com.coroptis.coidi.op.dao.BaseUserDao;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+public interface UserDao {
 
-public class BaseUserDaoImpl implements BaseUserDao {
+    User login(String name, String password);
 
-    @Inject
-    private Session session;
+    User register(String name, String password, String identityId);
 
-    @Override
-    public UserImpl getById(final Integer idUser) {
-	return (UserImpl) session.createCriteria(UserImpl.class)
-		.add(Restrictions.eq("idUser", idUser)).uniqueResult();
-    }
+    User getUserByName(String userName);
 }

@@ -17,26 +17,12 @@ package com.coroptis.coidi.op.view.dao;
 
 import java.util.List;
 
-import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class IdentityDaoTest extends AbstractDaoTest {
 
-    BaseIdentityDao identityDao;
-
-    public void testGetIdentityByName() throws Exception {
-	Identity ret = identityDao.getIdentityByName("jane");
-
-	assertNotNull(ret);
-	assertEquals("jane", ret.getIdIdentity());
-    }
-
-    public void testGetIdentityByName_notExists() throws Exception {
-	Identity ret = identityDao.getIdentityByName("brekeke");
-
-	assertNull(ret);
-    }
+    IdentityDao identityDao;
 
     public void testGetCount() throws Exception {
 	Integer ret = identityDao.getCount();
@@ -79,7 +65,7 @@ public class IdentityDaoTest extends AbstractDaoTest {
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
-	identityDao = getService(BaseIdentityDao.class);
+	identityDao = getService(IdentityDao.class);
     }
 
     @Override

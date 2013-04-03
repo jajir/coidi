@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.view.services;
 
 import com.coroptis.coidi.op.entities.User;
 
@@ -34,17 +34,5 @@ public interface UserService {
      *         such user
      */
     User getById(Integer idUser);
-
-    /**
-     * Verify that identity belongs to user.
-     * 
-     * @param idUser
-     *            required user's id
-     * @param identityName
-     *            required identity id, usually URL
-     * @return <code>true</code> if identity belongs to user otherwise return
-     *         <code>false</code>
-     */
-    Boolean isUsersIdentity(final Integer idUser, final String identityName);
 
 }

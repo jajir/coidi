@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.services.impl;
+package com.coroptis.coidi.op.view.services.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -25,10 +25,9 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.op.dao.BaseUserDao;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
-import com.coroptis.coidi.op.services.UserService;
-import com.google.common.base.Preconditions;
+import com.coroptis.coidi.op.view.dao.UserDao;
+import com.coroptis.coidi.op.view.services.UserService;
 
 public class UserServiceImpl implements UserService {
 
@@ -36,11 +35,14 @@ public class UserServiceImpl implements UserService {
     private Logger logger;
 
     @Inject
-    private BaseUserDao userDao;
+    private UserDao userDao;
+
+    @Inject
+    private BaseUserDao baseUserDao;
 
     @Inject
     private ConvertorService convertorService;
-    
+
     public final static String SALT = "23t4bcdjs@()&d431f#";
 
     @Override
@@ -60,20 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(final Integer idUser) {
-	return userDao.getById(idUser);
-    }
-
-    @Override
-    public Boolean isUsersIdentity(final Integer idUser, final String identityName) {
-	User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
-	Preconditions.checkNotNull(identityName, "identityName is null");
-
-	for (Identity identity : user.getIdentities()) {
-	    if (identityName.equals(identity.getIdIdentity())) {
-		return true;
-	    }
-	}
-	return false;
+	return baseUserDao.getById(idUser);
     }
 
     /**
