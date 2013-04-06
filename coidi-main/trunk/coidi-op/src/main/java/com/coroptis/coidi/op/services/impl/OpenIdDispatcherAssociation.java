@@ -71,7 +71,6 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 	    if (request.getSessionType() == null) {
 		return new ErrorResponse(false, AssociationRequest.SESSION_TYPE + " is required");
 	    }
-	    // FIXME create new association
 	    Association association = associationDao.createNewInstance();
 	    association.setAssocHandle(cryptoService.generateUUID());
 	    association.setSessionType(request.getSessionType());

@@ -27,12 +27,12 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
@@ -48,6 +48,9 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 
     @Inject
     private AuthenticationProcessor authenticationProcessor;
+
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
@@ -65,8 +68,8 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 			    + " probably it's authentication extension");
 		    return null;
 		} else {
-		    return new ErrorResponse(false,
-			    "In authentication request is not filled openid.claimed_id"
+		    return negativeResponseGenerator
+			    .simpleError("In authentication request is not filled openid.claimed_id"
 				    + " but openid.identity is empty" + " It's invalid combination");
 		}
 	    } else {
@@ -84,7 +87,19 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		return new RedirectResponse();
 	    }
 
-	    Identity identity = identityService.getIdentityByName(authenticationRequest
+	    if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
+		if (StringUtils.isEmpty(authenticationRequest.getSelectedIdentity())) {
+		    return negativeResponseGenerator.applicationError("requested identity is '"
+			    + AuthenticationRequest.IDENTITY_SELECT
+			    + "' but user didin't put selected identity in property '"
+			    + AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
+			    NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
+		} else {
+		    authenticationRequest.setIdentity(authenticationRequest.getSelectedIdentity());
+		}
+	    }
+
+	    Identity identity = identityService.getByOpIdentifier(authenticationRequest
 		    .getIdentity());
 
 	    if (identity == null) {
@@ -93,18 +108,17 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		return new RedirectResponse();
 	    }
 
-	    // TODO isUsersIdentity thrown NPE, it should not. it should be
-	    // OpenID error messages
-	    if (!identityService.isUsersIdentity(userSession.getIdUser(), identity.getIdIdentity())) {
-		logger.debug("Identity '" + authenticationRequest.getIdentity()
-			+ "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
-		return new RedirectResponse();
+	    if (identityService.isUsersOpIdentifier(userSession.getIdUser(),
+		    identity.getIdIdentity())) {
+		Set<String> fieldToSign = new HashSet<String>();
+		return authenticationProcessor.process(authenticationRequest,
+			new AuthenticationResponse(), identity, fieldToSign);
+	    } else {
+		return negativeResponseGenerator.simpleError("Identity '"
+			+ authenticationRequest.getIdentity() + "' doesn't belongs to user '"
+			+ userSession.getIdUser() + "'.");
 	    }
 
-	    Set<String> fieldToSign = new HashSet<String>();
-	    AbstractMessage out = authenticationProcessor.process(authenticationRequest,
-		    new AuthenticationResponse(), identity, fieldToSign);
-	    return out;
 	}
 	return null;
     }

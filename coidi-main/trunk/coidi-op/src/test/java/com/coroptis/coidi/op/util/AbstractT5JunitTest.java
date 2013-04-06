@@ -13,38 +13,45 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao;
+package com.coroptis.coidi.op.util;
 
-import com.coroptis.coidi.op.dao.BaseIdentityDao;
-import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.view.util.AbstractDaoTest;
+import org.apache.tapestry5.ioc.ServiceBinder;
 
-public class BaseIdentityDaoTest extends AbstractDaoTest {
+import com.coroptis.coidi.test.AbstractJunitTest;
 
-    BaseIdentityDao identityDao;
+/**
+ * Extending this provide to test wired T5 application environment.
+ * 
+ * @author jan
+ * 
+ */
+public abstract class AbstractT5JunitTest extends AbstractJunitTest {
 
-    public void testGetIdentityByOpLocalIdentifier() throws Exception {
-	Identity ret = identityDao.getIdentityByOpLocalIdentifier("jane");
+    protected Services services;
 
-	assertNotNull(ret);
-	assertEquals("jane", ret.getIdIdentity());
+    public AbstractT5JunitTest() {
+	super(JunitAppModule.class);
     }
 
-    public void testGetIdentityByOpLocalIdentifier_notExists() throws Exception {
-	Identity ret = identityDao.getIdentityByOpLocalIdentifier("brekeke");
+    @Override
+    public void bind(ServiceBinder binder) {
 
-	assertNull(ret);
     }
 
     @Override
     protected void setUp() throws Exception {
+	System.setProperty("op.stateless.mode.association.type", "HMAC-SHA1");
+	System.setProperty("op.server", "http://localhost:8080/");
+	System.setProperty("op.nonce.timeToLiveInSeconds", "1800");
+	System.setProperty("op.err.contact", "john@gmail.com");
+	services = Services.getServices();
+	services.reset();
 	super.setUp();
-	identityDao = getService(BaseIdentityDao.class);
     }
 
     @Override
     protected void tearDown() throws Exception {
-	identityDao = null;
+	services = null;
 	super.tearDown();
     }
 }

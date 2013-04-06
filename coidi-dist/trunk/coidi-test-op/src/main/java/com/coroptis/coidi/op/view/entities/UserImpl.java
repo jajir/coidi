@@ -108,6 +108,7 @@ public class UserImpl implements User {
 	/* (non-Javadoc)
 	 * @see com.coroptis.coidi.op.entities.User#getIdentities()
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Set<Identity> getIdentities() {
 		return (Set)identities;
@@ -116,6 +117,7 @@ public class UserImpl implements User {
 	/* (non-Javadoc)
 	 * @see com.coroptis.coidi.op.entities.User#setIdentities(java.util.Set)
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void setIdentities(Set<Identity> identities) {
 		this.identities = (Set)identities;

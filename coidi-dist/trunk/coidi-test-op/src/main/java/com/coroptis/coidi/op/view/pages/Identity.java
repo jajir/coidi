@@ -46,7 +46,7 @@ public class Identity { // NO_UCD
     @Inject
     private Request request;
 
-    private String identityName;
+    private String opLocalIdentifier;
 
     @Property
     private com.coroptis.coidi.op.entities.Identity identity;
@@ -54,26 +54,26 @@ public class Identity { // NO_UCD
     @InjectPage
     private Error404 error404;
 
-    Object onActivate(final String identityName) {
-	this.identityName = identityName;
-	logger.debug("Requested identity id '" + identityName + "'");
-	if (identityName == null) {
-	    throw new CoidiException("user name '" + identityName + "' is null");
+    Object onActivate(final String opLocalIdentifier) {
+	this.opLocalIdentifier = opLocalIdentifier;
+	logger.debug("Requested identity id '" + opLocalIdentifier + "'");
+	if (opLocalIdentifier == null) {
+	    throw new CoidiException("user name '" + opLocalIdentifier + "' is null");
 	}
-	identity = identityService.getIdentityByName(identityName);
+	identity = identityService.getByOpLocalIdentifier(opLocalIdentifier);
 	if (identity == null) {
-	    logger.info("identity '" + identityName + "' is null");
+	    logger.info("identity '" + opLocalIdentifier + "' is null");
 	    return error404;
 	}
 	if (request.getHeader("Accept") != null
 		&& request.getHeader("Accept").toString().indexOf("application/xrds+xml") >= 0) {
-	    return new XrdsStreamResponse(xrdsService.getDocument(identityName));
+	    return new XrdsStreamResponse(xrdsService.getDocument(opLocalIdentifier));
 	}
 	return null;
     }
 
     String onPassivate() {
-	return identityName;
+	return opLocalIdentifier;
     }
 
 }

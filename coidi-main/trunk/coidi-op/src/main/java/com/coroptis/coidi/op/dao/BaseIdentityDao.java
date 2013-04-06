@@ -33,6 +33,6 @@ public interface BaseIdentityDao {
      * @return {@link IdentityImpl} object if there is any otherwise
      *         <code>null</code>
      */
-    Identity getIdentityByName(String idIdentity);
+    Identity getIdentityByOpLocalIdentifier(String idIdentity);
 
 }

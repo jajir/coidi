@@ -25,6 +25,11 @@ import com.coroptis.coidi.core.message.ErrorResponse;
  */
 public interface NegativeResponseGenerator {
 
+    static final String APPLICATION_ERROR_KEY = "appErr";
+
+    static final String APPLICATION_ERROR_SELECT_IDENTITY = "selectIdentity";
+    
+    
     /**
      * Generated error with given message.
      * 
@@ -33,5 +38,15 @@ public interface NegativeResponseGenerator {
      * @return created instance of {@link ErrorResponse} class
      */
     ErrorResponse simpleError(String message);
+
+    /**
+     * This generate error that tells application that there should correct
+     * something.
+     * 
+     * @param message
+     * @param errorKey
+     * @return
+     */
+    ErrorResponse applicationError(String message, String errorKey);
 
 }

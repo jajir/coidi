@@ -28,7 +28,7 @@ public class BaseIdentityDaoImpl implements BaseIdentityDao {
     private Session session;
 
     @Override
-    public IdentityImpl getIdentityByName(final String idIdentity) {
+    public IdentityImpl getIdentityByOpLocalIdentifier(final String idIdentity) {
 	return (IdentityImpl) session.createCriteria(IdentityImpl.class)
 		.add(Restrictions.eq("idIdentity", idIdentity)).uniqueResult();
     }

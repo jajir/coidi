@@ -21,9 +21,9 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
-import com.coroptis.coidi.op.util.BaseJunitTest;
+import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
-public class AssociationServiceTest extends BaseJunitTest {
+public class AssociationServiceTest extends AbstractT5JunitTest {
 
 	private final static String SERVICE_NAME = "realService";
 
