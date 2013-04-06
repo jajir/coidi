@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
  */
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
-    private final static String PLACEHOLDER = "${identity}";
+    private final static String PLACEHOLDER = "<identity>";
 
     private final String idenityPattern;
 
