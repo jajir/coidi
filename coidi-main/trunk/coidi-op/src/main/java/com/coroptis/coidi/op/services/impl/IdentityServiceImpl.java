@@ -16,13 +16,13 @@
 package com.coroptis.coidi.op.services.impl;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.google.common.base.Preconditions;
 
@@ -34,26 +34,30 @@ public class IdentityServiceImpl implements IdentityService {
     @Inject
     private BaseUserDao userDao;
 
-    /**
-     * OpenID identity is stored in URL form. In database is stored just prefix
-     * part of it. For example prefix is http://www.myid.com/user/
-     */
     @Inject
-    @Symbol("op.idenity.prefix")
-    private String idenityPrefix;
+    private IdentityNamesConvertor identityNamesConvertor;
 
     @Override
     public Identity getIdentityByName(final String idIdentity) {
-	if (idIdentity.startsWith(idenityPrefix)) {
-	    return identityDao.getIdentityByName(idIdentity.substring(idenityPrefix.length()));
+	if (identityNamesConvertor.isOpLocalIdentifier(idIdentity)) {
+	    return identityDao.getIdentityByOpLocalIdentifier(idIdentity);
 	} else {
-	    return identityDao.getIdentityByName(idIdentity);
+	    return identityDao.getIdentityByOpLocalIdentifier(identityNamesConvertor
+		    .getOpLocalIdentifier(idIdentity));
 	}
     }
 
     @Override
-    public Identity getById(final String id) {
-	return identityDao.getIdentityByName(idenityPrefix + id);
+    public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {
+	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
+	return identityDao.getIdentityByOpLocalIdentifier(opLocalIdentifier);
+    }
+
+    @Override
+    public Identity getByOpIdentifier(String opIdentifier) {
+	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
+	return identityDao.getIdentityByOpLocalIdentifier(identityNamesConvertor
+		.getOpLocalIdentifier(opIdentifier));
     }
 
     @Override
@@ -76,12 +80,13 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public Boolean isUsersIdentity(final Integer idUser, final String identityName) {
-	User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
-	Preconditions.checkNotNull(identityName, "identityName is null");
+    public Boolean isUsersOpIdentifier(final Integer idUser, final String opIdentifier) {
+	final String opLocalIdentifier = identityNamesConvertor.getOpLocalIdentifier(opIdentifier);
+	final User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
+	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
 
 	for (Identity identity : user.getIdentities()) {
-	    if (identityName.equals(identity.getIdIdentity())) {
+	    if (opLocalIdentifier.equals(identity.getIdIdentity())) {
 		return true;
 	    }
 	}

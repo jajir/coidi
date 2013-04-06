@@ -30,6 +30,7 @@ import com.coroptis.coidi.op.services.impl.AuthenticationProcessorSreg11;
 import com.coroptis.coidi.op.services.impl.AuthenticationProcessorTerminator;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
+import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
 import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation;
@@ -57,6 +58,7 @@ public class OpModule {// NO_UCD
 	binder.bind(StatelessModeNonceService.class, StatelessModeNonceServiceImpl.class);
 	binder.bind(SregService.class, SregServiceImpl.class);
 	binder.bind(NegativeResponseGenerator.class, NegativeResponseGeneratorImpl.class);
+	binder.bind(IdentityNamesConvertor.class, IdentityNamesConvertorImpl.class);
     }
 
     public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,

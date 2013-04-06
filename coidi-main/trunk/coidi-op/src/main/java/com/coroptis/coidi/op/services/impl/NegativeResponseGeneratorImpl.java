@@ -46,4 +46,14 @@ public class NegativeResponseGeneratorImpl implements NegativeResponseGenerator 
 	return errorResponse;
     }
 
+    @Override
+    public ErrorResponse applicationError(final String message, final String errorKey) {
+	logger.warn(message);
+	ErrorResponse errorResponse = new ErrorResponse(false);
+	errorResponse.setContact(errorContact);
+	errorResponse.put(APPLICATION_ERROR_KEY, errorKey);
+	errorResponse.setError(message);
+	return errorResponse;
+    }
+
 }

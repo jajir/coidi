@@ -75,7 +75,7 @@ public class Registration { // NO_UCD
 			registrationForm.recordError(userNameField,
 					"user name is already registered.");
 		}
-		if (identityService.getIdentityByName(identityId) != null) {
+		if (identityService.getByOpLocalIdentifier(identityId) != null) {
 			registrationForm.recordError(identityIdField,
 					"identity id is already registered.");
 		}

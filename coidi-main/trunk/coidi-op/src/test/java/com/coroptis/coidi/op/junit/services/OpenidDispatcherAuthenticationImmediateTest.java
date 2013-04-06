@@ -1,3 +1,18 @@
+/**
+ * Copyright 2012 coroptis.com
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package com.coroptis.coidi.op.junit.services;
 
 import java.util.Date;
@@ -15,7 +30,7 @@ import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
-import com.coroptis.coidi.op.util.BaseJunitTest;
+import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 import com.coroptis.coidi.op.util.IdentityMock;
 import com.coroptis.coidi.op.util.TestUserSession;
 
@@ -25,7 +40,7 @@ import com.coroptis.coidi.op.util.TestUserSession;
  * @author jirout
  * 
  */
-public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
+public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
@@ -53,7 +68,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 		.andReturn(true);
 	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
 		association);
-	EasyMock.expect(services.getIdentityService().getIdentityByName("http://pond.com/duck"))
+	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
 		.andReturn(identity);
 	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
 		.andReturn(true);
@@ -127,8 +142,8 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 	EasyMock.expect(services.getAssociationDao().getByAssocHandle("324guy4321j")).andReturn(
 		associationInvalid);
 	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError((String)
-			EasyMock.anyObject())).andReturn(errorResponse);
+		services.getNegativeResponseGenerator().simpleError((String) EasyMock.anyObject()))
+		.andReturn(errorResponse);
 	services.replay();
 	AbstractMessage ret = service.process(params, userSession);
 
@@ -149,7 +164,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 		.andReturn(true);
 	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
 		association);
-	EasyMock.expect(services.getIdentityService().getIdentityByName("http://pond.com/duck"))
+	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
 		.andReturn(null);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator().simpleError(
@@ -175,7 +190,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends BaseJunitTest {
 		.andReturn(true);
 	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
 		association);
-	EasyMock.expect(services.getIdentityService().getIdentityByName("http://pond.com/duck"))
+	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
 		.andReturn(identity);
 	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
 		.andReturn(false);

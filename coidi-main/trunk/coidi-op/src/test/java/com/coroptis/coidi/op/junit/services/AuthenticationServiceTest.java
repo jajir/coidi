@@ -24,9 +24,9 @@ import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
-import com.coroptis.coidi.op.util.BaseJunitTest;
+import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
-public class AuthenticationServiceTest extends BaseJunitTest {
+public class AuthenticationServiceTest extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 

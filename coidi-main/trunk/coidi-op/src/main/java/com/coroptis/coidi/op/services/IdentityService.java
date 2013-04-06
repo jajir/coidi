@@ -19,8 +19,10 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
+ * Identity managing service.
  * 
  * @author jan
+ * 
  * 
  */
 public interface IdentityService {
@@ -28,23 +30,34 @@ public interface IdentityService {
     /**
      * Get identity by it's name. Name is unique within OP.
      * 
-     * @param idIdentity
-     *            required idenitity's name (id)
+     * @param someOpIdentifier
+     *            required OP identifier
      * @return {@link IdentityImpl} object if there is any otherwise
      *         <code>null</code>
-     */
-    Identity getIdentityByName(String idIdentity);
-
-    /**
-     * Get identity by it's id. Id is composed 'op.idenity.prefix'/name.
-     * 
-     * @param id
-     *            required identity id
-     * @return {@link IdentityImpl} object if there is any otherwise
-     *         <code>null</code>
+     * @deprecated replace with identifier aware methods.
      */
     @Deprecated
-    Identity getById(String id);
+    Identity getIdentityByName(String someOpIdentifier);
+
+    /**
+     * Get {@link Identity} by it's OP local identifier.
+     * 
+     * @param id
+     *            required OP local identifier
+     * @return {@link Identity} object if there is any otherwise
+     *         <code>null</code>
+     */
+    Identity getByOpLocalIdentifier(String id);
+
+    /**
+     * Get {@link Identity} by it's OP identifier.
+     * 
+     * @param id
+     *            required OP identifier
+     * @return {@link Identity} object if there is any otherwise
+     *         <code>null</code>
+     */
+    Identity getByOpIdentifier(String id);
 
     /**
      * Verify that claimed identity is logged into given user session.
@@ -64,10 +77,10 @@ public interface IdentityService {
      * 
      * @param idUser
      *            required user's id
-     * @param identityName
-     *            required identity id, usually URL
+     * @param opIdentifier
+     *            required OP identifier
      * @return <code>true</code> if identity belongs to user otherwise return
      *         <code>false</code>
      */
-    Boolean isUsersIdentity(final Integer idUser, final String identityName);
+    Boolean isUsersOpIdentifier(Integer idUser, String opIdentifier);
 }

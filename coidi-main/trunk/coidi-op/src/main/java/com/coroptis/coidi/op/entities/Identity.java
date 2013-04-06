@@ -18,17 +18,21 @@ package com.coroptis.coidi.op.entities;
 import java.util.Date;
 
 public interface Identity {
-    
+
     public enum Gendre {
 	M, F
     }
 
     /**
+     * It get OP Local identifier.
+     * 
      * @return the idIdentity
      */
     String getIdIdentity();
 
     /**
+     * It set OP local identifier.
+     * 
      * @param idIdentity
      *            the idIdentity to set
      */

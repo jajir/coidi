@@ -80,7 +80,7 @@ public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher
 			+ association.getExpiredIn());
 	    }
 
-	    Identity identity = identityService.getIdentityByName(authenticationRequest
+	    Identity identity = identityService.getByOpIdentifier(authenticationRequest
 		    .getIdentity());
 	    if (identity == null) {
 		return negativeResponseGenerator.simpleError("There is no such identity '"

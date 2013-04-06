@@ -15,6 +15,10 @@
  */
 package com.coroptis.coidi.op.services;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 
@@ -23,38 +27,45 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
  */
 public interface AuthenticationService {
 
-	/**
-	 * Return true if it's valid authentication request. It's when it have mode
-	 * checkid_setup or checkid_immediate and contains claimed_id or identity.
-	 * 
-	 * @param authenticationRequest
-	 *            required {@link AuthenticationRequest} object
-	 * @return true when it's valid authentication request otherwise return
-	 *         false
-	 */
-	boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
+    /**
+     * Return true if it's valid authentication request. It's when it have mode
+     * checkid_setup or checkid_immediate and contains claimed_id or identity.
+     * 
+     * @param authenticationRequest
+     *            required {@link AuthenticationRequest} object
+     * @return true when it's valid authentication request otherwise return
+     *         false
+     */
+    boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
 
-	/**
-	 * Process authentication request from RP and generate positive or negative
-	 * authentication response according to OpenID specifications.
-	 * 
-	 * @param authenticationRequest
-	 *            required {@link AuthenticationRequest}
-	 * @return {@link AuthenticationResponse} object
-	 */
-	@Deprecated
-	AuthenticationResponse process(AuthenticationRequest authenticationRequest);
+    /**
+     * Process authentication request from RP and generate positive or negative
+     * authentication response according to OpenID specifications.
+     * 
+     * @param authenticationRequest
+     *            required {@link AuthenticationRequest}
+     * @return {@link AuthenticationResponse} object
+     */
+    @Deprecated
+    AuthenticationResponse process(AuthenticationRequest authenticationRequest);
 
-	/**
-	 * Method return used name space in open id authentication request for given
-	 * name space extension. For 'openid.ns.ax=http://openid.net/srv/ax/1.0'
-	 * from authentication request return 'ax'. If in requestis not given name
-	 * space URL than return null.
-	 * 
-	 * @param authenticationRequest
-	 * @param nameSpaceUrl
-	 * @return
-	 */
-	String getNameSpace(AuthenticationRequest authenticationRequest,
-			String nameSpaceUrl);
+    /**
+     * Method return used name space in open id authentication request for given
+     * name space extension. For 'openid.ns.ax=http://openid.net/srv/ax/1.0'
+     * from authentication request return 'ax'. If in request is not given name
+     * space URL than return null.
+     * 
+     * @param authenticationRequest
+     * @param nameSpaceUrl
+     * @return
+     */
+    String getNameSpace(AuthenticationRequest authenticationRequest, String nameSpaceUrl);
+
+    /**
+     * Convert all HTTP request parameters into map.
+     * 
+     * @param httpServletRequest
+     * @return map containing key value
+     */
+    Map<String, String> convertHttpRequestParametersToMap(HttpServletRequest httpServletRequest);
 }

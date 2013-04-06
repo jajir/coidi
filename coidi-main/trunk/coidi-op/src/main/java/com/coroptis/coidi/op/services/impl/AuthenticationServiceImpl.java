@@ -15,7 +15,12 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
@@ -123,5 +128,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	    }
 	}
 	return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Map<String, String> convertHttpRequestParametersToMap(
+	    HttpServletRequest httpServletRequest) {
+	Map<String, String> map = new HashMap<String, String>();
+	Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
+	while (parameterNames.hasMoreElements()) {
+	    String key = parameterNames.nextElement();
+	    map.put(key, httpServletRequest.getParameter(key));
+	    logger.debug("adding '" + key + "', '" + httpServletRequest.getParameter(key) + "'");
+	}
+	return map;
     }
 }

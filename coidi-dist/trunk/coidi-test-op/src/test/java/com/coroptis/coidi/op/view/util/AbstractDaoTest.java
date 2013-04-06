@@ -41,9 +41,6 @@ import com.google.common.base.Preconditions;
  * All DAO test should be extended from this class. It provide secure datasets
  * loading.
  * 
- * TODO mock database connection should be aligned with JDBC connection as 1:1
- * 
- * FIXME test doesn't work, recursive reference in configuration module
  * 
  * @author jan
  * 
