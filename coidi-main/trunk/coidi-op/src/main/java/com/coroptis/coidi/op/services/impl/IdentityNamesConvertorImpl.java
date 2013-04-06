@@ -30,20 +30,20 @@ import com.google.common.base.Preconditions;
  */
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
-    private final static String PLACEHOLDER = "<identity>";
+    private final static String PLACEHOLDER = "%identity%";
 
-    private final String idenityPattern;
+    private final String identityPattern;
 
     public IdentityNamesConvertorImpl(
-	    @Inject @Symbol("op.identity.pattern") final String idenityPattern) {
-	this.idenityPattern = idenityPattern;
+	    @Inject @Symbol("op.identity.pattern") final String identityPattern) {
+	this.identityPattern = identityPattern;
     }
 
     @Override
     public String getOpLocalIdentifier(final String opIdentifier) {
 	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
 	final String start = getFirstPart();
-	final String end = idenityPattern.substring(start.length() + PLACEHOLDER.length());
+	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
 	final String part = opIdentifier.substring(start.length());
 	return part.substring(0, part.length() - end.length());
     }
@@ -52,25 +52,25 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
     public String getOpIdentifier(final String opLocalIdentifier) {
 	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
 	final String start = getFirstPart();
-	final String end = idenityPattern.substring(start.length() + PLACEHOLDER.length());
+	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
 	return start + opLocalIdentifier + end;
     }
 
     private String getFirstPart() {
-	final int pos = idenityPattern.indexOf(PLACEHOLDER);
+	final int pos = identityPattern.indexOf(PLACEHOLDER);
 	if (pos < 0) {
 	    throw new CoidiException(
 		    "Invalid configration op.identity.pattern, there is no placeholder '"
 			    + PLACEHOLDER + "' ");
 	} else {
-	    return idenityPattern.substring(0, pos);
+	    return identityPattern.substring(0, pos);
 	}
     }
 
     public Boolean isOpLocalIdentifier(final String someIdentifier) {
 	Preconditions.checkNotNull(someIdentifier, "someIdentifier is null");
 	final String start = getFirstPart();
-	final String end = idenityPattern.substring(start.length() + PLACEHOLDER.length());
+	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
 	return !someIdentifier.startsWith(start) || !someIdentifier.endsWith(end);
     }
 }
