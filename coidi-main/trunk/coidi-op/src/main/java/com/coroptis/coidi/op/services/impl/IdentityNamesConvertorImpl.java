@@ -35,7 +35,7 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
     private final String idenityPattern;
 
     public IdentityNamesConvertorImpl(
-	    @Inject @Symbol("op.idenity.pattern") final String idenityPattern) {
+	    @Inject @Symbol("op.identity.pattern") final String idenityPattern) {
 	this.idenityPattern = idenityPattern;
     }
 
