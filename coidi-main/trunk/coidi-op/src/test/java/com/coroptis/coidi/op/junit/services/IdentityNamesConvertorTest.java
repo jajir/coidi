@@ -17,9 +17,6 @@ package com.coroptis.coidi.op.junit.services;
 
 import junit.framework.TestCase;
 
-import org.slf4j.Logger;
-import org.slf4j.impl.Log4jLoggerFactory;
-
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
@@ -32,18 +29,16 @@ import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
  */
 public class IdentityNamesConvertorTest extends TestCase {
 
-    private Logger logger;
-
     public void testGetOpIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%", logger);
+		"http://localhost:8080/user/%identity%");
 
 	assertEquals("http://localhost:8080/user/karel", convertor.getOpIdentifier("karel"));
     }
 
     public void testGetOpIdentifier_null() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%", logger);
+		"http://localhost:8080/user/%identity%");
 
 	try {
 	    convertor.getOpIdentifier(null);
@@ -55,7 +50,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 
     public void testGetOpIdentifier_invalidPattern() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%idenity%", logger);
+		"http://localhost:8080/user/%idenity%");
 
 	try {
 	    convertor.getOpIdentifier("karel");
@@ -67,28 +62,28 @@ public class IdentityNamesConvertorTest extends TestCase {
 
     public void testGetOpIdentifier_placeholderInTheMiddle() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://%identity%.server.com:8080/", logger);
+		"http://%identity%.server.com:8080/");
 
 	assertEquals("http://karel.server.com:8080/", convertor.getOpIdentifier("karel"));
     }
 
     public void testGetOpLocalIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%", logger);
+		"http://localhost:8080/user/%identity%");
 
 	assertEquals("karel", convertor.getOpLocalIdentifier("http://localhost:8080/user/karel"));
     }
 
     public void testGetOpLocalIdentifier_placeholderInTheMiddle() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://%identity%.server.com:8080/", logger);
+		"http://%identity%.server.com:8080/");
 
 	assertEquals("karel", convertor.getOpLocalIdentifier("http://karel.server.com:8080/"));
     }
 
     public void testGetOpLocalIdentifier_null() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%", logger);
+		"http://localhost:8080/user/%identity%");
 
 	try {
 	    convertor.getOpLocalIdentifier(null);
@@ -100,24 +95,11 @@ public class IdentityNamesConvertorTest extends TestCase {
 
     public void testIsOpLocalIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%", logger);
+		"http://localhost:8080/user/%identity%");
 
 	assertTrue(convertor.isOpLocalIdentifier("karel"));
 	assertFalse(convertor.isOpLocalIdentifier("http://localhost:8080/user/karel"));
 
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	Log4jLoggerFactory factory = new Log4jLoggerFactory();
-	logger = factory.getLogger(IdentityNamesConvertorImpl.class.getName());
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-	logger = null;
-	super.tearDown();
     }
 
 }
