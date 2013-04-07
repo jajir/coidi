@@ -17,6 +17,7 @@ package com.coroptis.coidi.op.services.impl;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
@@ -30,17 +31,27 @@ import com.google.common.base.Preconditions;
  */
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
+    private final Logger logger;
+
     private final static String PLACEHOLDER = "%identity%";
 
     private final String identityPattern;
 
     public IdentityNamesConvertorImpl(
-	    @Inject @Symbol("op.identity.pattern") final String identityPattern) {
+	    @Inject @Symbol("op.identity.pattern") final String identityPattern,
+	    @Inject final Logger logger) {
 	this.identityPattern = identityPattern;
+	this.logger = logger;
+	Preconditions.checkNotNull(this.identityPattern);
+	Preconditions.checkNotNull(this.logger);
     }
 
     @Override
     public String getOpLocalIdentifier(final String opIdentifier) {
+	if (logger.isDebugEnabled()) {
+	    logger.debug("converting '" + opIdentifier + "' to op local identifier with pattern '"
+		    + identityPattern + "'");
+	}
 	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
 	final String start = getFirstPart();
 	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
@@ -50,6 +61,10 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     @Override
     public String getOpIdentifier(final String opLocalIdentifier) {
+	if (logger.isDebugEnabled()) {
+	    logger.debug("converting '" + opLocalIdentifier + "' to op identifier with pattern '"
+		    + identityPattern + "'");
+	}
 	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
 	final String start = getFirstPart();
 	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
