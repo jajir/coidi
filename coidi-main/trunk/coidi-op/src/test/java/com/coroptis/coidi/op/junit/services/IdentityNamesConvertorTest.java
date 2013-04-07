@@ -93,6 +93,18 @@ public class IdentityNamesConvertorTest extends TestCase {
 	}
     }
 
+    public void testGetOpLocalIdentifier_invalidInoutIdentity() throws Exception {
+	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+		"http://localhost:8080/user/%identity%");
+
+	try {
+	    convertor.getOpLocalIdentifier("qwe");
+	    fail();
+	} catch (CoidiException e) {
+	    assertTrue(true);
+	}
+    }
+
     public void testIsOpLocalIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://localhost:8080/user/%identity%");
