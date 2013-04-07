@@ -52,6 +52,11 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
 	final String start = getFirstPart();
 	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
+	if (start.length() > opIdentifier.length()) {
+	    throw new CoidiException("Given OP Identifier '" + opIdentifier
+		    + "' is valid can't be converted to OP local identifier with pattern '"
+		    + identityPattern + "'.");
+	}
 	final String part = opIdentifier.substring(start.length());
 	return part.substring(0, part.length() - end.length());
     }
