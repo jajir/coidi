@@ -109,7 +109,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 	    }
 
 	    if (identityService.isUsersOpIdentifier(userSession.getIdUser(),
-		    identity.getIdIdentity())) {
+		    authenticationRequest.getIdentity())) {
 		Set<String> fieldToSign = new HashSet<String>();
 		return authenticationProcessor.process(authenticationRequest,
 			new AuthenticationResponse(), identity, fieldToSign);
