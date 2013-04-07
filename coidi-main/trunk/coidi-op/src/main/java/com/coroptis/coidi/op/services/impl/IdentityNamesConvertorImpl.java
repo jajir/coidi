@@ -15,9 +15,9 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import org.apache.log4j.Logger;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
@@ -31,19 +31,16 @@ import com.google.common.base.Preconditions;
  */
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
-    private final Logger logger;
+    private final Logger logger = Logger.getLogger(IdentityNamesConvertor.class);
 
     private final static String PLACEHOLDER = "%identity%";
 
     private final String identityPattern;
 
     public IdentityNamesConvertorImpl(
-	    @Inject @Symbol("op.identity.pattern") final String identityPattern,
-	    @Inject final Logger logger) {
+	    @Inject @Symbol("op.identity.pattern") final String identityPattern) {
 	this.identityPattern = identityPattern;
-	this.logger = logger;
 	Preconditions.checkNotNull(this.identityPattern);
-	Preconditions.checkNotNull(this.logger);
     }
 
     @Override
