@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
@@ -34,6 +33,7 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.CryptoService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
@@ -59,17 +59,25 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
     @Inject
     private ConvertorService convertorService;
 
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
+
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AbstractMessage.MODE_ASSOCIATE)) {
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    if (request.getAssociationType() == null) {
-		return new ErrorResponse(false, AssociationRequest.ASSOCIATION_TYPE
-			+ " is required");
+		return negativeResponseGenerator.simpleError("Parameter '"
+			+ AssociationRequest.ASSOCIATION_TYPE + "' is required");
 	    }
 	    if (request.getSessionType() == null) {
-		return new ErrorResponse(false, AssociationRequest.SESSION_TYPE + " is required");
+		return negativeResponseGenerator.simpleError("Parameter '"
+			+ AssociationRequest.SESSION_TYPE + "' is required");
+	    }
+	    if (request.getDhConsumerPublic() == null) {
+		return negativeResponseGenerator.simpleError("Parameter '"
+			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
 	    }
 	    Association association = associationDao.createNewInstance();
 	    association.setAssocHandle(cryptoService.generateUUID());

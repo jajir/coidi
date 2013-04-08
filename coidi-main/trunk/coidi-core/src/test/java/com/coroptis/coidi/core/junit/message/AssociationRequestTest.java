@@ -15,18 +15,36 @@
  */
 package com.coroptis.coidi.core.junit.message;
 
-import com.coroptis.coidi.core.message.AssociationRequest;
-
 import junit.framework.TestCase;
 
+import com.coroptis.coidi.core.message.AssociationRequest;
+
+/**
+ * Tests for {@link AssociationRequest}.
+ * 
+ * @author jirout
+ * 
+ */
 public class AssociationRequestTest extends TestCase {
 
-	public void testMode() throws Exception {
-		AssociationRequest request = new AssociationRequest();
+    public void testMode() throws Exception {
+	AssociationRequest request = new AssociationRequest();
 
-		assertEquals("associate", request.getMode());
-		assertTrue(request.getMessage().contains("openid.mode"));
-		assertTrue(request.getMap().containsKey("openid.mode"));
-	}
+	assertEquals("associate", request.getMode());
+	assertTrue(request.getMessage().contains("openid.mode"));
+	assertTrue(request.getMap().containsKey("openid.mode"));
+    }
+
+    public void testGetDH_MODULUS_prevent_NPE() throws Exception {
+	AssociationRequest request = new AssociationRequest();
+
+	assertNull(request.getDhModulo());
+    }
+
+    public void testGetDH_GENERATOR_prevent_NPE() throws Exception {
+	AssociationRequest request = new AssociationRequest();
+
+	assertNull(request.getDhGen());
+    }
 
 }
