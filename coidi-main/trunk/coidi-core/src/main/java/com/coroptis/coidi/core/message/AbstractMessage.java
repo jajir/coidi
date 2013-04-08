@@ -56,7 +56,7 @@ public abstract class AbstractMessage {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 	if (obj == null) {
 	    return false;
 	}
@@ -201,23 +201,23 @@ public abstract class AbstractMessage {
      * @param isUrl
      *            the isUrl to set
      */
-    public void setUrl(boolean isUrl) {
+    public void setUrl(final boolean isUrl) {
 	this.isUrl = isUrl;
     }
 
-    public byte[] convertToBytes(String s) {
+    public byte[] convertToBytes(final String s) {
 	return Base64.decodeBase64(s.getBytes());
     }
 
-    public String convertToString(byte[] b) {
+    public String convertToString(final byte[] b) {
 	return new String(Base64.encodeBase64(b));
     }
 
-    public String convertToString(BigInteger b) {
+    public String convertToString(final BigInteger b) {
 	return convertToString(b.toByteArray());
     }
 
-    public BigInteger convertToBigIntegerFromString(String s) {
+    public BigInteger convertToBigIntegerFromString(final String s) {
 	return new BigInteger(convertToBytes(s));
     }
 
