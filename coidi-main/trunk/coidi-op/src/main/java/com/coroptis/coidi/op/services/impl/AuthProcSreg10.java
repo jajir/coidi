@@ -32,7 +32,7 @@ import com.coroptis.coidi.op.services.SregService;
  * @author jirout
  *
  */
-public class AuthenticationProcessorSreg10 implements AuthenticationProcessor {
+public class AuthProcSreg10 implements AuthenticationProcessor {
 
 	public static final String SREG_REQUIRED = "openid.sreg.required";
 

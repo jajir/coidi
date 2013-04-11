@@ -29,14 +29,18 @@ public interface StatelessModeNonce {
     void setNonce(String nonce);
 
     /**
+     * @deprecated it shoudl be part of association
      * @return the macKey
      */
+    @Deprecated
     String getMacKey();
 
     /**
+     * @deprecated it shoudl be part of association
      * @param macKey
      *            the macKey to set
      */
+    @Deprecated
     void setMacKey(String macKey);
 
 }

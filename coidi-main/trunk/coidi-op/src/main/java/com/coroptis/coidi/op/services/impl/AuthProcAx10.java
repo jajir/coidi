@@ -33,7 +33,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
  * @author jirout
  *
  */
-public class AuthenticationProcessorAx10 implements AuthenticationProcessor {
+public class AuthProcAx10 implements AuthenticationProcessor {
 
 	@Inject
 	private Logger logger;

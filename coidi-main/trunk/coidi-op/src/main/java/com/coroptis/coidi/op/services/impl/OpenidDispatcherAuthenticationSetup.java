@@ -81,6 +81,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		}
 	    }
 
+	    //TODO should be perform just when all infoations are valid
 	    if (!userSession.isLogged()) {
 		logger.debug("User is not logged in.");
 		userSession.setAuthenticationRequest(authenticationRequest);

@@ -20,7 +20,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.core.message.AuthenticationResponse;
 
 /**
  * This service produce authentication response that is send in redirect to RP.
@@ -37,17 +36,6 @@ public interface AuthenticationService {
      *         false
      */
     boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
-
-    /**
-     * Process authentication request from RP and generate positive or negative
-     * authentication response according to OpenID specifications.
-     * 
-     * @param authenticationRequest
-     *            required {@link AuthenticationRequest}
-     * @return {@link AuthenticationResponse} object
-     */
-    @Deprecated
-    AuthenticationResponse process(AuthenticationRequest authenticationRequest);
 
     /**
      * Method return used name space in open id authentication request for given

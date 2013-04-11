@@ -18,20 +18,16 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.slf4j.Logger;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.StatelessModeNonce;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.google.common.base.Joiner;
 
 /**
@@ -42,10 +38,7 @@ import com.google.common.base.Joiner;
  * @author jirout
  * 
  */
-public class AuthenticationProcessorTerminator implements AuthenticationProcessor {
-
-    @Inject
-    private Logger logger;
+public class AuthProcSign implements AuthenticationProcessor {
 
     @Inject
     private BaseAssociationDao associationDao;
@@ -53,51 +46,23 @@ public class AuthenticationProcessorTerminator implements AuthenticationProcesso
     @Inject
     private SigningService signingService;
 
-    @Inject
-    private StatelessModeNonceService statelessModeNonceService;
-
-    private final AssociationType statelesModeAssociationType;
-
     private final Joiner joiner = Joiner.on(",").skipNulls();
-
-    public AuthenticationProcessorTerminator(
-	    // NO_UCD
-	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
-	    final Logger logger) {
-	statelesModeAssociationType = AssociationType.convert(assocTypeStr);
-	this.logger = logger;
-	logger.debug("stateless mode association type: " + statelesModeAssociationType);
-    }
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
 	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
-	if (authenticationRequest.getAssocHandle() == null) {
-	    /**
-	     * State-less mode.
-	     */
-	    signInStatelessMode(response);
+	Association association = associationDao.getByAssocHandle(authenticationRequest
+		.getAssocHandle());
+	if (association == null) {
+	    throw new CoidiException("Invalid assoc handle '"
+		    + authenticationRequest.getAssocHandle()
+		    + "', let's try to response in stateless mode.");
 	} else {
-	    Association association = associationDao.getByAssocHandle(authenticationRequest
-		    .getAssocHandle());
-	    if (association == null) {
-		logger.info("Invalid assoc handle '" + authenticationRequest.getAssocHandle()
-			+ "', let's try to response in stateless mode.");
-		signInStatelessMode(response);
-		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-	    } else {
-		response.setAssocHandle(authenticationRequest.getAssocHandle());
-		response.setSignature(signingService.sign(response, association));
-	    }
+	    response.setAssocHandle(authenticationRequest.getAssocHandle());
+	    response.setSignature(signingService.sign(response, association));
 	}
 	return response;
     }
 
-    private void signInStatelessMode(final AuthenticationResponse response) {
-	StatelessModeNonce statelessModeNonce = statelessModeNonceService
-		.createStatelessModeNonce(response.getNonce());
-	response.setSignature(signingService.sign(response, statelessModeNonce.getMacKey(),
-		statelesModeAssociationType));
-    }
 }

@@ -35,7 +35,7 @@ import com.ibm.icu.text.SimpleDateFormat;
  * @author jirout
  * 
  */
-public class AuthenticationProcessorSreg11 extends AuthenticationProcessorSreg10 implements
+public class AuthProcSreg11 extends AuthProcSreg10 implements
 	AuthenticationProcessor {
 
     @Inject

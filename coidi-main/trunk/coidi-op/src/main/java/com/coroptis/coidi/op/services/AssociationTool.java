@@ -15,6 +15,31 @@
  */
 package com.coroptis.coidi.op.services;
 
-public interface AssociationService {
+import java.util.Date;
+
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+
+/**
+ * Helps to manage associations.
+ * 
+ * @author jirout
+ * 
+ */
+public interface AssociationTool {
+
+    /**
+     * Generate time to live for currently creates association handle.
+     * 
+     * @return
+     */
+    Date getTimeToLive();
+
+    /**
+     * Get default association type. It's used in stateless mode, when
+     * association is created on OP.
+     * 
+     * @return default association type value
+     */
+    AssociationType getDefaultAssociationType();
 
 }
