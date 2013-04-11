@@ -24,10 +24,12 @@ import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.services.Dispatcher;
 
-import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
-import com.coroptis.coidi.op.services.impl.AuthenticationProcessorResponse;
-import com.coroptis.coidi.op.services.impl.AuthenticationProcessorSreg11;
-import com.coroptis.coidi.op.services.impl.AuthenticationProcessorTerminator;
+import com.coroptis.coidi.op.services.impl.AssociationToolImpl;
+import com.coroptis.coidi.op.services.impl.AuthProcAssociation;
+import com.coroptis.coidi.op.services.impl.AuthProcNonce;
+import com.coroptis.coidi.op.services.impl.AuthProcResponse;
+import com.coroptis.coidi.op.services.impl.AuthProcSign;
+import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
@@ -52,7 +54,7 @@ public class OpModule {// NO_UCD
 	 */
 	binder.bind(XrdsService.class, XrdsServiceImpl.class);
 	binder.bind(IdentityService.class, IdentityServiceImpl.class);
-	binder.bind(AssociationService.class, AssociationServiceImpl.class);
+	binder.bind(AssociationTool.class, AssociationToolImpl.class);
 	binder.bind(CryptoService.class, CryptoServiceImpl.class);
 	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
 	binder.bind(StatelessModeNonceService.class, StatelessModeNonceServiceImpl.class);
@@ -105,12 +107,14 @@ public class OpModule {// NO_UCD
 
     public static void contributeAuthenticationProcessor(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
-	    @Autobuild AuthenticationProcessorSreg11 authenticationFilterSreg11,
-	    @Autobuild AuthenticationProcessorTerminator authenticationFilterTerminator,
-	    @Autobuild AuthenticationProcessorResponse authenticationProcessorResponse) {
-	configuration.add("authenticationProcessorResponse", authenticationProcessorResponse);
-	configuration.add("authenticationFilterSreg11", authenticationFilterSreg11);
-	configuration.add("authenticationFilterTerminator", authenticationFilterTerminator);
+	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse authProcResponse) {
+	configuration.add("authProcResponse", authProcResponse);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcNonce", authProcNonce);
+	configuration.add("authProcSreg11", authProcSreg11);
+	configuration.add("authProcSign", authProcSign);
     }
 
 }

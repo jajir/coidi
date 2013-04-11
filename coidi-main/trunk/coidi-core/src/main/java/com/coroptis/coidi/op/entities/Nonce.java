@@ -13,8 +13,37 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.entities;
 
-public interface AssociationService {
+/**
+ * Nonce is random string that prevent re-using messages. In some cases should
+ * be persisted on OP and on RP.
+ * 
+ * @author jirout
+ * 
+ */
+public interface Nonce {
+
+    /**
+     * @return the nonce
+     */
+    String getNonce();
+
+    /**
+     * @param nonce
+     *            the nonce to set
+     */
+    void setNonce(String nonce);
+
+    /**
+     * @return the association
+     */
+    Association getAssociation();
+
+    /**
+     * @param association
+     *            the association to set
+     */
+    void setAssociation(Association association);
 
 }

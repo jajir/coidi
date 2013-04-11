@@ -19,15 +19,15 @@ import java.util.Date;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.op.services.AssociationService;
-import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
+import com.coroptis.coidi.op.services.AssociationTool;
+import com.coroptis.coidi.op.services.impl.AssociationToolImpl;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
 public class AssociationServiceTest extends AbstractT5JunitTest {
 
 	private final static String SERVICE_NAME = "realService";
 
-	private AssociationService service;
+	private AssociationTool service;
 
 	public void testGetTimeToLive() throws Exception {
 		/**
@@ -46,14 +46,14 @@ public class AssociationServiceTest extends AbstractT5JunitTest {
 
 	@Override
 	public void bind(ServiceBinder binder) {
-		binder.bind(AssociationService.class, AssociationServiceImpl.class)
+		binder.bind(AssociationTool.class, AssociationToolImpl.class)
 				.withId(SERVICE_NAME);
 	}
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		service = getService(SERVICE_NAME, AssociationService.class);
+		service = getService(SERVICE_NAME, AssociationTool.class);
 	}
 
 	@Override

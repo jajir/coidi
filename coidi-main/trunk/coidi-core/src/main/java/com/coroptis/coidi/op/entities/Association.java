@@ -16,6 +16,7 @@
 package com.coroptis.coidi.op.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Interface define association behavior.
@@ -179,4 +180,7 @@ public interface Association {
 
     void setMacKey(String macKey);
 
+    Set<Nonce> getNonces();
+
+    void setNonces(Set<Nonce> nonces);
 }

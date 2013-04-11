@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -26,8 +25,6 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.dao.BaseAssociationDao;
-import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
@@ -42,9 +39,6 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  * 
  */
 public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher {
-
-    @Inject
-    private BaseAssociationDao associationDao;
 
     @Inject
     private AuthenticationService authenticationService;
@@ -66,18 +60,6 @@ public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher
 	    if (!authenticationService.isAuthenticationRequest(authenticationRequest)) {
 		return negativeResponseGenerator
 			.simpleError("authentication request doesn't contains any idenity field");
-	    }
-
-	    Association association = associationDao.getByAssocHandle(authenticationRequest
-		    .getAssocHandle());
-	    if (association == null) {
-		return negativeResponseGenerator.simpleError("Unable to find association handle '"
-			+ authenticationRequest.getAssocHandle() + "'");
-	    }
-	    if (association.getExpiredIn().before(new Date())) {
-		return negativeResponseGenerator.simpleError("Assocition handle '"
-			+ authenticationRequest.getAssocHandle() + "' expires at "
-			+ association.getExpiredIn());
 	    }
 
 	    Identity identity = identityService.getByOpIdentifier(authenticationRequest

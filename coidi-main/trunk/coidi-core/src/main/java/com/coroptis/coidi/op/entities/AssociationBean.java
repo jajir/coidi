@@ -16,6 +16,7 @@
 package com.coroptis.coidi.op.entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.google.common.base.Objects;
 
@@ -37,6 +38,8 @@ public class AssociationBean implements Association {
     private String macKey;
 
     private Date expiredIn;
+
+    private Set<Nonce> nonces;
 
     /**
      * @return the assocHandle
@@ -118,6 +121,21 @@ public class AssociationBean implements Association {
 	return Objects.toStringHelper(AssociationBean.class).add("assocHandle", assocHandle)
 		.add("associationType", associationType).add("expiredIn", expiredIn)
 		.add("macKey", macKey).add("sessionType", sessionType).toString();
+    }
+
+    /**
+     * @return the nonces
+     */
+    public Set<Nonce> getNonces() {
+	return nonces;
+    }
+
+    /**
+     * @param nonces
+     *            the nonces to set
+     */
+    public void setNonces(Set<Nonce> nonces) {
+	this.nonces = nonces;
     }
 
 }

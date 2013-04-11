@@ -31,11 +31,18 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.services.AssociationService;
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
+/**
+ * Process openid.mode=associate. OP create valid association and share it with
+ * RP.
+ * 
+ * @author jirout
+ * 
+ */
 public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 
     @Inject
@@ -45,7 +52,7 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
     private Logger logger;
 
     @Inject
-    private AssociationService associationService;
+    private AssociationTool associationTool;
 
     @Inject
     private BaseAssociationDao associationDao;
@@ -79,10 +86,11 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		return negativeResponseGenerator.simpleError("Parameter '"
 			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
 	    }
+	    // TODO it's duplicated code, see association service.
 	    Association association = associationDao.createNewInstance();
 	    association.setAssocHandle(cryptoService.generateUUID());
 	    association.setSessionType(request.getSessionType());
-	    association.setExpiredIn(associationService.getTimeToLive());
+	    association.setExpiredIn(associationTool.getTimeToLive());
 	    association.setAssociationType(request.getAssociationType());
 
 	    AssociationResponse out = new AssociationResponse();

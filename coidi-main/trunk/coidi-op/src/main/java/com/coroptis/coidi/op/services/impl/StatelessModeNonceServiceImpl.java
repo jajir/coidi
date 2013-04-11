@@ -20,24 +20,16 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
-import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
-import com.coroptis.coidi.op.entities.StatelessModeNonce;
-import com.coroptis.coidi.op.services.CryptoService;
+import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.google.common.base.Preconditions;
 
 public class StatelessModeNonceServiceImpl implements StatelessModeNonceService {
 
     private final Logger logger;
-
-    @Inject
-    private ConvertorService convertorService;
-
-    @Inject
-    private CryptoService cryptoService;
 
     @Inject
     private BaseNonceDao statelessModeNonceDao;
@@ -50,29 +42,20 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
     public StatelessModeNonceServiceImpl(
 	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
 	    final Logger logger) {
+	// FIXME it's moved in associationTool
 	this.logger = logger;
 	statelesModeAssociationType = AssociationType.convert(assocTypeStr);
 	logger.debug("Association type for stateless mode: " + statelesModeAssociationType);
     }
 
     @Override
-    public StatelessModeNonce createStatelessModeNonce(final String nonce) {
-	StatelessModeNonce statelessModeNonce = statelessModeNonceDao.createNewInstance();
-	statelessModeNonce.setNonce(nonce);
-	statelessModeNonce.setMacKey(convertorService.convertToString(cryptoService
-		.generateAssociationRandom(statelesModeAssociationType)));
-	logger.debug("Creating stateless nonce: " + statelessModeNonce);
-	statelessModeNonceDao.save(statelessModeNonce);
-	return statelessModeNonce;
-    }
-
-    @Override
     public Boolean isValidCheckAuthenticationRequest(final CheckAuthenticationRequest request) {
-	StatelessModeNonce statelessModeNonce = statelessModeNonceDao
-		.getByNonce(request.getNonce());
-	Preconditions.checkNotNull(statelessModeNonce, "nonce '" + request.getNonce()
+	Nonce nonce = statelessModeNonceDao.getByNonce(request.getNonce());
+	Preconditions.checkNotNull(nonce, "nonce '" + request.getNonce()
 		+ "' wasn't found during sateless authentication");
-	String signature = signingService.sign(request, statelessModeNonce.getMacKey(),
+	Preconditions.checkNotNull(nonce.getAssociation(), "nonce '" + nonce.getNonce()
+		+ "' doesn't have any association");
+	String signature = signingService.sign(request, nonce.getAssociation().getMacKey(),
 		statelesModeAssociationType);
 	if (signature.equals(request.getSignature())) {
 	    return true;

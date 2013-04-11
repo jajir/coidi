@@ -25,6 +25,13 @@ import com.coroptis.coidi.op.entities.Association;
  */
 public interface BaseAssociationDao {
 
+    /**
+     * Persist new association. During persisting should also persist all
+     * including object like nonces.
+     * 
+     * @param required
+     *            association
+     */
     void create(Association association);
 
     Association getByAssocHandle(String assoc_handle);

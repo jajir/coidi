@@ -14,19 +14,19 @@ public class SregServiceImpl implements SregService {
 			AuthenticationRequest authenticationRequest) {
 		Set<String> keys = new HashSet<String>();
 		if (authenticationRequest.getMap().get(
-				AuthenticationProcessorSreg10.SREG_OPTIONAL) != null) {
+				AuthProcSreg10.SREG_OPTIONAL) != null) {
 			Collections.addAll(
 					keys,
 					authenticationRequest.getMap()
-							.get(AuthenticationProcessorSreg10.SREG_OPTIONAL)
+							.get(AuthProcSreg10.SREG_OPTIONAL)
 							.split(","));
 		}
 		if (authenticationRequest.getMap().get(
-				AuthenticationProcessorSreg10.SREG_REQUIRED) != null) {
+				AuthProcSreg10.SREG_REQUIRED) != null) {
 			Collections.addAll(
 					keys,
 					authenticationRequest.getMap()
-							.get(AuthenticationProcessorSreg10.SREG_REQUIRED)
+							.get(AuthProcSreg10.SREG_REQUIRED)
 							.split(","));
 		}
 		return keys;
