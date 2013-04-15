@@ -54,6 +54,7 @@ public class AuthProcSign implements AuthenticationProcessor {
 	response.setSigned(joiner.join(fieldsToSign));
 	Association association = associationDao.getByAssocHandle(authenticationRequest
 		.getAssocHandle());
+	//TODO neoveruji, ze je associace platna
 	if (association == null) {
 	    throw new CoidiException("Invalid assoc handle '"
 		    + authenticationRequest.getAssocHandle()

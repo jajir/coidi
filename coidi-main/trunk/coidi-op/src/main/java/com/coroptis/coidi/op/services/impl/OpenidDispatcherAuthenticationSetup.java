@@ -62,26 +62,7 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		return null;
 	    }
 
-	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
-		if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-		    logger.debug("it's not authentication request,"
-			    + " probably it's authentication extension");
-		    return null;
-		} else {
-		    return negativeResponseGenerator
-			    .simpleError("In authentication request is not filled openid.claimed_id"
-				    + " but openid.identity is empty" + " It's invalid combination");
-		}
-	    } else {
-		if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-		    /**
-		     * Use openid.claimed_id as openid.identity.
-		     */
-		    authenticationRequest.setIdentity(authenticationRequest.getClaimedId());
-		}
-	    }
-
-	    //TODO should be perform just when all infoations are valid
+	    // TODO should be perform just when all information are valid
 	    if (!userSession.isLogged()) {
 		logger.debug("User is not logged in.");
 		userSession.setAuthenticationRequest(authenticationRequest);
@@ -97,6 +78,14 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 			    NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
 		} else {
 		    authenticationRequest.setIdentity(authenticationRequest.getSelectedIdentity());
+		    if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest
+			    .getClaimedId())) {
+			logger.warn("authentication request contains '"
+				+ AuthenticationRequest.IDENTITY_SELECT + "' in '"
+				+ AuthenticationRequest.CLAIMED_ID + "'");
+			authenticationRequest.setClaimedId(authenticationRequest
+				.getSelectedIdentity());
+		    }
 		}
 	    }
 

@@ -22,8 +22,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.services.AssociationTool;
+import com.google.common.base.Preconditions;
 
 /**
  * Implementation relay on configuration.
@@ -65,6 +67,12 @@ public class AssociationToolImpl implements AssociationTool {
     @Override
     public AssociationType getDefaultAssociationType() {
 	return defaultAssociationType;
+    }
+
+    @Override
+    public Boolean isPrivateAssociation(final Association association) {
+	Preconditions.checkNotNull(association, "association is null");
+	return association.getSessionType() == null;
     }
 
 }

@@ -16,7 +16,6 @@
 package com.coroptis.coidi.op.dao;
 
 import com.coroptis.coidi.op.entities.Nonce;
-import com.coroptis.coidi.op.entities.StatelessModeNonce;
 
 /**
  * It's for StatelessMode.
@@ -26,14 +25,21 @@ import com.coroptis.coidi.op.entities.StatelessModeNonce;
  */
 public interface BaseNonceDao {
 
-    void save(StatelessModeNonce statelessModeNonce);
+    void save(Nonce statelessModeNonce);
 
     Nonce getByNonce(String noce);
 
     /**
-     * Just create new empty object instance. Instance is not presisted.
+     * Remove nonce from store.
      * 
-     * @return new {@link StatelessModeNonce} object instance
+     * @param nonce
+     */
+    void delete(Nonce nonce);
+
+    /**
+     * Just create new empty object instance. Instance is not persisted.
+     * 
+     * @return new {@link Nonce} object instance
      */
     Nonce createNewInstance();
 

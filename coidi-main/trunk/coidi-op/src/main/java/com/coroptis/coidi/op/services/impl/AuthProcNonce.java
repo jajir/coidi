@@ -15,6 +15,7 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -60,6 +61,7 @@ public class AuthProcNonce implements AuthenticationProcessor {
     @Inject
     private ConvertorService convertorService;
 
+    @Inject
     private BaseAssociationDao baseAssociationDao;
 
     @Inject
@@ -83,6 +85,8 @@ public class AuthProcNonce implements AuthenticationProcessor {
 		    .generateAssociationRandom(association.getAssociationType())));
 	    Nonce nonce = baseNonceDao.createNewInstance();
 	    nonce.setNonce(response.getNonce());
+	    nonce.setAssociation(association);
+	    association.setNonces(new HashSet<Nonce>());
 	    association.getNonces().add(nonce);
 	    associationDao.create(association);
 	    response.setAssocHandle(association.getAssocHandle());

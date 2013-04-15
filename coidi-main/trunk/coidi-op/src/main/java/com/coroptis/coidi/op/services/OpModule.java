@@ -24,6 +24,7 @@ import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.services.Dispatcher;
 
+import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.services.impl.AssociationToolImpl;
 import com.coroptis.coidi.op.services.impl.AuthProcAssociation;
 import com.coroptis.coidi.op.services.impl.AuthProcNonce;
@@ -52,6 +53,7 @@ public class OpModule {// NO_UCD
 	/**
 	 * Services
 	 */
+	binder.bind(AssociationService.class, AssociationServiceImpl.class);
 	binder.bind(XrdsService.class, XrdsServiceImpl.class);
 	binder.bind(IdentityService.class, IdentityServiceImpl.class);
 	binder.bind(AssociationTool.class, AssociationToolImpl.class);

@@ -44,4 +44,12 @@ public interface BaseAssociationDao {
      */
     Association createNewInstance();
 
+    /**
+     * Delete permanently from persistent store.
+     * 
+     * @param association
+     *            required association
+     */
+    void delete(Association association);
+
 }

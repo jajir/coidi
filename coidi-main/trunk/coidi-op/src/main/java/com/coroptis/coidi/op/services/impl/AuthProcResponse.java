@@ -47,7 +47,7 @@ public class AuthProcResponse implements AuthenticationProcessor {
 	if (authenticationRequest.getIdentity() == null) {
 	    if (authenticationRequest.getClaimedId() == null) {
 		/**
-		 * Both are empty
+		 * Both are empty. It could be some OpenID extension request.
 		 */
 	    } else {
 		return negativeResponseGenerator.simpleError("field '"

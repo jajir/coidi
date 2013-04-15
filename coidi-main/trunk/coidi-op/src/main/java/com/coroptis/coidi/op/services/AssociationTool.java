@@ -17,6 +17,7 @@ package com.coroptis.coidi.op.services;
 
 import java.util.Date;
 
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 
 /**
@@ -35,11 +36,22 @@ public interface AssociationTool {
     Date getTimeToLive();
 
     /**
-     * Get default association type. It's used in stateless mode, when
+     * Get default association type. It's used in state-less mode, when
      * association is created on OP.
      * 
      * @return default association type value
      */
     AssociationType getDefaultAssociationType();
+
+    /**
+     * Get information if it's shared or public association. When session type
+     * of association is <code>null</code> then it's private association.
+     * 
+     * @param association
+     *            required association
+     * @return <code>true</code> if it's private association otherwise return
+     *         <code>false</code>
+     */
+    Boolean isPrivateAssociation(Association association);
 
 }
