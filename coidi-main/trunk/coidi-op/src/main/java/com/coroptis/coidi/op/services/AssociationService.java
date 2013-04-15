@@ -17,4 +17,12 @@ package com.coroptis.coidi.op.services;
 
 public interface AssociationService {
 
+    /**
+     * Permanently delete association from persistent store.
+     * 
+     * @param associationHandle
+     *            required association handle
+     */
+    void delete(String associationHandle);
+
 }

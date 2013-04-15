@@ -16,8 +16,28 @@
 package com.coroptis.coidi.op.services;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
+import com.coroptis.coidi.op.entities.Nonce;
 
 public interface StatelessModeNonceService {
 
-    Boolean isValidCheckAuthenticationRequest(final CheckAuthenticationRequest request);
+    /**
+     * Return verified nonce object. When it's not possible to verify given
+     * nonce parameter or nonce parameter is <code>null</code> than
+     * <code>null</code> is returned.
+     * 
+     * @param nonce
+     *            optional nonce
+     * @return verifier nonce object or <code>null</code>
+     */
+    Nonce getVerifiedNonce(String nonce);
+
+    /**
+     * Valid if request is valid. For verifications is used nonce. Verify if in
+     * request is valid association and nonce belongs to this association.
+     * 
+     * @param nonce
+     * @param request
+     * @return
+     */
+    Boolean isAssociationValid(Nonce nonce, CheckAuthenticationRequest request);
 }

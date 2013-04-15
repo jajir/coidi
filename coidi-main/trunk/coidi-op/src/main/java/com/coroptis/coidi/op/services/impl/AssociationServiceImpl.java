@@ -15,8 +15,22 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.services.AssociationService;
 
 public class AssociationServiceImpl implements AssociationService {
 
+    @Inject
+    private BaseAssociationDao baseAssociationDao;
+
+    @Override
+    public void delete(String associationHandle) {
+	Association association = baseAssociationDao.getByAssocHandle(associationHandle);
+	if (association != null) {
+	    baseAssociationDao.delete(association);
+	}
+    }
 }

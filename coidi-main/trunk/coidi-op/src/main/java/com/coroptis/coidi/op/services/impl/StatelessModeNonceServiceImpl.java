@@ -16,53 +16,84 @@
 package com.coroptis.coidi.op.services.impl;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
-import com.coroptis.coidi.core.services.SigningService;
+import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.google.common.base.Preconditions;
 
 public class StatelessModeNonceServiceImpl implements StatelessModeNonceService {
 
-    private final Logger logger;
+    @Inject
+    private Logger logger;
 
     @Inject
-    private BaseNonceDao statelessModeNonceDao;
+    private BaseNonceDao baseNonceDao;
 
     @Inject
-    private SigningService signingService;
+    private AssociationTool associationTool;
 
-    private final AssociationType statelesModeAssociationType;
+    @Inject
+    private BaseAssociationDao baseAssociationDao;
 
-    public StatelessModeNonceServiceImpl(
-	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
-	    final Logger logger) {
-	// FIXME it's moved in associationTool
-	this.logger = logger;
-	statelesModeAssociationType = AssociationType.convert(assocTypeStr);
-	logger.debug("Association type for stateless mode: " + statelesModeAssociationType);
+    @Inject
+    private NonceService nonceService;
+
+    @Override
+    public Nonce getVerifiedNonce(final String nonce) {
+	if (nonce == null) {
+	    logger.info("Nonce is null");
+	    return null;
+	}
+	if (!nonceService.verifyNonce(nonce, 30)) {
+	    logger.info("Invalid nonce '" + nonce + "'");
+	    return null;
+	}
+	final Nonce nonceObject = baseNonceDao.getByNonce(nonce);
+	if (nonceObject == null) {
+	    logger.info("There is no stored such nonce '" + nonce + "'");
+	    return null;
+	} else {
+	    if (nonceObject.getAssociation() == null) {
+		logger.info("Nonce '" + nonce + "' is not attached to any association");
+		return null;
+	    } else {
+		if (associationTool.isPrivateAssociation(nonceObject.getAssociation())) {
+		    return nonceObject;
+		} else {
+		    logger.info("Nonce '" + nonce + "' belongs to shared association,"
+			    + " should belongs to private association");
+		    return null;
+		}
+	    }
+	}
     }
 
     @Override
-    public Boolean isValidCheckAuthenticationRequest(final CheckAuthenticationRequest request) {
-	Nonce nonce = statelessModeNonceDao.getByNonce(request.getNonce());
-	Preconditions.checkNotNull(nonce, "nonce '" + request.getNonce()
-		+ "' wasn't found during sateless authentication");
-	Preconditions.checkNotNull(nonce.getAssociation(), "nonce '" + nonce.getNonce()
-		+ "' doesn't have any association");
-	String signature = signingService.sign(request, nonce.getAssociation().getMacKey(),
-		statelesModeAssociationType);
-	if (signature.equals(request.getSignature())) {
-	    return true;
-	} else {
-	    logger.info("Signature from check_authentication message '" + request.getSignature()
-		    + "' is not same as computed one '" + signature + "'");
+    public Boolean isAssociationValid(Nonce nonce, CheckAuthenticationRequest request) {
+	Preconditions.checkNotNull(request, "request is null");
+	Preconditions.checkNotNull(nonce, "nonce is null");
+	String associationHandle = request.getAssocHandle();
+	if (associationHandle == null) {
+	    logger.info("Association handle is null in " + request.toString());
 	    return false;
 	}
+	Association association = baseAssociationDao.getByAssocHandle(associationHandle);
+	if (association == null) {
+	    logger.info("Association fo association handle '" + associationHandle + "' is null");
+	    return false;
+	}
+	if (!associationTool.isPrivateAssociation(association)) {
+	    logger.info("Association is not private " + association);
+	    return false;
+	}
+	return association.getAssocHandle().equals(nonce.getAssociation().getAssocHandle());
     }
+
 }

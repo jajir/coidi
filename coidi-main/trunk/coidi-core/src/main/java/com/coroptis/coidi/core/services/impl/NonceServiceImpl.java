@@ -56,7 +56,7 @@ public class NonceServiceImpl implements NonceService {
 		isoDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		try {
 			return isoDateFormatter.parse(Preconditions.checkNotNull(nonce,
-					"nonce"));
+					"nonce is null"));
 		} catch (ParseException e) {
 			return null;
 		}
@@ -64,7 +64,7 @@ public class NonceServiceImpl implements NonceService {
 
 	@Override
 	public boolean verifyNonce(final String nonce,
-			final Integer expirationMinutes) {
+			final Integer expirationInMinutes) {
 		Date now = new Date();
 		Date nonceDateTime = extractDate(nonce);
 
@@ -75,7 +75,7 @@ public class NonceServiceImpl implements NonceService {
 
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		calendar.setTime(nonceDateTime);
-		calendar.add(Calendar.MINUTE, expirationMinutes);
+		calendar.add(Calendar.MINUTE, expirationInMinutes);
 		if (calendar.getTime().before(now)) {
 			logger.debug("Nonce expired. Because now is '" + now
 					+ "' and nonce is '" + calendar.getTime() + "'");

@@ -29,6 +29,7 @@ public interface NonceService {
 	 */
 	Date extractDate(String nonce);
 
+	//FIXME rename to verifyNonceExpiratio
 	/**
 	 * Verifies whether a nonce is valid or not.
 	 * 
@@ -38,7 +39,7 @@ public interface NonceService {
 	 *            minutes how long the nonce is valid
 	 * @return true if nonce is valide, false otherwise
 	 */
-	boolean verifyNonce(String nonce, Integer expirationMinutes);
+	boolean verifyNonce(String nonce, Integer expirationInMinutes);
 
 	String createNonce();
 
