@@ -20,8 +20,8 @@ import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 
 public class DiscoveryProcessorTerminator implements DiscoveryProcessor {
 
-	public DiscoveryResult dicovery(String userSuppliedId) {
-		return null;
-	}
+    public DiscoveryResult dicovery(String userSuppliedId) {
+	return null;
+    }
 
 }

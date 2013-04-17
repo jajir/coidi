@@ -23,8 +23,9 @@ import java.lang.annotation.Target;
 
 /**
  * Pages marked with this annotation will be accessible just for unsigned users.
+ * 
  * @author jan
- *
+ * 
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

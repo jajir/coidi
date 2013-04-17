@@ -41,34 +41,31 @@ import com.coroptis.coidi.rp.services.AuthReq;
  */
 public class AuthReqRegistration11 implements AuthReq {
 
-	public final static String SREG_REQUIRED = "sreg.required";
+    public final static String SREG_REQUIRED = "sreg.required";
 
-	public final static String SREG_OPTIONAL = "sreg.optional";
+    public final static String SREG_OPTIONAL = "sreg.optional";
 
-	public final static String SREG_POLICY_URL = "sreg.policy_url";
+    public final static String SREG_POLICY_URL = "sreg.policy_url";
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	@Symbol("common.extension.registration.policyUrl")
-	private String policyUrl;
+    @Inject
+    @Symbol("common.extension.registration.policyUrl")
+    private String policyUrl;
 
-	@Override
-	public boolean process(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult, Map<String, String> parameters) {
-		if (discoveryResult.getPreferedService().idPresent(
-				OpenIdNs.TYPE_SREG_1_1)
-				&& OpenIdNs.TYPE_SREG_1_1.equals(parameters.get("sreg.ns"))) {
-			logger.debug("Registration extension 1.1 will be applied");
-			authenticationRequest.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
-			authenticationRequest.putIgnoreEmpty(SREG_REQUIRED,
-					parameters.get(SREG_REQUIRED));
-			authenticationRequest.putIgnoreEmpty(SREG_OPTIONAL,
-					parameters.get(SREG_OPTIONAL));
-			authenticationRequest.putIgnoreEmpty(SREG_POLICY_URL, policyUrl);
-		}
-		return false;
+    @Override
+    public boolean process(AuthenticationRequest authenticationRequest,
+	    DiscoveryResult discoveryResult, Map<String, String> parameters) {
+	if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_SREG_1_1)
+		&& OpenIdNs.TYPE_SREG_1_1.equals(parameters.get("sreg.ns"))) {
+	    logger.debug("Registration extension 1.1 will be applied");
+	    authenticationRequest.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
+	    authenticationRequest.putIgnoreEmpty(SREG_REQUIRED, parameters.get(SREG_REQUIRED));
+	    authenticationRequest.putIgnoreEmpty(SREG_OPTIONAL, parameters.get(SREG_OPTIONAL));
+	    authenticationRequest.putIgnoreEmpty(SREG_POLICY_URL, policyUrl);
 	}
+	return false;
+    }
 
 }

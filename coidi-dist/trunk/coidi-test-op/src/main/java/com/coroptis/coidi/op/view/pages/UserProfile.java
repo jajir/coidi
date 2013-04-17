@@ -32,15 +32,15 @@ import com.coroptis.coidi.op.view.utils.UserSession;
 @AccessOnlyForSigned
 public class UserProfile { // NO_UCD
 
-	@SessionState
-	private UserSession userSession;
+    @SessionState
+    private UserSession userSession;
 
-	@SuppressWarnings("unused")
-	@Property
-	private Identity identity;
-	
-	public User getUser() {
-		return userSession.getUser();
-	}
+    @SuppressWarnings("unused")
+    @Property
+    private Identity identity;
+
+    public User getUser() {
+	return userSession.getUser();
+    }
 
 }

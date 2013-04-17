@@ -25,29 +25,29 @@ import org.easymock.EasyMock;
  */
 public class Mocks {
 
-	private static Mocks mocks;
+    private static Mocks mocks;
 
-	private final Object[] objects = new Object[] {};
+    private final Object[] objects = new Object[] {};
 
-	public static Mocks getServices() {
-		if (mocks == null) {
-			mocks = new Mocks();
-		}
-		return mocks;
+    public static Mocks getServices() {
+	if (mocks == null) {
+	    mocks = new Mocks();
 	}
+	return mocks;
+    }
 
-	private Mocks() {
-	}
+    private Mocks() {
+    }
 
-	public void replay() {
-		EasyMock.replay(objects);
-	}
+    public void replay() {
+	EasyMock.replay(objects);
+    }
 
-	public void verify() {
-		EasyMock.verify(objects);
-	}
+    public void verify() {
+	EasyMock.verify(objects);
+    }
 
-	public void reset() {
-		EasyMock.reset(objects);
-	}
+    public void reset() {
+	EasyMock.reset(objects);
+    }
 }

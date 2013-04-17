@@ -32,32 +32,32 @@ import com.coroptis.coidi.rp.services.YadisService;
 
 public class YadisServiceImpl implements YadisService {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private HttpService httpService;
+    @Inject
+    private HttpService httpService;
 
-	public void readXrdsDocument(String url) {
-		try {
-			HttpClient httpClient = httpService.getHttpClient();
-			HttpGet httpget = new HttpGet(url);
-			httpget.setHeader("Accept", "application/xrds+xml");
-			HttpResponse response;
-			response = httpClient.execute(httpget);
+    public void readXrdsDocument(String url) {
+	try {
+	    HttpClient httpClient = httpService.getHttpClient();
+	    HttpGet httpget = new HttpGet(url);
+	    httpget.setHeader("Accept", "application/xrds+xml");
+	    HttpResponse response;
+	    response = httpClient.execute(httpget);
 
-			HttpEntity entity = response.getEntity();
-			String string = EntityUtils.toString(entity);
-			System.out.println(string);
-			// extract "openid2.provider"
-		} catch (ClientProtocolException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
-		} catch (IOException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
-		}
-
+	    HttpEntity entity = response.getEntity();
+	    String string = EntityUtils.toString(entity);
+	    System.out.println(string);
+	    // extract "openid2.provider"
+	} catch (ClientProtocolException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
+	} catch (IOException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
 	}
+
+    }
 
 }

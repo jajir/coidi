@@ -37,7 +37,7 @@ public class NegativeResponseGeneratorTest extends AbstractT5JunitTest {
 	assertEquals("john@gmail.com", ret.getContact());
 	assertEquals(AbstractOpenIdResponse.OPENID_NS_20, ret.getNameSpace());
     }
-    
+
     public void testSimpleError_messageIsNull() throws Exception {
 	ErrorResponse ret = service.simpleError(null);
 

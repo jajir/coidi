@@ -85,7 +85,7 @@ public class AssociationServiceTest extends AbstractT5JunitTest {
 
 	services.verify();
     }
-    
+
     public void test_isValid_valid_association() throws Exception {
 	Calendar cal = Calendar.getInstance();
 	cal.add(Calendar.HOUR, 1);

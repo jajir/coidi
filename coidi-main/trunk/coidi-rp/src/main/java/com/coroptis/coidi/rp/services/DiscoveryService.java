@@ -25,13 +25,13 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
  */
 public interface DiscoveryService {
 
-	/**
-	 * Performs discovery on given user supplied ID.
-	 * 
-	 * @param userSuppliedId
-	 *            required user supplied id
-	 * @return discovery result
-	 */
-	DiscoveryResult dicovery(String userSuppliedId);
+    /**
+     * Performs discovery on given user supplied ID.
+     * 
+     * @param userSuppliedId
+     *            required user supplied id
+     * @return discovery result
+     */
+    DiscoveryResult dicovery(String userSuppliedId);
 
 }

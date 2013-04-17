@@ -27,19 +27,19 @@ import com.coroptis.coidi.op.view.utils.UserSession;
 @Import(stylesheet = "context:css/layout.css")
 public class Layout { // NO_UCD
 
-	@SuppressWarnings("unused")
-	@Property
-	@Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
-	private String title;
+    @SuppressWarnings("unused")
+    @Property
+    @Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
+    private String title;
 
-	@SuppressWarnings("unused")
-	@Property
-	@SessionState
-	private UserSession userSession;
+    @SuppressWarnings("unused")
+    @Property
+    @SessionState
+    private UserSession userSession;
 
-	Object onActionFromLogout() {
-		userSession = null;
-		return Index.class;
-	}
+    Object onActionFromLogout() {
+	userSession = null;
+	return Index.class;
+    }
 
 }

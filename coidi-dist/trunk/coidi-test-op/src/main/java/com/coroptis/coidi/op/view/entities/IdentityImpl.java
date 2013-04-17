@@ -73,7 +73,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return Objects.toStringHelper(IdentityImpl.class).add("idIdentity", idIdentity).toString();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getIdIdentity()
      */
     @Override
@@ -81,8 +83,11 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return idIdentity;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setIdIdentity(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setIdIdentity(java.lang.String)
      */
     @Override
     public void setIdIdentity(String idIdentity) {
@@ -106,7 +111,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getUser()
      */
     @Override
@@ -114,15 +121,21 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return user;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setUser(com.coroptis.coidi.op.entities.UserImpl)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setUser(com.coroptis.coidi.op
+     * .entities.UserImpl)
      */
     @Override
     public void setUser(User user) {
-	this.user = (UserImpl)user;
+	this.user = (UserImpl) user;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getNickname()
      */
     @Override
@@ -130,15 +143,20 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return nickname;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setNickname(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setNickname(java.lang.String)
      */
     @Override
     public void setNickname(String nickname) {
 	this.nickname = nickname;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getEmail()
      */
     @Override
@@ -146,7 +164,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return email;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#setEmail(java.lang.String)
      */
     @Override
@@ -154,7 +174,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	this.email = email;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getFullname()
      */
     @Override
@@ -162,15 +184,20 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return fullname;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setFullname(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setFullname(java.lang.String)
      */
     @Override
     public void setFullname(String fullname) {
 	this.fullname = fullname;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getDob()
      */
     @Override
@@ -178,7 +205,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return dob;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#setDob(java.util.Date)
      */
     @Override
@@ -186,7 +215,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	this.dob = dob;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getGendre()
      */
     @Override
@@ -194,15 +225,21 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return gendre;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setGendre(com.coroptis.coidi.op.entities.IdentityImpl.Gendre)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setGendre(com.coroptis.coidi.
+     * op.entities.IdentityImpl.Gendre)
      */
     @Override
     public void setGendre(Gendre gendre) {
 	this.gendre = gendre;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getPostcode()
      */
     @Override
@@ -210,15 +247,20 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return postcode;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setPostcode(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setPostcode(java.lang.String)
      */
     @Override
     public void setPostcode(String postcode) {
 	this.postcode = postcode;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getCountry()
      */
     @Override
@@ -226,7 +268,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return country;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#setCountry(java.lang.String)
      */
     @Override
@@ -234,7 +278,9 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	this.country = country;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getLanguage()
      */
     @Override
@@ -242,15 +288,20 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return language;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setLanguage(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setLanguage(java.lang.String)
      */
     @Override
     public void setLanguage(String language) {
 	this.language = language;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.coroptis.coidi.op.entities.Identity#getTimezone()
      */
     @Override
@@ -258,8 +309,11 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	return timezone;
     }
 
-    /* (non-Javadoc)
-     * @see com.coroptis.coidi.op.entities.Identity#setTimezone(java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * com.coroptis.coidi.op.entities.Identity#setTimezone(java.lang.String)
      */
     @Override
     public void setTimezone(String timezone) {

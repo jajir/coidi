@@ -21,9 +21,9 @@ import com.coroptis.coidi.rp.base.AuthenticationResult;
 
 public interface AuthenticationService {
 
-	public final static Integer NONCE_EXPIRATION_TIME_IN_MINUTES = 30;
+    public final static Integer NONCE_EXPIRATION_TIME_IN_MINUTES = 30;
 
-	AuthenticationResult verify(AuthenticationResponse authenticationResponse,
-			Association association);
+    AuthenticationResult verify(AuthenticationResponse authenticationResponse,
+	    Association association);
 
 }

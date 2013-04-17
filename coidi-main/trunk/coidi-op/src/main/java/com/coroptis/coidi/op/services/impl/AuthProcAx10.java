@@ -30,29 +30,29 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 
 /**
  * Attribute exchange extension version 1.0.
+ * 
  * @author jirout
- *
+ * 
  */
 public class AuthProcAx10 implements AuthenticationProcessor {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private AuthenticationService authenticationService;
+    @Inject
+    private AuthenticationService authenticationService;
 
-	@Override
-	public AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AuthenticationResponse response, Identity identity,
-			Set<String> fieldsToSign) {
-		String nameSpaceName = authenticationService.getNameSpace(
-				authenticationRequest, OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
-		if (nameSpaceName != null) {
-			logger.debug("name space '" + nameSpaceName + "' for "
-					+ OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
-		
-		}
-		return null;
+    @Override
+    public AbstractMessage process(AuthenticationRequest authenticationRequest,
+	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	String nameSpaceName = authenticationService.getNameSpace(authenticationRequest,
+		OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+	if (nameSpaceName != null) {
+	    logger.debug("name space '" + nameSpaceName + "' for "
+		    + OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
+
 	}
+	return null;
+    }
 
 }

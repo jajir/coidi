@@ -21,25 +21,25 @@ import java.util.Map.Entry;
 
 public class AbstractOpenIdRequest extends AbstractMessage {
 
-	public AbstractOpenIdRequest() {
-		super();
-	}
+    public AbstractOpenIdRequest() {
+	super();
+    }
 
-	public AbstractOpenIdRequest(final Map<String, String> map) {
-		super(map, OPENID);
-	}
+    public AbstractOpenIdRequest(final Map<String, String> map) {
+	super(map, OPENID);
+    }
 
-	public String getMessage() {
-		return getPrefixedMessage(OPENID);
+    public String getMessage() {
+	return getPrefixedMessage(OPENID);
+    }
+
+    @Override
+    public Map<String, String> getMap() {
+	Map<String, String> out = new HashMap<String, String>();
+	for (Entry<String, String> entry : super.getMap().entrySet()) {
+	    out.put(OPENID + entry.getKey(), entry.getValue());
 	}
-	
-	@Override
-	public Map<String, String> getMap() {
-		Map<String, String> out = new HashMap<String, String>();
-		for (Entry<String, String> entry : super.getMap().entrySet()) {
-			out.put(OPENID + entry.getKey(), entry.getValue());
-		}
-		return out;
-	}
+	return out;
+    }
 
 }

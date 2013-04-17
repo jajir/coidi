@@ -27,17 +27,17 @@ import com.coroptis.coidi.CoidiException;
  */
 public class AuthenticationProcessException extends CoidiException {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public AuthenticationProcessException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public AuthenticationProcessException(String message, Throwable throwable) {
+	super(message, throwable);
+    }
 
-	public AuthenticationProcessException(String message) {
-		super(message);
-	}
+    public AuthenticationProcessException(String message) {
+	super(message);
+    }
 
 }

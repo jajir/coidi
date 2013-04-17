@@ -24,17 +24,17 @@ package com.coroptis.coidi;
  */
 public class CoidiException extends RuntimeException {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CoidiException(String message) {
-		super(message);
-	}
+    public CoidiException(String message) {
+	super(message);
+    }
 
-	public CoidiException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public CoidiException(String message, Throwable throwable) {
+	super(message, throwable);
+    }
 
 }

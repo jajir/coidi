@@ -20,7 +20,7 @@ import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class BaseUserDaoTest extends AbstractDaoTest {
-    
+
     private BaseUserDao dao;
 
     public void testGetById() throws Exception {

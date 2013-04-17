@@ -29,56 +29,51 @@ import com.coroptis.coidi.rp.util.AbstractLocalJunitTest;
 
 public class AuthReqGoogleAttributeExchangeTest extends AbstractLocalJunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private AuthReq authReq;
+    private AuthReq authReq;
 
-	private AuthenticationRequest authenticationRequest;
+    private AuthenticationRequest authenticationRequest;
 
-	private Map<String, String> params;
+    private Map<String, String> params;
 
-	private XrdService xrdService;
+    private XrdService xrdService;
 
-	public void testProcess_missingSupport() throws Exception {
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
+    public void testProcess_missingSupport() throws Exception {
+	EasyMock.expect(services.getDiscoveryResult().getPreferedService()).andReturn(xrdService);
 
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
+	services.replay();
+	authReq.process(authenticationRequest, services.getDiscoveryResult(), params);
 
-		assertNull(authenticationRequest.get("openid.ns.ax"));
-		services.verify();
-	}
+	assertNull(authenticationRequest.get("openid.ns.ax"));
+	services.verify();
+    }
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(AuthReq.class, AuthReqGoogleAttributeExchange.class)
-				.withId(SERVICE_NAME);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(AuthReq.class, AuthReqGoogleAttributeExchange.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		System.setProperty("common.extension.registration.requiredFields",
-				"name");
-		System.setProperty("common.extension.registration.optionalFields",
-				"email");
-		System.setProperty("common.extension.registration.policyUrl",
-				"http://www.example.com/policy-description");
-		super.setUp();
-		authReq = getService(SERVICE_NAME, AuthReq.class);
-		authenticationRequest = new AuthenticationRequest();
-		params = new HashMap<String, String>();
-		xrdService = new XrdService();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	System.setProperty("common.extension.registration.requiredFields", "name");
+	System.setProperty("common.extension.registration.optionalFields", "email");
+	System.setProperty("common.extension.registration.policyUrl",
+		"http://www.example.com/policy-description");
+	super.setUp();
+	authReq = getService(SERVICE_NAME, AuthReq.class);
+	authenticationRequest = new AuthenticationRequest();
+	params = new HashMap<String, String>();
+	xrdService = new XrdService();
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		authReq = null;
-		authenticationRequest = null;
-		params = null;
-		xrdService = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	authReq = null;
+	authenticationRequest = null;
+	params = null;
+	xrdService = null;
+	super.tearDown();
+    }
 
 }

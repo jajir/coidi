@@ -39,36 +39,32 @@ import com.coroptis.coidi.rp.services.AuthReq;
  */
 public class AuthReqRegistration10 implements AuthReq {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	@Symbol("common.extension.registration.requiredFields")
-	private String requiredFields;
+    @Inject
+    @Symbol("common.extension.registration.requiredFields")
+    private String requiredFields;
 
-	@Inject
-	@Symbol("common.extension.registration.optionalFields")
-	private String optionalFields;
+    @Inject
+    @Symbol("common.extension.registration.optionalFields")
+    private String optionalFields;
 
-	@Inject
-	@Symbol("common.extension.registration.policyUrl")
-	private String policyUrl;
+    @Inject
+    @Symbol("common.extension.registration.policyUrl")
+    private String policyUrl;
 
-	@Override
-	public boolean process(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult, Map<String, String> parameters) {
-		if (discoveryResult.getPreferedService().idPresent(
-				OpenIdNs.TYPE_SREG_1_0)
-				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
-			logger.debug("Registration extension 1.0 will be applied");
-			authenticationRequest.putIgnoreEmpty("sreg.required",
-					requiredFields);
-			authenticationRequest.putIgnoreEmpty("sreg.optional",
-					optionalFields);
-			authenticationRequest.putIgnoreEmpty("sreg.policy_url",
-					policyUrl);
-		}
-		return false;
+    @Override
+    public boolean process(AuthenticationRequest authenticationRequest,
+	    DiscoveryResult discoveryResult, Map<String, String> parameters) {
+	if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_SREG_1_0)
+		&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
+	    logger.debug("Registration extension 1.0 will be applied");
+	    authenticationRequest.putIgnoreEmpty("sreg.required", requiredFields);
+	    authenticationRequest.putIgnoreEmpty("sreg.optional", optionalFields);
+	    authenticationRequest.putIgnoreEmpty("sreg.policy_url", policyUrl);
 	}
+	return false;
+    }
 
 }

@@ -30,98 +30,87 @@ import com.coroptis.coidi.rp.util.AbstractLocalJunitTest;
 
 public class AuthReqRegistration10Test extends AbstractLocalJunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private AuthReq authReq;
+    private AuthReq authReq;
 
-	private AuthenticationRequest authenticationRequest;
+    private AuthenticationRequest authenticationRequest;
 
-	private Map<String, String> params;
+    private Map<String, String> params;
 
-	private XrdService xrdService;
+    private XrdService xrdService;
 
-	public void testProcess_missingSupport() throws Exception {
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
+    public void testProcess_missingSupport() throws Exception {
+	EasyMock.expect(services.getDiscoveryResult().getPreferedService()).andReturn(xrdService);
 
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
+	services.replay();
+	authReq.process(authenticationRequest, services.getDiscoveryResult(), params);
 
-		assertNull(authenticationRequest.get("sreg.required"));
-		services.verify();
-	}
+	assertNull(authenticationRequest.get("sreg.required"));
+	services.verify();
+    }
 
-	public void testProcess_invalid_regNewIdentityParam() throws Exception {
-		xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_0);
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
+    public void testProcess_invalid_regNewIdentityParam() throws Exception {
+	xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_0);
+	EasyMock.expect(services.getDiscoveryResult().getPreferedService()).andReturn(xrdService);
 
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
+	services.replay();
+	authReq.process(authenticationRequest, services.getDiscoveryResult(), params);
 
-		assertNull(authenticationRequest.get("sreg.required"));
-		services.verify();
-	}
+	assertNull(authenticationRequest.get("sreg.required"));
+	services.verify();
+    }
 
-	public void testProcess_invalid_nameSpace() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
+    public void testProcess_invalid_nameSpace() throws Exception {
+	params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
+	EasyMock.expect(services.getDiscoveryResult().getPreferedService()).andReturn(xrdService);
 
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
+	services.replay();
+	authReq.process(authenticationRequest, services.getDiscoveryResult(), params);
 
-		assertNull(authenticationRequest.get("openid.sreg.required"));
-		services.verify();
-	}
+	assertNull(authenticationRequest.get("openid.sreg.required"));
+	services.verify();
+    }
 
-	public void testProcess() throws Exception {
-		params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
-		xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_0);
-		EasyMock.expect(services.getDiscoveryResult().getPreferedService())
-				.andReturn(xrdService);
+    public void testProcess() throws Exception {
+	params.put(AuthReqRegistration10.REG_NEW_IDENTITY, "true");
+	xrdService.getTypes().add(OpenIdNs.TYPE_SREG_1_0);
+	EasyMock.expect(services.getDiscoveryResult().getPreferedService()).andReturn(xrdService);
 
-		services.replay();
-		authReq.process(authenticationRequest, services.getDiscoveryResult(),
-				params);
+	services.replay();
+	authReq.process(authenticationRequest, services.getDiscoveryResult(), params);
 
-		services.verify();
-		assertEquals("name", authenticationRequest.get("sreg.required"));
-		assertEquals("email", authenticationRequest.get("sreg.optional"));
-		assertEquals("http://www.example.com/policy-description",
-				authenticationRequest.get("sreg.policy_url"));
-	}
+	services.verify();
+	assertEquals("name", authenticationRequest.get("sreg.required"));
+	assertEquals("email", authenticationRequest.get("sreg.optional"));
+	assertEquals("http://www.example.com/policy-description",
+		authenticationRequest.get("sreg.policy_url"));
+    }
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(AuthReq.class, AuthReqRegistration10.class).withId(
-				SERVICE_NAME);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(AuthReq.class, AuthReqRegistration10.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		System.setProperty("common.extension.registration.requiredFields",
-				"name");
-		System.setProperty("common.extension.registration.optionalFields",
-				"email");
-		System.setProperty("common.extension.registration.policyUrl",
-				"http://www.example.com/policy-description");
-		super.setUp();
-		authReq = getService(SERVICE_NAME, AuthReq.class);
-		authenticationRequest = new AuthenticationRequest();
-		params = new HashMap<String, String>();
-		xrdService = new XrdService();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	System.setProperty("common.extension.registration.requiredFields", "name");
+	System.setProperty("common.extension.registration.optionalFields", "email");
+	System.setProperty("common.extension.registration.policyUrl",
+		"http://www.example.com/policy-description");
+	super.setUp();
+	authReq = getService(SERVICE_NAME, AuthReq.class);
+	authenticationRequest = new AuthenticationRequest();
+	params = new HashMap<String, String>();
+	xrdService = new XrdService();
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		authReq = null;
-		authenticationRequest = null;
-		params = null;
-		xrdService = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	authReq = null;
+	authenticationRequest = null;
+	params = null;
+	xrdService = null;
+	super.tearDown();
+    }
 }

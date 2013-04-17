@@ -19,7 +19,7 @@ import java.io.ByteArrayInputStream;
 
 public class TextResponse extends AttachmentStreamResponse {
 
-	public TextResponse(String text) {
-		super(new ByteArrayInputStream(text.getBytes()));
-	}
+    public TextResponse(String text) {
+	super(new ByteArrayInputStream(text.getBytes()));
+    }
 }

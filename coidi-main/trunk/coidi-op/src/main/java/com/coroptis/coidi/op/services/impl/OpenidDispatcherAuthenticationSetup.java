@@ -35,7 +35,6 @@ import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
-
 //TODO refactor it, it's long
 public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 

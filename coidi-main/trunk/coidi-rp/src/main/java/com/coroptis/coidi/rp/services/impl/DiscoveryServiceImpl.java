@@ -25,22 +25,22 @@ import com.google.common.base.Preconditions;
 
 public class DiscoveryServiceImpl implements DiscoveryService {
 
-	@Inject
-	private DiscoveryProcessor discoveryProcessor;
+    @Inject
+    private DiscoveryProcessor discoveryProcessor;
 
-	@Inject
-	private DiscoverySupport discoverySupport;
+    @Inject
+    private DiscoverySupport discoverySupport;
 
-	@Override
-	public DiscoveryResult dicovery(final String userSuppliedId) {
-		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
-		String claimedId = userSuppliedId.trim();
-		if (!discoverySupport.isItEmail(claimedId)) {
-			claimedId = discoverySupport.normalize(claimedId);
-		}
-		DiscoveryResult out = discoveryProcessor.dicovery(claimedId);
-		out.setClaimedId(claimedId);
-		return out;
+    @Override
+    public DiscoveryResult dicovery(final String userSuppliedId) {
+	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
+	String claimedId = userSuppliedId.trim();
+	if (!discoverySupport.isItEmail(claimedId)) {
+	    claimedId = discoverySupport.normalize(claimedId);
 	}
+	DiscoveryResult out = discoveryProcessor.dicovery(claimedId);
+	out.setClaimedId(claimedId);
+	return out;
+    }
 
 }

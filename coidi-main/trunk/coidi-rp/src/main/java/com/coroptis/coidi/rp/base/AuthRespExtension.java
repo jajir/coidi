@@ -5,18 +5,18 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 @Deprecated
 public class AuthRespExtension {
 
-	private final String extensionAlias;
+    private final String extensionAlias;
 
-	private final AuthenticationResponse authenticationResponse;
+    private final AuthenticationResponse authenticationResponse;
 
-	public AuthRespExtension(final String extensionAlias,
-			final AuthenticationResponse authenticationResponse) {
-		this.extensionAlias = extensionAlias;
-		this.authenticationResponse = authenticationResponse;
-	}
+    public AuthRespExtension(final String extensionAlias,
+	    final AuthenticationResponse authenticationResponse) {
+	this.extensionAlias = extensionAlias;
+	this.authenticationResponse = authenticationResponse;
+    }
 
-	public String getValueForName(String name) {
-		return authenticationResponse.get(extensionAlias + ".value." + name);
-	}
+    public String getValueForName(String name) {
+	return authenticationResponse.get(extensionAlias + ".value." + name);
+    }
 
 }

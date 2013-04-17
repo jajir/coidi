@@ -47,86 +47,73 @@ import com.coroptis.coidi.rp.view.util.UserSession;
  */
 public class AuthenticationResponseDispatcher implements Dispatcher {
 
-	@Inject
-	private RequestGlobals requestGlobals;
+    @Inject
+    private RequestGlobals requestGlobals;
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private MessageService messageService;
+    @Inject
+    private MessageService messageService;
 
-	@Inject
-	private AuthenticationService authenticationService;
+    @Inject
+    private AuthenticationService authenticationService;
 
-	@Inject
-	private HttpTransportService httpTransportService;
+    @Inject
+    private HttpTransportService httpTransportService;
 
-	private final ApplicationStateManager asm;
+    private final ApplicationStateManager asm;
 
-	public AuthenticationResponseDispatcher(ApplicationStateManager asm) {
-		this.asm = asm;
-	}
+    public AuthenticationResponseDispatcher(ApplicationStateManager asm) {
+	this.asm = asm;
+    }
 
-	@Override
-	public boolean dispatch(Request request, Response response)
-			throws IOException {
+    @Override
+    public boolean dispatch(Request request, Response response) throws IOException {
 
-		HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
+	HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
 
-		if (httpRequest.getQueryString() != null
-				&& httpRequest.getQueryString().length() > 0) {
-			logger.debug("query is coming: " + httpRequest.getQueryString());
-			Map<String, String> map = messageService
-					.convertUrlToMap(httpRequest.getQueryString());
-			AuthenticationResponse authenticationResponse = new AuthenticationResponse(
-					map);
+	if (httpRequest.getQueryString() != null && httpRequest.getQueryString().length() > 0) {
+	    logger.debug("query is coming: " + httpRequest.getQueryString());
+	    Map<String, String> map = messageService.convertUrlToMap(httpRequest.getQueryString());
+	    AuthenticationResponse authenticationResponse = new AuthenticationResponse(map);
 
-			if (asm.exists(Association.class)) {
-				logger.debug("there is association.");
-				AuthenticationResult authenticationResult = authenticationService
-						.verify(authenticationResponse,
-								asm.get(Association.class));
-				if (authenticationResult.isPositive()) {
-					UserSession session = asm.get(UserSession.class);
-					session.setAuthenticationResult(authenticationResult);
-					session.setSsoIdentity(authenticationResponse.getIdentity());
-				}
-			} else {
-				logger.debug("there is no association - stateless mode.");
-				// TODO finish stateless mode, move it to RP library
-				CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
-				checkAuthenticationRequest.setIdentity(authenticationResponse
-						.getIdentity());
-				checkAuthenticationRequest
-						.setInvalidateHandle(authenticationResponse
-								.getInvalidateHandle());
-				checkAuthenticationRequest.setNonce(authenticationResponse
-						.getNonce());
-				checkAuthenticationRequest.setReturnTo(authenticationResponse
-						.getReturnTo());
-				checkAuthenticationRequest.setSignature(authenticationResponse
-						.getSignature());
-				checkAuthenticationRequest.setSigned(authenticationResponse
-						.getSigned());
-				logger.debug("check authentication msg: "
-						+ checkAuthenticationRequest);
-
-				// post it to server
-				CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
-						httpTransportService.doPost(
-								authenticationResponse.getOpEndpoint(),
-								checkAuthenticationRequest.getMap()));
-				if (response2.getIsValid()) {
-					UserSession session = asm.get(UserSession.class);
-					session.setSsoIdentity(authenticationResponse.getIdentity());
-				} else {
-					logger.error("check authentication wasn't successful");
-				}
-			}
-
+	    if (asm.exists(Association.class)) {
+		logger.debug("there is association.");
+		AuthenticationResult authenticationResult = authenticationService.verify(
+			authenticationResponse, asm.get(Association.class));
+		if (authenticationResult.isPositive()) {
+		    UserSession session = asm.get(UserSession.class);
+		    session.setAuthenticationResult(authenticationResult);
+		    session.setSsoIdentity(authenticationResponse.getIdentity());
 		}
-		return false;
+	    } else {
+		logger.debug("there is no association - stateless mode.");
+		// TODO finish stateless mode, move it to RP library
+		CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
+		checkAuthenticationRequest.setIdentity(authenticationResponse.getIdentity());
+		checkAuthenticationRequest.setInvalidateHandle(authenticationResponse
+			.getInvalidateHandle());
+		checkAuthenticationRequest.setNonce(authenticationResponse.getNonce());
+		checkAuthenticationRequest.setReturnTo(authenticationResponse.getReturnTo());
+		checkAuthenticationRequest.setSignature(authenticationResponse.getSignature());
+		checkAuthenticationRequest.setSigned(authenticationResponse.getSigned());
+		logger.debug("check authentication msg: " + checkAuthenticationRequest);
+
+		// post it to server
+		CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
+			httpTransportService.doPost(authenticationResponse.getOpEndpoint(),
+				checkAuthenticationRequest.getMap()));
+		if (response2.getIsValid()) {
+		    UserSession session = asm.get(UserSession.class);
+		    session.setSsoIdentity(authenticationResponse.getIdentity());
+		} else {
+		    logger.error("check authentication wasn't successful");
+		}
+	    }
+
 	}
+	return false;
+    }
 
 }

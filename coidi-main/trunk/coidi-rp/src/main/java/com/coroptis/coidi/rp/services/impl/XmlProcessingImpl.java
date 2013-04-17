@@ -28,69 +28,66 @@ import com.google.common.base.Preconditions;
 
 public class XmlProcessingImpl implements XmlProcessing {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Override
-	public boolean isThereTag(Node node, String tagName, String value) {
-		NodeList nl = node.getChildNodes();
-		for (int i = 0; i < nl.getLength(); i++) {
-			Node n = nl.item(i);
-			if (value.equals(n.getTextContent())) {
-				return true;
-			}
-		}
-		return false;
+    @Override
+    public boolean isThereTag(Node node, String tagName, String value) {
+	NodeList nl = node.getChildNodes();
+	for (int i = 0; i < nl.getLength(); i++) {
+	    Node n = nl.item(i);
+	    if (value.equals(n.getTextContent())) {
+		return true;
+	    }
 	}
+	return false;
+    }
 
-	@Override
-	public String getTagContent(Node node, String tagName) {
-		NodeList nl = node.getChildNodes();
-		for (int i = 0; i < nl.getLength(); i++) {
-			Node n = nl.item(i);
-			if (tagName.equals(n.getNodeName())) {
-				return n.getTextContent();
-			}
-		}
-		return null;
+    @Override
+    public String getTagContent(Node node, String tagName) {
+	NodeList nl = node.getChildNodes();
+	for (int i = 0; i < nl.getLength(); i++) {
+	    Node n = nl.item(i);
+	    if (tagName.equals(n.getNodeName())) {
+		return n.getTextContent();
+	    }
 	}
+	return null;
+    }
 
-	@Override
-	public String getMetaContent(final String htmlDocument, final String name) {
-		logger.debug("reading META HTML tag '" + name + "' from document: "
-				+ htmlDocument);
-		final Pattern pattern = Pattern.compile("<meta\\s*http-equiv=\"" + name
-				+ "\".*.>");
-		final Matcher matcher = pattern.matcher(htmlDocument);
-		while (matcher.find()) {
-			logger.debug("found: " + matcher.group() + ", " + matcher.start()
-					+ ", " + matcher.end());
-			return extractAttributeFromTag(matcher.group(), "content");
-		}
-		return null;
+    @Override
+    public String getMetaContent(final String htmlDocument, final String name) {
+	logger.debug("reading META HTML tag '" + name + "' from document: " + htmlDocument);
+	final Pattern pattern = Pattern.compile("<meta\\s*http-equiv=\"" + name + "\".*.>");
+	final Matcher matcher = pattern.matcher(htmlDocument);
+	while (matcher.find()) {
+	    logger.debug("found: " + matcher.group() + ", " + matcher.start() + ", "
+		    + matcher.end());
+	    return extractAttributeFromTag(matcher.group(), "content");
 	}
+	return null;
+    }
 
-	private String extractAttributeFromTag(final String tag,
-			final String attribute) {
-		Pattern pattern = Pattern.compile(attribute + "\\s*=\\s*\".*\"");
-		Matcher matcher = pattern.matcher(tag);
-		while (matcher.find()) {
-			final String attributePart = matcher.group();
-			final int firstQuotas = attributePart.indexOf('"');
-			final int lastQuotas = attributePart.lastIndexOf('"');
-			return attributePart.substring(firstQuotas + 1, lastQuotas);
-		}
-		return null;
+    private String extractAttributeFromTag(final String tag, final String attribute) {
+	Pattern pattern = Pattern.compile(attribute + "\\s*=\\s*\".*\"");
+	Matcher matcher = pattern.matcher(tag);
+	while (matcher.find()) {
+	    final String attributePart = matcher.group();
+	    final int firstQuotas = attributePart.indexOf('"');
+	    final int lastQuotas = attributePart.lastIndexOf('"');
+	    return attributePart.substring(firstQuotas + 1, lastQuotas);
 	}
+	return null;
+    }
 
-	@Override
-	public Boolean isXrdsDocument(final String document) {
-		Preconditions.checkNotNull(document, "document");
-		if (document.startsWith("<?xml version=\"1.0\" ")) {
-			if (document.indexOf("xrds:XRDS") > 0) {
-				return true;
-			}
-		}
-		return false;
+    @Override
+    public Boolean isXrdsDocument(final String document) {
+	Preconditions.checkNotNull(document, "document");
+	if (document.startsWith("<?xml version=\"1.0\" ")) {
+	    if (document.indexOf("xrds:XRDS") > 0) {
+		return true;
+	    }
 	}
+	return false;
+    }
 }

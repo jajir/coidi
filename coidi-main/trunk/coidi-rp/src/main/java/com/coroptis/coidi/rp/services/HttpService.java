@@ -26,15 +26,15 @@ import com.coroptis.coidi.CoidiException;
 
 public interface HttpService {
 
-	/**
-	 * Provide access to configured {@link HttpClient}.
-	 * 
-	 * @return {@link HttpClient} object
-	 * @throws CoidiException
-	 */
-	DefaultHttpClient getHttpClient() throws CoidiException;
+    /**
+     * Provide access to configured {@link HttpClient}.
+     * 
+     * @return {@link HttpClient} object
+     * @throws CoidiException
+     */
+    DefaultHttpClient getHttpClient() throws CoidiException;
 
-	List<NameValuePair> toList(Map<String, String> parameters);
+    List<NameValuePair> toList(Map<String, String> parameters);
 
-	Map<String, String> convertToMap(String body);
+    Map<String, String> convertToMap(String body);
 }

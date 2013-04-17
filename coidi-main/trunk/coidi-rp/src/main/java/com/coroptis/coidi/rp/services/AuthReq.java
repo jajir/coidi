@@ -27,19 +27,19 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
  */
 public interface AuthReq {
 
-	final static String REG_NEW_IDENTITY = "registration.itIsNewIdentity";
+    final static String REG_NEW_IDENTITY = "registration.itIsNewIdentity";
 
-	/**
-	 * 
-	 * @param authenticationRequest
-	 * @param discoveryResult
-	 * @param parameters
-	 *            required map of parameters, this parameters will be used by
-	 *            particular implementations, parameters will be used for
-	 *            passing values from front-end.
-	 * @return
-	 */
-	boolean process(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult, Map<String, String> parameters);
+    /**
+     * 
+     * @param authenticationRequest
+     * @param discoveryResult
+     * @param parameters
+     *            required map of parameters, this parameters will be used by
+     *            particular implementations, parameters will be used for
+     *            passing values from front-end.
+     * @return
+     */
+    boolean process(AuthenticationRequest authenticationRequest, DiscoveryResult discoveryResult,
+	    Map<String, String> parameters);
 
 }

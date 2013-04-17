@@ -27,6 +27,6 @@ import org.apache.tapestry5.ioc.ServiceBinder;
  */
 public interface AdditionalBinder {
 
-	void bind(ServiceBinder binder);
+    void bind(ServiceBinder binder);
 
 }

@@ -30,17 +30,15 @@ import com.coroptis.coidi.rp.services.AuthReq;
  */
 public class AuthReqUiIcon implements AuthReq {
 
-	@Override
-	public boolean process(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult, Map<String, String> parameters) {
-		if (discoveryResult.getPreferedService().idPresent(
-				OpenIdNs.TYPE_UI_ICON_1_0)) {
-			authenticationRequest.put("openid.ns.ui",
-					OpenIdNs.TYPE_UI_ICON_1_0);
-			authenticationRequest.put("openid.ui.mode", "x-has-session");
-			authenticationRequest.put("openid.ui.icon", "true");
-		}
-		return false;
+    @Override
+    public boolean process(AuthenticationRequest authenticationRequest,
+	    DiscoveryResult discoveryResult, Map<String, String> parameters) {
+	if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_UI_ICON_1_0)) {
+	    authenticationRequest.put("openid.ns.ui", OpenIdNs.TYPE_UI_ICON_1_0);
+	    authenticationRequest.put("openid.ui.mode", "x-has-session");
+	    authenticationRequest.put("openid.ui.icon", "true");
 	}
+	return false;
+    }
 
 }

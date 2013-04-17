@@ -25,45 +25,44 @@ import com.coroptis.coidi.core.util.BaseJunitTest;
 
 public class AppSymbolProviderTest extends BaseJunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private SymbolProvider symbolProvider;
+    private SymbolProvider symbolProvider;
 
-	public void testValueForSymbol() throws Exception {
-		expect(services.getConfigurationService().getProperty("op.ipAddress"))
-				.andReturn("10.20.30.40");
-		services.replay();
-		String ret = symbolProvider.valueForSymbol("op.ipAddress");
+    public void testValueForSymbol() throws Exception {
+	expect(services.getConfigurationService().getProperty("op.ipAddress")).andReturn(
+		"10.20.30.40");
+	services.replay();
+	String ret = symbolProvider.valueForSymbol("op.ipAddress");
 
-		assertNotNull(ret);
-		assertEquals("10.20.30.40", ret);
-	}
+	assertNotNull(ret);
+	assertEquals("10.20.30.40", ret);
+    }
 
-	public void testValueForSymbol_notFound() throws Exception {
-		expect(services.getConfigurationService().getProperty("op.ipAddress.notFound"))
-				.andReturn(null);
-		services.replay();
-		String ret = symbolProvider.valueForSymbol("op.ipAddress.notFound");
+    public void testValueForSymbol_notFound() throws Exception {
+	expect(services.getConfigurationService().getProperty("op.ipAddress.notFound")).andReturn(
+		null);
+	services.replay();
+	String ret = symbolProvider.valueForSymbol("op.ipAddress.notFound");
 
-		assertNull(ret);
-	}
+	assertNull(ret);
+    }
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId(
-				SERVICE_NAME);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		symbolProvider = getService(SERVICE_NAME, SymbolProvider.class);
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	symbolProvider = getService(SERVICE_NAME, SymbolProvider.class);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		services.verify();
-		symbolProvider = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	services.verify();
+	symbolProvider = null;
+	super.tearDown();
+    }
 }

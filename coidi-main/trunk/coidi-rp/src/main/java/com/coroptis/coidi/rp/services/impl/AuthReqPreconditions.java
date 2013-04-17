@@ -28,36 +28,35 @@ import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 
 public class AuthReqPreconditions implements AuthReq {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Override
-	public boolean process(AuthenticationRequest authenticationRequest,
-			DiscoveryResult discoveryResult, Map<String, String> parameters) {
-		if (discoveryResult.getPreferedService() == null) {
-			logger.info("Discovery process failed, found XRDS document is not valid.");
-			throw new AuthenticationProcessException(
-					"Discovery process failed, found XRDS document is not valid.");
-		}
-		/**
-		 * Look for OP identifier element
-		 */
-		if (discoveryResult.getPreferedService().idPresent(
-				OpenIdNs.TYPE_OPENID_2_0)) {
-			return false;
-		} else {
-			/**
-			 * Look for Claimed identifier element
-			 */
-			if (discoveryResult.getPreferedService().idPresent(
-					OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0)) {
-				return false;
-			} else {
-				logger.info("Discovery process failed, found XRDS document doens't contains"
-						+ " neither OP identifier element nor Claimend identifier element.");
-				throw new AuthenticationProcessException(
-						"Discovery process failed, found XRDS document is not valid.");
-			}
-		}
+    @Override
+    public boolean process(AuthenticationRequest authenticationRequest,
+	    DiscoveryResult discoveryResult, Map<String, String> parameters) {
+	if (discoveryResult.getPreferedService() == null) {
+	    logger.info("Discovery process failed, found XRDS document is not valid.");
+	    throw new AuthenticationProcessException(
+		    "Discovery process failed, found XRDS document is not valid.");
 	}
+	/**
+	 * Look for OP identifier element
+	 */
+	if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_OPENID_2_0)) {
+	    return false;
+	} else {
+	    /**
+	     * Look for Claimed identifier element
+	     */
+	    if (discoveryResult.getPreferedService().idPresent(
+		    OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0)) {
+		return false;
+	    } else {
+		logger.info("Discovery process failed, found XRDS document doens't contains"
+			+ " neither OP identifier element nor Claimend identifier element.");
+		throw new AuthenticationProcessException(
+			"Discovery process failed, found XRDS document is not valid.");
+	    }
+	}
+    }
 }

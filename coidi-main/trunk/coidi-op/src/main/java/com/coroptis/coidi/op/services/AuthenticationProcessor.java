@@ -35,17 +35,16 @@ import com.coroptis.coidi.op.entities.Identity;
  */
 public interface AuthenticationProcessor {
 
-	/**
-	 * 
-	 * @param authenticationRequest
-	 * @param response
-	 * @param identity
-	 * @param fieldsToSign
-	 *            required parameter where will be added all fields from message
-	 *            that should be signed
-	 * @return
-	 */
-	AbstractMessage process(AuthenticationRequest authenticationRequest,
-			AuthenticationResponse response, Identity identity,
-			Set<String> fieldsToSign);
+    /**
+     * 
+     * @param authenticationRequest
+     * @param response
+     * @param identity
+     * @param fieldsToSign
+     *            required parameter where will be added all fields from message
+     *            that should be signed
+     * @return
+     */
+    AbstractMessage process(AuthenticationRequest authenticationRequest,
+	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign);
 }

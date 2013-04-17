@@ -41,10 +41,9 @@ public class TestJunit extends TestCase {
 	params.put("openid.response_nonce", "2013-04-14T00:31:31ZivR4+/GQEHI6sw==");
 	params.put("openid.claimed_id", "http://specs.openid.net/auth/2.0/identifier_select");
 	params.put("openid.sig", "tPjev37UGi1As2UdcA9T/dMOMZref9ND4dBHwa4gwT4=");
-	
-	
+
 	CheckAuthenticationRequest request = new CheckAuthenticationRequest(params);
 	System.out.println(request.getSignature());
-	//TODO should be used in test
+	// TODO should be used in test
     }
 }

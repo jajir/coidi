@@ -33,7 +33,8 @@ public class IdentityNamesConvertorTest extends TestCase {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://localhost:8080/user/%identity%");
 
-	assertEquals("http://localhost:8080/user/karel", convertor.convertToOpLocalIdentifier("karel"));
+	assertEquals("http://localhost:8080/user/karel",
+		convertor.convertToOpLocalIdentifier("karel"));
     }
 
     public void testGetOpIdentifier_null() throws Exception {
