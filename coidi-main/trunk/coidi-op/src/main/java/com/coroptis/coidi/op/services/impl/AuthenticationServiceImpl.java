@@ -23,28 +23,16 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.google.common.base.Preconditions;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final Logger logger;
-
-    private final AssociationType statelesModeAssociationType;
-
-    public AuthenticationServiceImpl(
-	    // NO_UCD
-	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
-	    final Logger logger) {
-	statelesModeAssociationType = AssociationType.convert(assocTypeStr);
-	this.logger = logger;
-	logger.debug("stateless mode association type: " + statelesModeAssociationType);
-    }
+    @Inject
+    private Logger logger;
 
     @Override
     public boolean isAuthenticationRequest(final AuthenticationRequest authenticationRequest) {

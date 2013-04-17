@@ -51,7 +51,7 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 	    logger.info("Nonce is null");
 	    return null;
 	}
-	if (!nonceService.verifyNonce(nonce, 30)) {
+	if (!nonceService.verifyNonceExpiration(nonce, 30)) {
 	    logger.info("Invalid nonce '" + nonce + "'");
 	    return null;
 	}

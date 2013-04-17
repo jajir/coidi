@@ -34,6 +34,11 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
      */
     public final static String USERS_SELECTED_IDENTITY = "users_selected_identity";
 
+    @Override
+    public String getUrl(final String targetUrl) {
+	return getUrlMessage(OPENID, targetUrl);
+    }
+
     public AuthenticationRequest() {
 	super();
 	setUrl(true);

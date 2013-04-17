@@ -26,14 +26,6 @@ public class TestUserSession implements UserSessionSkeleton {
     private Integer idUser;
 
     /**
-     * @return the user
-     */
-    @Override
-    public User getUser() {
-	return user;
-    }
-
-    /**
      * @param user
      *            the user to set
      */

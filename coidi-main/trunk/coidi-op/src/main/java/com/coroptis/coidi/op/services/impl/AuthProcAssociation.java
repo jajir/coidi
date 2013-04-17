@@ -47,7 +47,7 @@ public class AuthProcAssociation implements AuthenticationProcessor {
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
 	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
-	logger.debug("verifiing association: " + authenticationRequest);
+	logger.debug("verifying association: " + authenticationRequest);
 
 	if (authenticationRequest.getAssocHandle() == null) {
 	    response.setAssocHandle(null);

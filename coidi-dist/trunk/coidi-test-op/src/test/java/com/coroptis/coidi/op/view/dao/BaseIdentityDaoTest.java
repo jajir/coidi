@@ -24,14 +24,14 @@ public class BaseIdentityDaoTest extends AbstractDaoTest {
     BaseIdentityDao identityDao;
 
     public void testGetIdentityByOpLocalIdentifier() throws Exception {
-	Identity ret = identityDao.getIdentityByOpLocalIdentifier("jane");
+	Identity ret = identityDao.getIdentityId("jane");
 
 	assertNotNull(ret);
 	assertEquals("jane", ret.getIdIdentity());
     }
 
     public void testGetIdentityByOpLocalIdentifier_notExists() throws Exception {
-	Identity ret = identityDao.getIdentityByOpLocalIdentifier("brekeke");
+	Identity ret = identityDao.getIdentityId("brekeke");
 
 	assertNull(ret);
     }

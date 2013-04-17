@@ -24,63 +24,61 @@ import com.coroptis.coidi.op.view.services.UserService;
 
 public class UserSession implements UserSessionSkeleton {
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
 
-	private Integer idUser;
+    private Integer idUser;
 
-	private AuthenticationRequest authenticationRequest;
+    private AuthenticationRequest authenticationRequest;
 
-	@Override
-	public boolean isLogged() {
-		return idUser != null;
+    @Override
+    public boolean isLogged() {
+	return idUser != null;
+    }
+
+    public User getUser() {
+	if (idUser == null) {
+	    return null;
+	} else {
+	    return userService.getById(idUser);
 	}
+    }
 
-	@Override
-	public User getUser() {
-		if (idUser == null) {
-			return null;
-		} else {
-			return userService.getById(idUser);
-		}
-	}
+    /**
+     * @param user
+     *            the user to set
+     */
+    public void setUser(User user) {
+	this.idUser = user.getIdUser();
+    }
 
-	/**
-	 * @param user
-	 *            the user to set
-	 */
-	public void setUser(User user) {
-		this.idUser = user.getIdUser();
-	}
+    /**
+     * @return the authenticationRequest
+     */
+    public AuthenticationRequest getAuthenticationRequest() {
+	return authenticationRequest;
+    }
 
-	/**
-	 * @return the authenticationRequest
-	 */
-	public AuthenticationRequest getAuthenticationRequest() {
-		return authenticationRequest;
-	}
+    /**
+     * @param authenticationRequest
+     *            the authenticationRequest to set
+     */
+    @Override
+    public void setAuthenticationRequest(AuthenticationRequest authenticationRequest) {
+	this.authenticationRequest = authenticationRequest;
+    }
 
-	/**
-	 * @param authenticationRequest
-	 *            the authenticationRequest to set
-	 */
-	@Override
-	public void setAuthenticationRequest(
-			AuthenticationRequest authenticationRequest) {
-		this.authenticationRequest = authenticationRequest;
-	}
+    @Override
+    public Integer getIdUser() {
+	return idUser;
+    }
 
-	@Override
-	public Integer getIdUser() {
-		return idUser;
-	}
-
-	/**
-	 * @param idUser
-	 *            the idUser to set
-	 */
-	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
-	}
+    /**
+     * @param idUser
+     *            the idUser to set
+     */
+    public void setIdUser(Integer idUser) {
+	this.idUser = idUser;
+    }
 
 }

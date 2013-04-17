@@ -15,6 +15,7 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -27,7 +28,6 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.SregService;
-import com.ibm.icu.text.SimpleDateFormat;
 
 /**
  * Simple Registration Extension 1.1.
@@ -35,8 +35,7 @@ import com.ibm.icu.text.SimpleDateFormat;
  * @author jirout
  * 
  */
-public class AuthProcSreg11 extends AuthProcSreg10 implements
-	AuthenticationProcessor {
+public class AuthProcSreg11 extends AuthProcSreg10 implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
@@ -65,8 +64,7 @@ public class AuthProcSreg11 extends AuthProcSreg10 implements
 		    fieldsToSign.add(SREG_FULLNAME);
 		}
 		if (SREG_DOB.equals(sregKey) && identity.getDob() != null) {
-		    // TODO replace date constant
-		    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		    response.put(SREG_DOB, sdf.format(identity.getDob()));
 		    fieldsToSign.add(SREG_DOB);
 		}

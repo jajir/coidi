@@ -24,22 +24,22 @@ import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.dao.BaseUserDao;
+import com.coroptis.coidi.op.services.AssociationService;
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
+import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
 
-    private final BaseNonceDao statelessModeNonceDao = EasyMock
-	    .createMock(BaseNonceDao.class);
     private final ConfigurationService configurationService = EasyMock
 	    .createMock(ConfigurationService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-    private final BaseUserDao userDao = EasyMock.createMock(BaseUserDao.class);
+    private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
-    private final BaseAssociationDao associationDao = EasyMock.createMock(BaseAssociationDao.class);
     private final SigningService signingService = EasyMock.createMock(SigningService.class);
     private final StatelessModeNonceService statelessModeNonceService = EasyMock
 	    .createMock(StatelessModeNonceService.class);
@@ -50,12 +50,20 @@ public class Services {
     private final IdentityService identityService = EasyMock.createMock(IdentityService.class);
     private final NegativeResponseGenerator negativeResponseGenerator = EasyMock
 	    .createMock(NegativeResponseGenerator.class);
+    private final CryptoService cryptoService = EasyMock.createMock(CryptoService.class);
+    private final AssociationTool associationTool = EasyMock.createMock(AssociationTool.class);
+    private final BaseNonceDao baseNonceDao = EasyMock.createMock(BaseNonceDao.class);
+    private final AssociationService associationService = EasyMock
+	    .createMock(AssociationService.class);
+    private final BaseAssociationDao baseAssociationDao = EasyMock
+	    .createMock(BaseAssociationDao.class);
 
-    private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
-	    getConfigurationService(), getNonceService(), getAssociationDao(), getSigningService(),
-	    getStatelessModeNonceService(), getAuthenticationProcessor(),
-	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator(),
-	    getUserDao(), getConvertorService() };
+    private final Object[] mocks = new Object[] { getBaseNonceDao(), getConfigurationService(),
+	    getNonceService(), getSigningService(), getStatelessModeNonceService(),
+	    getAuthenticationProcessor(), getAuthenticationService(), getIdentityService(),
+	    getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
+	    getCryptoService(), getAssociationTool(), getAssociationService(),
+	    getBaseAssociationDao() };
 
     private static Services services;
 
@@ -95,24 +103,10 @@ public class Services {
     }
 
     /**
-     * @return the statelessModeNonceDao
-     */
-    public BaseNonceDao getStatelessModeNonceDao() {
-	return statelessModeNonceDao;
-    }
-
-    /**
      * @return the nonceService
      */
     public NonceService getNonceService() {
 	return nonceService;
-    }
-
-    /**
-     * @return the associationDao
-     */
-    public BaseAssociationDao getAssociationDao() {
-	return associationDao;
     }
 
     /**
@@ -160,8 +154,8 @@ public class Services {
     /**
      * @return the userDao
      */
-    public BaseUserDao getUserDao() {
-	return userDao;
+    public BaseUserDao getBaseUserDao() {
+	return baseUserDao;
     }
 
     /**
@@ -169,5 +163,40 @@ public class Services {
      */
     public ConvertorService getConvertorService() {
 	return convertorService;
+    }
+
+    /**
+     * @return the cryptoService
+     */
+    public CryptoService getCryptoService() {
+	return cryptoService;
+    }
+
+    /**
+     * @return the associationTool
+     */
+    public AssociationTool getAssociationTool() {
+	return associationTool;
+    }
+
+    /**
+     * @return the baseNonceDao
+     */
+    public BaseNonceDao getBaseNonceDao() {
+	return baseNonceDao;
+    }
+
+    /**
+     * @return the associationService
+     */
+    public AssociationService getAssociationService() {
+	return associationService;
+    }
+
+    /**
+     * @return the baseAssociationDao
+     */
+    public BaseAssociationDao getBaseAssociationDao() {
+	return baseAssociationDao;
     }
 }

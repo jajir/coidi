@@ -31,9 +31,8 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.google.common.base.Joiner;
 
 /**
- * Class just return back already processes authentication response. If
- * processing comes here it means that there wasn't any errors and message could
- * be signed.
+ * Class just sign already processes authentication response. If processing
+ * comes here it means that there wasn't any errors and message could be signed.
  * 
  * @author jirout
  * 
@@ -52,15 +51,12 @@ public class AuthProcSign implements AuthenticationProcessor {
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
 	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
-	Association association = associationDao.getByAssocHandle(authenticationRequest
-		.getAssocHandle());
-	//TODO neoveruji, ze je associace platna
+	Association association = associationDao.getByAssocHandle(response.getAssocHandle());
 	if (association == null) {
 	    throw new CoidiException("Invalid assoc handle '"
 		    + authenticationRequest.getAssocHandle()
 		    + "', let's try to response in stateless mode.");
 	} else {
-	    response.setAssocHandle(authenticationRequest.getAssocHandle());
 	    response.setSignature(signingService.sign(response, association));
 	}
 	return response;

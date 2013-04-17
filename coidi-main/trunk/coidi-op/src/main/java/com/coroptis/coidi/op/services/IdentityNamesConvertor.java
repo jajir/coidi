@@ -37,27 +37,28 @@ import com.coroptis.coidi.CoidiException;
 public interface IdentityNamesConvertor {
 
     /**
-     * Convert to OP local identifier.
-     * 
-     * @param opIdentifier
-     *            required OP identifier
-     * @return OP local identifier
-     * @throws CoidiException
-     *             when it's not possible to parse opIdentifier
-     */
-    String getOpLocalIdentifier(String opIdentifier);
-
-    /**
-     * Convert to OP identifier.
+     * Convert from OP local identifier to identity id.
      * 
      * @param opLocalIdentifier
      *            required OP local identifier
-     * @return OP identifier
+     * @return identity id
+     * @throws CoidiException
+     *             when it's not possible to parse opIdentifier
      */
-    String getOpIdentifier(String opLocalIdentifier);
+    String convertToIdentityId(String opLocalIdentifier);
+
+    /**
+     * Convert identity id to OP local identifier.
+     * 
+     * @param identityId
+     *            required identity id
+     * @return OP local identifier
+     */
+    String convertToOpLocalIdentifier(String identityId);
 
     /**
      * This inform if given string is in form of local identifier.
+     * 
      * 
      * @param someIdentifier
      *            required some OP identifier

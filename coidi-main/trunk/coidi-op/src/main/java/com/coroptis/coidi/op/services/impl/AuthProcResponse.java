@@ -70,7 +70,6 @@ public class AuthProcResponse implements AuthenticationProcessor {
 	    }
 	}
 	response.setReturnTo(authenticationRequest.getReturnTo());
-	response.put("go_to", authenticationRequest.getReturnTo());
 	response.setOpEndpoint(opServer + "openid");
 	fieldsToSign.add(AuthenticationResponse.RETURN_TO);
 	fieldsToSign.add(AuthenticationResponse.NONCE);

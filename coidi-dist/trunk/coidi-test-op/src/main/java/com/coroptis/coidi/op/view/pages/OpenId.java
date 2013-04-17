@@ -68,7 +68,7 @@ public class OpenId { // NO_UCD
 	    AbstractMessage requestResponse = openIdRequestDispatcher.process(map, userSession);
 	    logger.debug("openId response: " + requestResponse.getMessage());
 	    if (requestResponse.isUrl()) {
-		String redirUrl = requestResponse.getMessage();
+		String redirUrl = requestResponse.getUrl(null);
 		logger.info("SSO openId response is redirect to: '" + redirUrl + "'");
 		response.sendRedirect(redirUrl);
 		return new TextResponse("");

@@ -50,7 +50,7 @@ public class SigningServiceImpl implements SigningService {
 				.extractStringForSign(response, null);
 		logger.debug("Message to sign '" + toSign + "'");
 		try {
-			byte[] b = cryptoService.hmacSha1(
+			byte[] b = cryptoService.generateMac(
 					convertorService.convertToBytes(association.getMacKey()),
 					toSign.getBytes("UTF-8"), association.getAssociationType());
 			return convertorService.convertToString(b);
@@ -66,7 +66,7 @@ public class SigningServiceImpl implements SigningService {
 		String toSign = messageService
 				.extractStringForSign(response, "openid.");
 		try {
-			byte[] b = cryptoService.hmacSha1(
+			byte[] b = cryptoService.generateMac(
 					convertorService.convertToBytes(macKey),
 					toSign.getBytes("UTF-8"), associationType);
 			return convertorService.convertToString(b);

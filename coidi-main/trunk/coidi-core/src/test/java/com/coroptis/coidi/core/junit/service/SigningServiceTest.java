@@ -45,7 +45,7 @@ public class SigningServiceTest extends BaseJunitTest {
 				services.getConvertorService().convertToBytes(
 						"3uAPFsOq3UYQ3v3SeujCZaNclIg=")).andReturn(bytes);
 		EasyMock.expect(
-				services.getCryptographyService().hmacSha1(EasyMock.eq(bytes),
+				services.getCryptographyService().generateMac(EasyMock.eq(bytes),
 						(byte[]) EasyMock.anyObject(),
 						EasyMock.eq(AssociationType.HMAC_SHA1))).andReturn(
 				signature);

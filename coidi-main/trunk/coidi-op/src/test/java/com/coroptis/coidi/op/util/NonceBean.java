@@ -13,38 +13,42 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao;
+package com.coroptis.coidi.op.util;
 
-import com.coroptis.coidi.op.dao.BaseNonceDao;
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
-import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
-public class StatelessModeNonceDaoTest extends AbstractDaoTest {
+public class NonceBean implements Nonce {
 
-    private BaseNonceDao dao;
+    private String nonce;
+    
+    private Association association;
 
-    public void testGetByNonce() throws Exception {
-	Nonce ret = dao.getByNonce("nonce-string-value");
-
-	assertNotNull(ret);
+    /**
+     * @return the nonce
+     */
+    public String getNonce() {
+        return nonce;
     }
 
-    public void testGetByNonce_notFound() throws Exception {
-	Nonce ret = dao.getByNonce("no_such_nonce");
-
-	assertNull(ret);
+    /**
+     * @param nonce the nonce to set
+     */
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
     }
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	dao = getService(BaseNonceDao.class);
+    /**
+     * @return the association
+     */
+    public Association getAssociation() {
+        return association;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-	dao = null;
-	super.tearDown();
+    /**
+     * @param association the association to set
+     */
+    public void setAssociation(Association association) {
+        this.association = association;
     }
-
 }

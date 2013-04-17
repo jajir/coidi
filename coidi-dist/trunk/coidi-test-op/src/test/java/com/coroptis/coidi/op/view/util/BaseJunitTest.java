@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.view.util;
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.test.AbstractJunitTest;
 
 /**
@@ -27,37 +28,37 @@ import com.coroptis.coidi.test.AbstractJunitTest;
  */
 public abstract class BaseJunitTest extends AbstractJunitTest {
 
-	protected Registry registry;
+    protected Registry registry;
 
-	protected Services services;
+    protected Services services;
 
-	public BaseJunitTest() {
-		super(JunitAppModule.class);
-	}
+    public BaseJunitTest() {
+	super(JunitAppModule.class);
+    }
 
-	protected <T> T getService(Class<T> serviceInterface) {
-		return registry.getService(serviceInterface);
-	}
+    protected <T> T getService(Class<T> serviceInterface) {
+	return registry.getService(serviceInterface);
+    }
 
-	@Override
-	public void bind(ServiceBinder binder) {
+    @Override
+    public void bind(ServiceBinder binder) {
 
-	}
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		System.setProperty("op.stateless.mode.association.type", "HMAC-SHA1");
-		System.setProperty("op.server", "http://localhost:8080/");
-		System.setProperty("op.nonce.timeToLiveInSeconds", "1800");
-		System.setProperty("op.err.contact", "john@gmail.com");
-		services = Services.getServices();
-		services.reset();
-		super.setUp();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	System.setProperty(AssociationTool.DEFAULT_ASSOCITION_TYPE, "HMAC-SHA1");
+	System.setProperty("op.server", "http://localhost:8080/");
+	System.setProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS, "1800");
+	System.setProperty("op.err.contact", "john@gmail.com");
+	services = Services.getServices();
+	services.reset();
+	super.setUp();
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		services = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	services = null;
+	super.tearDown();
+    }
 }

@@ -63,7 +63,7 @@ public class NonceServiceImpl implements NonceService {
 	}
 
 	@Override
-	public boolean verifyNonce(final String nonce,
+	public boolean verifyNonceExpiration(final String nonce,
 			final Integer expirationInMinutes) {
 		Date now = new Date();
 		Date nonceDateTime = extractDate(nonce);

@@ -47,9 +47,31 @@ public abstract class AbstractMessage {
 
     private Map<String, String> map;
 
+    /**
+     * it's tru when message could be used in indirect communication (HTTP
+     * redirect).
+     */
     private boolean isUrl;
 
+    /**
+     * It should return messages that could be used in direct communication. It
+     * should be always implemented.
+     * 
+     * @return
+     */
     public abstract String getMessage();
+
+    /**
+     * Return URL string that could be used for indirect communication.
+     * 
+     * @param targetUrl
+     *            required URL to which will be user's browser redirected
+     * @return
+     */
+    public String getUrl(final String targetUrl) {
+	throw new CoidiException("indirect communication message is not supported"
+		+ " for this type of message");
+    }
 
     AbstractMessage() {
 	map = new HashMap<String, String>();
@@ -100,26 +122,33 @@ public abstract class AbstractMessage {
 	}
     }
 
-    protected String getPrefixedMessage(final String keyPrefix) {
+    protected String getUrlMessage(final String keyPrefix, final String targetUrl) {
 	try {
 	    if (isUrl()) {
 		StringBuilder buff = concatEntries(keyPrefix, "=", "&");
-		String returnTo = get("go_to");
-		if (returnTo == null) {
-		    logger.info("There is no 'go_to' parameter in message '" + buff.toString()
-			    + "'");
+		if (targetUrl == null) {
+		    logger.warn("targetUrl method return null!");
 		} else {
-		    if (returnTo.contains("?")) {
+		    if (targetUrl.contains("?")) {
 			buff.insert(0, "&");
 		    } else {
 			buff.insert(0, "?");
 		    }
-		    buff.insert(0, returnTo);
+		    buff.insert(0, targetUrl);
 		}
 		return buff.toString();
 	    } else {
-		return concatEntries(keyPrefix, ":", "\n").toString();
+		throw new CoidiException("it's not Url message type, call different method.");
 	    }
+	} catch (UnsupportedEncodingException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
+	}
+    }
+
+    protected String getPrefixedMessage(final String keyPrefix) {
+	try {
+	    return concatEntries(keyPrefix, ":", "\n").toString();
 	} catch (UnsupportedEncodingException e) {
 	    logger.error(e.getMessage(), e);
 	    throw new CoidiException(e.getMessage(), e);

@@ -17,11 +17,11 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 /**
@@ -33,49 +33,27 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherChecker implements OpenIdDispatcher {
 
-	private final static Logger logger = Logger
-			.getLogger(OpenIdDispatcherChecker.class);
+    private final static String OPENID_NS = AbstractMessage.OPENID + AbstractMessage.OPENID_NS;
 
-	private final static String OPENID_NS = AbstractMessage.OPENID
-			+ AbstractMessage.OPENID_NS;
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
 
-	@Override
-	public AbstractMessage process(Map<String, String> requestParams,
-			UserSessionSkeleton userSession) {
-		if (requestParams.get(OPENID_MODE) == null) {
-		    //TODO move to negative response generator
-			StringBuilder buff = new StringBuilder();
-			buff.append("key value '");
-			buff.append(OPENID_MODE);
-			buff.append("' is empty");
-			logger.error(buff.toString());
-			ErrorResponse errorResponse = new ErrorResponse(false);
-			errorResponse.setError(buff.toString());
-			return errorResponse;
-		}
-		if (requestParams.get(OPENID_NS) == null) {
-			StringBuilder buff = new StringBuilder();
-			buff.append("key value '");
-			buff.append(OPENID_NS);
-			buff.append("' is empty");
-			logger.error(buff.toString());
-			ErrorResponse errorResponse = new ErrorResponse(false);
-			errorResponse.setError(buff.toString());
-			return errorResponse;
-		} else {
-			if (!AbstractMessage.OPENID_NS_20.equals(requestParams
-					.get(OPENID_NS))) {
-				StringBuilder buff = new StringBuilder();
-				buff.append("Unsupported OpenId namespace '");
-				buff.append(requestParams.get(OPENID_NS));
-				buff.append("'");
-				logger.error(buff.toString());
-				ErrorResponse errorResponse = new ErrorResponse(false);
-				errorResponse.setError(buff.toString());
-				return errorResponse;
-			}
-		}
-		return null;
+    @Override
+    public AbstractMessage process(Map<String, String> requestParams,
+	    UserSessionSkeleton userSession) {
+	if (requestParams.get(OPENID_MODE) == null) {
+	    return negativeResponseGenerator
+		    .simpleError("key value '" + OPENID_MODE + "' is empty");
 	}
+	if (requestParams.get(OPENID_NS) == null) {
+	    return negativeResponseGenerator.simpleError("key value '" + OPENID_NS + "' is empty");
+	} else {
+	    if (!AbstractMessage.OPENID_NS_20.equals(requestParams.get(OPENID_NS))) {
+		return negativeResponseGenerator.simpleError("Unsupported OpenId namespace '"
+			+ requestParams.get(OPENID_NS) + "'");
+	    }
+	}
+	return null;
+    }
 
 }
