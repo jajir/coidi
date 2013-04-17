@@ -19,11 +19,11 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
 
 public interface XrdsService {
 
-	/**
-	 * 
-	 * @param xrdsDocument
-	 * @return
-	 */
-	DiscoveryResult extractDiscoveryResult(String xrdsDocument);
+    /**
+     * 
+     * @param xrdsDocument
+     * @return
+     */
+    DiscoveryResult extractDiscoveryResult(String xrdsDocument);
 
 }

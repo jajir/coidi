@@ -21,10 +21,10 @@ import org.apache.tapestry5.annotations.SessionState;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
 public class Index {
-    
+
     @SuppressWarnings("unused")
     @Property
     @SessionState
     private UserSession userSession;
-    
+
 }

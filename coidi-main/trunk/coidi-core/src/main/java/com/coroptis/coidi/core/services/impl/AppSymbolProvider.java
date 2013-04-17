@@ -31,11 +31,11 @@ import com.coroptis.coidi.core.services.ConfigurationService;
  */
 public class AppSymbolProvider implements SymbolProvider {
 
-	@Inject
-	private ConfigurationService configurationService;
+    @Inject
+    private ConfigurationService configurationService;
 
-	@Override
-	public String valueForSymbol(String symbolName) {
-		return configurationService.getProperty(symbolName);
-	}
+    @Override
+    public String valueForSymbol(String symbolName) {
+	return configurationService.getProperty(symbolName);
+    }
 }

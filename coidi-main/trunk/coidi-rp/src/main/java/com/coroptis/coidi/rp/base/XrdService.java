@@ -22,72 +22,72 @@ import com.coroptis.coidi.OpenIdNs;
 
 public class XrdService implements OpenIdNs {
 
-	private Integer priority;
+    private Integer priority;
 
-	private String url;
+    private String url;
 
-	private String localId;
+    private String localId;
 
-	private final Set<String> types = new HashSet<String>();
+    private final Set<String> types = new HashSet<String>();
 
-	public Boolean idPresent(String serviceType) {
-		return types.contains(serviceType);
-	}
+    public Boolean idPresent(String serviceType) {
+	return types.contains(serviceType);
+    }
 
-	public Integer getEffectivePriority() {
-		return priority == null ? Integer.MAX_VALUE : priority;
-	}
+    public Integer getEffectivePriority() {
+	return priority == null ? Integer.MAX_VALUE : priority;
+    }
 
-	/**
-	 * @return the priority
-	 */
-	public Integer getPriority() {
-		return priority;
-	}
+    /**
+     * @return the priority
+     */
+    public Integer getPriority() {
+	return priority;
+    }
 
-	/**
-	 * @param priority
-	 *            the priority to set
-	 */
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    /**
+     * @param priority
+     *            the priority to set
+     */
+    public void setPriority(Integer priority) {
+	this.priority = priority;
+    }
 
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+	return url;
+    }
 
-	/**
-	 * @param url
-	 *            the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /**
+     * @param url
+     *            the url to set
+     */
+    public void setUrl(String url) {
+	this.url = url;
+    }
 
-	/**
-	 * @return the types
-	 */
-	public Set<String> getTypes() {
-		return types;
-	}
+    /**
+     * @return the types
+     */
+    public Set<String> getTypes() {
+	return types;
+    }
 
-	/**
-	 * @return the localID
-	 */
-	public String getLocalId() {
-		return localId;
-	}
+    /**
+     * @return the localID
+     */
+    public String getLocalId() {
+	return localId;
+    }
 
-	/**
-	 * @param localID
-	 *            the localID to set
-	 */
-	public void setLocalId(String localID) {
-		this.localId = localID;
-	}
+    /**
+     * @param localID
+     *            the localID to set
+     */
+    public void setLocalId(String localID) {
+	this.localId = localID;
+    }
 
 }

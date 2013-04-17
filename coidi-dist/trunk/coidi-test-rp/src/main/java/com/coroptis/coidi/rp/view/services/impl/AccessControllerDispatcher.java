@@ -40,68 +40,65 @@ import com.coroptis.coidi.rp.view.util.UserSession;
  */
 public class AccessControllerDispatcher implements Dispatcher {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	private final static String LOGIN_PAGE = "/login";
+    private final static String LOGIN_PAGE = "/login";
 
-	private ApplicationStateManager asm;
-	private final ComponentClassResolver resolver;
-	private final ComponentSource componentSource;
+    private ApplicationStateManager asm;
+    private final ComponentClassResolver resolver;
+    private final ComponentSource componentSource;
 
-	public AccessControllerDispatcher(ApplicationStateManager asm,
-			ComponentClassResolver resolver, ComponentSource componentSource) {
-		this.asm = asm;
-		this.resolver = resolver;
-		this.componentSource = componentSource;
+    public AccessControllerDispatcher(ApplicationStateManager asm, ComponentClassResolver resolver,
+	    ComponentSource componentSource) {
+	this.asm = asm;
+	this.resolver = resolver;
+	this.componentSource = componentSource;
+    }
+
+    public boolean dispatch(Request request, Response response) throws IOException {
+	String path = request.getPath();
+	if (path.equals("")) {
+	    return false;
 	}
 
-	public boolean dispatch(Request request, Response response)
-			throws IOException {
-		String path = request.getPath();
-		if (path.equals("")) {
-			return false;
-		}
+	int nextslashx = path.length();
+	String pageName;
+	logger.debug("page path: " + request.getPath());
 
-		int nextslashx = path.length();
-		String pageName;
-		logger.debug("page path: " + request.getPath());
-
-		while (true) {
-			pageName = path.substring(1, nextslashx);
-			if (!pageName.endsWith("/") && resolver.isPageName(pageName))
-				break;
-			nextslashx = path.lastIndexOf('/', nextslashx - 1);
-			if (nextslashx <= 1)
-				return false;
-		}
-		return checkAccess(pageName, request, response);
-	}
-
-	private boolean checkAccess(String pageName, Request request,
-			Response response) throws IOException {
-		Component page = componentSource.getPage(pageName);
-		if (page.getClass().getAnnotation(AccessOnlyForSigned.class) != null) {
-			if (asm.exists(UserSession.class)
-					&& asm.get(UserSession.class).isLogged()) {
-				return false;
-			} else {
-				response.sendRedirect(request.getContextPath() + LOGIN_PAGE);
-				return true;
-			}
-		}
-
-		if (page.getClass().getAnnotation(AccessOnlyForUnsigned.class) != null) {
-			if (asm.exists(UserSession.class)
-					&& asm.get(UserSession.class).isLogged()) {
-				response.sendRedirect(request.getContextPath());
-				return true;
-			} else {
-				return false;
-			}
-		}
-
+	while (true) {
+	    pageName = path.substring(1, nextslashx);
+	    if (!pageName.endsWith("/") && resolver.isPageName(pageName))
+		break;
+	    nextslashx = path.lastIndexOf('/', nextslashx - 1);
+	    if (nextslashx <= 1)
 		return false;
 	}
+	return checkAccess(pageName, request, response);
+    }
+
+    private boolean checkAccess(String pageName, Request request, Response response)
+	    throws IOException {
+	Component page = componentSource.getPage(pageName);
+	if (page.getClass().getAnnotation(AccessOnlyForSigned.class) != null) {
+	    if (asm.exists(UserSession.class) && asm.get(UserSession.class).isLogged()) {
+		return false;
+	    } else {
+		response.sendRedirect(request.getContextPath() + LOGIN_PAGE);
+		return true;
+	    }
+	}
+
+	if (page.getClass().getAnnotation(AccessOnlyForUnsigned.class) != null) {
+	    if (asm.exists(UserSession.class) && asm.get(UserSession.class).isLogged()) {
+		response.sendRedirect(request.getContextPath());
+		return true;
+	    } else {
+		return false;
+	    }
+	}
+
+	return false;
+    }
 
 }

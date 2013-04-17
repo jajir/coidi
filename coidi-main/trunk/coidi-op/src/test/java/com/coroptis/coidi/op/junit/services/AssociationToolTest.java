@@ -25,40 +25,39 @@ import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
 public class AssociationToolTest extends AbstractT5JunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private AssociationTool service;
+    private AssociationTool service;
 
-	public void testGetTimeToLive() throws Exception {
-		/**
-		 * How many second could ttl differ from expected time and is still took
-		 * as valid.
-		 */
-		long delta = 5;
-		
-		long nowInSec = System.currentTimeMillis();
-		Date ret = service.getTimeToLive();
+    public void testGetTimeToLive() throws Exception {
+	/**
+	 * How many second could ttl differ from expected time and is still took
+	 * as valid.
+	 */
+	long delta = 5;
 
-		assertNotNull(ret);
-		long ttl = ret.getTime();
-		assertTrue(ttl - nowInSec < 30 * 60 * 1000 + (1000 * delta));
-	}
+	long nowInSec = System.currentTimeMillis();
+	Date ret = service.getTimeToLive();
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(AssociationTool.class, AssociationToolImpl.class)
-				.withId(SERVICE_NAME);
-	}
+	assertNotNull(ret);
+	long ttl = ret.getTime();
+	assertTrue(ttl - nowInSec < 30 * 60 * 1000 + (1000 * delta));
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		service = getService(SERVICE_NAME, AssociationTool.class);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(AssociationTool.class, AssociationToolImpl.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		service = null;
-		super.tearDown();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	service = getService(SERVICE_NAME, AssociationTool.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+	service = null;
+	super.tearDown();
+    }
 }

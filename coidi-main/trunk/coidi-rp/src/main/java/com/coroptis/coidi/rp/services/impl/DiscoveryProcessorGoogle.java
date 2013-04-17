@@ -31,21 +31,20 @@ import com.google.common.base.Preconditions;
  */
 public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
 
-	private final static Logger logger = Logger
-			.getLogger(DiscoveryProcessorGoogle.class);
+    private final static Logger logger = Logger.getLogger(DiscoveryProcessorGoogle.class);
 
-	@Inject
-	private DiscoverySupport discoverySupport;
+    @Inject
+    private DiscoverySupport discoverySupport;
 
-	public DiscoveryResult dicovery(String userSuppliedId) {
-		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
-		if (discoverySupport.isItEmail(userSuppliedId)) {
-			logger.debug("It's gmail id '" + userSuppliedId + "'");
-			return discoverySupport.getXrdsDocument(
-					"https://www.google.com/accounts/o8/id", userSuppliedId);
-		} else {
-			return null;
-		}
+    public DiscoveryResult dicovery(String userSuppliedId) {
+	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
+	if (discoverySupport.isItEmail(userSuppliedId)) {
+	    logger.debug("It's gmail id '" + userSuppliedId + "'");
+	    return discoverySupport.getXrdsDocument("https://www.google.com/accounts/o8/id",
+		    userSuppliedId);
+	} else {
+	    return null;
 	}
+    }
 
 }

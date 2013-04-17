@@ -115,8 +115,8 @@ public class Login {
 	try {
 	    DiscoveryResult discoveryResult = discoveryProcessor.dicovery(userSuppliedId);
 	    if (discoveryResult == null) {
-		 openId.recordError("Invalid user supplied ID, unable to get XRDS document.");
-		 return;
+		openId.recordError("Invalid user supplied ID, unable to get XRDS document.");
+		return;
 	    }
 	    logger.debug("claimed ID from discovery '" + discoveryResult.getClaimedId() + "'");
 	    AuthenticationParameters params = new AuthenticationParameters();

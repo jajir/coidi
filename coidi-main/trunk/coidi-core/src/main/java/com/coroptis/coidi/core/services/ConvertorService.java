@@ -19,13 +19,13 @@ import java.math.BigInteger;
 
 public interface ConvertorService {
 
-	Integer getInt(String val);
+    Integer getInt(String val);
 
-	byte[] convertToBytes(String s);
+    byte[] convertToBytes(String s);
 
-	String convertToString(byte[] b);
+    String convertToString(byte[] b);
 
-	String convertToString(BigInteger b);
+    String convertToString(BigInteger b);
 
-	BigInteger convertToBigIntegerFromString(String s);
+    BigInteger convertToBigIntegerFromString(String s);
 }

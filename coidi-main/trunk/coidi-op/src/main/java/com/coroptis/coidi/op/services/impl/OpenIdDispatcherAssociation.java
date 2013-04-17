@@ -86,7 +86,7 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		return negativeResponseGenerator.simpleError("Parameter '"
 			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
 	    }
-	    
+
 	    Association association = associationService.createAssociation(
 		    request.getAssociationType(), request.getSessionType());
 	    AssociationResponse out = new AssociationResponse();
@@ -94,14 +94,14 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		logger.info("No encryption was setup during association request/response.");
 		byte macKey[] = cryptoService.generateAssociationRandom(association
 			.getAssociationType());
-		//TODO format of mac key should be unified
+		// TODO format of mac key should be unified
 		association.setMacKey(convertorService.convertToString(macKey));
 		out.setMacKey(macKey);
 	    } else {
 		association.setMacKey(convertorService.convertToString(cryptoService
 			.generateSessionRandom(association.getSessionType())));
 		KeyPair cryptoSession = cryptoSessionService.generateCryptoSession(request);
-		//TODO format of mac key should be unified
+		// TODO format of mac key should be unified
 		out.setEncMacKey(cryptographyService.encryptSecret(cryptoSession,
 			request.getDhConsumerPublic(),
 			convertorService.convertToBytes(association.getMacKey()),

@@ -25,44 +25,42 @@ import com.google.common.io.Files;
 
 public class ProcessXrdsTest extends AbstractIntegrationTest {
 
-	// TODO convert it to junit test
+    // TODO convert it to junit test
 
-	public void testProcessExample1() throws Exception {
-		DiscoveryResult ret = readValue("src/test/resources/example-xrds1.xml");
+    public void testProcessExample1() throws Exception {
+	DiscoveryResult ret = readValue("src/test/resources/example-xrds1.xml");
 
-		assertEquals("http://www.myopenid.com/server", ret.getEndPoint());
-	}
+	assertEquals("http://www.myopenid.com/server", ret.getEndPoint());
+    }
 
-	public void testProcessExample2() throws Exception {
-		DiscoveryResult ret = readValue("src/test/resources/example-xrds2.xml");
+    public void testProcessExample2() throws Exception {
+	DiscoveryResult ret = readValue("src/test/resources/example-xrds2.xml");
 
-		assertEquals("http://www.livejournal.com/openid/server.bml",
-				ret.getEndPoint());
-	}
+	assertEquals("http://www.livejournal.com/openid/server.bml", ret.getEndPoint());
+    }
 
-	public void testProcessExample3() throws Exception {
-		DiscoveryResult ret = readValue("src/test/resources/example-xrds3.xml");
+    public void testProcessExample3() throws Exception {
+	DiscoveryResult ret = readValue("src/test/resources/example-xrds3.xml");
 
-		assertEquals("http://localhost:8080/openid", ret.getEndPoint());
-	}
+	assertEquals("http://localhost:8080/openid", ret.getEndPoint());
+    }
 
-	public void testProcessExample4() throws Exception {
-		DiscoveryResult ret = readValue("src/test/resources/example-xrds4.xml");
+    public void testProcessExample4() throws Exception {
+	DiscoveryResult ret = readValue("src/test/resources/example-xrds4.xml");
 
-		assertEquals("https://www.google.com/accounts/o8/ud", ret.getEndPoint());
-	}
+	assertEquals("https://www.google.com/accounts/o8/ud", ret.getEndPoint());
+    }
 
-	public void testProcessExample5() throws Exception {
-		DiscoveryResult ret = readValue("src/test/resources/example-xrds5.xml");
+    public void testProcessExample5() throws Exception {
+	DiscoveryResult ret = readValue("src/test/resources/example-xrds5.xml");
 
-		assertEquals("http://server.myid.net/server/2.0", ret.getEndPoint());
-	}
+	assertEquals("http://server.myid.net/server/2.0", ret.getEndPoint());
+    }
 
-	private DiscoveryResult readValue(String fileName) throws Exception {
-		XrdsService xrdsService = getService(XrdsService.class);
-		String xrds = Files.toString(new File(fileName),
-				Charset.forName("UTF-8"));
-		return xrdsService.extractDiscoveryResult(xrds);
-	}
+    private DiscoveryResult readValue(String fileName) throws Exception {
+	XrdsService xrdsService = getService(XrdsService.class);
+	String xrds = Files.toString(new File(fileName), Charset.forName("UTF-8"));
+	return xrdsService.extractDiscoveryResult(xrds);
+    }
 
 }

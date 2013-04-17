@@ -92,7 +92,8 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 		services.getNegativeResponseGenerator().simpleError(
 			"There is no such identity 'http://pond.com/duck'")).andReturn(
 		errorResponse);
-	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+	EasyMock.expect(
+		services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
 		.andReturn(null);
 	services.replay();
 	AbstractMessage ret = service.process(params, userSession);
@@ -116,7 +117,8 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 		services.getNegativeResponseGenerator().simpleError(
 			"Idenity 'http://pond.com/duck' is not logged in"))
 		.andReturn(errorResponse);
-	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+	EasyMock.expect(
+		services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
 		.andReturn(identity);
 	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
 		.andReturn(false);
@@ -139,7 +141,8 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 	EasyMock.expect(
 		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
 		.andReturn(true);
-	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+	EasyMock.expect(
+		services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
 		.andReturn(identity);
 	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
 		.andReturn(true);

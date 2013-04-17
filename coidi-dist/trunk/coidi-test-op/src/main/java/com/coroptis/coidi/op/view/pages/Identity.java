@@ -43,7 +43,7 @@ public class Identity { // NO_UCD
     @Inject
     @Symbol("op.server")
     private String opServer;
-    
+
     @Inject
     private Logger logger;
 

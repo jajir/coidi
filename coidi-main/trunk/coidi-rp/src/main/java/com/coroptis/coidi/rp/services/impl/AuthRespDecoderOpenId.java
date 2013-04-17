@@ -22,57 +22,53 @@ import com.coroptis.coidi.rp.services.NonceDao;
  */
 public class AuthRespDecoderOpenId implements AuthRespDecoder {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private NonceService nonceService;
+    @Inject
+    private NonceService nonceService;
 
-	@Inject
-	private SigningService signingService;
+    @Inject
+    private SigningService signingService;
 
-	@Inject
-	private NonceDao nonceDao;
+    @Inject
+    private NonceDao nonceDao;
 
-	@Override
-	public Boolean decode(final AuthenticationResponse authenticationResponse,
-			final Association association,
-			final AuthenticationResult authenticationResult) {
-		if (authenticationResponse.getMode() == null) {
-			logger.warn("openid.mode is not in authentication response: "
-					+ authenticationResponse.getMessage());
-			return false;
-		}
-		if (authenticationResponse.getMode().equals("cancel")) {
-			authenticationResult.setStatus(Status.cancel);
-		} else if (authenticationResponse.getMode().equals("id_res")) {
-			authenticationResult.setStatus(Status.res);
-			if (nonceService.verifyNonceExpiration(authenticationResponse.getNonce(),
-					AuthenticationService.NONCE_EXPIRATION_TIME_IN_MINUTES)) {
-				nonceDao.storeNonce(authenticationResponse.getNonce());
-			} else {
-				logger.warn("nonce is expired in authentication response: "
-						+ authenticationResponse.getMessage());
-				return false;
-			}
-			String signature = signingService.sign(authenticationResponse,
-					association);
-			if (!signature.equals(authenticationResponse.getSignature())) {
-				logger.warn("Signature in authentication response '"
-						+ authenticationResponse.getSignature()
-						+ "' is not same as computed '" + signature
-						+ "', used association: " + association
-						+ ", from authentication response "
-						+ authenticationResponse.getMessage());
-				return false;
-			}
-		} else {
-			logger.warn("openid.mode value is not valid in authentication response: "
-					+ authenticationResponse.getMessage());
-			return false;
-		}
-		authenticationResult.setIdentity(authenticationResponse.getIdentity());
-		return null;
+    @Override
+    public Boolean decode(final AuthenticationResponse authenticationResponse,
+	    final Association association, final AuthenticationResult authenticationResult) {
+	if (authenticationResponse.getMode() == null) {
+	    logger.warn("openid.mode is not in authentication response: "
+		    + authenticationResponse.getMessage());
+	    return false;
 	}
+	if (authenticationResponse.getMode().equals("cancel")) {
+	    authenticationResult.setStatus(Status.cancel);
+	} else if (authenticationResponse.getMode().equals("id_res")) {
+	    authenticationResult.setStatus(Status.res);
+	    if (nonceService.verifyNonceExpiration(authenticationResponse.getNonce(),
+		    AuthenticationService.NONCE_EXPIRATION_TIME_IN_MINUTES)) {
+		nonceDao.storeNonce(authenticationResponse.getNonce());
+	    } else {
+		logger.warn("nonce is expired in authentication response: "
+			+ authenticationResponse.getMessage());
+		return false;
+	    }
+	    String signature = signingService.sign(authenticationResponse, association);
+	    if (!signature.equals(authenticationResponse.getSignature())) {
+		logger.warn("Signature in authentication response '"
+			+ authenticationResponse.getSignature() + "' is not same as computed '"
+			+ signature + "', used association: " + association
+			+ ", from authentication response " + authenticationResponse.getMessage());
+		return false;
+	    }
+	} else {
+	    logger.warn("openid.mode value is not valid in authentication response: "
+		    + authenticationResponse.getMessage());
+	    return false;
+	}
+	authenticationResult.setIdentity(authenticationResponse.getIdentity());
+	return null;
+    }
 
 }

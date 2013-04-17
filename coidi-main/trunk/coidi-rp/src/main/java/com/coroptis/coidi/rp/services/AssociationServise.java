@@ -21,7 +21,7 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public interface AssociationServise {
 
-	Association generateAssociation(String opEndpoint, SessionType sessionType,
-			AssociationType associationType);
+    Association generateAssociation(String opEndpoint, SessionType sessionType,
+	    AssociationType associationType);
 
 }

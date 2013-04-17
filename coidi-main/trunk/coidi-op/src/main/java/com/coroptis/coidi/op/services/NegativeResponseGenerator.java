@@ -28,8 +28,7 @@ public interface NegativeResponseGenerator {
     static final String APPLICATION_ERROR_KEY = "appErr";
 
     static final String APPLICATION_ERROR_SELECT_IDENTITY = "selectIdentity";
-    
-    
+
     /**
      * Generated error with given message.
      * 

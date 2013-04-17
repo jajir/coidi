@@ -37,54 +37,49 @@ import com.google.common.base.Preconditions;
 
 public class CryptographyServiceImpl implements CryptographyService {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private CryptoSessionService cryptoSessionService;
+    @Inject
+    private CryptoSessionService cryptoSessionService;
 
-	@Override
-	public byte[] generateMac(final byte[] key, final byte[] text,
-			final AssociationType associationType) {
-		try {
-			SecretKey sk = new SecretKeySpec(key,
-					associationType.getAlgorithmName());
-			Mac m = Mac.getInstance(sk.getAlgorithm());
-			m.init(sk);
-			return m.doFinal(text);
-		} catch (InvalidKeyException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
-		} catch (NoSuchAlgorithmException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
-		}
+    @Override
+    public byte[] generateMac(final byte[] key, final byte[] text,
+	    final AssociationType associationType) {
+	try {
+	    SecretKey sk = new SecretKeySpec(key, associationType.getAlgorithmName());
+	    Mac m = Mac.getInstance(sk.getAlgorithm());
+	    m.init(sk);
+	    return m.doFinal(text);
+	} catch (InvalidKeyException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
+	} catch (NoSuchAlgorithmException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
 	}
+    }
 
-	@Override
-	public byte[] encryptSecret(final KeyPair keyPair,
-			final BigInteger dhConsumerPublic, final byte[] macKey,
-			final SessionType sessionType) {
-		return cryptoSessionService.xorSecret(keyPair, dhConsumerPublic,
-				macKey, sessionType);
-	}
+    @Override
+    public byte[] encryptSecret(final KeyPair keyPair, final BigInteger dhConsumerPublic,
+	    final byte[] macKey, final SessionType sessionType) {
+	return cryptoSessionService.xorSecret(keyPair, dhConsumerPublic, macKey, sessionType);
+    }
 
-	@Override
-	public byte[] computeDigest(final byte[] text, final SessionType sessionType) {
-		Preconditions.checkNotNull(text, "signing text");
-		Preconditions.checkNotNull(sessionType, "sessionType");
-		if (sessionType.equals(SessionType.no_encription)) {
-			throw new CoidiException(
-					"Can't sign when session type is 'no-encryption'");
-		}
-		try {
-			MessageDigest d = MessageDigest.getInstance(sessionType
-					.getAlgorithmName());
-			return d.digest(text);
-		} catch (NoSuchAlgorithmException e) {
-			logger.error(e.getMessage(), e);
-			throw new CoidiException(e.getMessage(), e);
-		}
+    @Override
+    public byte[] computeDigest(final byte[] text, final SessionType sessionType) {
+	Preconditions.checkNotNull(text, "signing text");
+	Preconditions.checkNotNull(sessionType, "sessionType");
+	if (sessionType.equals(SessionType.no_encription)) {
+	    throw new CoidiException("Can't sign when session type is 'no-encryption'");
 	}
+	try {
+	    MessageDigest d = MessageDigest.getInstance(sessionType.getAlgorithmName());
+	    return d.digest(text);
+	} catch (NoSuchAlgorithmException e) {
+	    logger.error(e.getMessage(), e);
+	    throw new CoidiException(e.getMessage(), e);
+	}
+    }
 
 }

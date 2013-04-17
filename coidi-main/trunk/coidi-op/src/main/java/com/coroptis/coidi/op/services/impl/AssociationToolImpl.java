@@ -49,8 +49,7 @@ public class AssociationToolImpl implements AssociationTool {
     private final AssociationType defaultAssociationType;
 
     public AssociationToolImpl( // NO_UCD
-	    @Inject @Symbol(DEFAULT_ASSOCITION_TYPE) final String assocTypeStr,
-	    final Logger logger) {
+	    @Inject @Symbol(DEFAULT_ASSOCITION_TYPE) final String assocTypeStr, final Logger logger) {
 	defaultAssociationType = AssociationType.convert(assocTypeStr);
 	this.logger = logger;
 	logger.debug("stateless mode association type: " + defaultAssociationType);

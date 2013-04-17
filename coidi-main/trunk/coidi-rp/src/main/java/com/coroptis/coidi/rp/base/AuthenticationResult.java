@@ -11,57 +11,59 @@ import java.util.Map;
  */
 public class AuthenticationResult {
 
-	public enum Status {
-		res, cancel;
-	}
+    public enum Status {
+	res, cancel;
+    }
 
-	private Status status;
+    private Status status;
 
-	private String identity;
-	
-	private final Map<String, ExtensionResult> extensions = new HashMap<String, ExtensionResult>();
+    private String identity;
 
-	public boolean isPositive() {
-		return Status.res.equals(status);
-	}
+    private final Map<String, ExtensionResult> extensions = new HashMap<String, ExtensionResult>();
 
-	/**
-	 * @return the extensions
-	 */
-	public Map<String, ExtensionResult> getExtensions() {
-		return extensions;
-	}
+    public boolean isPositive() {
+	return Status.res.equals(status);
+    }
 
-	public ExtensionResultSreg getSreg() {
-		return (ExtensionResultSreg) extensions.get(ExtensionResultSreg.CODE);
-	}
+    /**
+     * @return the extensions
+     */
+    public Map<String, ExtensionResult> getExtensions() {
+	return extensions;
+    }
 
-	/**
-	 * @return the status
-	 */
-	public Status getStatus() {
-		return status;
-	}
+    public ExtensionResultSreg getSreg() {
+	return (ExtensionResultSreg) extensions.get(ExtensionResultSreg.CODE);
+    }
 
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+    /**
+     * @return the status
+     */
+    public Status getStatus() {
+	return status;
+    }
 
-	/**
-	 * @return the identity
-	 */
-	public String getIdentity() {
-		return identity;
-	}
+    /**
+     * @param status
+     *            the status to set
+     */
+    public void setStatus(Status status) {
+	this.status = status;
+    }
 
-	/**
-	 * @param identity the identity to set
-	 */
-	public void setIdentity(String identity) {
-		this.identity = identity;
-	}
+    /**
+     * @return the identity
+     */
+    public String getIdentity() {
+	return identity;
+    }
+
+    /**
+     * @param identity
+     *            the identity to set
+     */
+    public void setIdentity(String identity) {
+	this.identity = identity;
+    }
 
 }

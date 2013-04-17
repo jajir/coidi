@@ -16,46 +16,41 @@ import com.google.common.io.Files;
 
 public class XrdsServiceTest extends AbstractLocalJunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private XrdsService discoverySupport;
+    private XrdsService discoverySupport;
 
-	public void testExtractDiscoveryResult() throws Exception {
-		expect(services.getConvertorService().getInt("100")).andReturn(
-				Integer.valueOf(100));
-		expect(services.getConvertorService().getInt("10")).andReturn(
-				Integer.valueOf(10));
-		services.replay();
-		DiscoveryResult ret = discoverySupport
-				.extractDiscoveryResult(readFile("src/test/resources/example-xrds3.xml"));
+    public void testExtractDiscoveryResult() throws Exception {
+	expect(services.getConvertorService().getInt("100")).andReturn(Integer.valueOf(100));
+	expect(services.getConvertorService().getInt("10")).andReturn(Integer.valueOf(10));
+	services.replay();
+	DiscoveryResult ret = discoverySupport
+		.extractDiscoveryResult(readFile("src/test/resources/example-xrds3.xml"));
 
-		assertNotNull(ret);
-		assertEquals("http://localhost:8080/user/juan", ret
-				.getPreferedService().getLocalId());
-		services.verify();
-	}
+	assertNotNull(ret);
+	assertEquals("http://localhost:8080/user/juan", ret.getPreferedService().getLocalId());
+	services.verify();
+    }
 
-	private String readFile(String fileName) throws IOException {
-		String xrds = Files.toString(new File(fileName),
-				Charset.forName("UTF-8"));
-		return xrds;
-	}
+    private String readFile(String fileName) throws IOException {
+	String xrds = Files.toString(new File(fileName), Charset.forName("UTF-8"));
+	return xrds;
+    }
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(XrdsService.class, XrdsServiceImpl.class).withId(
-				SERVICE_NAME);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(XrdsService.class, XrdsServiceImpl.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		discoverySupport = getService(SERVICE_NAME, XrdsService.class);
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	discoverySupport = getService(SERVICE_NAME, XrdsService.class);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		discoverySupport = null;
-		super.tearDown();
-	}
+    @Override
+    protected void tearDown() throws Exception {
+	discoverySupport = null;
+	super.tearDown();
+    }
 }

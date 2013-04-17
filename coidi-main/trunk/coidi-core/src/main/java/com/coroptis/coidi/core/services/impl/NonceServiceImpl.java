@@ -37,64 +37,60 @@ import com.google.common.base.Preconditions;
  */
 public class NonceServiceImpl implements NonceService {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	private final SecureRandom random;
+    private final SecureRandom random;
 
-	@Inject
-	private ConvertorService convertorService;
+    @Inject
+    private ConvertorService convertorService;
 
-	public NonceServiceImpl() throws NoSuchAlgorithmException {
-		random = SecureRandom.getInstance("SHA1PRNG");
+    public NonceServiceImpl() throws NoSuchAlgorithmException {
+	random = SecureRandom.getInstance("SHA1PRNG");
+    }
+
+    @Override
+    public Date extractDate(final String nonce) {
+	SimpleDateFormat isoDateFormatter = new SimpleDateFormat(ISO_DATETIME_FORMAT);
+	isoDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+	try {
+	    return isoDateFormatter.parse(Preconditions.checkNotNull(nonce, "nonce is null"));
+	} catch (ParseException e) {
+	    return null;
+	}
+    }
+
+    @Override
+    public boolean verifyNonceExpiration(final String nonce, final Integer expirationInMinutes) {
+	Date now = new Date();
+	Date nonceDateTime = extractDate(nonce);
+
+	if (nonceDateTime == null) {
+	    logger.info("Nonce is invalid");
+	    return false;
 	}
 
-	@Override
-	public Date extractDate(final String nonce) {
-		SimpleDateFormat isoDateFormatter = new SimpleDateFormat(
-				ISO_DATETIME_FORMAT);
-		isoDateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-		try {
-			return isoDateFormatter.parse(Preconditions.checkNotNull(nonce,
-					"nonce is null"));
-		} catch (ParseException e) {
-			return null;
-		}
+	Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+	calendar.setTime(nonceDateTime);
+	calendar.add(Calendar.MINUTE, expirationInMinutes);
+	if (calendar.getTime().before(now)) {
+	    logger.debug("Nonce expired. Because now is '" + now + "' and nonce is '"
+		    + calendar.getTime() + "'");
+	    return false;
 	}
 
-	@Override
-	public boolean verifyNonceExpiration(final String nonce,
-			final Integer expirationInMinutes) {
-		Date now = new Date();
-		Date nonceDateTime = extractDate(nonce);
+	return true;
+    }
 
-		if (nonceDateTime == null) {
-			logger.info("Nonce is invalid");
-			return false;
-		}
+    @Override
+    public String createNonce() {
+	SimpleDateFormat isoDateFormatter = new SimpleDateFormat(ISO_DATETIME_FORMAT);
+	return isoDateFormatter.format(new Date()) + generateCrumb();
+    }
 
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-		calendar.setTime(nonceDateTime);
-		calendar.add(Calendar.MINUTE, expirationInMinutes);
-		if (calendar.getTime().before(now)) {
-			logger.debug("Nonce expired. Because now is '" + now
-					+ "' and nonce is '" + calendar.getTime() + "'");
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
-	public String createNonce() {
-		SimpleDateFormat isoDateFormatter = new SimpleDateFormat(
-				ISO_DATETIME_FORMAT);
-		return isoDateFormatter.format(new Date()) + generateCrumb();
-	}
-
-	private String generateCrumb() {
-		byte[] b = new byte[10];
-		random.nextBytes(b);
-		return convertorService.convertToString(b);
-	}
+    private String generateCrumb() {
+	byte[] b = new byte[10];
+	random.nextBytes(b);
+	return convertorService.convertToString(b);
+    }
 }

@@ -14,10 +14,10 @@ import com.coroptis.coidi.rp.services.AuthRespDecoder;
  */
 public class AuthRespDecoderTerminator implements AuthRespDecoder {
 
-	@Override
-	public Boolean decode(AuthenticationResponse authenticationResponse,
-			Association association, AuthenticationResult authenticationResult) {
-		return true;
-	}
+    @Override
+    public Boolean decode(AuthenticationResponse authenticationResponse, Association association,
+	    AuthenticationResult authenticationResult) {
+	return true;
+    }
 
 }

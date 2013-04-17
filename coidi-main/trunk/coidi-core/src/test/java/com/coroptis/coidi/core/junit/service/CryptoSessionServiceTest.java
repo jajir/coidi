@@ -39,7 +39,7 @@ public class CryptoSessionServiceTest extends BaseJunitTest {
 
 	services.replay();
 	KeyPair ret = service.generateCryptoSession(request);
-	
+
 	assertNotNull(ret);
     }
 

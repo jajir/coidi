@@ -21,7 +21,6 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
 
 public interface RpService {
 
-	String authentication(DiscoveryResult discoveryResult,
-			Association association,
-			AuthenticationParameters authenticationParameters);
+    String authentication(DiscoveryResult discoveryResult, Association association,
+	    AuthenticationParameters authenticationParameters);
 }

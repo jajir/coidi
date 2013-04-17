@@ -21,9 +21,9 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 
 public interface SigningService {
 
-	String sign(final AbstractMessage response, final String macKey,
-			final AssociationType associationType);
+    String sign(final AbstractMessage response, final String macKey,
+	    final AssociationType associationType);
 
-	String sign(AbstractMessage response, Association association);
+    String sign(AbstractMessage response, Association association);
 
 }

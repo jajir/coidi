@@ -21,34 +21,36 @@ import com.coroptis.coidi.op.entities.Nonce;
 public class NonceBean implements Nonce {
 
     private String nonce;
-    
+
     private Association association;
 
     /**
      * @return the nonce
      */
     public String getNonce() {
-        return nonce;
+	return nonce;
     }
 
     /**
-     * @param nonce the nonce to set
+     * @param nonce
+     *            the nonce to set
      */
     public void setNonce(String nonce) {
-        this.nonce = nonce;
+	this.nonce = nonce;
     }
 
     /**
      * @return the association
      */
     public Association getAssociation() {
-        return association;
+	return association;
     }
 
     /**
-     * @param association the association to set
+     * @param association
+     *            the association to set
      */
     public void setAssociation(Association association) {
-        this.association = association;
+	this.association = association;
     }
 }

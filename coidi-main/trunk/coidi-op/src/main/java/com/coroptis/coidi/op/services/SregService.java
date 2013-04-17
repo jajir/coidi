@@ -12,14 +12,14 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
  */
 public interface SregService {
 
-	/**
-	 * Treating to required and optional fields is same so both could be
-	 * processed in one set.
-	 * 
-	 * @param authenticationRequest
-	 *            required {@link AuthenticationRequest}
-	 * @return
-	 */
-	Set<String> extractRequestedKeys(AuthenticationRequest authenticationRequest);
+    /**
+     * Treating to required and optional fields is same so both could be
+     * processed in one set.
+     * 
+     * @param authenticationRequest
+     *            required {@link AuthenticationRequest}
+     * @return
+     */
+    Set<String> extractRequestedKeys(AuthenticationRequest authenticationRequest);
 
 }

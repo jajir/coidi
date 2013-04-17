@@ -27,23 +27,21 @@ import com.coroptis.coidi.rp.services.AuthenticationService;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private AuthRespDecoder authRespDecoder;
+    @Inject
+    private AuthRespDecoder authRespDecoder;
 
-	@Override
-	public AuthenticationResult verify(
-			final AuthenticationResponse authenticationResponse,
-			final Association association) {
-		AuthenticationResult authenticationResult = new AuthenticationResult();
-		if (authRespDecoder.decode(authenticationResponse, association,
-				authenticationResult)) {
-			return authenticationResult;
-		} else {
-			logger.debug("message error");
-			throw new CoidiException("There was some error in message");
-		}
+    @Override
+    public AuthenticationResult verify(final AuthenticationResponse authenticationResponse,
+	    final Association association) {
+	AuthenticationResult authenticationResult = new AuthenticationResult();
+	if (authRespDecoder.decode(authenticationResponse, association, authenticationResult)) {
+	    return authenticationResult;
+	} else {
+	    logger.debug("message error");
+	    throw new CoidiException("There was some error in message");
 	}
+    }
 }

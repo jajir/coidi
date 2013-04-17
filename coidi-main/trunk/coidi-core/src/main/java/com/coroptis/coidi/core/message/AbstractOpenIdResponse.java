@@ -19,16 +19,16 @@ import java.util.Map;
 
 public class AbstractOpenIdResponse extends AbstractMessage {
 
-	public AbstractOpenIdResponse() {
-		super();
-	}
+    public AbstractOpenIdResponse() {
+	super();
+    }
 
-	public AbstractOpenIdResponse(final Map<String, String> map) {
-		super(map, null);
-	}
+    public AbstractOpenIdResponse(final Map<String, String> map) {
+	super(map, null);
+    }
 
-	public String getMessage() {
-		return getPrefixedMessage(null);
-	}
+    public String getMessage() {
+	return getPrefixedMessage(null);
+    }
 
 }

@@ -22,84 +22,89 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public class OpenIdRequestAssociation {
 
-	private AssociationType associationType;
+    private AssociationType associationType;
 
-	private SessionType sessionType;
-	
-	private BigInteger dhConsumerPublic;
-	
-	private BigInteger dhGen;
-	
-	private BigInteger dhModulo;
+    private SessionType sessionType;
 
-	/**
-	 * @return the associationType
-	 */
-	public AssociationType getAssociationType() {
-		return associationType;
-	}
+    private BigInteger dhConsumerPublic;
 
-	/**
-	 * @param associationType the associationType to set
-	 */
-	public void setAssociationType(AssociationType associationType) {
-		this.associationType = associationType;
-	}
+    private BigInteger dhGen;
 
-	/**
-	 * @return the sessionType
-	 */
-	public SessionType getSessionType() {
-		return sessionType;
-	}
+    private BigInteger dhModulo;
 
-	/**
-	 * @param sessionType the sessionType to set
-	 */
-	public void setSessionType(SessionType sessionType) {
-		this.sessionType = sessionType;
-	}
+    /**
+     * @return the associationType
+     */
+    public AssociationType getAssociationType() {
+	return associationType;
+    }
 
-	/**
-	 * @return the dhConsumerPublic
-	 */
-	public BigInteger getDhConsumerPublic() {
-		return dhConsumerPublic;
-	}
+    /**
+     * @param associationType
+     *            the associationType to set
+     */
+    public void setAssociationType(AssociationType associationType) {
+	this.associationType = associationType;
+    }
 
-	/**
-	 * @param dhConsumerPublic the dhConsumerPublic to set
-	 */
-	public void setDhConsumerPublic(BigInteger dhConsumerPublic) {
-		this.dhConsumerPublic = dhConsumerPublic;
-	}
+    /**
+     * @return the sessionType
+     */
+    public SessionType getSessionType() {
+	return sessionType;
+    }
 
-	/**
-	 * @return the dhGen
-	 */
-	public BigInteger getDhGen() {
-		return dhGen;
-	}
+    /**
+     * @param sessionType
+     *            the sessionType to set
+     */
+    public void setSessionType(SessionType sessionType) {
+	this.sessionType = sessionType;
+    }
 
-	/**
-	 * @param dhGen the dhGen to set
-	 */
-	public void setDhGen(BigInteger dhGen) {
-		this.dhGen = dhGen;
-	}
+    /**
+     * @return the dhConsumerPublic
+     */
+    public BigInteger getDhConsumerPublic() {
+	return dhConsumerPublic;
+    }
 
-	/**
-	 * @return the dhModulo
-	 */
-	public BigInteger getDhModulo() {
-		return dhModulo;
-	}
+    /**
+     * @param dhConsumerPublic
+     *            the dhConsumerPublic to set
+     */
+    public void setDhConsumerPublic(BigInteger dhConsumerPublic) {
+	this.dhConsumerPublic = dhConsumerPublic;
+    }
 
-	/**
-	 * @param dhModulo the dhModulo to set
-	 */
-	public void setDhModulo(BigInteger dhModulo) {
-		this.dhModulo = dhModulo;
-	}
-	
+    /**
+     * @return the dhGen
+     */
+    public BigInteger getDhGen() {
+	return dhGen;
+    }
+
+    /**
+     * @param dhGen
+     *            the dhGen to set
+     */
+    public void setDhGen(BigInteger dhGen) {
+	this.dhGen = dhGen;
+    }
+
+    /**
+     * @return the dhModulo
+     */
+    public BigInteger getDhModulo() {
+	return dhModulo;
+    }
+
+    /**
+     * @param dhModulo
+     *            the dhModulo to set
+     */
+    public void setDhModulo(BigInteger dhModulo) {
+	this.dhModulo = dhModulo;
+    }
+
 }

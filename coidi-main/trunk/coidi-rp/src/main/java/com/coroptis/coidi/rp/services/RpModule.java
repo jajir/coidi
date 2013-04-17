@@ -52,79 +52,72 @@ import com.coroptis.coidi.rp.services.impl.YadisServiceImpl;
 
 public class RpModule {
 
-	public static void bind(ServiceBinder binder) {
-		binder.bind(HttpService.class, HttpServiceImpl.class);
-		binder.bind(YadisService.class, YadisServiceImpl.class);
-		binder.bind(XrdsService.class, XrdsServiceImpl.class);
-		binder.bind(AssociationServise.class, AssociationServiseImpl.class);
-		binder.bind(NonceDao.class, NonceDaoImpl.class);
-		binder.bind(DiscoveryService.class, DiscoveryServiceImpl.class);
-		binder.bind(DiscoverySupport.class, DiscoverySupportImpl.class);
-		binder.bind(RpService.class, RpServiceImpl.class);
-		binder.bind(XmlProcessing.class, XmlProcessingImpl.class);
-		binder.bind(AuthenticationService.class,
-				AuthenticationServiceImpl.class);
-		binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
-		binder.bind(AuthRespSupport.class, AuthRespSupportImpl.class);
-	}
+    public static void bind(ServiceBinder binder) {
+	binder.bind(HttpService.class, HttpServiceImpl.class);
+	binder.bind(YadisService.class, YadisServiceImpl.class);
+	binder.bind(XrdsService.class, XrdsServiceImpl.class);
+	binder.bind(AssociationServise.class, AssociationServiseImpl.class);
+	binder.bind(NonceDao.class, NonceDaoImpl.class);
+	binder.bind(DiscoveryService.class, DiscoveryServiceImpl.class);
+	binder.bind(DiscoverySupport.class, DiscoverySupportImpl.class);
+	binder.bind(RpService.class, RpServiceImpl.class);
+	binder.bind(XmlProcessing.class, XmlProcessingImpl.class);
+	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
+	binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
+	binder.bind(AuthRespSupport.class, AuthRespSupportImpl.class);
+    }
 
-	public static DiscoveryProcessor buildRestChainProcessor(
-			List<DiscoveryProcessor> commands,
-			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
-		return chainBuilder.build(DiscoveryProcessor.class, commands);
-	}
+    public static DiscoveryProcessor buildRestChainProcessor(List<DiscoveryProcessor> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(DiscoveryProcessor.class, commands);
+    }
 
-	public static void contributeRestChainProcessor(
-			OrderedConfiguration<DiscoveryProcessor> configuration,
-			@Autobuild DiscoveryProcessorHtml discoveryProcessorHtml,
-			@Autobuild DiscoveryProcessorGoogle discoveryProcessorGoogle,
-			@Autobuild DiscoveryProcessorTerminator discoveryProcessorTerminator,
-			@Autobuild DiscoveryProcessorYadis discoveryProcessorYadis) {
-		configuration.add("discoveryProcessorGoogle", discoveryProcessorGoogle);
-		configuration.add("discoveryProcessorYadis", discoveryProcessorYadis);
-		configuration.add("discoveryProcessorHtml", discoveryProcessorHtml);
-		configuration.add("discoveryProcessorTerminator",
-				discoveryProcessorTerminator);
-	}
+    public static void contributeRestChainProcessor(
+	    OrderedConfiguration<DiscoveryProcessor> configuration,
+	    @Autobuild DiscoveryProcessorHtml discoveryProcessorHtml,
+	    @Autobuild DiscoveryProcessorGoogle discoveryProcessorGoogle,
+	    @Autobuild DiscoveryProcessorTerminator discoveryProcessorTerminator,
+	    @Autobuild DiscoveryProcessorYadis discoveryProcessorYadis) {
+	configuration.add("discoveryProcessorGoogle", discoveryProcessorGoogle);
+	configuration.add("discoveryProcessorYadis", discoveryProcessorYadis);
+	configuration.add("discoveryProcessorHtml", discoveryProcessorHtml);
+	configuration.add("discoveryProcessorTerminator", discoveryProcessorTerminator);
+    }
 
-	public static AuthReq buildAuthReqChainProcessor(List<AuthReq> commands,
-			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
-		return chainBuilder.build(AuthReq.class, commands);
-	}
+    public static AuthReq buildAuthReqChainProcessor(List<AuthReq> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthReq.class, commands);
+    }
 
-	public static void contributeAuthReqChainProcessor(
-			OrderedConfiguration<AuthReq> configuration,
-			@Autobuild AuthReqPreconditions authReqPreconditions,
-			@Autobuild AuthReqOpenId authReqOpenId,
-			@Autobuild AuthReqGoogleAttributeExchange authReqGoogleAttributeExchange,
-			@Autobuild AuthReqUiIcon auReqUiIcon,
-			@Autobuild AuthReqRegistration10 authReqRegistration10,
-			@Autobuild AuthReqRegistration11 authReqRegistration11,
-			@Autobuild AuthReqTerminator authReqTerminator) {
-		configuration.add("authReqPreconditions", authReqPreconditions);
-		configuration.add("authReqOpenId", authReqOpenId);
-		configuration.add("authReqGoogleAttributeExchange",
-				authReqGoogleAttributeExchange);
-		configuration.add("auReqUiIcon", auReqUiIcon);
-		configuration.add("authReqRegistration10", authReqRegistration10);
-		configuration.add("authReqRegistration11", authReqRegistration11);
-		configuration.add("authReqTerminator", authReqTerminator);
-	}
+    public static void contributeAuthReqChainProcessor(OrderedConfiguration<AuthReq> configuration,
+	    @Autobuild AuthReqPreconditions authReqPreconditions,
+	    @Autobuild AuthReqOpenId authReqOpenId,
+	    @Autobuild AuthReqGoogleAttributeExchange authReqGoogleAttributeExchange,
+	    @Autobuild AuthReqUiIcon auReqUiIcon,
+	    @Autobuild AuthReqRegistration10 authReqRegistration10,
+	    @Autobuild AuthReqRegistration11 authReqRegistration11,
+	    @Autobuild AuthReqTerminator authReqTerminator) {
+	configuration.add("authReqPreconditions", authReqPreconditions);
+	configuration.add("authReqOpenId", authReqOpenId);
+	configuration.add("authReqGoogleAttributeExchange", authReqGoogleAttributeExchange);
+	configuration.add("auReqUiIcon", auReqUiIcon);
+	configuration.add("authReqRegistration10", authReqRegistration10);
+	configuration.add("authReqRegistration11", authReqRegistration11);
+	configuration.add("authReqTerminator", authReqTerminator);
+    }
 
-	public static AuthRespDecoder buildAuthRespDecoderChainProcessor(
-			List<AuthRespDecoder> commands,
-			@InjectService("ChainBuilder") ChainBuilder chainBuilder) {
-		return chainBuilder.build(AuthRespDecoder.class, commands);
-	}
+    public static AuthRespDecoder buildAuthRespDecoderChainProcessor(
+	    List<AuthRespDecoder> commands, @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthRespDecoder.class, commands);
+    }
 
-	public static void contributeAuthRespDecoderChainProcessor(
-			OrderedConfiguration<AuthRespDecoder> configuration,
-			@Autobuild AuthRespDecoderOpenId authRespDecoderOpenId,
-			@Autobuild AuthRespDecoderSreg authRespDecoderSreg,
-			@Autobuild AuthRespDecoderTerminator authRespDecoderTerminator) {
-		configuration.add("authRespDecoderOpenId", authRespDecoderOpenId);
-		configuration.add("authRespDecoderSreg", authRespDecoderSreg);
-		configuration.add("authRespDecoderTerminator",
-				authRespDecoderTerminator);
-	}
+    public static void contributeAuthRespDecoderChainProcessor(
+	    OrderedConfiguration<AuthRespDecoder> configuration,
+	    @Autobuild AuthRespDecoderOpenId authRespDecoderOpenId,
+	    @Autobuild AuthRespDecoderSreg authRespDecoderSreg,
+	    @Autobuild AuthRespDecoderTerminator authRespDecoderTerminator) {
+	configuration.add("authRespDecoderOpenId", authRespDecoderOpenId);
+	configuration.add("authRespDecoderSreg", authRespDecoderSreg);
+	configuration.add("authRespDecoderTerminator", authRespDecoderTerminator);
+    }
 }

@@ -36,32 +36,32 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	@Symbol("op.err.contact")
-	private String contact;
+    @Inject
+    @Symbol("op.err.contact")
+    private String contact;
 
-	@Override
-	public AbstractMessage process(Map<String, String> requestParams,
-			UserSessionSkeleton userSession) {
-		ErrorResponse errorResponse = new ErrorResponse(false);
-		StringBuilder buff = new StringBuilder();
-		buff.append("Unable to process incoming message, incorrect 'openid.mode'");
-		buff.append(" or missing parameters or missing OpenID extension support.");
-		String errMsg = buff.toString();
-		buff.append("\n");
-		for (Entry<String, String> entry : requestParams.entrySet()) {
-			buff.append(entry.getKey());
-			buff.append("=");
-			buff.append(entry.getValue());
-			buff.append("\n");
-		}
-		logger.info(buff.toString());
-		errorResponse.setError(errMsg);
-		errorResponse.setContact(contact);
-		return errorResponse;
+    @Override
+    public AbstractMessage process(Map<String, String> requestParams,
+	    UserSessionSkeleton userSession) {
+	ErrorResponse errorResponse = new ErrorResponse(false);
+	StringBuilder buff = new StringBuilder();
+	buff.append("Unable to process incoming message, incorrect 'openid.mode'");
+	buff.append(" or missing parameters or missing OpenID extension support.");
+	String errMsg = buff.toString();
+	buff.append("\n");
+	for (Entry<String, String> entry : requestParams.entrySet()) {
+	    buff.append(entry.getKey());
+	    buff.append("=");
+	    buff.append(entry.getValue());
+	    buff.append("\n");
 	}
+	logger.info(buff.toString());
+	errorResponse.setError(errMsg);
+	errorResponse.setContact(contact);
+	return errorResponse;
+    }
 
 }

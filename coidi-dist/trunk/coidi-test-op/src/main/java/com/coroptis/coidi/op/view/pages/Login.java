@@ -34,42 +34,41 @@ import com.coroptis.coidi.op.view.utils.UserSession;
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
 
-	@SessionState
-	private UserSession userSession;
+    @SessionState
+    private UserSession userSession;
 
-	@Component
-	private Form loginForm;
+    @Component
+    private Form loginForm;
 
-	@Property
-	private String userName;
+    @Property
+    private String userName;
 
-	@Property
-	private String password;
+    @Property
+    private String password;
 
-	@Component(id = "password")
-	private PasswordField passwordField;
+    @Component(id = "password")
+    private PasswordField passwordField;
 
-	@Inject
-	private OpenIdDispatcher openIdDispatcher;
+    @Inject
+    private OpenIdDispatcher openIdDispatcher;
 
-	void onValidateFromLoginForm() {
-		if (userService.login(userName, password) == null) {
-			loginForm.recordError(passwordField,
-					"Invalid user name or password.");
-		}
+    void onValidateFromLoginForm() {
+	if (userService.login(userName, password) == null) {
+	    loginForm.recordError(passwordField, "Invalid user name or password.");
 	}
+    }
 
-	Object onSuccess() throws MalformedURLException {
-		userSession.setUser(userService.login(userName, password));
-		if (userSession.getAuthenticationRequest() != null) {
-			AbstractMessage response = openIdDispatcher.process(userSession
-					.getAuthenticationRequest().getMap(), userSession);
-			return new URL(response.getMessage());
-		}
-		return UserProfile.class;
+    Object onSuccess() throws MalformedURLException {
+	userSession.setUser(userService.login(userName, password));
+	if (userSession.getAuthenticationRequest() != null) {
+	    AbstractMessage response = openIdDispatcher.process(userSession
+		    .getAuthenticationRequest().getMap(), userSession);
+	    return new URL(response.getMessage());
 	}
+	return UserProfile.class;
+    }
 
 }

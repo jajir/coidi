@@ -34,56 +34,60 @@ public class UserMock implements User {
      * @return the idUser
      */
     public Integer getIdUser() {
-        return idUser;
+	return idUser;
     }
 
     /**
-     * @param idUser the idUser to set
+     * @param idUser
+     *            the idUser to set
      */
     public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
+	this.idUser = idUser;
     }
 
     /**
      * @return the name
      */
     public String getName() {
-        return name;
+	return name;
     }
 
     /**
-     * @param name the name to set
+     * @param name
+     *            the name to set
      */
     public void setName(String name) {
-        this.name = name;
+	this.name = name;
     }
 
     /**
      * @return the password
      */
     public String getPassword() {
-        return password;
+	return password;
     }
 
     /**
-     * @param password the password to set
+     * @param password
+     *            the password to set
      */
     public void setPassword(String password) {
-        this.password = password;
+	this.password = password;
     }
 
     /**
      * @return the identities
      */
     public Set<Identity> getIdentities() {
-        return identities;
+	return identities;
     }
 
     /**
-     * @param identities the identities to set
+     * @param identities
+     *            the identities to set
      */
     public void setIdentities(Set<Identity> identities) {
-        this.identities = identities;
+	this.identities = identities;
     }
 
 }
