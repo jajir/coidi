@@ -4,33 +4,12 @@
 
 XRDS
 
-* Discovery process 
-
- It's process for Relaying Party that provide endpoint and service description.
- Information about endpoint services are stored in XRDS document.  
-
-[yadis-discovery-rp.png] Relaying Party discovery process
-
- Previous picture shows how to get XRDS document.
- This document contains information where is technical enpoint that understand OpenId protocol.
- Discovered XRDS document can contain multiple service sections.
- Each Service section describe one endpoint technical capabilities. Technical endpoint is tag URI.
- Multiple tags 'Type' specified technical options for given endpoint.
- Following diagrams shows how relaying party select proper endpoint for OpenID version 2.0.
+* XRDS
  
- [[1]] Select OpenID 2.0 related services. This are services containing Claimed identifier element or OP identifier element. 
-
- [[1]] Order selected services by following criteria:
+ XRDS is XML document containing description of services provided by some URL. 
+ Simplified XML schema is on following image. XRDS document is get in discovery process.
  
-  [[2]] OP identifier element, it's Type 'http://specs.openid.net/auth/2.0/server'
- 
-  [[2]] Claimed Identifier Element, it's Type 'http://specs.openid.net/auth/2.0/signon'
- 
-  [[2]] By value of attribute 'priority', lower priority is more relevant, when priority is missing treat is as big number.
- 
- [[1]] Select first service from list and it's requested OP technical endpoint.
- 
-[] 
+[XRD-schema.png] XRDS schema  
 
 * Example of XRDS document 
 
@@ -77,5 +56,3 @@ XRDS
   </XRD>
 </xrds:XRDS>
 +----+
-
- 

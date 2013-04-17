@@ -49,8 +49,10 @@
 			
 			<item name="OpenID" href="./openid.html">
 				<item name="Introduction" href="./introduction.html" />
+				<item name="Identity" href="./identity.html" />
 				<item name="Normalization" href="./normalization.html" />
 				<item name="Discovery" href="./discovery.html" />
+				<item name="XRDS" href="./xrds.html" />
 				<item name="Authentication" href="./authentication.html" />
 			</item>
 			<item name="How to integrate" href="./integration.html" >
