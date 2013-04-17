@@ -4,6 +4,8 @@
 
 Release methodology
 
+ Application version number is composed from three numbers separated by dot. For example '0.4.7'. 
+
  [[1]] digit is major version
  
  [[1]] minor change version
@@ -12,24 +14,40 @@ Release methodology
 
 []
 
- Each minor change or improvement increase 'minor change version'. Each bugfixing release cause increasing of last version number. Project structure is following:
+ Each minor change or improvement increase 'minor change version'.
+ Each bugfixing release cause increasing of last version number.
+ Project structure is following:
 
 +----+
-/tags/1.0.0
-      1.0.1
-      1.1.0
-      ...
-branches/1.0
-         1.1
-         ...
-trunk/dist
-      core
-      op
-      rp
-      test-rp
-      test-op
+Project repository structure is following
+
+/coidi-dist/
+            tags/1.0.0
+                 1.0.1
+                 ...
+            branches/1.0
+                     1.1
+                     ...
+            trunk/
+                  coidi-dist
+                  coidi-test-op
+                  coidi-test-rp
+                  ...
+/coidi-main/
+            tags/1.0.0
+                 1.0.1
+                 ...
+            branches/1.0
+                     1.1
+                     ...
+            trunk/
+                  coidi-core
+                  coidi-op
+                  coidi-rp
+                  coidi-test-support
+                  ...
 +----+
 
- All modules are released together. So change or bug fixing in any submodule cause version increase in each sub module.
+ All coidi-main modules are released together. 
+ So change or bug fixing in any submodule cause version increase in each sub module.
 
- Target of this project is to provide reliable easy to understand and integrate openID component.

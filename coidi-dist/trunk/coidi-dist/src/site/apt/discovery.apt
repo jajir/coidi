@@ -1,10 +1,10 @@
  ----
- XRDS
+ Discovery
  ----
 
-XRDS
+Discovery
 
-* Discovery process 
+* Discovery process on RP
 
  It's process for Relaying Party that provide endpoint and service description.
  Information about endpoint services are stored in XRDS document.  
@@ -31,52 +31,6 @@ XRDS
  [[1]] Select first service from list and it's requested OP technical endpoint.
  
 [] 
-
-* Example of XRDS document 
-
-+----+
-<?xml version="1.0" encoding="UTF-8"?>
-<xrds:XRDS
-    xmlns:xrds="xri://$xrds"
-    xmlns:ux="http://specs.openid.net/extensions/ux/1.0"
-    xmlns="xri://$xrd*($v*2.0)">
-  <XRD>
-
-    <Service priority="0">
-      <Type>http://specs.openid.net/auth/2.0/server</Type>
-      <Type>http://openid.net/sreg/1.0</Type>
-      <URI priority="0">https://www.myopenid.com/server</URI>
-    </Service>
-
-    <Service>
-      <Type>http://specs.openid.net/extensions/ux/1.0/friendlyname</Type>
-      <ux:friendlyname>MyOpenID</ux:friendlyname>
-    </Service>
-    <Service>
-      <Type>http://specs.openid.net/extensions/ux/1.0/img</Type>
-      <ux:img url="https://www.myopenid.com/static/images/myopenid_selector.png" width="48" height="48"></ux:img>
-    </Service>
-  </XRD>
-</xrds:XRDS>
-+----+
-
-* Example of google XRDS
-
-+----+
-<?xml version="1.0" encoding="UTF-8"?>
-<xrds:XRDS xmlns:xrds="xri://$xrds" xmlns="xri://$xrd*($v*2.0)">
-  <XRD>
-    <Service priority="0">
-      <Type>http://specs.openid.net/auth/2.0/server</Type>
-      <Type>http://openid.net/srv/ax/1.0</Type>
-      <Type>http://specs.openid.net/extensions/ui/1.0/mode/popup</Type>
-      <Type>http://specs.openid.net/extensions/ui/1.0/icon</Type>
-      <Type>http://specs.openid.net/extensions/pape/1.0</Type>
-      <URI>https://www.google.com/accounts/o8/ud</URI>
-    </Service>
-  </XRD>
-</xrds:XRDS>
-+----+
 
 * Yadis discovery on OP
 
