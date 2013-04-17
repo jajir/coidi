@@ -28,8 +28,13 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
  */
 public interface AssociationTool {
 
+    final static String DEFAULT_TIME_TO_LIVE_IN_SECONDS = "op.nonce.timeToLiveInSeconds";
+
+    final static String DEFAULT_ASSOCITION_TYPE = "op.stateless.mode.association.type";
+
     /**
-     * Generate time to live for currently creates association handle.
+     * Get date up to which is association handle considered as valid. It's
+     * based on co
      * 
      * @return
      */

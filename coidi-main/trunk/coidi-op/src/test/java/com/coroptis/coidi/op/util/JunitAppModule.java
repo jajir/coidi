@@ -22,9 +22,13 @@ import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.dao.BaseUserDao;
+import com.coroptis.coidi.op.services.AssociationService;
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
+import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
@@ -45,8 +49,6 @@ public class JunitAppModule {
 		services.getConfigurationService()));
 	binder.bind(NonceService.class,
 		new EasyMockServicebuilder<NonceService>(services.getNonceService()));
-	binder.bind(BaseAssociationDao.class,
-		new EasyMockServicebuilder<BaseAssociationDao>(services.getAssociationDao()));
 	binder.bind(AuthenticationService.class, new EasyMockServicebuilder<AuthenticationService>(
 		services.getAuthenticationService()));
 	binder.bind(IdentityService.class,
@@ -65,8 +67,19 @@ public class JunitAppModule {
 		AuthenticationProcessor.class,
 		new EasyMockServicebuilder<AuthenticationProcessor>(services
 			.getAuthenticationProcessor()));
-	binder.bind(BaseUserDao.class, new EasyMockServicebuilder<BaseUserDao>(services.getUserDao()));
+	binder.bind(BaseUserDao.class,
+		new EasyMockServicebuilder<BaseUserDao>(services.getBaseUserDao()));
 	binder.bind(ConvertorService.class,
 		new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
+	binder.bind(CryptoService.class,
+		new EasyMockServicebuilder<CryptoService>(services.getCryptoService()));
+	binder.bind(AssociationTool.class,
+		new EasyMockServicebuilder<AssociationTool>(services.getAssociationTool()));
+	binder.bind(BaseNonceDao.class,
+		new EasyMockServicebuilder<BaseNonceDao>(services.getBaseNonceDao()));
+	binder.bind(AssociationService.class, new EasyMockServicebuilder<AssociationService>(
+		services.getAssociationService()));
+	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(
+		services.getBaseAssociationDao()));
     }
 }

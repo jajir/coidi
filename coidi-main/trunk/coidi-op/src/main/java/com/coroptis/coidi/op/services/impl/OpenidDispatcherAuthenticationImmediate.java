@@ -62,7 +62,7 @@ public class OpenidDispatcherAuthenticationImmediate implements OpenIdDispatcher
 			.simpleError("authentication request doesn't contains any idenity field");
 	    }
 
-	    Identity identity = identityService.getByOpIdentifier(authenticationRequest
+	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
 		    .getIdentity());
 	    if (identity == null) {
 		return negativeResponseGenerator.simpleError("There is no such identity '"

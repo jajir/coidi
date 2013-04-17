@@ -24,16 +24,14 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.Nonce;
-import com.coroptis.coidi.op.services.AssociationTool;
+import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.CryptoService;
 
 /**
  * Based on association handle set up nonce.
@@ -47,19 +45,10 @@ public class AuthProcNonce implements AuthenticationProcessor {
     private Logger logger;
 
     @Inject
-    private BaseAssociationDao associationDao;
+    private AssociationService associationService;
 
     @Inject
     private NonceService nonceService;
-
-    @Inject
-    private CryptoService cryptoService;
-
-    @Inject
-    private AssociationTool associationTool;
-
-    @Inject
-    private ConvertorService convertorService;
 
     @Inject
     private BaseAssociationDao baseAssociationDao;
@@ -72,23 +61,21 @@ public class AuthProcNonce implements AuthenticationProcessor {
 	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
 	logger.debug("processing nonce: " + authenticationRequest);
 	response.setNonce(nonceService.createNonce());
-	if (response.getAssocHandle() == null) {
+	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
+	    response.setAssocHandle(authenticationRequest.getAssocHandle());
+	} else {
+	    logger.debug("Entering into state-less mode, assoc_handle is null.");
 	    /**
-	     * state-less mode, association handle will generate and stored on
+	     * State-less mode, association handle will generate and stored on
 	     * OP side, not will be send to RP.
 	     */
-	    Association association = baseAssociationDao.createNewInstance();
-	    association.setAssociationType(associationTool.getDefaultAssociationType());
-	    association.setAssocHandle(cryptoService.generateUUID());
-	    association.setExpiredIn(associationTool.getTimeToLive());
-	    association.setMacKey(convertorService.convertToString(cryptoService
-		    .generateAssociationRandom(association.getAssociationType())));
+	    Association association = associationService.createStateLessAssociation();
 	    Nonce nonce = baseNonceDao.createNewInstance();
 	    nonce.setNonce(response.getNonce());
 	    nonce.setAssociation(association);
 	    association.setNonces(new HashSet<Nonce>());
 	    association.getNonces().add(nonce);
-	    associationDao.create(association);
+	    baseAssociationDao.create(association);
 	    response.setAssocHandle(association.getAssocHandle());
 	}
 	fieldsToSign.add(AuthenticationResponse.ASSOC_HANDLE);

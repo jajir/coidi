@@ -15,6 +15,10 @@
  */
 package com.coroptis.coidi.op.services;
 
+import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
+
 public interface AssociationService {
 
     /**
@@ -24,5 +28,34 @@ public interface AssociationService {
      *            required association handle
      */
     void delete(String associationHandle);
+
+    /**
+     * Find out if association is valid or not. It try to load it from database
+     * and that verify that is not stale.
+     * 
+     * @param assoc_handle
+     * @return <code>true</code> if association exists and is valid otherwise
+     *         return <code>false</code>
+     */
+    boolean isValid(String assoc_handle);
+
+    /**
+     * Create shared association.
+     * 
+     * @param associationType
+     *            required association type
+     * @param sessionType
+     *            required session type
+     * @return
+     */
+    Association createAssociation(AssociationType associationType, SessionType sessionType);
+
+    /**
+     * Create association with default association type and with empty session
+     * type. It's state-less association.
+     * 
+     * @return
+     */
+    Association createStateLessAssociation();
 
 }

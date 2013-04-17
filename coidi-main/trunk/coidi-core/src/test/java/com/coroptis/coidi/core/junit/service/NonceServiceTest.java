@@ -37,7 +37,7 @@ public class NonceServiceTest extends BaseJunitTest {
 	public void testVerifyNonce_false() throws Exception {
 		services.replay();
 		
-		assertFalse(nonceService.verifyNonce("2012-06-20T21:27:13ZrCqe4J", 30));
+		assertFalse(nonceService.verifyNonceExpiration("2012-06-20T21:27:13ZrCqe4J", 30));
 	}
 
 	public void testVerifyNonce_true() throws Exception {
@@ -48,7 +48,7 @@ public class NonceServiceTest extends BaseJunitTest {
 		logger.debug("nonce: " + nonce);
 		services.replay();
 		
-		assertTrue(nonceService.verifyNonce(nonce, 30));
+		assertTrue(nonceService.verifyNonceExpiration(nonce, 30));
 	}
 
 	@Override

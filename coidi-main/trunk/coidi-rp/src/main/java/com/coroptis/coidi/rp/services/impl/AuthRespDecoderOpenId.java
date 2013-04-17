@@ -47,7 +47,7 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 			authenticationResult.setStatus(Status.cancel);
 		} else if (authenticationResponse.getMode().equals("id_res")) {
 			authenticationResult.setStatus(Status.res);
-			if (nonceService.verifyNonce(authenticationResponse.getNonce(),
+			if (nonceService.verifyNonceExpiration(authenticationResponse.getNonce(),
 					AuthenticationService.NONCE_EXPIRATION_TIME_IN_MINUTES)) {
 				nonceDao.storeNonce(authenticationResponse.getNonce());
 			} else {

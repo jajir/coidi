@@ -37,14 +37,14 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     private final String identityPattern;
 
-    public IdentityNamesConvertorImpl(
+    public IdentityNamesConvertorImpl( // NO_UCD
 	    @Inject @Symbol("op.identity.pattern") final String identityPattern) {
 	this.identityPattern = identityPattern;
 	Preconditions.checkNotNull(this.identityPattern);
     }
 
     @Override
-    public String getOpLocalIdentifier(final String opIdentifier) {
+    public String convertToIdentityId(final String opIdentifier) {
 	if (logger.isDebugEnabled()) {
 	    logger.debug("converting '" + opIdentifier + "' to op local identifier with pattern '"
 		    + identityPattern + "'");
@@ -54,7 +54,7 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
 	if (start.length() > opIdentifier.length()) {
 	    throw new CoidiException("Given OP Identifier '" + opIdentifier
-		    + "' is valid can't be converted to OP local identifier with pattern '"
+		    + "' is not valid and can't be converted to identity id with pattern '"
 		    + identityPattern + "'.");
 	}
 	final String part = opIdentifier.substring(start.length());
@@ -62,7 +62,7 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
     }
 
     @Override
-    public String getOpIdentifier(final String opLocalIdentifier) {
+    public String convertToOpLocalIdentifier(final String opLocalIdentifier) {
 	if (logger.isDebugEnabled()) {
 	    logger.debug("converting '" + opLocalIdentifier + "' to op identifier with pattern '"
 		    + identityPattern + "'");

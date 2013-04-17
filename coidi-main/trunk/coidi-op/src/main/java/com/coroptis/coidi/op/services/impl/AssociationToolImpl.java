@@ -36,7 +36,7 @@ import com.google.common.base.Preconditions;
 public class AssociationToolImpl implements AssociationTool {
 
     @Inject
-    @Symbol("op.nonce.timeToLiveInSeconds")
+    @Symbol(DEFAULT_TIME_TO_LIVE_IN_SECONDS)
     private Integer timeToLiveInSeconds;
 
     @SuppressWarnings("unused")
@@ -48,8 +48,8 @@ public class AssociationToolImpl implements AssociationTool {
      */
     private final AssociationType defaultAssociationType;
 
-    public AssociationToolImpl(
-	    @Inject @Symbol("op.stateless.mode.association.type") final String assocTypeStr,
+    public AssociationToolImpl( // NO_UCD
+	    @Inject @Symbol(DEFAULT_ASSOCITION_TYPE) final String assocTypeStr,
 	    final Logger logger) {
 	defaultAssociationType = AssociationType.convert(assocTypeStr);
 	this.logger = logger;

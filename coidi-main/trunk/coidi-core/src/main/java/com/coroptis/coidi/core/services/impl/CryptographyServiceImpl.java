@@ -44,7 +44,7 @@ public class CryptographyServiceImpl implements CryptographyService {
 	private CryptoSessionService cryptoSessionService;
 
 	@Override
-	public byte[] hmacSha1(final byte[] key, final byte[] text,
+	public byte[] generateMac(final byte[] key, final byte[] text,
 			final AssociationType associationType) {
 		try {
 			SecretKey sk = new SecretKeySpec(key,

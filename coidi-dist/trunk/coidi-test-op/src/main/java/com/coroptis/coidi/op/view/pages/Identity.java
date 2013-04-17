@@ -18,12 +18,18 @@ package com.coroptis.coidi.op.view.pages;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.OpenIdNs;
+import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
-import com.coroptis.coidi.op.services.XrdsService;
+import com.coroptis.coidi.op.util.Xrd;
+import com.coroptis.coidi.op.util.XrdService;
+import com.coroptis.coidi.op.util.Xrds;
 import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 
 /**
@@ -35,16 +41,23 @@ import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 public class Identity { // NO_UCD
 
     @Inject
+    @Symbol("op.server")
+    private String opServer;
+    
+    @Inject
     private Logger logger;
 
     @Inject
     private IdentityService identityService;
 
     @Inject
-    private XrdsService xrdsService;
+    private Request request;
 
     @Inject
-    private Request request;
+    private Response response;
+
+    @Inject
+    private IdentityNamesConvertor identityNamesConvertor;
 
     private String opLocalIdentifier;
 
@@ -54,20 +67,28 @@ public class Identity { // NO_UCD
     @InjectPage
     private Error404 error404;
 
-    Object onActivate(final String opLocalIdentifier) {
-	this.opLocalIdentifier = opLocalIdentifier;
-	logger.debug("Requested identity id '" + opLocalIdentifier + "'");
-	if (opLocalIdentifier == null) {
-	    throw new CoidiException("user name '" + opLocalIdentifier + "' is null");
+    Object onActivate(final String identityId) {
+	this.opLocalIdentifier = identityId;
+	logger.debug("Requested identity id '" + identityId + "'");
+	if (identityId == null) {
+	    throw new CoidiException("user name '" + identityId + "' is null");
 	}
-	identity = identityService.getByOpLocalIdentifier(opLocalIdentifier);
+	identity = identityService.getByIdentityId(identityId);
 	if (identity == null) {
-	    logger.info("identity '" + opLocalIdentifier + "' is null");
+	    logger.info("identity '" + identityId + "' is null");
 	    return error404;
+	}
+	response.setHeader("X-XRDS-Location",
+		identityNamesConvertor.convertToOpLocalIdentifier(identityId) + "?xrds=get");
+	response.setHeader("Vary:", "Accept");
+	if (request.getParameter("xrds") != null) {
+	    logger.debug("Based on request parameter xrds return XRDS document");
+	    return generateXrds();
 	}
 	if (request.getHeader("Accept") != null
 		&& request.getHeader("Accept").toString().indexOf("application/xrds+xml") >= 0) {
-	    return new XrdsStreamResponse(xrdsService.getDocument(opLocalIdentifier));
+	    logger.debug("Based on request header 'Accept: application/xrds+xml' return XRDS document");
+	    return generateXrds();
 	}
 	return null;
     }
@@ -76,4 +97,35 @@ public class Identity { // NO_UCD
 	return opLocalIdentifier;
     }
 
+    public String getOpLocalIdentifier() {
+	return identityNamesConvertor.convertToOpLocalIdentifier(opLocalIdentifier);
+    }
+
+    private XrdsStreamResponse generateXrds() {
+	Xrds xrds = new Xrds();
+	xrds.getXrds().add(new Xrd());
+	xrds.getXrds().get(0).setVersion("2.0");
+
+	XrdService service = new XrdService();
+	service.setPriority(1);
+	service.getTypes().add(OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0);
+	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
+	service.setUri(getOpEndpoint());
+	service.setLocalID(identityNamesConvertor.convertToOpLocalIdentifier(opLocalIdentifier));
+	xrds.getXrds().get(0).getServices().add(service);
+
+	service = new XrdService();
+	service.setPriority(3);
+	service.getTypes().add(OpenIdNs.TYPE_OPENID_2_0);
+	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
+	service.setUri(getOpEndpoint());
+
+	xrds.getXrds().get(0).getServices().add(service);
+	logger.debug(xrds.print(new StringBuffer(), "").toString());
+	return new XrdsStreamResponse(xrds.print(new StringBuffer(), "").toString());
+    }
+
+    public String getOpEndpoint() {
+	return opServer + "openid";
+    }
 }

@@ -28,36 +28,24 @@ import com.coroptis.coidi.op.entities.Identity;
 public interface IdentityService {
 
     /**
-     * Get identity by it's name. Name is unique within OP.
+     * Get {@link Identity} by it's identity id.
      * 
-     * @param someOpIdentifier
-     *            required OP identifier
-     * @return {@link IdentityImpl} object if there is any otherwise
+     * @param identityId
+     *            required identity id
+     * @return {@link Identity} object if there is any otherwise
      *         <code>null</code>
-     * @deprecated replace with identifier aware methods.
      */
-    @Deprecated
-    Identity getIdentityByName(String someOpIdentifier);
+    Identity getByIdentityId(String identityId);
 
     /**
      * Get {@link Identity} by it's OP local identifier.
      * 
-     * @param id
+     * @param opLocalIdentifier
      *            required OP local identifier
      * @return {@link Identity} object if there is any otherwise
      *         <code>null</code>
      */
-    Identity getByOpLocalIdentifier(String id);
-
-    /**
-     * Get {@link Identity} by it's OP identifier.
-     * 
-     * @param id
-     *            required OP identifier
-     * @return {@link Identity} object if there is any otherwise
-     *         <code>null</code>
-     */
-    Identity getByOpIdentifier(String id);
+    Identity getByOpLocalIdentifier(String opLocalIdentifier);
 
     /**
      * Verify that claimed identity is logged into given user session.
@@ -77,10 +65,10 @@ public interface IdentityService {
      * 
      * @param idUser
      *            required user's id
-     * @param opIdentifier
-     *            required OP identifier
+     * @param opLocalIdentifier
+     *            required OP local identifier
      * @return <code>true</code> if identity belongs to user otherwise return
      *         <code>false</code>
      */
-    Boolean isUsersOpIdentifier(Integer idUser, String opIdentifier);
+    Boolean isUsersOpIdentifier(Integer idUser, String opLocalIdentifier);
 }

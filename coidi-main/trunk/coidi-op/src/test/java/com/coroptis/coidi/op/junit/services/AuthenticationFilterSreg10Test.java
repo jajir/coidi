@@ -15,37 +15,48 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import org.apache.tapestry5.ioc.ServiceBinder;
 
+import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.impl.AuthProcSreg10;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
 public class AuthenticationFilterSreg10Test extends AbstractT5JunitTest {
 
-	private final static String SERVICE_NAME = "realService";
+    private final static String SERVICE_NAME = "realService";
 
-	private AuthenticationProcessor service;
+    private AuthenticationProcessor service;
 
-	public void testProcess() throws Exception {
-	    //FIXME finish that
-	}
+    public void testProcess() throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	AuthenticationRequest authenticationRequest = new AuthenticationRequest(params);
+	services.replay();
 
-	@Override
-	public void bind(ServiceBinder binder) {
-		binder.bind(AuthenticationProcessor.class,
-				AuthProcSreg10.class).withId(SERVICE_NAME);
-	}
+	service.process(authenticationRequest, new AuthenticationResponse(), null,
+		new HashSet<String>());
+	services.verify();
+    }
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-		service = getService(SERVICE_NAME, AuthenticationProcessor.class);
-	}
+    @Override
+    public void bind(ServiceBinder binder) {
+	binder.bind(AuthenticationProcessor.class, AuthProcSreg10.class).withId(SERVICE_NAME);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		service = null;
-		super.tearDown();
-	}
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	service = getService(SERVICE_NAME, AuthenticationProcessor.class);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+	service = null;
+	super.tearDown();
+    }
 }

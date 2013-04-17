@@ -17,8 +17,8 @@ package com.coroptis.coidi.op.junit.services;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
@@ -56,34 +56,6 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 
     private ErrorResponse errorResponse;
 
-    public void testProcess_success_pass() throws Exception {
-	Map<String, String> params = new HashMap<String, String>();
-	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
-	params.put(AuthenticationRequest.ASSOC_HANDLE, "h342usd09d");
-	params.put(AuthenticationRequest.IDENTITY, "http://pond.com/duck");
-	AuthenticationRequest authenticationRequest = new AuthenticationRequest(params);
-
-	EasyMock.expect(
-		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
-		.andReturn(true);
-	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
-		association);
-	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
-		.andReturn(identity);
-	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
-		.andReturn(true);
-	EasyMock.expect(
-		services.getAuthenticationProcessor().process(authenticationRequest,
-			new AuthenticationResponse(), identity, new HashSet<String>())).andReturn(
-		positiveResponse);
-	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
-
-	assertNotNull(ret);
-	assertEquals(positiveResponse, ret);
-	services.verify();
-    }
-
     public void testProcess_invalid_authentication_request() throws Exception {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
@@ -106,52 +78,6 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 	services.verify();
     }
 
-    public void testProcess_failed_assoc_not_found() throws Exception {
-	Map<String, String> params = new HashMap<String, String>();
-	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
-	params.put(AuthenticationRequest.ASSOC_HANDLE, "h342usd09d");
-	params.put(AuthenticationRequest.IDENTITY, "http://pond.com/duck");
-	AuthenticationRequest authenticationRequest = new AuthenticationRequest(params);
-
-	EasyMock.expect(
-		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
-		.andReturn(true);
-	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d"))
-		.andReturn(null);
-	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError(
-			"Unable to find association handle 'h342usd09d'")).andReturn(errorResponse);
-	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
-
-	assertNotNull(ret);
-	assertEquals(errorResponse, ret);
-	services.verify();
-    }
-
-    public void testProcess_failed_expired_assoc_handle() throws Exception {
-	Map<String, String> params = new HashMap<String, String>();
-	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
-	params.put(AuthenticationRequest.ASSOC_HANDLE, "324guy4321j");
-	params.put(AuthenticationRequest.IDENTITY, "http://pond.com/duck");
-	AuthenticationRequest authenticationRequest = new AuthenticationRequest(params);
-
-	EasyMock.expect(
-		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
-		.andReturn(true);
-	EasyMock.expect(services.getAssociationDao().getByAssocHandle("324guy4321j")).andReturn(
-		associationInvalid);
-	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError((String) EasyMock.anyObject()))
-		.andReturn(errorResponse);
-	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
-
-	assertNotNull(ret);
-	assertEquals(errorResponse, ret);
-	services.verify();
-    }
-
     public void testProcess_invalid_identity() throws Exception {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
@@ -162,18 +88,16 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 	EasyMock.expect(
 		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
 		.andReturn(true);
-	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
-		association);
-	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
-		.andReturn(null);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator().simpleError(
 			"There is no such identity 'http://pond.com/duck'")).andReturn(
 		errorResponse);
+	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+		.andReturn(null);
 	services.replay();
 	AbstractMessage ret = service.process(params, userSession);
 
-	assertNotNull(errorResponse);
+	assertNotNull(ret);
 	assertEquals(errorResponse, ret);
 	services.verify();
     }
@@ -188,21 +112,47 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 	EasyMock.expect(
 		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
 		.andReturn(true);
-	EasyMock.expect(services.getAssociationDao().getByAssocHandle("h342usd09d")).andReturn(
-		association);
-	EasyMock.expect(services.getIdentityService().getByOpIdentifier("http://pond.com/duck"))
-		.andReturn(identity);
-	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
-		.andReturn(false);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator().simpleError(
 			"Idenity 'http://pond.com/duck' is not logged in"))
 		.andReturn(errorResponse);
+	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+		.andReturn(identity);
+	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
+		.andReturn(false);
 	services.replay();
 	AbstractMessage ret = service.process(params, userSession);
 
-	assertNotNull(errorResponse);
+	assertNotNull(ret);
 	assertEquals(errorResponse, ret);
+	services.verify();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testProcess_success() throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put(OpenIdDispatcher.OPENID_MODE, AuthenticationRequest.MODE_CHECKID_IMMEDIATE);
+	params.put(AuthenticationRequest.ASSOC_HANDLE, "h342usd09d");
+	params.put(AuthenticationRequest.IDENTITY, "http://pond.com/duck");
+	AuthenticationRequest authenticationRequest = new AuthenticationRequest(params);
+
+	EasyMock.expect(
+		services.getAuthenticationService().isAuthenticationRequest(authenticationRequest))
+		.andReturn(true);
+	EasyMock.expect(services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
+		.andReturn(identity);
+	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
+		.andReturn(true);
+	EasyMock.expect(
+		services.getAuthenticationProcessor().process(
+			(AuthenticationRequest) EasyMock.anyObject(),
+			(AuthenticationResponse) EasyMock.anyObject(), EasyMock.eq(identity),
+			(Set<String>) EasyMock.anyObject())).andReturn(positiveResponse);
+	services.replay();
+	AbstractMessage ret = service.process(params, userSession);
+
+	assertNotNull(ret);
+	assertTrue(ret instanceof AuthenticationResponse);
 	services.verify();
     }
 

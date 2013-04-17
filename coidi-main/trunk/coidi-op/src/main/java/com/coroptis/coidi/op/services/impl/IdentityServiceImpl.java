@@ -38,26 +38,16 @@ public class IdentityServiceImpl implements IdentityService {
     private IdentityNamesConvertor identityNamesConvertor;
 
     @Override
-    public Identity getIdentityByName(final String idIdentity) {
-	if (identityNamesConvertor.isOpLocalIdentifier(idIdentity)) {
-	    return identityDao.getIdentityByOpLocalIdentifier(idIdentity);
-	} else {
-	    return identityDao.getIdentityByOpLocalIdentifier(identityNamesConvertor
-		    .getOpLocalIdentifier(idIdentity));
-	}
+    public Identity getByIdentityId(final String identityId) {
+	Preconditions.checkNotNull(identityId, "identityId is null");
+	return identityDao.getIdentityId(identityId);
     }
 
     @Override
     public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {
 	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
-	return identityDao.getIdentityByOpLocalIdentifier(opLocalIdentifier);
-    }
-
-    @Override
-    public Identity getByOpIdentifier(final String opIdentifier) {
-	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
-	return identityDao.getIdentityByOpLocalIdentifier(identityNamesConvertor
-		.getOpLocalIdentifier(opIdentifier));
+	return identityDao.getIdentityId(identityNamesConvertor
+		.convertToIdentityId(opLocalIdentifier));
     }
 
     @Override
@@ -80,13 +70,13 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public Boolean isUsersOpIdentifier(final Integer idUser, final String opIdentifier) {
-	final String opLocalIdentifier = identityNamesConvertor.getOpLocalIdentifier(opIdentifier);
+    public Boolean isUsersOpIdentifier(final Integer idUser, final String opLocalIdentifier) {
 	final User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
-	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
+	final String identityId = identityNamesConvertor.convertToIdentityId(opLocalIdentifier);
+	Preconditions.checkNotNull(identityId, "opLocalIdentifier is null");
 
 	for (Identity identity : user.getIdentities()) {
-	    if (opLocalIdentifier.equals(identity.getIdIdentity())) {
+	    if (identityId.equals(identity.getIdIdentity())) {
 		return true;
 	    }
 	}

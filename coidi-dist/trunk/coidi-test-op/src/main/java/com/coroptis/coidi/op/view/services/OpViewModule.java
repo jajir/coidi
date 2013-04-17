@@ -49,10 +49,14 @@ import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.dao.BaseUserDao;
+import com.coroptis.coidi.op.view.dao.IdentityDao;
+import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.op.view.dao.impl.BaseAssociationDaoImpl;
 import com.coroptis.coidi.op.view.dao.impl.BaseIdentityDaoImpl;
 import com.coroptis.coidi.op.view.dao.impl.BaseNonceDaoImpl;
 import com.coroptis.coidi.op.view.dao.impl.BaseUserDaoImpl;
+import com.coroptis.coidi.op.view.dao.impl.IdentityDaoImpl;
+import com.coroptis.coidi.op.view.dao.impl.UserDaoImpl;
 import com.coroptis.coidi.op.view.services.impl.AccessControllerDispatcher;
 import com.coroptis.coidi.op.view.services.impl.IdentityGds;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
@@ -76,6 +80,8 @@ public class OpViewModule {// NO_UCD
 	binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId(
 		"accessControllerDispatcher");
 	binder.bind(GridDataSource.class, IdentityGds.class).withId("identityGds");
+	binder.bind(IdentityDao.class, IdentityDaoImpl.class);
+	binder.bind(UserDao.class, UserDaoImpl.class);
     }
 
     @Startup

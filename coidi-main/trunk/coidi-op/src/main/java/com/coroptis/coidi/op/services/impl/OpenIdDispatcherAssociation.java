@@ -31,7 +31,7 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.services.AssociationTool;
+import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
@@ -46,22 +46,22 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 
     @Inject
-    private CryptoService cryptoService;
-
-    @Inject
     private Logger logger;
 
     @Inject
-    private AssociationTool associationTool;
-
-    @Inject
-    private BaseAssociationDao associationDao;
+    private BaseAssociationDao baseAssociationDao;
 
     @Inject
     private CryptoSessionService cryptoSessionService;
 
     @Inject
     private CryptographyService cryptographyService;
+
+    @Inject
+    private CryptoService cryptoService;
+
+    @Inject
+    private AssociationService associationService;;
 
     @Inject
     private ConvertorService convertorService;
@@ -86,24 +86,22 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		return negativeResponseGenerator.simpleError("Parameter '"
 			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
 	    }
-	    // TODO it's duplicated code, see association service.
-	    Association association = associationDao.createNewInstance();
-	    association.setAssocHandle(cryptoService.generateUUID());
-	    association.setSessionType(request.getSessionType());
-	    association.setExpiredIn(associationTool.getTimeToLive());
-	    association.setAssociationType(request.getAssociationType());
-
+	    
+	    Association association = associationService.createAssociation(
+		    request.getAssociationType(), request.getSessionType());
 	    AssociationResponse out = new AssociationResponse();
-	    if (request.getSessionType().equals(SessionType.no_encription)) {
+	    if (association.getSessionType().equals(SessionType.no_encription)) {
 		logger.info("No encryption was setup during association request/response.");
 		byte macKey[] = cryptoService.generateAssociationRandom(association
 			.getAssociationType());
+		//TODO format of mac key should be unified
 		association.setMacKey(convertorService.convertToString(macKey));
 		out.setMacKey(macKey);
 	    } else {
 		association.setMacKey(convertorService.convertToString(cryptoService
 			.generateSessionRandom(association.getSessionType())));
 		KeyPair cryptoSession = cryptoSessionService.generateCryptoSession(request);
+		//TODO format of mac key should be unified
 		out.setEncMacKey(cryptographyService.encryptSecret(cryptoSession,
 			request.getDhConsumerPublic(),
 			convertorService.convertToBytes(association.getMacKey()),
@@ -111,7 +109,7 @@ public class OpenIdDispatcherAssociation implements OpenIdDispatcher {
 		out.setDhServerPublic(cryptoSession.getPublicKey());
 	    }
 
-	    associationDao.create(association);
+	    baseAssociationDao.create(association);
 
 	    out.setSessionType(association.getSessionType());
 	    out.setAssociationType(association.getAssociationType());

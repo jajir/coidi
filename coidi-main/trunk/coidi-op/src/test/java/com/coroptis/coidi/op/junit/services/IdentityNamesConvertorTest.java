@@ -33,7 +33,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://localhost:8080/user/%identity%");
 
-	assertEquals("http://localhost:8080/user/karel", convertor.getOpIdentifier("karel"));
+	assertEquals("http://localhost:8080/user/karel", convertor.convertToOpLocalIdentifier("karel"));
     }
 
     public void testGetOpIdentifier_null() throws Exception {
@@ -41,7 +41,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 		"http://localhost:8080/user/%identity%");
 
 	try {
-	    convertor.getOpIdentifier(null);
+	    convertor.convertToOpLocalIdentifier(null);
 	    fail();
 	} catch (NullPointerException e) {
 	    assertTrue(true);
@@ -53,7 +53,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 		"http://localhost:8080/user/%idenity%");
 
 	try {
-	    convertor.getOpIdentifier("karel");
+	    convertor.convertToOpLocalIdentifier("karel");
 	    fail();
 	} catch (CoidiException e) {
 	    assertTrue(true);
@@ -64,21 +64,21 @@ public class IdentityNamesConvertorTest extends TestCase {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://%identity%.server.com:8080/");
 
-	assertEquals("http://karel.server.com:8080/", convertor.getOpIdentifier("karel"));
+	assertEquals("http://karel.server.com:8080/", convertor.convertToOpLocalIdentifier("karel"));
     }
 
     public void testGetOpLocalIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://localhost:8080/user/%identity%");
 
-	assertEquals("karel", convertor.getOpLocalIdentifier("http://localhost:8080/user/karel"));
+	assertEquals("karel", convertor.convertToIdentityId("http://localhost:8080/user/karel"));
     }
 
     public void testGetOpLocalIdentifier_placeholderInTheMiddle() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
 		"http://%identity%.server.com:8080/");
 
-	assertEquals("karel", convertor.getOpLocalIdentifier("http://karel.server.com:8080/"));
+	assertEquals("karel", convertor.convertToIdentityId("http://karel.server.com:8080/"));
     }
 
     public void testGetOpLocalIdentifier_null() throws Exception {
@@ -86,7 +86,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 		"http://localhost:8080/user/%identity%");
 
 	try {
-	    convertor.getOpLocalIdentifier(null);
+	    convertor.convertToIdentityId(null);
 	    fail();
 	} catch (NullPointerException e) {
 	    assertTrue(true);
@@ -98,7 +98,7 @@ public class IdentityNamesConvertorTest extends TestCase {
 		"http://localhost:8080/user/%identity%");
 
 	try {
-	    convertor.getOpLocalIdentifier("qwe");
+	    convertor.convertToIdentityId("qwe");
 	    fail();
 	} catch (CoidiException e) {
 	    assertTrue(true);

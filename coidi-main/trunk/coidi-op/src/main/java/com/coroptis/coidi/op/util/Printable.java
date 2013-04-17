@@ -13,26 +13,11 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.util;
 
-import com.coroptis.coidi.CoidiException;
+public interface Printable {
 
-/**
- * 
- * @author jan
- * 
- */
-public interface XrdsService {
+    final static String LINE_INTEND = "  ";
 
-    /**
-     * For given user name produce XRDS document.
-     * 
-     * @param user
-     *            required user name
-     * @return XRDS document
-     * @throws CoidiException
-     *             is throws at least when user doesn't exists
-     */
-    String getDocument(String user) throws CoidiException;
-
+    StringBuffer print(StringBuffer buffer, String currentIntend);
 }

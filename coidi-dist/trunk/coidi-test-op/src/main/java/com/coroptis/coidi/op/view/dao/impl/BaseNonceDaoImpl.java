@@ -15,35 +15,38 @@
  */
 package com.coroptis.coidi.op.view.dao.impl;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.entities.StatelessModeNonce;
-import com.coroptis.coidi.op.view.entities.StatelessModeNonceImpl;
+import com.coroptis.coidi.op.entities.Nonce;
+import com.coroptis.coidi.op.view.entities.NonceImpl;
 
 public class BaseNonceDaoImpl implements BaseNonceDao {
 
     @Inject
     private Session session;
 
-    @CommitAfter
     @Override
-    public void save(StatelessModeNonce statelessModeNonce) {
-	session.save(statelessModeNonce);
+    public void save(Nonce nonce) {
+	session.save(nonce);
     }
 
     @Override
-    public StatelessModeNonceImpl getByNonce(String noce) {
-	return (StatelessModeNonceImpl) session.createCriteria(StatelessModeNonceImpl.class)
+    public NonceImpl getByNonce(String noce) {
+	return (NonceImpl) session.createCriteria(NonceImpl.class)
 		.add(Restrictions.eq("nonce", noce)).uniqueResult();
     }
 
     @Override
-    public StatelessModeNonce createNewInstance() {
-	return new StatelessModeNonceImpl();
+    public Nonce createNewInstance() {
+	return new NonceImpl();
+    }
+
+    @Override
+    public void delete(Nonce nonce) {
+	session.delete(nonce);
     }
 
 }

@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.view.dao.impl;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -33,7 +32,6 @@ public class BaseAssociationDaoImpl implements BaseAssociationDao {
     @Inject
     private Session session;
 
-    @CommitAfter
     @Override
     public void create(Association association) {
 	logger.debug("creating: " + association);
@@ -51,4 +49,8 @@ public class BaseAssociationDaoImpl implements BaseAssociationDao {
 	return new AssociationImpl();
     }
 
+    @Override
+    public void delete(Association association) {
+	session.delete(association);
+    }
 }
