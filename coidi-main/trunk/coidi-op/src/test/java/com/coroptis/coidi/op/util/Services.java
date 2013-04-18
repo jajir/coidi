@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
@@ -57,13 +58,14 @@ public class Services {
 	    .createMock(AssociationService.class);
     private final BaseAssociationDao baseAssociationDao = EasyMock
 	    .createMock(BaseAssociationDao.class);
+    private final RealmTool realmTool = EasyMock.createMock(RealmTool.class);
 
     private final Object[] mocks = new Object[] { getBaseNonceDao(), getConfigurationService(),
 	    getNonceService(), getSigningService(), getStatelessModeNonceService(),
 	    getAuthenticationProcessor(), getAuthenticationService(), getIdentityService(),
 	    getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
 	    getCryptoService(), getAssociationTool(), getAssociationService(),
-	    getBaseAssociationDao() };
+	    getBaseAssociationDao(), getRealmTool() };
 
     private static Services services;
 
@@ -198,5 +200,12 @@ public class Services {
      */
     public BaseAssociationDao getBaseAssociationDao() {
 	return baseAssociationDao;
+    }
+
+    /**
+     * @return the realmTool
+     */
+    public RealmTool getRealmTool() {
+	return realmTool;
     }
 }

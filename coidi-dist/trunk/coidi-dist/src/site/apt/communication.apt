@@ -1,0 +1,36 @@
+ ----
+ Communication
+ ----
+
+Communication
+
+ In OpenID there are two types of communication between OP and RP - direct and indirect. 
+
+* Direct communication
+
+ During direct communication one side directly access second one.
+
+[message_association_verification.png] Direct communication during association verification.
+ 
+ This communication is used for:
+ 
+  * establishing association
+  
+  * verifying authentication assertion
+  
+[]
+  
+* Indirect communication
+
+ Advantage of this way of communication is that user agent in redirect request to OP could add HTTP session information.
+ It allows to identify user's browser at OP side.
+
+[message_authentication.png] Indirect communication during authentication request/response.
+
+ This communication is used for:
+ 
+  * authentication request
+  
+  * authentication response
+  
+[]

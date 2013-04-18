@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
 import com.coroptis.coidi.test.EasyMockServicebuilder;
@@ -81,5 +82,7 @@ public class JunitAppModule {
 		services.getAssociationService()));
 	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(
 		services.getBaseAssociationDao()));
+	binder.bind(RealmTool.class,
+		new EasyMockServicebuilder<RealmTool>(services.getRealmTool()));
     }
 }
