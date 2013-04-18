@@ -42,6 +42,7 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup;
+import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
 
@@ -59,6 +60,7 @@ public class OpModule {// NO_UCD
 	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
 	binder.bind(StatelessModeNonceService.class, StatelessModeNonceServiceImpl.class);
 	binder.bind(SregService.class, SregServiceImpl.class);
+	binder.bind(RealmTool.class, RealmToolImpl.class);
 	binder.bind(NegativeResponseGenerator.class, NegativeResponseGeneratorImpl.class);
 	binder.bind(IdentityNamesConvertor.class, IdentityNamesConvertorImpl.class);
     }

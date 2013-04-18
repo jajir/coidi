@@ -8,5 +8,6 @@
 		<property name="stateless.mode.association.type">HMAC-SHA1</property>
 		<property name="nonce.timeToLiveInSeconds">1800</property>
 		<property name="err.contact">john@somesite.com</property>		
+		<property name="wild-card.in.realm.enabled">true</property>		
 	</op>
 </configuration>

@@ -49,6 +49,8 @@
 			
 			<item name="OpenID" href="./openid.html">
 				<item name="Introduction" href="./introduction.html" />
+				<item name="Data model" href="./data-model.html" />
+				<item name="Communication" href="./communication.html" />
 				<item name="Identity" href="./identity.html" />
 				<item name="Normalization" href="./normalization.html" />
 				<item name="Discovery" href="./discovery.html" />
