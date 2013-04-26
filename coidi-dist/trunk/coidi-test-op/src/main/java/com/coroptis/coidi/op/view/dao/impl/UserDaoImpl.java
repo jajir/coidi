@@ -21,7 +21,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.op.view.entities.IdentityImpl;
 import com.coroptis.coidi.op.view.entities.UserImpl;
@@ -41,8 +40,8 @@ public class UserDaoImpl implements UserDao {
 
     @CommitAfter
     @Override
-    public User register(final String name, final String password, final String identityId) {
-	User user = new UserImpl();
+    public UserImpl register(final String name, final String password, final String identityId) {
+	UserImpl user = new UserImpl();
 	user.setName(name);
 	user.setPassword(password);
 	Identity identity = new IdentityImpl();
@@ -54,8 +53,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByName(final String userName) {
-	return (User) session.createCriteria(UserImpl.class).add(Restrictions.eq("name", userName))
-		.uniqueResult();
+    public UserImpl getUserByName(final String userName) {
+	return (UserImpl) session.createCriteria(UserImpl.class)
+		.add(Restrictions.eq("name", userName)).uniqueResult();
     }
 }

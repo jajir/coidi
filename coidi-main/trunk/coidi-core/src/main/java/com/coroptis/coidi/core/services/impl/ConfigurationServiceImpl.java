@@ -32,6 +32,7 @@ import com.coroptis.coidi.core.services.ConfException;
 import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.util.Conf;
 import com.coroptis.coidi.core.util.FsResource;
+import com.google.common.base.Preconditions;
 
 /**
  * Loads {@link Properties} from configuration file. Configuration files are
@@ -158,9 +159,16 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     @Override
-    public Resource getConfiguration(String configurationName) {
+    public Resource getConfiguration(final String configurationName) {
+	return getConfiguration(configurationName, "xml");
+    }
+
+    @Override
+    public Resource getConfiguration(final String configurationName, final String fileExtension) {
+	Preconditions.checkNotNull(configurationName, "configurationName is null");
+	Preconditions.checkNotNull(fileExtension, "fileExtension is null");
 	String fileName = getConfigurationDirectory() + configurationName + "-" + getServerRole()
-		+ ".xml";
+		+ "." + fileExtension;
 	return getConfigurationFileResource(fileName);
     }
 

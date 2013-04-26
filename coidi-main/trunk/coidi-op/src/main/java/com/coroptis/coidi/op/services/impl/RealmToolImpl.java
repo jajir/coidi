@@ -25,11 +25,15 @@ public class RealmToolImpl implements RealmTool {
     public boolean isMatching(final String realmPattern, final String returnTo) {
 	Preconditions.checkNotNull(realmPattern, "realmPattern is null");
 	Preconditions.checkNotNull(returnTo, "returnTo is null");
+	if (realmPattern.indexOf("#") > 0) {
+	    return false;
+	}
 	if (wildCardEnabled) {
-	    final Pattern p = Pattern.compile(realmPattern.replace("*", ".*"));
+	    String adjustedPattern = realmPattern + "*"; 
+	    final Pattern p = Pattern.compile(adjustedPattern.replace("*", ".*"));
 	    return p.matcher(returnTo).matches();
 	} else {
-	    return realmPattern.equals(returnTo);
+	    return returnTo.startsWith(realmPattern);
 	}
     }
 
