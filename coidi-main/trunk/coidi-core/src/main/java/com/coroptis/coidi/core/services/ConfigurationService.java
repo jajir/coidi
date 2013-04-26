@@ -85,6 +85,19 @@ public interface ConfigurationService {
     Resource getConfiguration(String configurationName);
 
     /**
+     * Return configuration file called
+     * '<configurationName>-<server.role>.<fileExtension>'.
+     * 
+     * @param configurationName
+     *            required configuration name, name have to be usable as part of
+     *            file name
+     * @param fileExtension
+     *            required file name extension without leading dot
+     * @return application configuration file
+     */
+    Resource getConfiguration(String configurationName, String fileExtension);
+
+    /**
      * Creates {@link Properties}
      * 
      * @param configurationSection

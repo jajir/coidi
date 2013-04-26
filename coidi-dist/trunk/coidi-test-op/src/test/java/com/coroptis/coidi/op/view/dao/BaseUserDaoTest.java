@@ -17,6 +17,7 @@ package com.coroptis.coidi.op.view.dao;
 
 import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.view.entities.UserImpl;
 import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class BaseUserDaoTest extends AbstractDaoTest {
@@ -24,7 +25,7 @@ public class BaseUserDaoTest extends AbstractDaoTest {
     private BaseUserDao dao;
 
     public void testGetById() throws Exception {
-	User ret = dao.getById(1);
+	UserImpl ret = (UserImpl) dao.getById(1);
 
 	assertNotNull(ret);
 	assertEquals("Jane", ret.getName());

@@ -82,7 +82,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#getName()
      */
-    @Override
     public String getName() {
 	return name;
     }
@@ -92,7 +91,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#setName(java.lang.String)
      */
-    @Override
     public void setName(String name) {
 	this.name = name;
     }
@@ -102,7 +100,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#getPassword()
      */
-    @Override
     public String getPassword() {
 	return password;
     }
@@ -112,7 +109,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#setPassword(java.lang.String)
      */
-    @Override
     public void setPassword(String password) {
 	this.password = password;
     }

@@ -22,10 +22,10 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.view.entities.UserImpl;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.view.util.BaseJunitTest;
-import com.coroptis.coidi.op.view.util.UserMock;
 
 /**
  * Tests for {@link UserServiceImpl}.
@@ -39,7 +39,7 @@ public class UserServiceTest extends BaseJunitTest {
 
     private UserService service;
 
-    private UserMock user;
+    private UserImpl user;
 
     public void testLogin() throws Exception {
 	MessageDigest md = MessageDigest.getInstance("MD5");
@@ -84,7 +84,7 @@ public class UserServiceTest extends BaseJunitTest {
     protected void setUp() throws Exception {
 	super.setUp();
 	service = getService(SERVICE_NAME, UserService.class);
-	user = new UserMock();
+	user = new UserImpl();
 	user.setIdUser(3);
 	user.setName("karel");
     }

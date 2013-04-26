@@ -31,28 +31,6 @@ public interface User {
     void setIdUser(Integer idUser);
 
     /**
-     * @return the name
-     */
-    String getName();
-
-    /**
-     * @param name
-     *            the name to set
-     */
-    void setName(String name);
-
-    /**
-     * @return the password
-     */
-    String getPassword();
-
-    /**
-     * @param password
-     *            the password to set
-     */
-    void setPassword(String password);
-
-    /**
      * @return the identities
      */
     Set<Identity> getIdentities();
