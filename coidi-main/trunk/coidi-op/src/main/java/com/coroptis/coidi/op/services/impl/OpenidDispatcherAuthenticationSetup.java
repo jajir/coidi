@@ -24,9 +24,9 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
@@ -67,7 +67,8 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 	    if (!userSession.isLogged()) {
 		logger.debug("User is not logged in.");
 		userSession.setAuthenticationRequest(authenticationRequest);
-		return new RedirectResponse();
+		return negativeResponseGenerator.applicationError("User is not logged in",
+			NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN);
 	    }
 
 	    if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
@@ -94,9 +95,10 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		    .getIdentity());
 
 	    if (identity == null) {
-		logger.debug("Unable to find idenity by '" + authenticationRequest.getIdentity()
-			+ "'.");
-		return new RedirectResponse();
+		logger.debug("Requested identity '" + authenticationRequest.getIdentity()
+			+ "' doesn't exists.");
+		return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+			userSession.getIdUser());
 	    }
 
 	    if (identityService.isUsersOpIdentifier(userSession.getIdUser(),
@@ -105,25 +107,17 @@ public class OpenidDispatcherAuthenticationSetup implements OpenIdDispatcher {
 		return authenticationProcessor.process(authenticationRequest,
 			new AuthenticationResponse(), identity, fieldToSign);
 	    } else {
-		return negativeResponseGenerator.simpleError("Identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't belongs to user '"
-			+ userSession.getIdUser() + "'.");
+		return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+			userSession.getIdUser());
 	    }
 
 	}
 	return null;
     }
 
-    class RedirectResponse extends AbstractOpenIdResponse {
+    private ErrorResponse identityBelongsToOtherUser(final String identity, final Integer idUser) {
+	return negativeResponseGenerator.simpleError("Identity '" + identity
+		+ "' doesn't belongs to user '" + idUser + "'.");
+    }
 
-	@Override
-	public boolean isUrl() {
-	    return true;
-	}
-
-	@Override
-	public String getMessage() {
-	    return "./login";
-	}
-    };
 }

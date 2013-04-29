@@ -25,9 +25,22 @@ import com.coroptis.coidi.core.message.ErrorResponse;
  */
 public interface NegativeResponseGenerator {
 
+    /**
+     * It's key under which is stored some of following simple messages
+     * describing problem. Most of problem could be corrected by OP by asking
+     * end user.
+     */
     static final String APPLICATION_ERROR_KEY = "appErr";
 
+    /**
+     * User should choose identity that would like to use.
+     */
     static final String APPLICATION_ERROR_SELECT_IDENTITY = "selectIdentity";
+
+    /**
+     * End user should login at OP site.
+     */
+    static final String APPLICATION_ERROR_PLEASE_LOGIN = "pleaseLogin";
 
     /**
      * Generated error with given message.
