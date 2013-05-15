@@ -29,6 +29,14 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
  */
 public interface OpenIdDispatcher {
 
+    /**
+     * OpenID name space.
+     */
+    final static String OPENID_NS = AbstractMessage.OPENID + AbstractMessage.OPENID_NS;
+
+    /**
+     * OpenID mode.
+     */
     final static String OPENID_MODE = AbstractMessage.OPENID + AbstractMessage.MODE;
 
     /**

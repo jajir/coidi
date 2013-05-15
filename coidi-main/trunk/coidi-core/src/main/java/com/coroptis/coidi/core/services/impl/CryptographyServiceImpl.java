@@ -70,7 +70,7 @@ public class CryptographyServiceImpl implements CryptographyService {
     public byte[] computeDigest(final byte[] text, final SessionType sessionType) {
 	Preconditions.checkNotNull(text, "signing text");
 	Preconditions.checkNotNull(sessionType, "sessionType");
-	if (sessionType.equals(SessionType.no_encription)) {
+	if (sessionType.equals(SessionType.NO_ENCRYPTION)) {
 	    throw new CoidiException("Can't sign when session type is 'no-encryption'");
 	}
 	try {

@@ -16,55 +16,53 @@
 package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.util.OpenId11;
+import com.coroptis.coidi.op.util.OpenId20;
 
 /**
- * This class in terminator of chain of command. When processing of message end
- * in this class it means that no command could process request.
- * <p>
- * Class works with both OpenID protocol versions.
- * </p>
+ * Simple implementation of {@link OpenIdRequestProcessor}.
  * 
- * @author jan
+ * @author jirout
  * 
  */
-public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
+public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
     @Inject
-    private Logger logger;
+    @OpenId11
+    private OpenIdDispatcher openIdDispatcher11;
 
     @Inject
-    @Symbol("op.err.contact")
-    private String contact;
+    @OpenId20
+    private OpenIdDispatcher openIdDispatcher20;
+
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
+
+    @Inject
+    @Symbol(CONF_OPENID_VERSION_11_ENABLED)
+    private Boolean openidVersion11Enabled;
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
-	ErrorResponse errorResponse = new ErrorResponse(false);
-	StringBuilder buff = new StringBuilder();
-	buff.append("Unable to process incoming message, incorrect 'openid.mode'");
-	buff.append(" or missing parameters or missing OpenID extension support.");
-	String errMsg = buff.toString();
-	buff.append("\n");
-	for (Entry<String, String> entry : requestParams.entrySet()) {
-	    buff.append(entry.getKey());
-	    buff.append("=");
-	    buff.append(entry.getValue());
-	    buff.append("\n");
+	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
+	    return negativeResponseGenerator.simpleError("key value '"
+		    + OpenIdDispatcher.OPENID_MODE + "' is empty");
 	}
-	logger.info(buff.toString());
-	errorResponse.setError(errMsg);
-	errorResponse.setContact(contact);
-	return errorResponse;
+	if (openidVersion11Enabled && requestParams.get(OpenIdDispatcher.OPENID_NS) == null) {
+	    return openIdDispatcher11.process(requestParams, userSession);
+	} else {
+	    return openIdDispatcher20.process(requestParams, userSession);
+	}
     }
 
 }

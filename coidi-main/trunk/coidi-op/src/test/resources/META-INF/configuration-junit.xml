@@ -1,5 +1,6 @@
 <configuration>
 	<op>
+		<property name="openid.version11.enabled">true</property>
 		<property name="fill.with.data.on.startup">false</property>
 		<property name="init.sql.data">none</property>
 		<property name="server">http://localhost:8080/</property>

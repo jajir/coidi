@@ -62,7 +62,7 @@ public class AssociationServiseImpl implements AssociationServise {
 	associationRequest.setSessionType(sessionType);
 	KeyPair keyPair = cryptoSessionService.generateCryptoSession(
 		CryptographyService.DEFAULT_MODULUS, CryptographyService.DEFAULT_GENERATOR);
-	if (!SessionType.no_encription.equals(sessionType)) {
+	if (!SessionType.NO_ENCRYPTION.equals(sessionType)) {
 	    associationRequest.setDhConsumerPublic(keyPair.getPublicKey());
 	    associationRequest.setDhGen(keyPair.getGenerator());
 	    associationRequest.setDhModulo(keyPair.getModulus());
@@ -78,7 +78,7 @@ public class AssociationServiseImpl implements AssociationServise {
 	association.setSessionType(associationResponse.getSessionType());
 	association.setExpiredIn(getExpireIn(associationResponse.getExpiresIn()));
 
-	if (SessionType.no_encription.equals(sessionType)) {
+	if (SessionType.NO_ENCRYPTION.equals(sessionType)) {
 	    association
 		    .setMacKey(convertorService.convertToString(associationResponse.getMacKey()));
 	} else {

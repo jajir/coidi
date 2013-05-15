@@ -47,15 +47,15 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractDaoTest extends DatabaseTestCase {
 
-    public final static String MOCK_DATA_PATH = "src/test/mock-data/";
+    public static final String MOCK_DATA_PATH = "src/test/mock-data/";
 
-    protected final static Logger logger = Logger.getLogger(AbstractDaoTest.class);
+    protected static final Logger logger = Logger.getLogger(AbstractDaoTest.class);
 
-    protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op.view";
+    protected static final String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op.view";
 
-    protected final static String T5_APPLICATION_NAME = "OpView";
+    protected static final String T5_APPLICATION_NAME = "OpView";
 
-    protected final static String T5_WEBAPP_BASE = "src/main/webapp";
+    protected static final String T5_WEBAPP_BASE = "src/main/webapp";
 
     static {
 	System.setProperty("server.role", "junit");

@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
@@ -38,6 +39,7 @@ import com.coroptis.coidi.test.EasyMockServicebuilder;
 
 public class JunitAppModule {
 
+    @SuppressWarnings("unchecked")
     public static void bind(ServiceBinder binder) {
 	/**
 	 * Additional bindings
@@ -82,7 +84,12 @@ public class JunitAppModule {
 		services.getAssociationService()));
 	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(
 		services.getBaseAssociationDao()));
-	binder.bind(RealmTool.class,
-		new EasyMockServicebuilder<RealmTool>(services.getRealmTool()));
+	binder.bind(RealmTool.class, new EasyMockServicebuilder<RealmTool>(services.getRealmTool()));
+	binder.bind(OpenIdDispatcher.class,
+		new EasyMockServicebuilder<OpenIdDispatcher>(services.getOpenIdDispatcher11()))
+		.withId("openIdDispatcher11").withMarker(OpenId11.class);
+	binder.bind(OpenIdDispatcher.class,
+		new EasyMockServicebuilder<OpenIdDispatcher>(services.getOpenIdDispatcher20()))
+		.withId("openIdDispatcher20").withMarker(OpenId20.class);
     }
 }

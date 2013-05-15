@@ -15,6 +15,9 @@
  */
 package com.coroptis.coidi.core.junit.message;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.TestCase;
 
 import com.coroptis.coidi.core.message.AssociationRequest;
@@ -45,6 +48,22 @@ public class AssociationRequestTest extends TestCase {
 	AssociationRequest request = new AssociationRequest();
 
 	assertNull(request.getDhGen());
+    }
+    
+    public void testSessionType_preventNullValues() throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("openid.session_type", null);
+	AssociationRequest request = new AssociationRequest(params);
+	
+	assertNull(request.getSessionType());
+    }
+    
+    public void testSessionType_preventInvalidValues() throws Exception {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("openid.session_type", "blee");
+	AssociationRequest request = new AssociationRequest(params);
+	
+	assertNull(request.getSessionType());
     }
 
 }

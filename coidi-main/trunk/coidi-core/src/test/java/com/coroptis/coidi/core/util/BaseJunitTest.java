@@ -27,8 +27,6 @@ import com.coroptis.coidi.test.AbstractJunitTest;
  */
 public abstract class BaseJunitTest extends AbstractJunitTest {
 
-    protected Registry registry;
-
     protected Services services;
 
     public BaseJunitTest() {
