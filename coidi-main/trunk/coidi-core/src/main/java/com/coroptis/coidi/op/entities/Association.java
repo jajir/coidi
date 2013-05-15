@@ -101,7 +101,7 @@ public interface Association {
      * 
      */
     public static enum SessionType {
-	no_encription("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
+	NO_ENCRYPTION("no-encryption", null, 0), DH_SHA1("DH-SHA1", "SHA-1", 20), DH_SHA256(
 		"DH-SHA256", "SHA-256", 32);
 
 	/**
@@ -132,8 +132,8 @@ public interface Association {
 		return DH_SHA1;
 	    } else if (DH_SHA256.getName().equals(str)) {
 		return DH_SHA256;
-	    } else if (no_encription.getName().equals(str)) {
-		return no_encription;
+	    } else if (NO_ENCRYPTION.getName().equals(str)) {
+		return NO_ENCRYPTION;
 	    }
 	    return null;
 	}

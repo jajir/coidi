@@ -48,7 +48,7 @@ public class AssociationRequest extends AbstractOpenIdRequest {
 
     @Override
     public String toString() {
-	if (SessionType.no_encription.equals(getSessionType())) {
+	if (SessionType.NO_ENCRYPTION.equals(getSessionType())) {
 	    return Objects.toStringHelper(AssociationRequest.class).add(MODE, getMode())
 		    .add(ASSOCIATION_TYPE, getAssociationType())
 		    .add(SESSION_TYPE, getSessionType()).add(OPENID_NS, getNameSpace()).toString();

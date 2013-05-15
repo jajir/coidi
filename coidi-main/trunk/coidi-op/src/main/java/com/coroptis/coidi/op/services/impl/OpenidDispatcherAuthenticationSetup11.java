@@ -20,38 +20,34 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.AuthenticationSetupProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 /**
- * Verify that basic message requirements are meat. This dispatched should be
- * first in chain.
+ * Authentication setup for OpenID 1.1.
  * 
- * @author jan
+ * @author jirout
  * 
  */
-public class OpenIdDispatcherChecker implements OpenIdDispatcher {
-
-    private final static String OPENID_NS = AbstractMessage.OPENID + AbstractMessage.OPENID_NS;
+public class OpenidDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
 
     @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private AuthenticationSetupProcessor authenticationSetupProcessor;
 
-    @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
-	if (requestParams.get(OPENID_MODE) == null) {
-	    return negativeResponseGenerator
-		    .simpleError("key value '" + OPENID_MODE + "' is empty");
-	}
-	if (requestParams.get(OPENID_NS) == null) {
-	    return negativeResponseGenerator.simpleError("key value '" + OPENID_NS + "' is empty");
-	} else {
-	    if (!AbstractMessage.OPENID_NS_20.equals(requestParams.get(OPENID_NS))) {
-		return negativeResponseGenerator.simpleError("Unsupported OpenId namespace '"
-			+ requestParams.get(OPENID_NS) + "'");
-	    }
+	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
+	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
+	    AbstractMessage out = authenticationSetupProcessor.process(authenticationRequest,
+		    userSession);
+	    /**
+	     * Prevent returning openid.op_endpoint
+	     */
+	    out.put(AuthenticationResponse.OP_ENDPOINT, null);
+	    return out;
 	}
 	return null;
     }

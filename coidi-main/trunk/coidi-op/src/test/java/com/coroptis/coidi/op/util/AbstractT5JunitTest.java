@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.util;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
 import com.coroptis.coidi.op.services.AssociationTool;
+import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.test.AbstractJunitTest;
 
@@ -47,6 +48,7 @@ public abstract class AbstractT5JunitTest extends AbstractJunitTest {
 	System.setProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS, "1800");
 	System.setProperty("op.err.contact", "john@gmail.com");
 	System.setProperty(RealmTool.KEY_IS_WILD_CARD_IN_REALM_ENABLED, "true");
+	System.setProperty(OpenIdRequestProcessor.CONF_OPENID_VERSION_11_ENABLED, "true");
 	services = Services.getServices();
 	services.reset();
 	super.setUp();

@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.AuthenticationService;
-import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.view.utils.TextResponse;
 import com.coroptis.coidi.op.view.utils.UserSession;
 
@@ -51,7 +51,7 @@ public class OpenId { // NO_UCD
     private Response response;
 
     @Inject
-    private OpenIdDispatcher openIdRequestDispatcher;
+    private OpenIdRequestProcessor openIdRequestProcessor;
 
     @javax.inject.Inject
     private AuthenticationService authenticationService;
@@ -65,7 +65,7 @@ public class OpenId { // NO_UCD
 	    Map<String, String> map = authenticationService
 		    .convertHttpRequestParametersToMap(request.getHTTPServletRequest());
 	    logger.info("SSO openId request is " + httpRequest.getQueryString());
-	    AbstractMessage requestResponse = openIdRequestDispatcher.process(map, userSession);
+	    AbstractMessage requestResponse = openIdRequestProcessor.process(map, userSession);
 	    logger.debug("openId response: " + requestResponse.getMessage());
 	    if (requestResponse.isUrl()) {
 		String redirUrl = requestResponse.getUrl(null);

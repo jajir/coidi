@@ -1,5 +1,6 @@
 <configuration>
 	<op>
+		<property name="openid.version11.enabled">true</property>
 		<property name="server">http://localhost:8080/</property>
 		<property name="identity.pattern">http://localhost:8080/identity/%identity%</property>
 		<property name="fill.with.data.on.startup">true</property>

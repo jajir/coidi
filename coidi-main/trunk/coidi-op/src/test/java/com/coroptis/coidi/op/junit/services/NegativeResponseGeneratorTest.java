@@ -24,6 +24,7 @@ import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
 public class NegativeResponseGeneratorTest extends AbstractT5JunitTest {
+    
     private final static String SERVICE_NAME = "realService";
 
     private NegativeResponseGenerator service;

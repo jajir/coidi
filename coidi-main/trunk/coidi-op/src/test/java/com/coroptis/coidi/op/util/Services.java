@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
@@ -59,13 +60,16 @@ public class Services {
     private final BaseAssociationDao baseAssociationDao = EasyMock
 	    .createMock(BaseAssociationDao.class);
     private final RealmTool realmTool = EasyMock.createMock(RealmTool.class);
+    private final OpenIdDispatcher openIdDispatcher11 = EasyMock.createMock(OpenIdDispatcher.class);
+    private final OpenIdDispatcher openIdDispatcher20 = EasyMock.createMock(OpenIdDispatcher.class);
 
     private final Object[] mocks = new Object[] { getBaseNonceDao(), getConfigurationService(),
 	    getNonceService(), getSigningService(), getStatelessModeNonceService(),
 	    getAuthenticationProcessor(), getAuthenticationService(), getIdentityService(),
 	    getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
 	    getCryptoService(), getAssociationTool(), getAssociationService(),
-	    getBaseAssociationDao(), getRealmTool() };
+	    getBaseAssociationDao(), getRealmTool(), getOpenIdDispatcher11(),
+	    getOpenIdDispatcher20() };
 
     private static Services services;
 
@@ -207,5 +211,19 @@ public class Services {
      */
     public RealmTool getRealmTool() {
 	return realmTool;
+    }
+
+    /**
+     * @return the openIdDispatcher11
+     */
+    public OpenIdDispatcher getOpenIdDispatcher11() {
+	return openIdDispatcher11;
+    }
+
+    /**
+     * @return the openIdDispatcher20
+     */
+    public OpenIdDispatcher getOpenIdDispatcher20() {
+	return openIdDispatcher20;
     }
 }

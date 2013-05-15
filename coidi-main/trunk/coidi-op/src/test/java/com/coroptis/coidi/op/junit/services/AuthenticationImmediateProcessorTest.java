@@ -28,23 +28,25 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.entities.AssociationBean;
+import com.coroptis.coidi.op.services.AuthenticationImmediateProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate;
+import com.coroptis.coidi.op.services.impl.AuthenticationImmediateProcessorImpl;
+import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate20;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 import com.coroptis.coidi.op.util.IdentityMock;
 import com.coroptis.coidi.op.util.TestUserSession;
 
 /**
- * Test for {@link OpenidDispatcherAuthenticationImmediate}.
+ * Test for {@link OpenidDispatcherAuthenticationImmediate20}.
  * 
  * @author jirout
  * 
  */
-public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5JunitTest {
+public class AuthenticationImmediateProcessorTest extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
-    private OpenIdDispatcher service;
+    private AuthenticationImmediateProcessor service;
 
     private AssociationBean association, associationInvalid;
 
@@ -71,7 +73,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 			"authentication request doesn't contains any idenity field")).andReturn(
 		errorResponse);
 	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
+	AbstractMessage ret = service.process(authenticationRequest, userSession);
 
 	assertNotNull(ret);
 	assertEquals(errorResponse, ret);
@@ -96,7 +98,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 		services.getIdentityService().getByOpLocalIdentifier("http://pond.com/duck"))
 		.andReturn(null);
 	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
+	AbstractMessage ret = service.process(authenticationRequest, userSession);
 
 	assertNotNull(ret);
 	assertEquals(errorResponse, ret);
@@ -123,7 +125,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 	EasyMock.expect(services.getIdentityService().isIdentityLogged(userSession, identity))
 		.andReturn(false);
 	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
+	AbstractMessage ret = service.process(authenticationRequest, userSession);
 
 	assertNotNull(ret);
 	assertEquals(errorResponse, ret);
@@ -152,7 +154,7 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 			(AuthenticationResponse) EasyMock.anyObject(), EasyMock.eq(identity),
 			(Set<String>) EasyMock.anyObject())).andReturn(positiveResponse);
 	services.replay();
-	AbstractMessage ret = service.process(params, userSession);
+	AbstractMessage ret = service.process(authenticationRequest, userSession);
 
 	assertNotNull(ret);
 	assertTrue(ret instanceof AuthenticationResponse);
@@ -161,14 +163,14 @@ public class OpenidDispatcherAuthenticationImmediateTest extends AbstractT5Junit
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(OpenIdDispatcher.class, OpenidDispatcherAuthenticationImmediate.class).withId(
+	binder.bind(AuthenticationImmediateProcessor.class, AuthenticationImmediateProcessorImpl.class).withId(
 		SERVICE_NAME);
     }
 
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
-	service = getService(SERVICE_NAME, OpenIdDispatcher.class);
+	service = getService(SERVICE_NAME, AuthenticationImmediateProcessor.class);
 	association = new AssociationBean();
 	association.setAssocHandle("h342usd09d");
 	// next assoc handle should be valid for 1 hour.

@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.view.util;
 
-import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
 import com.coroptis.coidi.op.services.AssociationTool;
@@ -27,8 +26,6 @@ import com.coroptis.coidi.test.AbstractJunitTest;
  * 
  */
 public abstract class BaseJunitTest extends AbstractJunitTest {
-
-    protected Registry registry;
 
     protected Services services;
 
