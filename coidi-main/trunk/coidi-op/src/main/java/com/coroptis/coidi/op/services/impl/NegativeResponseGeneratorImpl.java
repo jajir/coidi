@@ -47,12 +47,34 @@ public class NegativeResponseGeneratorImpl implements NegativeResponseGenerator 
     }
 
     @Override
+    public ErrorResponse simpleError(final String message, final String nameSpace) {
+	logger.warn(message);
+	ErrorResponse errorResponse = new ErrorResponse(false);
+	errorResponse.setContact(errorContact);
+	errorResponse.setError(message);
+	errorResponse.setNameSpace(nameSpace);
+	return errorResponse;
+    }
+
+    @Override
     public ErrorResponse applicationError(final String message, final String errorKey) {
 	logger.warn(message);
 	ErrorResponse errorResponse = new ErrorResponse(false);
 	errorResponse.setContact(errorContact);
 	errorResponse.put(APPLICATION_ERROR_KEY, errorKey);
 	errorResponse.setError(message);
+	return errorResponse;
+    }
+
+    @Override
+    public ErrorResponse applicationError(final String message, final String errorKey,
+	    final String nameSpace) {
+	logger.warn(message);
+	ErrorResponse errorResponse = new ErrorResponse(false);
+	errorResponse.setContact(errorContact);
+	errorResponse.put(APPLICATION_ERROR_KEY, errorKey);
+	errorResponse.setError(message);
+	errorResponse.setNameSpace(nameSpace);
 	return errorResponse;
     }
 

@@ -50,7 +50,8 @@ public class OpenIdDispatcherAssociation11 implements OpenIdDispatcher {
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    if (request.getDhConsumerPublic() == null) {
 		return negativeResponseGenerator.simpleError("Parameter '"
-			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
+			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required",
+			AbstractMessage.OPENID_NS_11);
 	    }
 	    AbstractMessage out = associationProcessor.processAssociation(request,
 		    extractSessionType(request), extractAssociationType(request));

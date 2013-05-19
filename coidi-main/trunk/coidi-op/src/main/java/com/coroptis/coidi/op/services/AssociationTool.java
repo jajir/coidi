@@ -49,8 +49,9 @@ public interface AssociationTool {
     AssociationType getDefaultAssociationType();
 
     /**
-     * Get information if it's shared or public association. When session type
+     * Get information if it's shared or private association. When session type
      * of association is <code>null</code> then it's private association.
+     * Private association could be part of state-less association.
      * 
      * @param association
      *            required association

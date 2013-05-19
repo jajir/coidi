@@ -32,7 +32,8 @@ import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.services.impl.AssociationToolImpl;
 import com.coroptis.coidi.op.services.impl.AuthProcAssociation;
 import com.coroptis.coidi.op.services.impl.AuthProcNonce;
-import com.coroptis.coidi.op.services.impl.AuthProcResponse;
+import com.coroptis.coidi.op.services.impl.AuthProcResponse11;
+import com.coroptis.coidi.op.services.impl.AuthProcResponse20;
 import com.coroptis.coidi.op.services.impl.AuthProcSign;
 import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
 import com.coroptis.coidi.op.services.impl.AuthenticationImmediateProcessorImpl;
@@ -44,10 +45,12 @@ import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
 import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation11;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation20;
-import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication11;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenIdRequestProcessorImpl;
+import com.coroptis.coidi.op.services.impl.OpenIdRequestToolImpl;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate11;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate20;
 import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup11;
@@ -80,6 +83,8 @@ public class OpModule {// NO_UCD
 	binder.bind(AuthenticationSetupProcessor.class, AuthenticationSetupProcessorImpl.class);
 	binder.bind(AuthenticationImmediateProcessor.class,
 		AuthenticationImmediateProcessorImpl.class);
+	binder.bind(OpenIdRequestTool.class, OpenIdRequestToolImpl.class);
+
     }
 
     public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
@@ -108,7 +113,7 @@ public class OpModule {// NO_UCD
 	    @Autobuild OpenIdDispatcherChecker20 openIdDispatcherChecker,
 	    @Autobuild OpenidDispatcherAuthenticationImmediate20 openidDispatcherAuthenticationImmediate20,
 	    @Autobuild OpenidDispatcherAuthenticationSetup20 openidDispatcherAuthenticationSetup20,
-	    @Autobuild OpenIdDispatcherCheckAuthentication openIdDispatcherCheckAuthentication,
+	    @Autobuild OpenIdDispatcherCheckAuthentication20 openIdDispatcherCheckAuthentication20,
 	    @Autobuild OpenIdDispatcherAssociation20 openIdDispatcherAssociation20,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
 	configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
@@ -117,8 +122,8 @@ public class OpModule {// NO_UCD
 	configuration.add("openidDispatcherAuthenticationSetup20",
 		openidDispatcherAuthenticationSetup20);
 	configuration.add("openIdDispatcherAssociation20", openIdDispatcherAssociation20);
-	configuration.add("openIdDispatcherCheckAuthentication",
-		openIdDispatcherCheckAuthentication);
+	configuration.add("openIdDispatcherCheckAuthentication20",
+		openIdDispatcherCheckAuthentication20);
 	configuration.add("openIdDispatcherTerminator", openIdDispatcherTerminator);
     }
 
@@ -128,7 +133,7 @@ public class OpModule {// NO_UCD
 	    OrderedConfiguration<OpenIdDispatcher> configuration,
 	    @Autobuild OpenidDispatcherAuthenticationImmediate11 openidDispatcherAuthenticationImmediate11,
 	    @Autobuild OpenidDispatcherAuthenticationSetup11 openidDispatcherAuthenticationSetup11,
-	    @Autobuild OpenIdDispatcherCheckAuthentication openIdDispatcherCheckAuthentication,
+	    @Autobuild OpenIdDispatcherCheckAuthentication11 openIdDispatcherCheckAuthentication11,
 	    @Autobuild OpenIdDispatcherAssociation11 openIdDispatcherAssociation11,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
 	configuration.add("openidDispatcherAuthenticationImmediate11",
@@ -136,33 +141,59 @@ public class OpModule {// NO_UCD
 	configuration.add("openidDispatcherAuthenticationSetup11",
 		openidDispatcherAuthenticationSetup11);
 	configuration.add("openIdDispatcherAssociation11", openIdDispatcherAssociation11);
-	configuration.add("openIdDispatcherCheckAuthentication",
-		openIdDispatcherCheckAuthentication);
+	configuration.add("openIdDispatcherCheckAuthentication11",
+		openIdDispatcherCheckAuthentication11);
 	configuration.add("openIdDispatcherTerminator", openIdDispatcherTerminator);
     }
 
     /**
-     * Chain of commands process authentication response.
+     * Chain of commands process authentication response for protocol version
+     * 2.0
      * 
      * @param commands
      * @param chainBuilder
      * @return
      */
-    public static AuthenticationProcessor buildAuthenticationProcessor(
+    @Marker(OpenId20.class)
+    @Local
+    public static AuthenticationProcessor buildAuthenticationProcessor20(
 	    List<AuthenticationProcessor> commands,
 	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
 	return chainBuilder.build(AuthenticationProcessor.class, commands);
     }
 
-    public static void contributeAuthenticationProcessor(
+    @Contribute(AuthenticationProcessor.class)
+    @OpenId20
+    public static void contributeAuthenticationProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
 	    @Autobuild AuthProcAssociation authProcAssociation,
-	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse authProcResponse) {
-	configuration.add("authProcResponse", authProcResponse);
+	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
+	configuration.add("authProcResponse20", authProcResponse20);
 	configuration.add("association", authProcAssociation);
 	configuration.add("authProcNonce", authProcNonce);
 	configuration.add("authProcSreg11", authProcSreg11);
+	configuration.add("authProcSign", authProcSign);
+    }
+
+    @Marker(OpenId11.class)
+    @Local
+    public static AuthenticationProcessor buildAuthenticationProcessor11(
+	    List<AuthenticationProcessor> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthenticationProcessor.class, commands);
+    }
+
+    @Contribute(AuthenticationProcessor.class)
+    @OpenId11
+    public static void contributeAuthenticationProcessor11(
+	    OrderedConfiguration<AuthenticationProcessor> configuration,
+	    @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse11 authProcResponse11) {
+	configuration.add("authProcResponse11", authProcResponse11);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcNonce", authProcNonce);
 	configuration.add("authProcSign", authProcSign);
     }
 

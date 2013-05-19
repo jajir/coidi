@@ -51,8 +51,8 @@ public interface AssociationService {
     Association createAssociation(AssociationType associationType, SessionType sessionType);
 
     /**
-     * Create association with default association type and with empty session
-     * type. It's state-less association.
+     * Create association with default association type and with
+     * <code>null</code> session type. It's state-less association.
      * 
      * @return
      */

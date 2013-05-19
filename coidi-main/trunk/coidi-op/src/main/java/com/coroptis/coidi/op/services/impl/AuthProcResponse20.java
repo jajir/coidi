@@ -28,7 +28,7 @@ import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
-public class AuthProcResponse implements AuthenticationProcessor {
+public class AuthProcResponse20 implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;

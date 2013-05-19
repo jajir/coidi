@@ -15,16 +15,25 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.AuthenticationSetupProcessor;
+import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.util.OpenId11;
 
 /**
  * Authentication setup for OpenID 1.1.
@@ -35,21 +44,61 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 public class OpenidDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
 
     @Inject
-    private AuthenticationSetupProcessor authenticationSetupProcessor;
+    private Logger logger;
+
+    @Inject
+    private IdentityService identityService;
+
+    @Inject
+    @OpenId11
+    private AuthenticationProcessor authenticationProcessor;
+
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
-	    AbstractMessage out = authenticationSetupProcessor.process(authenticationRequest,
-		    userSession);
-	    /**
-	     * Prevent returning openid.op_endpoint
-	     */
-	    out.put(AuthenticationResponse.OP_ENDPOINT, null);
-	    return out;
+	    if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+		return negativeResponseGenerator.simpleError("Field 'openid.identity' is empty.",
+			AbstractMessage.OPENID_NS_11);
+	    }
+
+	    if (!userSession.isLogged()) {
+		logger.debug("User is not logged in.");
+		userSession.setAuthenticationRequest(authenticationRequest);
+		return negativeResponseGenerator.applicationError("User is not logged in",
+			NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN,
+			AbstractMessage.OPENID_NS_11);
+	    }
+
+	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
+		    .getIdentity());
+	    if (identity == null) {
+		logger.debug("Requested identity '" + authenticationRequest.getIdentity()
+			+ "' doesn't exists.");
+		return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+			userSession.getIdUser());
+	    }
+
+	    if (identityService.isUsersOpIdentifier(userSession.getIdUser(),
+		    authenticationRequest.getIdentity())) {
+		Set<String> fieldToSign = new HashSet<String>();
+		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+		authenticationResponse.setNameSpace(AbstractMessage.OPENID_NS_11);
+		return authenticationProcessor.process(authenticationRequest,
+			authenticationResponse, identity, fieldToSign);
+	    } else {
+		return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+			userSession.getIdUser());
+	    }
 	}
 	return null;
     }
 
+    private ErrorResponse identityBelongsToOtherUser(final String identity, final Integer idUser) {
+	return negativeResponseGenerator.simpleError("Identity '" + identity
+		+ "' doesn't belongs to user '" + idUser + "'.", AbstractMessage.OPENID_NS_11);
+    }
 }

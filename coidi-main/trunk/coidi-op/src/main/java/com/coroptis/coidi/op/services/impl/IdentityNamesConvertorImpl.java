@@ -58,7 +58,13 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 		    + identityPattern + "'.");
 	}
 	final String part = opIdentifier.substring(start.length());
-	return part.substring(0, part.length() - end.length());
+	if (part.endsWith(end)) {
+	    return part.substring(0, part.length() - end.length());
+	} else {
+	    throw new CoidiException("Given OP Identifier '" + opIdentifier
+		    + "' is not valid and can't be converted to identity id with pattern '"
+		    + identityPattern + "'.");
+	}
     }
 
     @Override

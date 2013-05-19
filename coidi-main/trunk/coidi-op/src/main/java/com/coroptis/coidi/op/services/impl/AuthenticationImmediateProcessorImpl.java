@@ -15,6 +15,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.util.OpenId20;
 
 public class AuthenticationImmediateProcessorImpl implements AuthenticationImmediateProcessor {
 
@@ -22,6 +23,7 @@ public class AuthenticationImmediateProcessorImpl implements AuthenticationImmed
     private AuthenticationService authenticationService;
 
     @Inject
+    @OpenId20
     private AuthenticationProcessor authenticationProcessor;
 
     @Inject

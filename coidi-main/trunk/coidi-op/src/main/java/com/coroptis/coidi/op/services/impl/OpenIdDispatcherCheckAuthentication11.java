@@ -25,8 +25,11 @@ import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
+import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
@@ -37,7 +40,7 @@ import com.coroptis.coidi.op.services.StatelessModeNonceService;
  * @author jan
  * 
  */
-public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
+public class OpenIdDispatcherCheckAuthentication11 implements OpenIdDispatcher {
 
     @Inject
     private Logger logger;
@@ -49,8 +52,14 @@ public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
     private SigningService signingService;
 
     @Inject
+    private AssociationTool associationTool;
+
+    @Inject
     private AssociationService associationService;
 
+    @Inject
+    private BaseAssociationDao baseAssociationDao;
+    
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
@@ -59,26 +68,37 @@ public class OpenIdDispatcherCheckAuthentication implements OpenIdDispatcher {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);
 	    logger.debug("processing: " + request);
 	    CheckAuthenticationResponse response = new CheckAuthenticationResponse();
-	    Nonce nonce = statelessModeNonceService.getVerifiedNonce(request.getNonce());
-	    if (nonce == null) {
-		response.setIsValid(false);
+	    response.setNameSpace(AbstractMessage.OPENID_NS_11);
+	    
+	    /**
+	     * FIXME 1. verify that it's state-less association handle, it;s when exists nonce. 3. verify signature. 
+	     */
+//	    Nonce nonce = statelessModeNonceService.getVerifiedNonce(request.getNonce());
+//	    if (nonce == null) {
+//		response.setIsValid(false);
+//		return response;
+//	    } else {
+//		if (!statelessModeNonceService.isAssociationValid(nonce, request)) {
+//		    response.setIsValid(false);
+//		    return response;
+//		}
+//		if (!request.getSignature().equals(
+//			signingService.sign(request, nonce.getAssociation()))) {
+//		    response.setIsValid(false);
+//		    logger.info("Signature is not valid " + request);
+//		    return response;
+//		}
+//	    }
+	    Association association = baseAssociationDao.getByAssocHandle(request.getAssocHandle());
+	    if (associationTool.isPrivateAssociation(association)) {
+		associationService.delete(request.getAssocHandle());
+		response.setIsValid(true);
+		response.setInvalidateHandle(request.getAssocHandle());
 		return response;
 	    } else {
-		if (!statelessModeNonceService.isAssociationValid(nonce, request)) {
-		    response.setIsValid(false);
-		    return response;
-		}
-		if (!request.getSignature().equals(
-			signingService.sign(request, nonce.getAssociation()))) {
-		    response.setIsValid(false);
-		    logger.info("Signature is not valid " + request);
-		    return response;
-		}
+		response.setIsValid(false);
+		return response;
 	    }
-	    associationService.delete(request.getAssocHandle());
-	    response.setIsValid(true);
-	    response.setInvalidateHandle(request.getAssocHandle());
-	    return response;
 	}
 	return null;
     }

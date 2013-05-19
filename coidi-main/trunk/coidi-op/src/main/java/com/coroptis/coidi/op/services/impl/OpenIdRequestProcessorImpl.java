@@ -25,6 +25,7 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.util.OpenId11;
 import com.coroptis.coidi.op.util.OpenId20;
 
@@ -51,14 +52,17 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
     @Symbol(CONF_OPENID_VERSION_11_ENABLED)
     private Boolean openidVersion11Enabled;
 
+    @Inject
+    private OpenIdRequestTool openIdRequestTool;
+
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
+    public AbstractMessage process(final Map<String, String> requestParams,
+	    final UserSessionSkeleton userSession) {
 	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
 	    return negativeResponseGenerator.simpleError("key value '"
 		    + OpenIdDispatcher.OPENID_MODE + "' is empty");
 	}
-	if (openidVersion11Enabled && requestParams.get(OpenIdDispatcher.OPENID_NS) == null) {
+	if (openidVersion11Enabled && openIdRequestTool.isOpenIdVersion1x(requestParams)) {
 	    return openIdDispatcher11.process(requestParams, userSession);
 	} else {
 	    return openIdDispatcher20.process(requestParams, userSession);
