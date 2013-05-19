@@ -23,6 +23,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 
 /**
  * Verify that basic message requirements are meat. This dispatched should be
@@ -36,10 +37,13 @@ public class OpenIdDispatcherChecker20 implements OpenIdDispatcher {
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
 
+    @Inject
+    private OpenIdRequestTool openIdRequestTool;
+
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
-	if (!AbstractMessage.OPENID_NS_20.equals(requestParams.get(OPENID_NS))) {
+    public AbstractMessage process(final Map<String, String> requestParams,
+	    final UserSessionSkeleton userSession) {
+	if (!openIdRequestTool.isOpenIdVersion20(requestParams)) {
 	    return negativeResponseGenerator.simpleError("Unsupported OpenId namespace '"
 		    + requestParams.get(OPENID_NS) + "'");
 	}

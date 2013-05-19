@@ -18,6 +18,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.AuthenticationSetupProcessor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.util.OpenId20;
 
 public class AuthenticationSetupProcessorImpl implements AuthenticationSetupProcessor {
 
@@ -31,17 +32,19 @@ public class AuthenticationSetupProcessorImpl implements AuthenticationSetupProc
     private IdentityService identityService;
 
     @Inject
+    @OpenId20
     private AuthenticationProcessor authenticationProcessor;
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
-    
+
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final UserSessionSkeleton userSession) {
 	if (!authenticationService.isAuthenticationRequest(authenticationRequest)) {
 	    logger.debug("authentication request doesn't contains any idenity field");
-	    return null;
+	    return negativeResponseGenerator
+		    .simpleError("authentication request doesn't contains any idenity field");
 	}
 
 	// TODO should be perform just when all information are valid
@@ -96,6 +99,5 @@ public class AuthenticationSetupProcessorImpl implements AuthenticationSetupProc
 	return negativeResponseGenerator.simpleError("Identity '" + identity
 		+ "' doesn't belongs to user '" + idUser + "'.");
     }
-
 
 }

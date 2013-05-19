@@ -52,6 +52,17 @@ public interface NegativeResponseGenerator {
     ErrorResponse simpleError(String message);
 
     /**
+     * Generated error with given message.
+     * 
+     * @param nameSpace
+     *            required name space
+     * @param message
+     *            required error message
+     * @return created instance of {@link ErrorResponse} class
+     */
+    ErrorResponse simpleError(String message, String nameSpace);
+
+    /**
      * This generate error that tells application that there should correct
      * something.
      * 
@@ -60,5 +71,17 @@ public interface NegativeResponseGenerator {
      * @return
      */
     ErrorResponse applicationError(String message, String errorKey);
+
+    /**
+     * This generate error that tells application that there should correct
+     * something.
+     * 
+     * @param nameSpace
+     *            required name space
+     * @param message
+     * @param errorKey
+     * @return
+     */
+    ErrorResponse applicationError(String message, String errorKey, String nameSpace);
 
 }
