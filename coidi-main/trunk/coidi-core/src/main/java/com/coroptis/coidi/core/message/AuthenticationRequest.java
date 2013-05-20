@@ -27,6 +27,12 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
     public final static String ASSOC_HANDLE = "assoc_handle";
     public final static String RETURN_TO = "return_to";
     public final static String REALM = "realm";
+
+    /**
+     * OpenID 1.0 version attribute. It's not used in 2.0 protocol version.
+     */
+    public final static String TRUST_ROOT = "trust_root";
+
     /**
      * When authentication request have identity with value
      * {@link #IDENTITY_SELECT} then under this key should be identity selected
@@ -132,6 +138,21 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
      */
     public void setRealm(final String realm) {
 	put(REALM, realm);
+    }
+
+    /**
+     * @return the trust root
+     */
+    public String getTrustRoot() {
+	return get(TRUST_ROOT);
+    }
+
+    /**
+     * @param trustRoot
+     *            the trust root to set
+     */
+    public void setTrustRoot(final String trustRoot) {
+	put(TRUST_ROOT, trustRoot);
     }
 
     /**
