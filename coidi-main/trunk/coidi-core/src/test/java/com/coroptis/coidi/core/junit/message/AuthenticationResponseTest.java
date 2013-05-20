@@ -20,6 +20,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 
 public class AuthenticationResponseTest extends TestCase {
@@ -31,6 +32,14 @@ public class AuthenticationResponseTest extends TestCase {
 
 	AuthenticationResponse response = new AuthenticationResponse(map);
 	assertEquals("http://karel.is.com", response.getIdentity());
+    }
+    
+    public void testSetNameSpace() throws Exception {
+	AuthenticationResponse response = new AuthenticationResponse();
+	assertEquals(AbstractMessage.OPENID_NS_20, response.getNameSpace());
+	
+	response.setNameSpace(AbstractMessage.OPENID_NS_11);
+	assertEquals(AbstractMessage.OPENID_NS_11, response.getNameSpace());
     }
 
 }

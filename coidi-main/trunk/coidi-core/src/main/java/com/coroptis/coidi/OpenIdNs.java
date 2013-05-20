@@ -15,8 +15,28 @@
  */
 package com.coroptis.coidi;
 
+/**
+ * This interface contains string constants for YADIS protocol discovery
+ * process.
+ * 
+ * @author jirout
+ * 
+ */
 public interface OpenIdNs {
 
+    /**
+     * Type value for OpenID version 1.0.
+     */
+    public static final String TYPE_OPENID_1_0 = "http://openid.net/server/1.0";
+
+    /**
+     * Type value for OpenID version 1.1.
+     */
+    public static final String TYPE_OPENID_1_1 = "http://openid.net/server/1.1";
+
+    /**
+     * Type value for OpenID version 2.0.
+     */
     public static final String TYPE_OPENID_2_0 = "http://specs.openid.net/auth/2.0/server";
     public static final String TYPE_ATTRIBUTE_EXCHANGE_1_0 = "http://openid.net/srv/ax/1.0";
     public static final String TYPE_UI_POPUP_1_0 = "http://specs.openid.net/extensions/ui/1.0/mode/popup";

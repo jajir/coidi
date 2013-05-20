@@ -35,6 +35,19 @@ public abstract class AbstractMessage {
 
     public static final String OPENID_NS = "ns";
 
+    /**
+     * Value for field 'openid.ns'. It identify protocol version 1.0
+     */
+    public final static String OPENID_NS_10 = "http://openid.net/signon/1.0";
+
+    /**
+     * Value for field 'openid.ns'. It identify protocol version 1.1
+     */
+    public final static String OPENID_NS_11 = "http://openid.net/signon/1.1";
+
+    /**
+     * Value for field 'openid.ns'. It identify protocol version 2.0
+     */
     public final static String OPENID_NS_20 = "http://specs.openid.net/auth/2.0";
 
     public final static String MODE = "mode";
