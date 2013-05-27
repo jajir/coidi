@@ -27,6 +27,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.op.services.AuthenticationImmediateProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
@@ -152,6 +153,7 @@ public class AuthenticationImmediateProcessorTest extends AbstractT5JunitTest {
 		services.getAuthenticationProcessor().process(
 			(AuthenticationRequest) EasyMock.anyObject(),
 			(AuthenticationResponse) EasyMock.anyObject(), EasyMock.eq(identity),
+			(UserSessionSkeleton) EasyMock.anyObject(),
 			(Set<String>) EasyMock.anyObject())).andReturn(positiveResponse);
 	services.replay();
 	AbstractMessage ret = service.process(authenticationRequest, userSession);
@@ -163,8 +165,8 @@ public class AuthenticationImmediateProcessorTest extends AbstractT5JunitTest {
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(AuthenticationImmediateProcessor.class, AuthenticationImmediateProcessorImpl.class).withId(
-		SERVICE_NAME);
+	binder.bind(AuthenticationImmediateProcessor.class,
+		AuthenticationImmediateProcessorImpl.class).withId(SERVICE_NAME);
     }
 
     @Override

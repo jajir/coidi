@@ -36,6 +36,8 @@ import com.coroptis.coidi.op.services.impl.AuthProcResponse11;
 import com.coroptis.coidi.op.services.impl.AuthProcResponse20;
 import com.coroptis.coidi.op.services.impl.AuthProcSign;
 import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity20;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentitySelect20;
 import com.coroptis.coidi.op.services.impl.AuthenticationImmediateProcessorImpl;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.AuthenticationSetupProcessorImpl;
@@ -167,9 +169,13 @@ public class OpModule {// NO_UCD
     public static void contributeAuthenticationProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcVerifyIdentitySelect20 authProcVerifyIdentitySelect20,
+	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
 	    @Autobuild AuthProcAssociation authProcAssociation,
 	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
 	configuration.add("authProcResponse20", authProcResponse20);
+	configuration.add("verifyIdentitySelect", authProcVerifyIdentitySelect20);
+	configuration.add("verifyIdentity", authProcVerifyIdentity20);
 	configuration.add("association", authProcAssociation);
 	configuration.add("authProcNonce", authProcNonce);
 	configuration.add("authProcSreg11", authProcSreg11);

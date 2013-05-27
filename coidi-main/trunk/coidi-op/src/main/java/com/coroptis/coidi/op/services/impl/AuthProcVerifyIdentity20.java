@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import java.util.Date;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -24,53 +23,59 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.dao.BaseAssociationDao;
-import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
 /**
- * Perform association verification. It validates that association exists and is
- * valid otherwise switch to stateless mode.
+ * erify
  * 
  * @author jirout
  * 
  */
-public class AuthProcAssociation implements AuthenticationProcessor {
+public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
 
     @Inject
-    private BaseAssociationDao associationDao;
+    private IdentityService identityService;
+
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity,
+	    AuthenticationResponse response, Identity identity2,
 	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
-	logger.debug("verifying association: " + authenticationRequest);
+	logger.debug("verify identity: " + authenticationRequest);
+	/**
+	 * FIXME authentication request could be without identity.
+	 */
+	Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
+		.getIdentity());
 
-	if (authenticationRequest.getAssocHandle() == null) {
-	    response.setAssocHandle(null);
-	} else {
-	    Association association = associationDao.getByAssocHandle(authenticationRequest
-		    .getAssocHandle());
-	    if (association == null) {
-		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-		response.setAssocHandle(null);
-		logger.debug("Unable to find association handle '"
-			+ authenticationRequest.getAssocHandle() + "'");
-	    } else {
-		if (association.getExpiredIn().before(new Date())) {
-		    response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-		    response.setAssocHandle(null);
-		    logger.debug("Assocition handle '" + authenticationRequest.getAssocHandle()
-			    + "' expires at " + association.getExpiredIn());
-		}
-	    }
+	if (identity == null) {
+	    logger.debug("Requested identity '" + authenticationRequest.getIdentity()
+		    + "' doesn't exists.");
+	    return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+		    userSession.getIdUser());
 	}
-	return null;
+
+	if (identityService.isUsersOpIdentifier(userSession.getIdUser(),
+		authenticationRequest.getIdentity())) {
+	    return null;
+	} else {
+	    return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
+		    userSession.getIdUser());
+	}
     }
 
+    private ErrorResponse identityBelongsToOtherUser(final String identity, final Integer idUser) {
+	return negativeResponseGenerator.simpleError("Identity '" + identity
+		+ "' doesn't belongs to user '" + idUser + "'.");
+    }
 }

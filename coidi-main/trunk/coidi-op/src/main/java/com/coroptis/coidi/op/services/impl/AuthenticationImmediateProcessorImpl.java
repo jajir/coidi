@@ -55,7 +55,7 @@ public class AuthenticationImmediateProcessorImpl implements AuthenticationImmed
 	AuthenticationResponse response = new AuthenticationResponse();
 	Set<String> fieldToSign = new HashSet<String>();
 	AbstractMessage out = authenticationProcessor.process(authenticationRequest, response,
-		identity, fieldToSign);
+		identity, userSession, fieldToSign);
 	return out;
     }
 

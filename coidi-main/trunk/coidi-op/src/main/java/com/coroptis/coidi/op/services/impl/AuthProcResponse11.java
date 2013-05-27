@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 
@@ -33,7 +34,8 @@ public class AuthProcResponse11 implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	    AuthenticationResponse response, Identity identity,
+	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
 	logger.debug("creating athentication response for: " + authenticationRequest);
 	response.setReturnTo(authenticationRequest.getReturnTo());
 	response.setIdentity(authenticationRequest.getIdentity());

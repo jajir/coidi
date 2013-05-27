@@ -20,6 +20,7 @@ import java.util.Set;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
@@ -40,11 +41,13 @@ public interface AuthenticationProcessor {
      * @param authenticationRequest
      * @param response
      * @param identity
+     * @param userSession
      * @param fieldsToSign
      *            required parameter where will be added all fields from message
      *            that should be signed
      * @return
      */
     AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign);
+	    AuthenticationResponse response, Identity identity, UserSessionSkeleton userSession,
+	    Set<String> fieldsToSign);
 }

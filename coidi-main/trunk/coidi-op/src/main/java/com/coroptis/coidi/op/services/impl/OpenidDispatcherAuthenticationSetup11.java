@@ -88,7 +88,7 @@ public class OpenidDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 		authenticationResponse.setNameSpace(AbstractMessage.OPENID_NS_11);
 		return authenticationProcessor.process(authenticationRequest,
-			authenticationResponse, identity, fieldToSign);
+			authenticationResponse, identity, userSession, fieldToSign);
 	    } else {
 		return identityBelongsToOtherUser(authenticationRequest.getIdentity(),
 			userSession.getIdUser());

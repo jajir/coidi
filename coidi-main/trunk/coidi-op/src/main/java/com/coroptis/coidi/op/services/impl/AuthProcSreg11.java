@@ -25,6 +25,7 @@ import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.SregService;
@@ -45,7 +46,8 @@ public class AuthProcSreg11 extends AuthProcSreg10 implements AuthenticationProc
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	    AuthenticationResponse response, Identity identity,
+	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
 	Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
 	if (!keys.isEmpty()) {
 	    logger.debug("simple registration extension 1.0 was detected");
