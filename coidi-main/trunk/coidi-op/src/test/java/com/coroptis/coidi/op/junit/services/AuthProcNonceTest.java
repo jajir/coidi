@@ -57,7 +57,7 @@ public class AuthProcNonceTest extends AbstractT5JunitTest {
 		.andReturn(true);
 	services.replay();
 
-	AbstractMessage ret = service.process(request, response, null, new HashSet<String>());
+	AbstractMessage ret = service.process(request, response, null, null, new HashSet<String>());
 
 	assertNull(ret);
 	assertEquals("cc5b843b-e375-4640-8f71-38e40b2950a6", response.getAssocHandle());
@@ -80,7 +80,7 @@ public class AuthProcNonceTest extends AbstractT5JunitTest {
 	services.getBaseAssociationDao().create(association);
 	services.replay();
 
-	AbstractMessage ret = service.process(request, response, null, new HashSet<String>());
+	AbstractMessage ret = service.process(request, response, null, null, new HashSet<String>());
 
 	assertNull(ret);
 	services.verify();

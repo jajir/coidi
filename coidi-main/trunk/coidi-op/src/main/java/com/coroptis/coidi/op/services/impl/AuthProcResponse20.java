@@ -24,10 +24,18 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
+/**
+ * Verify that identity and claimed identities are correctly entered. Initialize
+ * authentication response.
+ * 
+ * @author jirout
+ * 
+ */
 public class AuthProcResponse20 implements AuthenticationProcessor {
 
     @Inject
@@ -42,7 +50,8 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	    AuthenticationResponse response, Identity identity,
+	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
 	logger.debug("creating athentication response for: " + authenticationRequest);
 	if (authenticationRequest.getIdentity() == null) {
 	    if (authenticationRequest.getClaimedId() == null) {
@@ -72,8 +81,8 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
 	response.setReturnTo(authenticationRequest.getReturnTo());
 	response.setOpEndpoint(opServer + "openid");
 	fieldsToSign.add(AuthenticationResponse.RETURN_TO);
-	fieldsToSign.add(AuthenticationResponse.NONCE);
 	fieldsToSign.add(AuthenticationResponse.OP_ENDPOINT);
+	fieldsToSign.add(AuthenticationResponse.NONCE);
 	return null;
     }
 

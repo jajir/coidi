@@ -24,6 +24,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Identity;
@@ -49,7 +50,8 @@ public class AuthProcSign implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	    AuthenticationResponse response, Identity identity,
+	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
 	Association association = associationDao.getByAssocHandle(response.getAssocHandle());
 	if (association == null) {

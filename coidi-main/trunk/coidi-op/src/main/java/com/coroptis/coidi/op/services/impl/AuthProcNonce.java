@@ -25,6 +25,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -34,7 +35,8 @@ import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 
 /**
- * Based on association handle set up nonce.
+ * Verify that association handle is valid. If association handle is not valid
+ * created state less association. Also create nonce.
  * 
  * @author jirout
  * 
@@ -58,13 +60,14 @@ public class AuthProcNonce implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, Set<String> fieldsToSign) {
+	    AuthenticationResponse response, Identity identity,
+	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
 	logger.debug("processing nonce: " + authenticationRequest);
 	response.setNonce(nonceService.createNonce());
 	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
 	    response.setAssocHandle(authenticationRequest.getAssocHandle());
 	} else {
-	    logger.debug("Entering into state-less mode, assoc_handle is null.");
+	    logger.debug("Entering into state-less mode, assoc_handle is invalid.");
 	    /**
 	     * State-less mode, association handle will generate and stored on
 	     * OP side, not will be send to RP.
