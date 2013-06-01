@@ -6,6 +6,7 @@
 	<identity id_identity="jane" id_user="1" />
 	<identity id_identity="juan" id_user="2" />
 	<identity id_identity="juane" id_user="2" />
+	<identity id_identity="prasatko" id_user="2" />
 
 	<association assoc_handle="bbbb-bbbb-bbbb-bbbb" assoc_type="1"
 		session_type="1" mac_key="123456789012345678901234567890" expired_in="2012-01-20 14:20:23" />
