@@ -63,8 +63,8 @@ public class StartupTest extends AbstractIntegrationDaoTest {
     public void testDispatchAuthentication() throws Exception {
 	Map<String, String> req = new HashMap<String, String>();
 	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
-	req.put("openid.identity", "http://www.myid.com/juan");
-	req.put("openid.claimed_id", "http://localhost:8080/user/juan");
+	req.put("openid.identity", "http://www.myid.com/juan/");
+	req.put("openid.claimed_id", "http://localhost:8080/user/juan/");
 	req.put("openid.mode", "checkid_immediate");
 	req.put("openid.realm", "not in use");
 	req.put("openid.assoc_handle", "6a4129eb-1336-4970-9ca8-f2d56111eddc");

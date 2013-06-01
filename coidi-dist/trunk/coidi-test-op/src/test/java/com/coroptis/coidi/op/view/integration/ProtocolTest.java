@@ -26,6 +26,12 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	System.out.println(ret.getMessage());
 	assertNotNull(ret);
 	assertEquals(AbstractMessage.OPENID_NS_11, ret.getNameSpace());
+	assertNotNull(ret.get("assoc_handle"));
+	assertEquals("http://www.myid.com/juan/", ret.get("identity"));
+	assertEquals("http://localhost:8081/somePage", ret.get("return_to"));
+	assertEquals("assoc_handle,identity,return_to,mode", ret.get("signed"));
+	assertNotNull(ret.get("response_nonce"));
+	assertEquals("id_res", ret.get("mode"));
     }
 
     public void test_check_authentication_openId11() throws Exception {
@@ -48,6 +54,123 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	System.out.println(ret.getMessage());
 	assertNotNull(ret);
 	assertEquals(AbstractMessage.OPENID_NS_11, ret.getNameSpace());
+	assertNotNull(ret.get("invalidate_handle"));
+	assertEquals("true", ret.get("is_valid"));
+    }
+    
+    public void test_checkid_setup_openId20_ok() throws Exception {
+	Map<String, String> req = new HashMap<String, String>();
+	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
+	req.put("openid.mode", "checkid_setup");
+	req.put("openid.realm", "http://www.brick.ie/");
+	req.put("openid.assoc_handle", "");
+	req.put("openid.return_to", "http://www.brick.ie/openid/authenticate?destination=node%2F92");
+	req.put("openid.identity", "http://www.myid.com/prasatko/");
+	req.put("openid.claimed_id", "http://www.myid.com/prasatko/");
+	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
+	req.put("openid.sreg.required", "nickname,email");
+
+	UserSessionMock userSession = new UserSessionMock();
+	userSession.setLogged(true);
+	userSession.setIdUser(2);
+	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
+	AbstractMessage ret = authentication.process(req, userSession);
+
+	System.out.println(ret.isUrl());
+	System.out.println(ret.getMessage());
+	assertNotNull(ret);
+	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
+	assertNotNull(ret.get("assoc_handle"));
+	assertEquals("http://www.myid.com/prasatko/", ret.get("identity"));
+	assertEquals("http://www.myid.com/prasatko/", ret.get("claimed_id"));
+	assertEquals("http://www.brick.ie/openid/authenticate?destination=node%2F92", ret.get("return_to"));
+	assertEquals("assoc_handle,op_endpoint,identity,return_to,response_nonce,claimed_id", ret.get("signed"));
+	assertEquals("", ret.get("invalidate_handle"));
+	assertNotNull(ret.get("response_nonce"));
+	assertNotNull(ret.get("sig"));
+	assertEquals("id_res", ret.get("mode"));
+    }
+    
+    public void test_checkid_setup_openId20_identityBelongsToOtherUser() throws Exception {
+	Map<String, String> req = new HashMap<String, String>();
+	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
+	req.put("openid.mode", "checkid_setup");
+	req.put("openid.realm", "http://www.brick.ie/");
+	req.put("openid.assoc_handle", "");
+	req.put("openid.return_to", "http://www.brick.ie/openid/authenticate?destination=node%2F92");
+	req.put("openid.identity", "http://www.myid.com/identity/prasatko/");
+	req.put("openid.claimed_id", "http://www.myid.com/identity/prasatko/");
+	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
+	req.put("openid.sreg.required", "nickname,email");
+
+	UserSessionMock userSession = new UserSessionMock();
+	userSession.setLogged(true);
+	userSession.setIdUser(2);
+	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
+	AbstractMessage ret = authentication.process(req, userSession);
+
+	System.out.println(ret.isUrl());
+	System.out.println(ret.getMessage());
+	assertNotNull(ret);
+	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
+	assertNotNull(ret.get("error"));
+	assertEquals("john@yahoo.com", ret.get("contact"));
+    }
+    
+    public void test_checkid_setup_openId20_invalidIdentity() throws Exception {
+	Map<String, String> req = new HashMap<String, String>();
+	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
+	req.put("openid.mode", "checkid_setup");
+	req.put("openid.realm", "http://www.brick.ie/");
+	req.put("openid.assoc_handle", "");
+	req.put("openid.return_to", "http://www.brick.ie/openid/authenticate?destination=node%2F92");
+	req.put("openid.identity", "http://www.coidi.com/identity/prasatko");
+	req.put("openid.claimed_id", "http://www.coidi.com/identity/prasatko");
+	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
+	req.put("openid.sreg.required", "nickname,email");
+
+	UserSessionMock userSession = new UserSessionMock();
+	userSession.setLogged(true);
+	userSession.setIdUser(2);
+	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
+	AbstractMessage ret = authentication.process(req, userSession);
+
+	System.out.println(ret.isUrl());
+	System.out.println(ret.getMessage());
+	assertNotNull(ret);
+	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
+	// TODO verify that it's error message not exception
+    }
+
+    /**
+     * FIXME test for extension without identity
+     * 
+     * @throws Exception
+     */
+
+    public void test_checkid_setup_openId20_emptyAssocHandle() throws Exception {
+	Map<String, String> req = new HashMap<String, String>();
+	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
+	req.put("openid.mode", "checkid_setup");
+	req.put("openid.realm", "http://www.brick.ie/");
+	req.put("openid.assoc_handle", "");
+	req.put("openid.return_to", "http://www.brick.ie/openid/authenticate?destination=node%2F92");
+	req.put("openid.identity", "http://www.myid.com/juan/");
+	req.put("openid.claimed_id", "http://www.myid.com/juan/");
+	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
+	req.put("openid.sreg.required", "nickname,email");
+
+	UserSessionMock userSession = new UserSessionMock();
+	userSession.setLogged(true);
+	userSession.setIdUser(2);
+	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
+	AbstractMessage ret = authentication.process(req, userSession);
+
+	System.out.println(ret.isUrl());
+	System.out.println(ret.getMessage());
+	assertNotNull(ret);
+	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
+	assertNull(ret.get("openid.invalidate_handle"));
     }
 
 }
