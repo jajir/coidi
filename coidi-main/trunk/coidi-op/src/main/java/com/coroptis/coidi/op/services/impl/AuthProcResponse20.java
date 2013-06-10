@@ -17,6 +17,7 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
@@ -25,7 +26,6 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
@@ -49,12 +49,12 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
     private NegativeResponseGenerator negativeResponseGenerator;
 
     @Override
-    public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity,
-	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final Set<String> fieldsToSign) {
 	logger.debug("creating athentication response for: " + authenticationRequest);
-	if (authenticationRequest.getIdentity() == null) {
-	    if (authenticationRequest.getClaimedId() == null) {
+	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
 		/**
 		 * Both are empty. It could be some OpenID extension request.
 		 */
@@ -64,7 +64,7 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
 			+ AuthenticationResponse.IDENTITY + "' is empty, this is forbiden state.");
 	    }
 	} else {
-	    if (authenticationRequest.getClaimedId() == null) {
+	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
 		return negativeResponseGenerator.simpleError("field '"
 			+ AuthenticationResponse.CLAIMED_ID + "' is empty and field '"
 			+ AuthenticationResponse.IDENTITY + "' is filled, this is forbiden state.");

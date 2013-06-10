@@ -19,14 +19,10 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
-import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 import com.google.common.io.Files;
@@ -60,22 +56,4 @@ public class StartupTest extends AbstractIntegrationDaoTest {
 	}
     }
 
-    public void testDispatchAuthentication() throws Exception {
-	Map<String, String> req = new HashMap<String, String>();
-	req.put("openid.ns", "http://specs.openid.net/auth/2.0");
-	req.put("openid.identity", "http://www.myid.com/juan/");
-	req.put("openid.claimed_id", "http://localhost:8080/user/juan/");
-	req.put("openid.mode", "checkid_immediate");
-	req.put("openid.realm", "not in use");
-	req.put("openid.assoc_handle", "6a4129eb-1336-4970-9ca8-f2d56111eddc");
-	req.put("openid.return_to", "http://localhost:8081/somePage");
-
-	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
-	AbstractMessage ret = authentication.process(req, null);
-
-	assertNotNull(ret);
-	System.out.println(ret.isUrl());
-	System.out.println(ret.getMessage());
-    }
-    
 }

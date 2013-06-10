@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -37,7 +36,7 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
  * @author jirout
  * 
  */
-public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
+public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
@@ -54,29 +53,26 @@ public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
 	if (!userSession.isLogged()) {
-	    return negativeResponseGenerator.simpleError("User is not logged at OP");
+	    return negativeResponseGenerator.simpleError("User is not logged at OP",
+		    AbstractMessage.OPENID_NS_11);
 	}
 
-	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-	    /**
-	     * There could not be checked if claimed id belongs to logged user.
-	     */
-	} else {
-	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
-		    .getIdentity());
-	    if (identity == null) {
-		logger.debug("Requested identity '" + authenticationRequest.getIdentity()
-			+ "' doesn't exists.");
-		return negativeResponseGenerator.simpleError("Requested identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't exists.");
-	    }
-	    if (!identityService.isUsersOpIdentifier(userSession.getIdUser(),
-		    authenticationRequest.getIdentity())) {
-		logger.debug("Identity '" + authenticationRequest.getIdentity()
-			+ "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
-		return negativeResponseGenerator.simpleError("Requested identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't exists.");
-	    }
+	Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
+		.getIdentity());
+	if (identity == null) {
+	    logger.debug("Requested identity '" + authenticationRequest.getIdentity()
+		    + "' doesn't exists.");
+	    return negativeResponseGenerator.simpleError("Requested identity '"
+		    + authenticationRequest.getIdentity() + "' doesn't exists.",
+		    AbstractMessage.OPENID_NS_11);
+	}
+	if (!identityService.isUsersOpIdentifier(userSession.getIdUser(),
+		authenticationRequest.getIdentity())) {
+	    logger.debug("Identity '" + authenticationRequest.getIdentity()
+		    + "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
+	    return negativeResponseGenerator.simpleError("Requested identity '"
+		    + authenticationRequest.getIdentity() + "' doesn't exists.",
+		    AbstractMessage.OPENID_NS_11);
 	}
 	return null;
 

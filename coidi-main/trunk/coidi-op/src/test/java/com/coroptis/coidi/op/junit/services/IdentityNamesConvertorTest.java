@@ -120,10 +120,17 @@ public class IdentityNamesConvertorTest extends TestCase {
 
     public void testIsOpLocalIdentifier() throws Exception {
 	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
-		"http://localhost:8080/user/%identity%");
+		"http://localhost:8080/user/%identity%/");
 
-	assertTrue(convertor.isOpLocalIdentifier("karel"));
-	assertFalse(convertor.isOpLocalIdentifier("http://localhost:8080/user/karel"));
+	assertFalse(convertor.isOpLocalIdentifier(null));
+	assertFalse(convertor.isOpLocalIdentifier("karel"));
+	assertFalse(convertor.isOpLocalIdentifier("/karel/"));
+	assertFalse(convertor.isOpLocalIdentifier("https://localhost:8080/user/karel"));
+	assertTrue(convertor.isOpLocalIdentifier("http://localhost:8080/user/karel/"));
+	/**
+	 * this could cause some problems. When RP sends multiple slashes.
+	 */
+	assertTrue(convertor.isOpLocalIdentifier("http://localhost:8080/user/karel//"));
 
     }
 

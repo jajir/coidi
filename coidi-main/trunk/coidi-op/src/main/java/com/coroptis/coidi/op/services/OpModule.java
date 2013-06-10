@@ -36,11 +36,12 @@ import com.coroptis.coidi.op.services.impl.AuthProcResponse11;
 import com.coroptis.coidi.op.services.impl.AuthProcResponse20;
 import com.coroptis.coidi.op.services.impl.AuthProcSign;
 import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
+import com.coroptis.coidi.op.services.impl.AuthProcStateLessAssociation;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity11;
 import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity20;
 import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentitySelect20;
-import com.coroptis.coidi.op.services.impl.AuthenticationImmediateProcessorImpl;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyLoggedUser;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
-import com.coroptis.coidi.op.services.impl.AuthenticationSetupProcessorImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
@@ -60,6 +61,8 @@ import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup20
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
+import com.coroptis.coidi.op.util.CheckIdImmediate;
+import com.coroptis.coidi.op.util.CheckIdSetup;
 import com.coroptis.coidi.op.util.OpenId11;
 import com.coroptis.coidi.op.util.OpenId20;
 
@@ -82,9 +85,6 @@ public class OpModule {// NO_UCD
 	binder.bind(IdentityNamesConvertor.class, IdentityNamesConvertorImpl.class);
 	binder.bind(OpenIdRequestProcessor.class, OpenIdRequestProcessorImpl.class);
 	binder.bind(AssociationProcessor.class, AssociationProcessorImpl.class);
-	binder.bind(AuthenticationSetupProcessor.class, AuthenticationSetupProcessorImpl.class);
-	binder.bind(AuthenticationImmediateProcessor.class,
-		AuthenticationImmediateProcessorImpl.class);
 	binder.bind(OpenIdRequestTool.class, OpenIdRequestToolImpl.class);
 
     }
@@ -149,16 +149,18 @@ public class OpModule {// NO_UCD
     }
 
     /**
-     * Chain of commands process authentication response for protocol version
-     * 2.0
+     * Follows definition of authentication processors.
      * 
-     * @param commands
-     * @param chainBuilder
-     * @return
      */
-    @Marker(OpenId20.class)
+
+    /**
+     * #########################################################################
+     * mode=checkid_setup version 2.0
+     * #########################################################################
+     */
+    @Marker({ OpenId20.class, CheckIdSetup.class })
     @Local
-    public static AuthenticationProcessor buildAuthenticationProcessor20(
+    public static AuthenticationProcessor buildAuthenticationSetupProcessor20(
 	    List<AuthenticationProcessor> commands,
 	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
 	return chainBuilder.build(AuthenticationProcessor.class, commands);
@@ -166,25 +168,68 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId20
-    public static void contributeAuthenticationProcessor20(
+    @CheckIdSetup
+    public static void contributeAuthenticationSetupProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcVerifyLoggedUser authProcVerifyLoggedUser,
 	    @Autobuild AuthProcVerifyIdentitySelect20 authProcVerifyIdentitySelect20,
 	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
 	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
 	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
 	configuration.add("authProcResponse20", authProcResponse20);
+	configuration.add("authProcVerifyLoggedUser", authProcVerifyLoggedUser);
 	configuration.add("verifyIdentitySelect", authProcVerifyIdentitySelect20);
 	configuration.add("verifyIdentity", authProcVerifyIdentity20);
-	configuration.add("association", authProcAssociation);
 	configuration.add("authProcNonce", authProcNonce);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
 	configuration.add("authProcSreg11", authProcSreg11);
 	configuration.add("authProcSign", authProcSign);
     }
 
-    @Marker(OpenId11.class)
+    /**
+     * #########################################################################
+     * mode=checkid_immediate version 2.0
+     * #########################################################################
+     */
+    @Marker({ OpenId20.class, CheckIdImmediate.class })
     @Local
-    public static AuthenticationProcessor buildAuthenticationProcessor11(
+    public static AuthenticationProcessor buildAuthenticationImmediateProcessor20(
+	    List<AuthenticationProcessor> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthenticationProcessor.class, commands);
+    }
+
+    @Contribute(AuthenticationProcessor.class)
+    @OpenId20
+    @CheckIdImmediate
+    public static void contributeAuthenticationImmediateProcessor20(
+	    OrderedConfiguration<AuthenticationProcessor> configuration,
+	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcVerifyIdentitySelect20 authProcVerifyIdentitySelect20,
+	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
+	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
+	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
+	configuration.add("authProcResponse20", authProcResponse20);
+	configuration.add("verifyIdentity20", authProcVerifyIdentity20);
+	configuration.add("authProcNonce", authProcNonce);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
+	configuration.add("authProcSreg11", authProcSreg11);
+	configuration.add("authProcSign", authProcSign);
+    }
+
+    /**
+     * #########################################################################
+     * mode=checkid_setup version 1.0 & 1.1
+     * #########################################################################
+     */
+    @Marker({ OpenId11.class, CheckIdSetup.class })
+    @Local
+    public static AuthenticationProcessor buildAuthenticationSetupProcessor11(
 	    List<AuthenticationProcessor> commands,
 	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
 	return chainBuilder.build(AuthenticationProcessor.class, commands);
@@ -192,14 +237,52 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId11
-    public static void contributeAuthenticationProcessor11(
+    @CheckIdSetup
+    public static void contributeAuthenticationSetupProcessor11(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSign authProcSign,
 	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
+	    @Autobuild AuthProcVerifyIdentity11 authProcVerifyIdentity11,
+	    @Autobuild AuthProcVerifyLoggedUser authProcVerifyLoggedUser,
 	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse11 authProcResponse11) {
 	configuration.add("authProcResponse11", authProcResponse11);
-	configuration.add("association", authProcAssociation);
+	configuration.add("authProcVerifyLoggedUser", authProcVerifyLoggedUser);
+	configuration.add("authProcVerifyIdentity11", authProcVerifyIdentity11);
 	configuration.add("authProcNonce", authProcNonce);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
+	configuration.add("authProcSign", authProcSign);
+    }
+
+    /**
+     * #########################################################################
+     * mode=checkid_immediate version 1.0 & 1.1
+     * #########################################################################
+     */
+    @Marker({ OpenId11.class, CheckIdImmediate.class })
+    @Local
+    public static AuthenticationProcessor buildAuthenticationImmediateProcessor11(
+	    List<AuthenticationProcessor> commands,
+	    @InjectService("ChainBuilder") ChainBuilder chainBuilder) {
+	return chainBuilder.build(AuthenticationProcessor.class, commands);
+    }
+
+    @Contribute(AuthenticationProcessor.class)
+    @OpenId11
+    @CheckIdImmediate
+    public static void contributeAuthenticationImmediateProcessor11(
+	    OrderedConfiguration<AuthenticationProcessor> configuration,
+	    @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcVerifyIdentity11 authProcVerifyIdentity11,
+	    @Autobuild AuthProcAssociation authProcAssociation,
+	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
+	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse11 authProcResponse11) {
+	configuration.add("authProcResponse11", authProcResponse11);
+	configuration.add("authProcVerifyIdentity11", authProcVerifyIdentity11);
+	configuration.add("authProcNonce", authProcNonce);
+	configuration.add("association", authProcAssociation);
+	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
 	configuration.add("authProcSign", authProcSign);
     }
 

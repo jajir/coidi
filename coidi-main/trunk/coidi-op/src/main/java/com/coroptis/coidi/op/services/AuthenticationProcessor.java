@@ -21,11 +21,10 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 
 /**
  * Interface define chain of commands that process incoming authentication
- * request and helps produce authentication respose.
+ * request and helps produce authentication response.
  * <p>
  * Each parts of chain of command change response, only terminator return non
  * null value.
@@ -40,7 +39,6 @@ public interface AuthenticationProcessor {
      * 
      * @param authenticationRequest
      * @param response
-     * @param identity
      * @param userSession
      * @param fieldsToSign
      *            required parameter where will be added all fields from message
@@ -48,6 +46,6 @@ public interface AuthenticationProcessor {
      * @return
      */
     AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity, UserSessionSkeleton userSession,
+	    AuthenticationResponse response, UserSessionSkeleton userSession,
 	    Set<String> fieldsToSign);
 }

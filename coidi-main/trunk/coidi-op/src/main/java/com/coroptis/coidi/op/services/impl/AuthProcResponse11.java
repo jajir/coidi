@@ -17,6 +17,7 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -24,20 +25,36 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
+/**
+ * Perform basic setting of authentication response for OpenID 1.1.
+ * <p>
+ * Also verify that correct identity was entered by user.
+ * </p>
+ * 
+ * @author jirout
+ * 
+ */
 public class AuthProcResponse11 implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
 
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
+
     @Override
-    public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity,
-	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final Set<String> fieldsToSign) {
 	logger.debug("creating athentication response for: " + authenticationRequest);
+	response.setNameSpace(AbstractMessage.OPENID_NS_11);
 	response.setReturnTo(authenticationRequest.getReturnTo());
+	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	    return negativeResponseGenerator.simpleError("Field 'openid.identity' is mandatory");
+	}
 	response.setIdentity(authenticationRequest.getIdentity());
 	fieldsToSign.add(AuthenticationResponse.MODE);
 	fieldsToSign.add(AuthenticationResponse.IDENTITY);

@@ -15,27 +15,36 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.AuthenticationSetupProcessor;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.util.CheckIdSetup;
+import com.coroptis.coidi.op.util.OpenId20;
 
 public class OpenidDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
     @Inject
-    public AuthenticationSetupProcessor authenticationSetupProcessor;
+    @OpenId20
+    @CheckIdSetup
+    private AuthenticationProcessor authenticationProcessor;
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
-	    return authenticationSetupProcessor.process(authenticationRequest, userSession);
+	    Set<String> fieldToSign = new HashSet<String>();
+	    return authenticationProcessor.process(authenticationRequest,
+		    new AuthenticationResponse(), userSession, fieldToSign);
 	}
 	return null;
     }

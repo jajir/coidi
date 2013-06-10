@@ -28,6 +28,8 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.SregService;
 
 /**
@@ -42,15 +44,30 @@ public class AuthProcSreg11 extends AuthProcSreg10 implements AuthenticationProc
     private Logger logger;
 
     @Inject
+    private IdentityService identityService;
+
+    @Inject
     private SregService sregService;
 
+    @Inject
+    private NegativeResponseGenerator negativeResponseGenerator;
+
     @Override
-    public AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, Identity identity,
-	    final UserSessionSkeleton userSession, Set<String> fieldsToSign) {
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final Set<String> fieldsToSign) {
 	Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
 	if (!keys.isEmpty()) {
 	    logger.debug("simple registration extension 1.0 was detected");
+	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
+		    .getIdentity());
+	    if (identity == null) {
+		/**
+		 * FIXME check that it's really required.
+		 */
+		return negativeResponseGenerator
+			.simpleError("For sreg extension is identity required.");
+	    }
 	    response.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
 	    for (String key : keys) {
 		/**
