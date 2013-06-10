@@ -34,8 +34,9 @@ public interface AssociationService {
      * and that verify that is not stale.
      * 
      * @param assoc_handle
-     * @return <code>true</code> if association exists and is valid otherwise
-     *         return <code>false</code>
+     *            optional association handle
+     * @return <code>true</code> if association is not <code>null</code>, exists
+     *         and is valid otherwise return <code>false</code>
      */
     boolean isValid(String assoc_handle);
 

@@ -34,6 +34,7 @@ public interface AuthenticationService {
      *            required {@link AuthenticationRequest} object
      * @return true when it's valid authentication request otherwise return
      *         false
+     * @deprecated it's replaced by authentication processor
      */
     boolean isAuthenticationRequest(AuthenticationRequest authenticationRequest);
 

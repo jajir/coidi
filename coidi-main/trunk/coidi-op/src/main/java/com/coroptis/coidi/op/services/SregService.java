@@ -13,8 +13,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 public interface SregService {
 
     /**
-     * Treating to required and optional fields is same so both could be
-     * processed in one set.
+     * When SREG extension 1.1 is detected than keys are extracted and returned.
      * 
      * @param authenticationRequest
      *            required {@link AuthenticationRequest}

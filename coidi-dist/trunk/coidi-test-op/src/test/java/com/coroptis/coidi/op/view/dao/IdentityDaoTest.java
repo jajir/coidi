@@ -28,14 +28,14 @@ public class IdentityDaoTest extends AbstractDaoTest {
 	Integer ret = identityDao.getCount();
 
 	assertNotNull(ret);
-	assertEquals(Integer.valueOf(3), ret);
+	assertEquals(Integer.valueOf(4), ret);
     }
 
     public void testGetChunk_allRecords() throws Exception {
 	List<Identity> ret = identityDao.getChunk(null, null);
 
 	assertNotNull(ret);
-	assertEquals(3, ret.size());
+	assertEquals(4, ret.size());
     }
 
     public void testGetChunk_second_record() throws Exception {
@@ -58,7 +58,7 @@ public class IdentityDaoTest extends AbstractDaoTest {
 	List<Identity> ret = identityDao.getChunk(2, null);
 
 	assertNotNull(ret);
-	assertEquals(1, ret.size());
+	assertEquals(2, ret.size());
 	assertEquals("juane", ret.get(0).getIdIdentity());
     }
 

@@ -90,10 +90,17 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 	}
     }
 
-    public Boolean isOpLocalIdentifier(final String someIdentifier) {
-	Preconditions.checkNotNull(someIdentifier, "someIdentifier is null");
+    @Override
+    public Boolean isOpLocalIdentifier(final String opIdentifier) {
+	if (opIdentifier == null) {
+	    return false;
+	}
 	final String start = getFirstPart();
 	final String end = identityPattern.substring(start.length() + PLACEHOLDER.length());
-	return !someIdentifier.startsWith(start) || !someIdentifier.endsWith(end);
+	if (start.length() > opIdentifier.length()) {
+	    return false;
+	}
+	final String part = opIdentifier.substring(start.length());
+	return (part.endsWith(end));
     }
 }

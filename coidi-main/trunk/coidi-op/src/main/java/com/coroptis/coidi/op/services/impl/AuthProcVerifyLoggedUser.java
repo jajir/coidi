@@ -24,42 +24,35 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
 /**
- * Perform association verification. It validates that association exists and is
- * valid. When association is valid than copy it value to response message
- * otherwise copy it to invalidate handle and switch to state-less mode.
+ * Verify that use is logged in. When is not logged than application error
+ * returned. This error should be handled by application, this error should not
+ * be passed to RP.
  * 
  * @author jirout
  * 
  */
-public class AuthProcAssociation implements AuthenticationProcessor {
+public class AuthProcVerifyLoggedUser implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
 
     @Inject
-    private AssociationService associationService;
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
-	logger.debug("verifying association: " + authenticationRequest);
-
-	/**
-	 * There could be problem null value in field association handle and
-	 * empty value are threat in a same way as invalid association.
-	 */
-	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
-	    response.setAssocHandle(authenticationRequest.getAssocHandle());
-	} else {
-	    response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-	    response.setAssocHandle(null);
-	    logger.debug("Invalid association handle '" + authenticationRequest.getAssocHandle()
-		    + "'");
+	logger.debug("verify identity: " + authenticationRequest);
+	if (!userSession.isLogged()) {
+	    logger.debug("User is not logged in.");
+	    userSession.setAuthenticationRequest(authenticationRequest);
+	    return negativeResponseGenerator.applicationError("User is not logged in",
+		    NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN);
 	}
 	return null;
     }

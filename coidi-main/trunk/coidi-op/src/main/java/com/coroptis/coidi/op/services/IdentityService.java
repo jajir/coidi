@@ -41,7 +41,9 @@ public interface IdentityService {
      * Get {@link Identity} by it's OP local identifier.
      * 
      * @param opLocalIdentifier
-     *            required OP local identifier
+     *            required OP local identifier, could be any string that could
+     *            contains identity. Method check if parameter is in correct
+     *            format.
      * @return {@link Identity} object if there is any otherwise
      *         <code>null</code>
      */

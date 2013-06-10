@@ -15,8 +15,10 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
@@ -24,18 +26,21 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import com.coroptis.coidi.op.dao.BaseAssociationDao;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
+import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 
 /**
- * Perform association verification. It validates that association exists and is
- * valid. When association is valid than copy it value to response message
- * otherwise copy it to invalidate handle and switch to state-less mode.
+ * When response doesn't contains value in association handle than it's
+ * state-less mode. In that case new state-less association have to be created.
  * 
  * @author jirout
  * 
  */
-public class AuthProcAssociation implements AuthenticationProcessor {
+public class AuthProcStateLessAssociation implements AuthenticationProcessor {
 
     @Inject
     private Logger logger;
@@ -43,23 +48,37 @@ public class AuthProcAssociation implements AuthenticationProcessor {
     @Inject
     private AssociationService associationService;
 
+    @Inject
+    private BaseAssociationDao baseAssociationDao;
+
+    @Inject
+    private BaseNonceDao baseNonceDao;
+
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
-	logger.debug("verifying association: " + authenticationRequest);
+	logger.debug("processing nonce: " + authenticationRequest);
+	if (StringUtils.isEmpty(response.getAssocHandle())) {
+	    logger.debug("Entering into state-less mode.");
+	    /**
+	     * State-less mode, association handle will be generated and stored
+	     * on OP side, and will be send to RP.
+	     */
+	    Association association = associationService.createStateLessAssociation();
 
-	/**
-	 * There could be problem null value in field association handle and
-	 * empty value are threat in a same way as invalid association.
-	 */
-	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
-	    response.setAssocHandle(authenticationRequest.getAssocHandle());
-	} else {
-	    response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-	    response.setAssocHandle(null);
-	    logger.debug("Invalid association handle '" + authenticationRequest.getAssocHandle()
-		    + "'");
+	    /**
+	     * If nonce was created in response than will be persisted.
+	     */
+	    if (StringUtils.isNotEmpty(response.getNonce())) {
+		Nonce nonce = baseNonceDao.createNewInstance();
+		nonce.setNonce(response.getNonce());
+		nonce.setAssociation(association);
+		association.setNonces(new HashSet<Nonce>());
+		association.getNonces().add(nonce);
+	    }
+	    baseAssociationDao.create(association);
+	    response.setAssocHandle(association.getAssocHandle());
 	}
 	return null;
     }

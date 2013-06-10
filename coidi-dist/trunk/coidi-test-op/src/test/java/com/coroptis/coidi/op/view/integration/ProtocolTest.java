@@ -114,7 +114,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	assertNotNull(ret);
 	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
 	assertNotNull(ret.get("error"));
-	assertEquals("john@yahoo.com", ret.get("contact"));
+	assertEquals("john@gmail.com", ret.get("contact"));
     }
     
     public void test_checkid_setup_openId20_invalidIdentity() throws Exception {

@@ -15,15 +15,20 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.AuthenticationImmediateProcessor;
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.util.CheckIdImmediate;
+import com.coroptis.coidi.op.util.OpenId20;
 
 /**
  * Process openid.more=checkid_immediate.
@@ -34,14 +39,19 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 public class OpenidDispatcherAuthenticationImmediate20 implements OpenIdDispatcher {
 
     @Inject
-    private AuthenticationImmediateProcessor authenticationImmediateProcessor;
+    @OpenId20
+    @CheckIdImmediate
+    private AuthenticationProcessor authenticationProcessor;
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
 	    final UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
-	    return authenticationImmediateProcessor.process(authenticationRequest, userSession);
+	    AuthenticationResponse response = new AuthenticationResponse();
+	    Set<String> fieldToSign = new HashSet<String>();
+	    return authenticationProcessor.process(authenticationRequest, response, userSession,
+		    fieldToSign);
 	}
 	return null;
     }

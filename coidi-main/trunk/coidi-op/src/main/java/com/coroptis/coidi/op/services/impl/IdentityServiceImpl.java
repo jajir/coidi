@@ -46,8 +46,12 @@ public class IdentityServiceImpl implements IdentityService {
     @Override
     public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {
 	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
-	return identityDao.getIdentityId(identityNamesConvertor
-		.convertToIdentityId(opLocalIdentifier));
+	if (identityNamesConvertor.isOpLocalIdentifier(opLocalIdentifier)) {
+	    return identityDao.getIdentityId(identityNamesConvertor
+		    .convertToIdentityId(opLocalIdentifier));
+	} else {
+	    return null;
+	}
     }
 
     @Override

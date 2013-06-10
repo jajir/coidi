@@ -25,7 +25,6 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 
@@ -47,9 +46,12 @@ public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final Identity identity,
-	    final UserSessionSkeleton userSession, final Set<String> fieldsToSign) {
+	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final Set<String> fieldsToSign) {
 	logger.debug("verify parameters: " + authenticationRequest);
+	if (!userSession.isLogged()) {
+	    return negativeResponseGenerator.simpleError("User is not logged at OP");
+	}
 
 	if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
 	    if (StringUtils.isEmpty(authenticationRequest.getSelectedIdentity())) {
