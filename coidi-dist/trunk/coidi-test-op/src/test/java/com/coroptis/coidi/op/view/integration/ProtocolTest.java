@@ -29,8 +29,9 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	assertNotNull(ret.get("assoc_handle"));
 	assertEquals("http://www.myid.com/juan/", ret.get("identity"));
 	assertEquals("http://localhost:8081/somePage", ret.get("return_to"));
-	assertEquals("assoc_handle,identity,return_to,mode", ret.get("signed"));
+	assertEquals("assoc_handle,identity,return_to,response_nonce,mode", ret.get("signed"));
 	assertNotNull(ret.get("response_nonce"));
+	assertFalse(ret.containsKey("invalidate_handle"));
 	assertEquals("id_res", ret.get("mode"));
     }
 

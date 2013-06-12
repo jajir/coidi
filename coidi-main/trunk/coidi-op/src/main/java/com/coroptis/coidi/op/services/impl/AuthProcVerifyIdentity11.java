@@ -24,10 +24,9 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 
 /**
  * Verify that user is logged in. If is not logged in than return negative
@@ -42,10 +41,10 @@ public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
     private Logger logger;
 
     @Inject
-    private IdentityService identityService;
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private OpenIdRequestTool openIdRequestTool;
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
@@ -57,19 +56,7 @@ public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
 		    AbstractMessage.OPENID_NS_11);
 	}
 
-	Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
-		.getIdentity());
-	if (identity == null) {
-	    logger.debug("Requested identity '" + authenticationRequest.getIdentity()
-		    + "' doesn't exists.");
-	    return negativeResponseGenerator.simpleError("Requested identity '"
-		    + authenticationRequest.getIdentity() + "' doesn't exists.",
-		    AbstractMessage.OPENID_NS_11);
-	}
-	if (!identityService.isUsersOpIdentifier(userSession.getIdUser(),
-		authenticationRequest.getIdentity())) {
-	    logger.debug("Identity '" + authenticationRequest.getIdentity()
-		    + "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
+	if (!openIdRequestTool.verify(authenticationRequest.getIdentity(), userSession)) {
 	    return negativeResponseGenerator.simpleError("Requested identity '"
 		    + authenticationRequest.getIdentity() + "' doesn't exists.",
 		    AbstractMessage.OPENID_NS_11);

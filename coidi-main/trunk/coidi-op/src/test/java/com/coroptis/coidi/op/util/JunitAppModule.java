@@ -32,6 +32,7 @@ import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
@@ -91,5 +92,7 @@ public class JunitAppModule {
 	binder.bind(OpenIdDispatcher.class,
 		new EasyMockServicebuilder<OpenIdDispatcher>(services.getOpenIdDispatcher20()))
 		.withId("openIdDispatcher20").withMarker(OpenId20.class);
+	binder.bind(OpenIdRequestTool.class,
+		new EasyMockServicebuilder<OpenIdRequestTool>(services.getOpenIdRequestTool()));
     }
 }

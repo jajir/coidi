@@ -22,7 +22,6 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
@@ -46,9 +45,6 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
     private OpenIdDispatcher openIdDispatcher20;
 
     @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
-
-    @Inject
     @Symbol(CONF_OPENID_VERSION_11_ENABLED)
     private Boolean openidVersion11Enabled;
 
@@ -58,10 +54,6 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
 	    final UserSessionSkeleton userSession) {
-	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
-	    return negativeResponseGenerator.simpleError("key value '"
-		    + OpenIdDispatcher.OPENID_MODE + "' is empty");
-	}
 	if (openidVersion11Enabled && openIdRequestTool.isOpenIdVersion1x(requestParams)) {
 	    return openIdDispatcher11.process(requestParams, userSession);
 	} else {

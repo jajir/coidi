@@ -16,43 +16,54 @@
 package com.coroptis.coidi.op.junit.services;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.impl.AuthProcNonce;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyLoggedUser;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
+import com.coroptis.coidi.op.util.TestUserSession;
+import com.coroptis.coidi.op.util.UserMock;
 
-public class AuthProcNonceTest extends AbstractT5JunitTest {
+public class AuthProcVerifyLoggedUserTest extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
     private AuthenticationProcessor service;
     private AuthenticationRequest request;
-    private AuthenticationResponse response;
+    private UserMock user;
+    private TestUserSession session;
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(AuthenticationProcessor.class, AuthProcNonce.class).withId(SERVICE_NAME);
+	binder.bind(AuthenticationProcessor.class, AuthProcVerifyLoggedUser.class).withId(
+		SERVICE_NAME);
     }
 
-    public void testProcess_validAssocHandle() throws Exception {
-	Set<String> fieldsToSign = new HashSet<String>();
-	assertNotNull(service);
-	EasyMock.expect(services.getNonceService().createNonce()).andReturn(
-		"2013-04-16T00:58:52ZjUuEGNrSH5LTTQ==");
+    public void testProcess_userIsLoggedIn() throws Exception {
+	session.setUser(user);
 	services.replay();
 
-	AbstractMessage ret = service.process(request, response, null, fieldsToSign);
+	AbstractMessage ret = service.process(request, null, session, new HashSet<String>());
 
 	assertNull(ret);
-	assertEquals("2013-04-16T00:58:52ZjUuEGNrSH5LTTQ==", response.getNonce());
-	assertTrue(fieldsToSign.contains("response_nonce"));
+	services.verify();
+    }
+
+    public void testProcess_userIsNotLoggedIn() throws Exception {
+	ErrorResponse err = new ErrorResponse(false);
+	EasyMock.expect(
+		services.getNegativeResponseGenerator().applicationError("User is not logged in",
+			"pleaseLogin")).andReturn(err);
+	services.replay();
+	AbstractMessage ret = service.process(request, null, session, new HashSet<String>());
+
+	assertSame(err, ret);
+	assertSame(request, session.getAuthenticationRequest());
 	services.verify();
     }
 
@@ -60,16 +71,17 @@ public class AuthProcNonceTest extends AbstractT5JunitTest {
     protected void setUp() throws Exception {
 	super.setUp();
 	service = getService(SERVICE_NAME, AuthenticationProcessor.class);
-
 	request = new AuthenticationRequest();
-	response = new AuthenticationResponse();
+	user = new UserMock();
+	session = new TestUserSession();
     }
 
     @Override
     protected void tearDown() throws Exception {
 	service = null;
 	request = null;
-	response = null;
+	user = null;
+	session = null;
 	super.tearDown();
     }
 }

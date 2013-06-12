@@ -15,7 +15,9 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
@@ -24,11 +26,14 @@ import org.easymock.EasyMock;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
+import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.impl.AuthProcNonce;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.impl.AuthProcResponse11;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
-public class AuthProcNonceTest extends AbstractT5JunitTest {
+public class AuthProcResponse11Test extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
@@ -38,21 +43,39 @@ public class AuthProcNonceTest extends AbstractT5JunitTest {
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(AuthenticationProcessor.class, AuthProcNonce.class).withId(SERVICE_NAME);
+	binder.bind(AuthenticationProcessor.class, AuthProcResponse11.class).withId(SERVICE_NAME);
     }
 
-    public void testProcess_validAssocHandle() throws Exception {
+    public void testProcess() throws Exception {
 	Set<String> fieldsToSign = new HashSet<String>();
-	assertNotNull(service);
-	EasyMock.expect(services.getNonceService().createNonce()).andReturn(
-		"2013-04-16T00:58:52ZjUuEGNrSH5LTTQ==");
 	services.replay();
 
 	AbstractMessage ret = service.process(request, response, null, fieldsToSign);
 
 	assertNull(ret);
-	assertEquals("2013-04-16T00:58:52ZjUuEGNrSH5LTTQ==", response.getNonce());
-	assertTrue(fieldsToSign.contains("response_nonce"));
+	assertEquals("http://www.coidi.com/identity/qwe", response.getIdentity());
+	assertEquals("http://openid.net/signon/1.1", response.getNameSpace());
+	assertEquals("https://sourceforge.net/account/openid_verify.php", response.getReturnTo());
+	assertTrue(fieldsToSign.contains("mode"));
+	assertTrue(fieldsToSign.contains("identity"));
+	assertTrue(fieldsToSign.contains("return_to"));
+	services.verify();
+    }
+
+    public void testProcess_missingIdentity() throws Exception {
+	request.setIdentity(null);
+	Set<String> fieldsToSign = new HashSet<String>();
+	ErrorResponse err = new ErrorResponse(false);
+	EasyMock.expect(
+		services.getNegativeResponseGenerator().simpleError(
+			"Mandatory field 'openid.identity' is missing",
+			"http://openid.net/signon/1.1")).andReturn(err);
+	services.replay();
+
+	AbstractMessage ret = service.process(request, response, null, fieldsToSign);
+
+	assertNotNull(ret);
+	assertEquals(err, ret);
 	services.verify();
     }
 
@@ -61,7 +84,12 @@ public class AuthProcNonceTest extends AbstractT5JunitTest {
 	super.setUp();
 	service = getService(SERVICE_NAME, AuthenticationProcessor.class);
 
-	request = new AuthenticationRequest();
+	Map<String, String> params = new HashMap<String, String>();
+	params.put(OpenIdDispatcher.OPENID_MODE, CheckAuthenticationRequest.MODE_CHECKID_SETUP);
+	params.put("openid.identity", "http://www.coidi.com/identity/qwe");
+	params.put("openid.assoc_handle", "cc5b843b-e375-4640-8f71-38e40b2950a6");
+	params.put("openid.return_to", "https://sourceforge.net/account/openid_verify.php");
+	request = new AuthenticationRequest(params);
 	response = new AuthenticationResponse();
     }
 

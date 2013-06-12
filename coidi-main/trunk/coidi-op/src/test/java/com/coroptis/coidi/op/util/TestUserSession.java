@@ -25,6 +25,8 @@ public class TestUserSession implements UserSessionSkeleton {
 
     private Integer idUser;
 
+    private AuthenticationRequest authenticationRequest;
+
     /**
      * @param user
      *            the user to set
@@ -54,9 +56,19 @@ public class TestUserSession implements UserSessionSkeleton {
 	return user != null;
     }
 
-    @Override
+    /**
+     * @return the authenticationRequest
+     */
+    public AuthenticationRequest getAuthenticationRequest() {
+	return authenticationRequest;
+    }
+
+    /**
+     * @param authenticationRequest
+     *            the authenticationRequest to set
+     */
     public void setAuthenticationRequest(AuthenticationRequest authenticationRequest) {
-	//
+	this.authenticationRequest = authenticationRequest;
     }
 
 }
