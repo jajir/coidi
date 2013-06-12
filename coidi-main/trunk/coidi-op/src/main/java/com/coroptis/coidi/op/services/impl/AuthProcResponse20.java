@@ -82,8 +82,7 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
 	response.setOpEndpoint(opServer + "openid");
 	fieldsToSign.add(AuthenticationResponse.RETURN_TO);
 	fieldsToSign.add(AuthenticationResponse.OP_ENDPOINT);
-	fieldsToSign.add(AuthenticationResponse.NONCE);
 	return null;
     }
-
+    
 }

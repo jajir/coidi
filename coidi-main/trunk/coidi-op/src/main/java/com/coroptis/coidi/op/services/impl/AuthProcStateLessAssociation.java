@@ -68,7 +68,8 @@ public class AuthProcStateLessAssociation implements AuthenticationProcessor {
 	    Association association = associationService.createStateLessAssociation();
 
 	    /**
-	     * If nonce was created in response than will be persisted.
+	     * If nonce was created in response than will be persisted. In
+	     * OpenID 1.1 could be missing.
 	     */
 	    if (StringUtils.isNotEmpty(response.getNonce())) {
 		Nonce nonce = baseNonceDao.createNewInstance();

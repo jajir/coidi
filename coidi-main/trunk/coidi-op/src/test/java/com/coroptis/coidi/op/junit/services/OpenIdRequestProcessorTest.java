@@ -39,6 +39,7 @@ public class OpenIdRequestProcessorTest extends AbstractT5JunitTest {
 	params.put(OpenIdDispatcher.OPENID_MODE, "some_mode");
 	TestUserSession userSession = new TestUserSession();
 	AbstractMessage out = new ErrorResponse(true, "some error");
+	EasyMock.expect(services.getOpenIdRequestTool().isOpenIdVersion1x(params)).andReturn(true);
 	EasyMock.expect(services.getOpenIdDispatcher11().process(params, userSession)).andReturn(
 		out);
 	services.replay();
@@ -54,6 +55,7 @@ public class OpenIdRequestProcessorTest extends AbstractT5JunitTest {
 	params.put(OpenIdDispatcher.OPENID_MODE, "some_mode");
 	TestUserSession userSession = new TestUserSession();
 	AbstractMessage out = new ErrorResponse(true, "some error");
+	EasyMock.expect(services.getOpenIdRequestTool().isOpenIdVersion1x(params)).andReturn(false);
 	EasyMock.expect(services.getOpenIdDispatcher20().process(params, userSession)).andReturn(
 		out);
 	services.replay();

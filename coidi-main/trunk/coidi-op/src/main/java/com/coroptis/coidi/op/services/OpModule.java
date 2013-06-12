@@ -50,6 +50,7 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation11;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication11;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication20;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker11;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenIdRequestProcessorImpl;
@@ -112,13 +113,13 @@ public class OpModule {// NO_UCD
     @OpenId20
     public static void contributeOpenIdDispatcher20(
 	    OrderedConfiguration<OpenIdDispatcher> configuration,
-	    @Autobuild OpenIdDispatcherChecker20 openIdDispatcherChecker,
+	    @Autobuild OpenIdDispatcherChecker20 openIdDispatcherChecker20,
 	    @Autobuild OpenidDispatcherAuthenticationImmediate20 openidDispatcherAuthenticationImmediate20,
 	    @Autobuild OpenidDispatcherAuthenticationSetup20 openidDispatcherAuthenticationSetup20,
 	    @Autobuild OpenIdDispatcherCheckAuthentication20 openIdDispatcherCheckAuthentication20,
 	    @Autobuild OpenIdDispatcherAssociation20 openIdDispatcherAssociation20,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
-	configuration.add("openIdDispatcherChecker", openIdDispatcherChecker);
+	configuration.add("openIdDispatcherChecker20", openIdDispatcherChecker20);
 	configuration.add("openidDispatcherAuthenticationImmediate20",
 		openidDispatcherAuthenticationImmediate20);
 	configuration.add("openidDispatcherAuthenticationSetup20",
@@ -133,11 +134,13 @@ public class OpModule {// NO_UCD
     @OpenId11
     public static void contributeOpenIdDispatcher11(
 	    OrderedConfiguration<OpenIdDispatcher> configuration,
+	    @Autobuild OpenIdDispatcherChecker11 openIdDispatcherChecker11,
 	    @Autobuild OpenidDispatcherAuthenticationImmediate11 openidDispatcherAuthenticationImmediate11,
 	    @Autobuild OpenidDispatcherAuthenticationSetup11 openidDispatcherAuthenticationSetup11,
 	    @Autobuild OpenIdDispatcherCheckAuthentication11 openIdDispatcherCheckAuthentication11,
 	    @Autobuild OpenIdDispatcherAssociation11 openIdDispatcherAssociation11,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
+	configuration.add("openIdDispatcherChecker11", openIdDispatcherChecker11);
 	configuration.add("openidDispatcherAuthenticationImmediate11",
 		openidDispatcherAuthenticationImmediate11);
 	configuration.add("openidDispatcherAuthenticationSetup11",

@@ -25,10 +25,9 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 
 /**
  * Verify that user is logged in. If is not logged in than return negative
@@ -43,10 +42,10 @@ public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
     private Logger logger;
 
     @Inject
-    private IdentityService identityService;
+    private NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private OpenIdRequestTool openIdRequestTool;
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
@@ -57,23 +56,8 @@ public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
 	    return negativeResponseGenerator.simpleError("User is not logged at OP");
 	}
 
-	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-	    /**
-	     * There could not be checked if claimed id belongs to logged user.
-	     */
-	} else {
-	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
-		    .getIdentity());
-	    if (identity == null) {
-		logger.debug("Requested identity '" + authenticationRequest.getIdentity()
-			+ "' doesn't exists.");
-		return negativeResponseGenerator.simpleError("Requested identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't exists.");
-	    }
-	    if (!identityService.isUsersOpIdentifier(userSession.getIdUser(),
-		    authenticationRequest.getIdentity())) {
-		logger.debug("Identity '" + authenticationRequest.getIdentity()
-			+ "' doesn't belongs to user '" + userSession.getIdUser() + "'.");
+	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	    if (!openIdRequestTool.verify(authenticationRequest.getIdentity(), userSession)) {
 		return negativeResponseGenerator.simpleError("Requested identity '"
 			+ authenticationRequest.getIdentity() + "' doesn't exists.");
 	    }

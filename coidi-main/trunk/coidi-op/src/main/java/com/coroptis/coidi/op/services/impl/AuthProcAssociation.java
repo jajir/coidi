@@ -48,18 +48,20 @@ public class AuthProcAssociation implements AuthenticationProcessor {
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verifying association: " + authenticationRequest);
+	fieldsToSign.add(AuthenticationResponse.ASSOC_HANDLE);
 
-	/**
-	 * There could be problem null value in field association handle and
-	 * empty value are threat in a same way as invalid association.
-	 */
-	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
-	    response.setAssocHandle(authenticationRequest.getAssocHandle());
-	} else {
-	    response.setInvalidateHandle(authenticationRequest.getAssocHandle());
+	if (authenticationRequest.getAssocHandle() == null) {
+	    logger.debug("assoc_handle in request is null.");
 	    response.setAssocHandle(null);
-	    logger.debug("Invalid association handle '" + authenticationRequest.getAssocHandle()
-		    + "'");
+	} else {
+	    if (associationService.isValid(authenticationRequest.getAssocHandle())) {
+		response.setAssocHandle(authenticationRequest.getAssocHandle());
+	    } else {
+		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
+		response.setAssocHandle(null);
+		logger.debug("Invalid association handle '"
+			+ authenticationRequest.getAssocHandle() + "'");
+	    }
 	}
 	return null;
     }

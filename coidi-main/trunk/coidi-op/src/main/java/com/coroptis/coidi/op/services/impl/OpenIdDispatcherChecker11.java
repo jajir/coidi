@@ -23,33 +23,24 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.OpenIdRequestTool;
 
 /**
- * Verify that openid.mode is filled. And that there is correct namespace. This
- * dispatched should be first in chain.
+ * Verify that openid.mode is filled.
  * 
  * @author jan
  * 
  */
-public class OpenIdDispatcherChecker20 implements OpenIdDispatcher {
+public class OpenIdDispatcherChecker11 implements OpenIdDispatcher {
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
-
-    @Inject
-    private OpenIdRequestTool openIdRequestTool;
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
 	    final UserSessionSkeleton userSession) {
 	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
 	    return negativeResponseGenerator.simpleError("key value '"
-		    + OpenIdDispatcher.OPENID_MODE + "' is empty");
-	}
-	if (!openIdRequestTool.isOpenIdVersion20(requestParams)) {
-	    return negativeResponseGenerator.simpleError("Unsupported OpenId namespace '"
-		    + requestParams.get(OPENID_NS) + "'");
+		    + OpenIdDispatcher.OPENID_MODE + "' is empty", AbstractMessage.OPENID_NS_11);
 	}
 	return null;
     }

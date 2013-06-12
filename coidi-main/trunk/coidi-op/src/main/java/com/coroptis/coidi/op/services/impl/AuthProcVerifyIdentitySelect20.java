@@ -49,26 +49,17 @@ public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify parameters: " + authenticationRequest);
-	if (!userSession.isLogged()) {
-	    return negativeResponseGenerator.simpleError("User is not logged at OP");
-	}
 
 	if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
 	    if (StringUtils.isEmpty(authenticationRequest.getSelectedIdentity())) {
 		return negativeResponseGenerator.applicationError("requested identity is '"
 			+ AuthenticationRequest.IDENTITY_SELECT
-			+ "' but user didin't put selected identity in property '"
+			+ "' but user didn't put selected identity in property '"
 			+ AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
 			NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
 	    } else {
 		authenticationRequest.setIdentity(authenticationRequest.getSelectedIdentity());
-		if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest
-			.getClaimedId())) {
-		    logger.warn("authentication request contains '"
-			    + AuthenticationRequest.IDENTITY_SELECT + "' in '"
-			    + AuthenticationRequest.CLAIMED_ID + "'");
-		    authenticationRequest.setClaimedId(authenticationRequest.getSelectedIdentity());
-		}
+		authenticationRequest.setClaimedId(authenticationRequest.getSelectedIdentity());
 	    }
 	}
 	return null;

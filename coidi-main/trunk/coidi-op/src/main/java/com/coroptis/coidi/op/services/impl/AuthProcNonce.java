@@ -47,7 +47,7 @@ public class AuthProcNonce implements AuthenticationProcessor {
 	    final Set<String> fieldsToSign) {
 	logger.debug("processing nonce: " + authenticationRequest);
 	response.setNonce(nonceService.createNonce());
-	fieldsToSign.add(AuthenticationResponse.ASSOC_HANDLE);
+	fieldsToSign.add(AuthenticationResponse.NONCE);
 	return null;
     }
 
