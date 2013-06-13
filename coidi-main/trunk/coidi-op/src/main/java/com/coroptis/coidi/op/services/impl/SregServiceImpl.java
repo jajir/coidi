@@ -46,11 +46,11 @@ public class SregServiceImpl implements SregService {
     @Override
     public Set<String> extractRequestedKeys(final AuthenticationRequest authenticationRequest) {
 	Set<String> keys = new HashSet<String>();
-	if (authenticationRequest.getMap().get(SREG_OPTIONAL) != null) {
-	    Collections.addAll(keys, authenticationRequest.getMap().get(SREG_OPTIONAL).split(","));
+	if (authenticationRequest.get(SREG_OPTIONAL) != null) {
+	    Collections.addAll(keys, authenticationRequest.get(SREG_OPTIONAL).split(","));
 	}
-	if (authenticationRequest.getMap().get(SREG_REQUIRED) != null) {
-	    Collections.addAll(keys, authenticationRequest.getMap().get(SREG_REQUIRED).split(","));
+	if (authenticationRequest.get(SREG_REQUIRED) != null) {
+	    Collections.addAll(keys, authenticationRequest.get(SREG_REQUIRED).split(","));
 	}
 	return keys;
     }

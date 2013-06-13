@@ -85,11 +85,13 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	assertEquals("http://www.myid.com/prasatko/", ret.get("identity"));
 	assertEquals("http://www.myid.com/prasatko/", ret.get("claimed_id"));
 	assertEquals("http://www.brick.ie/openid/authenticate?destination=node%2F92", ret.get("return_to"));
-	assertEquals("assoc_handle,op_endpoint,identity,return_to,response_nonce,claimed_id", ret.get("signed"));
+	assertEquals("sreg.nickname,assoc_handle,op_endpoint,identity,sreg.email,return_to,response_nonce,claimed_id", ret.get("signed"));
 	assertEquals("", ret.get("invalidate_handle"));
 	assertNotNull(ret.get("response_nonce"));
 	assertNotNull(ret.get("sig"));
 	assertEquals("id_res", ret.get("mode"));
+	assertEquals("cunik", ret.get("sreg.nickname"));
+	assertEquals("prase@chliv.cz", ret.get("sreg.email"));
     }
     
     public void test_checkid_setup_openId20_identityBelongsToOtherUser() throws Exception {
