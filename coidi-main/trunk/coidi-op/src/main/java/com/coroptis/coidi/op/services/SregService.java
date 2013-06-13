@@ -14,15 +14,24 @@ import com.coroptis.coidi.op.entities.Identity;
  */
 public interface SregService {
 
-    static final String SREG_NICKNAME = "sreg.nickname";
-    static final String SREG_EMAIL = "sreg.email";
-    static final String SREG_FULLNAME = "sreg.fullname";
-    static final String SREG_DOB = "sreg.dob";
-    static final String SREG_GENDRE = "sreg.gendre";
-    static final String SREG_POSTCODE = "sreg.postcode";
-    static final String SREG_COUNTRY = "sreg.country";
-    static final String SREG_LANGUAGE = "sreg.language";
-    static final String SREG_TIMEZONE = "sreg.timezone";
+    static final String SREG_NS = "http://openid.net/extensions/sreg/1.1";
+
+    static final String SREG_REQUIRED = "sreg.required";
+    
+    static final String SREG_OPTIONAL = "sreg.optional";
+
+    
+    static final String SREG = "sreg.";
+
+    static final String SREG_NICKNAME = "nickname";
+    static final String SREG_EMAIL = "email";
+    static final String SREG_FULLNAME = "fullname";
+    static final String SREG_DOB = "dob";
+    static final String SREG_GENDRE = "gendre";
+    static final String SREG_POSTCODE = "postcode";
+    static final String SREG_COUNTRY = "country";
+    static final String SREG_LANGUAGE = "language";
+    static final String SREG_TIMEZONE = "timezone";
 
     /**
      * Define format in which is date of birth (DOB) formatted.

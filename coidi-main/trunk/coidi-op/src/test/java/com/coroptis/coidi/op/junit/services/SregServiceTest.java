@@ -58,9 +58,8 @@ public class SregServiceTest extends TestCase {
 	Identity identity = new IdentityMock();
 	Set<String> fieldsToSign = new HashSet<String>();
 	AuthenticationResponse response = new AuthenticationResponse();
-	service.fillSregResponse(Sets.newHashSet("sreg.nickname", "sreg.email", "sreg.fullname",
-		"sreg.dob", "sreg.gendre", "sreg.postcode", "sreg.country", "sreg.language",
-		"sreg.timezone"), response, identity, fieldsToSign);
+	service.fillSregResponse(Sets.newHashSet("nickname", "email", "fullname", "dob", "gendre",
+		"postcode", "country", "language", "timezone"), response, identity, fieldsToSign);
 
 	assertTrue(fieldsToSign.isEmpty());
 	// it's 2 because there are filled openid.mode and openid.ns
@@ -80,9 +79,8 @@ public class SregServiceTest extends TestCase {
 	identity.setTimezone("Prage/Europe");
 	Set<String> fieldsToSign = new HashSet<String>();
 	AuthenticationResponse response = new AuthenticationResponse();
-	service.fillSregResponse(Sets.newHashSet("sreg.nickname", "sreg.email", "sreg.fullname",
-		"sreg.dob", "sreg.gendre", "sreg.postcode", "sreg.country", "sreg.language",
-		"sreg.timezone"), response, identity, fieldsToSign);
+	service.fillSregResponse(Sets.newHashSet("nickname", "email", "fullname", "dob", "gendre",
+		"postcode", "country", "language", "timezone"), response, identity, fieldsToSign);
 
 	assertTrue(fieldsToSign.contains("sreg.nickname"));
 	assertTrue(fieldsToSign.contains("sreg.email"));
@@ -95,7 +93,7 @@ public class SregServiceTest extends TestCase {
 	assertTrue(fieldsToSign.contains("sreg.timezone"));
 	// it's 2 because there are filled openid.mode and openid.ns
 	assertEquals(2 + 9, response.getMap().size());
-	
+
 	assertEquals("kacer", response.get("sreg.nickname"));
 	assertEquals("kachna@hnizdo.cz", response.get("sreg.email"));
 	assertEquals("Kachna Obecna", response.get("sreg.fullname"));

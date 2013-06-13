@@ -38,23 +38,6 @@ import com.coroptis.coidi.op.services.SregService;
  */
 public class AuthProcSreg10 implements AuthenticationProcessor {
 
-    protected static final String SREG_REQUIRED = "sreg.required";
-    protected static final String SREG_OPTIONAL = "sreg.optional";
-    protected static final String SREG_NS = "http://openid.net/extensions/sreg/1.1";
-
-    protected static final String SREG_POLICY_URL = "openid.sreg.policy_url";
-
-    protected static final String SREG_NICKNAME = "sreg.nickname";
-    protected static final String SREG_EMAIL = "sreg.email";
-    protected static final String SREG_FULLNAME = "sreg.fullname";
-    protected static final String SREG_DOB = "sreg.dob";
-    protected static final String SREG_GENDRE = "sreg.gendre";
-    protected static final String SREG_POSTCODE = "sreg.postcode";
-    protected static final String SREG_COUNTRY = "sreg.country";
-    protected static final String SREG_LANGUAGE = "sreg.language";
-    protected static final String SREG_TIMEZONE = "sreg.timezone";
-    protected static final String DATE_FORMAT = "yyyy-MM-dd";
-
     @Inject
     private Logger logger;
 
