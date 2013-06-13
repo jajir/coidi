@@ -35,6 +35,7 @@ import com.coroptis.coidi.op.services.impl.AuthProcNonce;
 import com.coroptis.coidi.op.services.impl.AuthProcResponse11;
 import com.coroptis.coidi.op.services.impl.AuthProcResponse20;
 import com.coroptis.coidi.op.services.impl.AuthProcSign;
+import com.coroptis.coidi.op.services.impl.AuthProcSreg10;
 import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
 import com.coroptis.coidi.op.services.impl.AuthProcStateLessAssociation;
 import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity11;
@@ -174,7 +175,8 @@ public class OpModule {// NO_UCD
     @CheckIdSetup
     public static void contributeAuthenticationSetupProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
-	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcSreg10 authProcSreg10, @Autobuild AuthProcSreg11 authProcSreg11,
+	    @Autobuild AuthProcSign authProcSign,
 	    @Autobuild AuthProcVerifyLoggedUser authProcVerifyLoggedUser,
 	    @Autobuild AuthProcVerifyIdentitySelect20 authProcVerifyIdentitySelect20,
 	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
@@ -188,6 +190,7 @@ public class OpModule {// NO_UCD
 	configuration.add("authProcNonce", authProcNonce);
 	configuration.add("association", authProcAssociation);
 	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
+	configuration.add("authProcSreg10", authProcSreg10);
 	configuration.add("authProcSreg11", authProcSreg11);
 	configuration.add("authProcSign", authProcSign);
     }
@@ -210,7 +213,8 @@ public class OpModule {// NO_UCD
     @CheckIdImmediate
     public static void contributeAuthenticationImmediateProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
-	    @Autobuild AuthProcSreg11 authProcSreg11, @Autobuild AuthProcSign authProcSign,
+	    @Autobuild AuthProcSreg10 authProcSreg10, @Autobuild AuthProcSreg11 authProcSreg11,
+	    @Autobuild AuthProcSign authProcSign,
 	    @Autobuild AuthProcVerifyIdentitySelect20 authProcVerifyIdentitySelect20,
 	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
 	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
@@ -221,6 +225,7 @@ public class OpModule {// NO_UCD
 	configuration.add("authProcNonce", authProcNonce);
 	configuration.add("association", authProcAssociation);
 	configuration.add("authProcStateLessAssociation", authProcStateLessAssociation);
+	configuration.add("authProcSreg10", authProcSreg10);
 	configuration.add("authProcSreg11", authProcSreg11);
 	configuration.add("authProcSign", authProcSign);
     }

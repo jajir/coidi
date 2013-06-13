@@ -1,6 +1,6 @@
 <html t:title="Identities of user: ${user.name}" t:type="layout"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-   	<t:loop source="user.identities" value="identity">
+   	<t:loop source="identities" value="identity">
    		<div>	
    			<p>Identity: <b>${identity.idIdentity}</b></p>
    			<p>Nickname: ${identity.nickname}</p>
