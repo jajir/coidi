@@ -31,28 +31,26 @@ public class SregServiceImpl implements SregService {
 
     @Override
     public boolean isSreg10(final AuthenticationRequest request) {
-	if (!AuthProcSreg10.SREG_NS.equals(request.get("ns.sreg"))) {
-	    return !StringUtils.isEmpty(request.get(AuthProcSreg10.SREG_REQUIRED))
-		    || !StringUtils.isEmpty(request.get(AuthProcSreg10.SREG_OPTIONAL));
+	if (!SREG_NS.equals(request.get("ns.sreg"))) {
+	    return !StringUtils.isEmpty(request.get(SREG_REQUIRED))
+		    || !StringUtils.isEmpty(request.get(SREG_OPTIONAL));
 	}
 	return false;
     }
 
     @Override
     public boolean isSreg11(final AuthenticationRequest request) {
-	return AuthProcSreg10.SREG_NS.equals(request.get("ns.sreg"));
+	return SREG_NS.equals(request.get("ns.sreg"));
     }
 
     @Override
     public Set<String> extractRequestedKeys(final AuthenticationRequest authenticationRequest) {
 	Set<String> keys = new HashSet<String>();
-	if (authenticationRequest.getMap().get(AuthProcSreg10.SREG_OPTIONAL) != null) {
-	    Collections.addAll(keys,
-		    authenticationRequest.getMap().get(AuthProcSreg10.SREG_OPTIONAL).split(","));
+	if (authenticationRequest.getMap().get(SREG_OPTIONAL) != null) {
+	    Collections.addAll(keys, authenticationRequest.getMap().get(SREG_OPTIONAL).split(","));
 	}
-	if (authenticationRequest.getMap().get(AuthProcSreg10.SREG_REQUIRED) != null) {
-	    Collections.addAll(keys,
-		    authenticationRequest.getMap().get(AuthProcSreg10.SREG_REQUIRED).split(","));
+	if (authenticationRequest.getMap().get(SREG_REQUIRED) != null) {
+	    Collections.addAll(keys, authenticationRequest.getMap().get(SREG_REQUIRED).split(","));
 	}
 	return keys;
     }
@@ -60,41 +58,41 @@ public class SregServiceImpl implements SregService {
     public void fillSregResponse(final Set<String> keys, final AuthenticationResponse response,
 	    final Identity identity, final Set<String> fieldsToSign) {
 	if (keys.contains(SREG_NICKNAME) && StringUtils.isNotEmpty(identity.getNickname())) {
-	    response.put(SREG_NICKNAME, identity.getNickname());
-	    fieldsToSign.add(SREG_NICKNAME);
+	    response.put(SREG + SREG_NICKNAME, identity.getNickname());
+	    fieldsToSign.add(SREG + SREG_NICKNAME);
 	}
 	if (keys.contains(SREG_EMAIL) && StringUtils.isNotEmpty(identity.getEmail())) {
-	    response.put(SREG_EMAIL, identity.getEmail());
-	    fieldsToSign.add(SREG_EMAIL);
+	    response.put(SREG + SREG_EMAIL, identity.getEmail());
+	    fieldsToSign.add(SREG + SREG_EMAIL);
 	}
 	if (keys.contains(SREG_FULLNAME) && StringUtils.isNotEmpty(identity.getFullname())) {
-	    response.put(SREG_FULLNAME, identity.getFullname());
-	    fieldsToSign.add(SREG_FULLNAME);
+	    response.put(SREG + SREG_FULLNAME, identity.getFullname());
+	    fieldsToSign.add(SREG + SREG_FULLNAME);
 	}
 	if (keys.contains(SREG_DOB) && identity.getDob() != null) {
 	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-	    response.put(SREG_DOB, sdf.format(identity.getDob()));
-	    fieldsToSign.add(SREG_DOB);
+	    response.put(SREG + SREG_DOB, sdf.format(identity.getDob()));
+	    fieldsToSign.add(SREG + SREG_DOB);
 	}
 	if (keys.contains(SREG_GENDRE) && identity.getGendre() != null) {
-	    response.put(SREG_GENDRE, identity.getGendre().name());
-	    fieldsToSign.add(SREG_GENDRE);
+	    response.put(SREG + SREG_GENDRE, identity.getGendre().name());
+	    fieldsToSign.add(SREG + SREG_GENDRE);
 	}
 	if (keys.contains(SREG_POSTCODE) && StringUtils.isNotEmpty(identity.getPostcode())) {
-	    response.put(SREG_POSTCODE, identity.getPostcode());
-	    fieldsToSign.add(SREG_POSTCODE);
+	    response.put(SREG + SREG_POSTCODE, identity.getPostcode());
+	    fieldsToSign.add(SREG + SREG_POSTCODE);
 	}
 	if (keys.contains(SREG_COUNTRY) && StringUtils.isNotEmpty(identity.getCountry())) {
-	    response.put(SREG_COUNTRY, identity.getCountry());
-	    fieldsToSign.add(SREG_COUNTRY);
+	    response.put(SREG + SREG_COUNTRY, identity.getCountry());
+	    fieldsToSign.add(SREG + SREG_COUNTRY);
 	}
 	if (keys.contains(SREG_LANGUAGE) && StringUtils.isNotEmpty(identity.getLanguage())) {
-	    response.put(SREG_LANGUAGE, identity.getLanguage());
-	    fieldsToSign.add(SREG_LANGUAGE);
+	    response.put(SREG + SREG_LANGUAGE, identity.getLanguage());
+	    fieldsToSign.add(SREG + SREG_LANGUAGE);
 	}
 	if (keys.contains(SREG_TIMEZONE) && StringUtils.isNotEmpty(identity.getTimezone())) {
-	    response.put(SREG_TIMEZONE, identity.getTimezone());
-	    fieldsToSign.add(SREG_TIMEZONE);
+	    response.put(SREG + SREG_TIMEZONE, identity.getTimezone());
+	    fieldsToSign.add(SREG + SREG_TIMEZONE);
 	}
     }
 
