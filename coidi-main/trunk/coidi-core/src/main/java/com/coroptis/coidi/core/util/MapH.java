@@ -13,27 +13,32 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.services;
+package com.coroptis.coidi.core.util;
 
-import com.coroptis.coidi.op.entities.User;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface UserService {
-
-    User login(String name, String password);
-
-    User register(String name, String password, String identityId);
-
-    User getUserByName(String userName);
+/**
+ * Helps with life with maps.
+ * 
+ * @author jirout
+ * 
+ */
+public class MapH {
 
     /**
-     * Get user by it's id.
+     * Create map where keys and values are same type.
      * 
-     * @param idUser
-     *            required is of user
-     * @return found {@link UserImpl} object of <code>null</code> if there is no
-     *         such user
+     * @param values
+     *            required parameter
+     * @return
      */
-    UserImpl getById(Integer idUser);
+    public static <E> Map<E, E> make(final E... values) {
+	final HashMap<E, E> out = new HashMap<E, E>();
+	for (int i = 0; i < values.length; i += 2) {
+	    out.put(values[i], values[i + 1]);
+	}
+	return out;
+    }
 
 }

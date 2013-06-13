@@ -31,6 +31,11 @@ public class UserDaoImpl implements UserDao {
     private Session session;
 
     @Override
+    public UserImpl getById(Integer idUser) {
+	return (UserImpl) session.get(UserImpl.class, idUser);
+    }
+
+    @Override
     public UserImpl login(final String name, final String password) {
 	return (UserImpl) session
 		.createCriteria(UserImpl.class)

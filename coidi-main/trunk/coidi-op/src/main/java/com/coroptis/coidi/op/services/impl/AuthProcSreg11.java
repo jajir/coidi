@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.Set;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -56,62 +55,17 @@ public class AuthProcSreg11 extends AuthProcSreg10 implements AuthenticationProc
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
-	Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
-	if (!keys.isEmpty()) {
+	if (sregService.isSreg11(authenticationRequest)) {
 	    logger.debug("simple registration extension 1.0 was detected");
 	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
 		    .getIdentity());
 	    if (identity == null) {
-		/**
-		 * FIXME check that it's really required.
-		 */
 		return negativeResponseGenerator
 			.simpleError("For sreg extension is identity required.");
 	    }
 	    response.put("ns.sreg", OpenIdNs.TYPE_SREG_1_1);
-	    for (String key : keys) {
-		/**
-		 * Keys in sreg extension parameters are without sreg. prefix
-		 */
-		String sregKey = "sreg." + key;
-		if (SREG_EMAIL.equals(sregKey) && identity.getEmail() != null) {
-		    response.put(SREG_EMAIL, identity.getEmail());
-		    fieldsToSign.add(SREG_EMAIL);
-		}
-		if (SREG_FULLNAME.equals(sregKey) && identity.getFullname() != null) {
-		    response.put(SREG_FULLNAME, identity.getFullname());
-		    fieldsToSign.add(SREG_FULLNAME);
-		}
-		if (SREG_DOB.equals(sregKey) && identity.getDob() != null) {
-		    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-		    response.put(SREG_DOB, sdf.format(identity.getDob()));
-		    fieldsToSign.add(SREG_DOB);
-		}
-		if (SREG_GENDRE.equals(sregKey) && identity.getGendre() != null) {
-		    response.put(SREG_GENDRE, identity.getGendre().name());
-		    fieldsToSign.add(SREG_GENDRE);
-		}
-		if (SREG_NICKNAME.equals(sregKey) && identity.getNickname() != null) {
-		    response.put(SREG_NICKNAME, identity.getNickname());
-		    fieldsToSign.add(SREG_NICKNAME);
-		}
-		if (SREG_POSTCODE.equals(sregKey) && identity.getPostcode() != null) {
-		    response.put(SREG_POSTCODE, identity.getPostcode());
-		    fieldsToSign.add(SREG_POSTCODE);
-		}
-		if (SREG_COUNTRY.equals(sregKey) && identity.getCountry() != null) {
-		    response.put(SREG_COUNTRY, identity.getCountry());
-		    fieldsToSign.add(SREG_COUNTRY);
-		}
-		if (SREG_LANGUAGE.equals(sregKey) && identity.getLanguage() != null) {
-		    response.put(SREG_LANGUAGE, identity.getLanguage());
-		    fieldsToSign.add(SREG_LANGUAGE);
-		}
-		if (SREG_TIMEZONE.equals(sregKey) && identity.getTimezone() != null) {
-		    response.put(SREG_TIMEZONE, identity.getTimezone());
-		    fieldsToSign.add(SREG_TIMEZONE);
-		}
-	    }
+	    Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
+	    sregService.fillSregResponse(keys, response, identity, fieldsToSign);
 	}
 	return null;
     }

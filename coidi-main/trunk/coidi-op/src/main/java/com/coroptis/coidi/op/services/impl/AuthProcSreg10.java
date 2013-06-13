@@ -38,9 +38,9 @@ import com.coroptis.coidi.op.services.SregService;
  */
 public class AuthProcSreg10 implements AuthenticationProcessor {
 
-    protected static final String SREG_REQUIRED = "openid.sreg.required";
-
-    protected static final String SREG_OPTIONAL = "openid.sreg.optional";
+    protected static final String SREG_REQUIRED = "sreg.required";
+    protected static final String SREG_OPTIONAL = "sreg.optional";
+    protected static final String SREG_NS = "http://openid.net/extensions/sreg/1.1";
 
     protected static final String SREG_POLICY_URL = "openid.sreg.policy_url";
 
@@ -53,7 +53,6 @@ public class AuthProcSreg10 implements AuthenticationProcessor {
     protected static final String SREG_COUNTRY = "sreg.country";
     protected static final String SREG_LANGUAGE = "sreg.language";
     protected static final String SREG_TIMEZONE = "sreg.timezone";
-
     protected static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Inject
@@ -72,42 +71,16 @@ public class AuthProcSreg10 implements AuthenticationProcessor {
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
-	Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
-	if (!keys.isEmpty()) {
+	if (sregService.isSreg10(authenticationRequest)) {
 	    logger.debug("simple registration extension 1.0 was detected");
 	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
 		    .getIdentity());
 	    if (identity == null) {
-		/**
-		 * FIXME check that it's really required.
-		 */
 		return negativeResponseGenerator
 			.simpleError("For sreg extension is identity required.");
 	    }
-	    for (String key : keys) {
-		if (SREG_NICKNAME.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_NICKNAME, identity.getNickname());
-		} else if (SREG_EMAIL.equals(key) && identity.getEmail() != null) {
-		    response.put(SREG_EMAIL, identity.getEmail());
-		}
-		if (SREG_FULLNAME.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_FULLNAME, identity.getNickname());
-		} else if (SREG_DOB.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_DOB, identity.getNickname());
-		} else if (SREG_GENDRE.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_GENDRE, identity.getNickname());
-		} else if (SREG_NICKNAME.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_NICKNAME, identity.getNickname());
-		} else if (SREG_POSTCODE.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_POSTCODE, identity.getNickname());
-		} else if (SREG_COUNTRY.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_COUNTRY, identity.getNickname());
-		} else if (SREG_LANGUAGE.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_LANGUAGE, identity.getNickname());
-		} else if (SREG_TIMEZONE.equals(key) && identity.getNickname() != null) {
-		    response.put(SREG_TIMEZONE, identity.getNickname());
-		}
-	    }
+	    Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
+	    sregService.fillSregResponse(keys, response, identity, fieldsToSign);
 	}
 	return null;
     }

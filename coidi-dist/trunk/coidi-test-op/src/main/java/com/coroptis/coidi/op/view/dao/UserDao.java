@@ -19,6 +19,8 @@ import com.coroptis.coidi.op.view.entities.UserImpl;
 
 public interface UserDao {
 
+    UserImpl getById(Integer idUser);
+
     UserImpl login(String name, String password);
 
     UserImpl register(String name, String password, String identityId);

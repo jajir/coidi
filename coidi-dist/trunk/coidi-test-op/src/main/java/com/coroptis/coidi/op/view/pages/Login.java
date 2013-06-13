@@ -26,7 +26,7 @@ import org.apache.tapestry5.corelib.components.PasswordField;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 import com.coroptis.coidi.op.view.utils.UserSession;
@@ -53,7 +53,7 @@ public class Login { // NO_UCD
     private PasswordField passwordField;
 
     @Inject
-    private OpenIdDispatcher openIdDispatcher;
+    private OpenIdRequestProcessor openIdRequestProcessor;
 
     void onValidateFromLoginForm() {
 	if (userService.login(userName, password) == null) {
@@ -64,7 +64,7 @@ public class Login { // NO_UCD
     Object onSuccess() throws MalformedURLException {
 	userSession.setUser(userService.login(userName, password));
 	if (userSession.getAuthenticationRequest() != null) {
-	    AbstractMessage response = openIdDispatcher.process(userSession
+	    AbstractMessage response = openIdRequestProcessor.process(userSession
 		    .getAuthenticationRequest().getMap(), userSession);
 	    return new URL(response.getMessage());
 	}

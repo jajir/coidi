@@ -120,6 +120,10 @@ public abstract class AbstractMessage {
 	return true;
     }
 
+    public boolean containsKey(final String key) {
+	return map.containsKey(key);
+    }
+
     public AbstractMessage(final Map<String, String> map, final String prefix) {
 	this();
 	if (prefix == null) {
