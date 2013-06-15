@@ -15,43 +15,29 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.tapestry5.ioc.ServiceBinder;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tapestry5.ioc.ServiceBinder;
+import org.easymock.EasyMock;
+
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class AuthenticationServiceTest extends AbstractT5JunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
     private AuthenticationService service;
-
-    public void testIsAuthenticationRequest_missingClaimedId() throws Exception {
-	AuthenticationRequest request = new AuthenticationRequest();
-	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
-	request.setIdentity("http://www.oid.com/user/karel");
-	assertFalse(service.isAuthenticationRequest(request));
-    }
-
-    public void testIsAuthenticationRequest() throws Exception {
-	AuthenticationRequest request = new AuthenticationRequest();
-	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
-	request.setIdentity("http://www.oid.com/user/karel");
-	request.setClaimedId("http://www.oid.com/user/karel");
-	assertTrue(service.isAuthenticationRequest(request));
-    }
-
-    public void testIsAuthenticationRequest_noIdent() throws Exception {
-	AuthenticationRequest request = new AuthenticationRequest();
-	request.setMode(AuthenticationRequest.MODE_CHECKID_SETUP);
-	assertFalse(service.isAuthenticationRequest(request));
-    }
 
     public void testGetNameSpace() throws Exception {
 	Map<String, String> map = new HashMap<String, String>();
@@ -68,6 +54,38 @@ public class AuthenticationServiceTest extends AbstractT5JunitTest {
 	String ret = service.getNameSpace(request, OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);
 
 	assertNull(ret);
+    }
+
+    public void test_convertHttpRequestParametersToMap() throws Exception {
+	HttpServletRequest request = EasyMock.createMock(HttpServletRequest.class);
+	EasyMock.expect(request.getParameterNames()).andReturn(
+		Collections.enumeration(Sets.newHashSet("openid.ns", "openid.identity")));
+	EasyMock.expect(request.getParameter("openid.ns"))
+		.andReturn("http://openid.net/signon/1.0").times(2);
+	EasyMock.expect(request.getParameter("openid.identity")).andReturn("kachna").times(2);
+	EasyMock.replay(request);
+	Map<String, String> ret = service.convertHttpRequestParametersToMap(request);
+
+	assertNotNull(ret);
+	EasyMock.verify(request);
+    }
+
+    public void test_convertHttpRequestParametersToMap_duplicatedKeys() throws Exception {
+	HttpServletRequest request = EasyMock.createMock(HttpServletRequest.class);
+	EasyMock.expect(request.getParameterNames()).andReturn(
+		Collections.enumeration(Lists.newArrayList("openid.ns", "openid.ns",
+			"openid.identity")));
+	EasyMock.expect(request.getParameter("openid.ns"))
+		.andReturn("http://openid.net/signon/1.0").times(4);
+	EasyMock.replay(request);
+	try {
+	    service.convertHttpRequestParametersToMap(request);
+	    fail();
+	} catch (CoidiException e) {
+	    assertTrue(true);
+	}
+
+	EasyMock.verify(request);
     }
 
     @Override
