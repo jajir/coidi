@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.google.common.base.Preconditions;
@@ -33,18 +34,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject
     private Logger logger;
-
-    @Override
-    public boolean isAuthenticationRequest(final AuthenticationRequest authenticationRequest) {
-	Preconditions.checkNotNull(authenticationRequest, "authenticationRequest");
-	if (AuthenticationRequest.MODE_CHECKID_SETUP.equals(authenticationRequest.getMode())
-		|| AuthenticationRequest.MODE_CHECKID_IMMEDIATE.equals(authenticationRequest
-			.getMode())) {
-	    return authenticationRequest.getIdentity() != null
-		    && authenticationRequest.getClaimedId() != null;
-	}
-	return false;
-    }
 
     @Override
     public String getNameSpace(AuthenticationRequest authenticationRequest, String nameSpaceUrl) {
@@ -67,7 +56,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	Enumeration<String> parameterNames = httpServletRequest.getParameterNames();
 	while (parameterNames.hasMoreElements()) {
 	    String key = parameterNames.nextElement();
-	    map.put(key, httpServletRequest.getParameter(key));
+	    if (map.put(key, httpServletRequest.getParameter(key)) == null) {
+		// there wasn't already assigned value.
+	    } else {
+		throw new CoidiException("There is duplicated key '"
+			+ httpServletRequest.getParameter(key) + "' in OpenID message.");
+	    }
 	    logger.debug("adding '" + key + "', '" + httpServletRequest.getParameter(key) + "'");
 	}
 	return map;
