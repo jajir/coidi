@@ -54,11 +54,7 @@ public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
     protected final static String T5_WEBAPP_BASE = "src/main/webapp";
 
     static {
-	System.setProperty("server.role", "junit");
-	System.setProperty("system.property.configuration.directory", "non-existing");
-	System.setProperty("op.err.contact", "john@yahoo.com");
-	System.setProperty("op.identity.pattern", "http://www.myid.com/%identity%/");
-	System.setProperty("op.openid.version11.enabled", "true");
+	CommonStaticConf.conf();
 	logger.debug("loading T5 registry with server.role.junit: "
 		+ System.getProperty("server.role"));
 
