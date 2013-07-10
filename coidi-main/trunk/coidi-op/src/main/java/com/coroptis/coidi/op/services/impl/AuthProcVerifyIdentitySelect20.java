@@ -58,6 +58,8 @@ public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
 			+ AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
 			NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
 	    } else {
+		response.setIdentity(authenticationRequest.getSelectedIdentity());
+		response.setClaimedId(authenticationRequest.getSelectedIdentity());
 		authenticationRequest.setIdentity(authenticationRequest.getSelectedIdentity());
 		authenticationRequest.setClaimedId(authenticationRequest.getSelectedIdentity());
 	    }

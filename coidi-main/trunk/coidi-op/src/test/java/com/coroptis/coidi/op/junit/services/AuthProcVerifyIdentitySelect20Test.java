@@ -52,6 +52,8 @@ public class AuthProcVerifyIdentitySelect20Test extends AbstractT5JunitTest {
 	AbstractMessage ret = service.process(request, response, null, new HashSet<String>());
 
 	assertNull(ret);
+	assertEquals("http://www.coidi.com/identity/qwe", response.getIdentity());
+	assertEquals("http://www.coidi.com/identity/qwe", response.getClaimedId());
 	assertEquals("http://www.coidi.com/identity/qwe", request.getIdentity());
 	assertEquals("http://www.coidi.com/identity/qwe", request.getClaimedId());
 	services.verify();

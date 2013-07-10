@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.view.util;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.test.AbstractJunitTest;
 
 /**
@@ -44,10 +43,7 @@ public abstract class BaseJunitTest extends AbstractJunitTest {
 
     @Override
     protected void setUp() throws Exception {
-	System.setProperty(AssociationTool.DEFAULT_ASSOCITION_TYPE, "HMAC-SHA1");
-	System.setProperty("op.server", "http://localhost:8080/");
-	System.setProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS, "1800");
-	System.setProperty("op.err.contact", "john@gmail.com");
+	CommonStaticConf.conf();
 	services = Services.getServices();
 	services.reset();
 	super.setUp();

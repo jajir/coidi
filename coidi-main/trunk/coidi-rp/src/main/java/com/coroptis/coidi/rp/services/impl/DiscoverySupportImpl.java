@@ -65,6 +65,9 @@ public class DiscoverySupportImpl implements DiscoverySupport {
     public DiscoveryResult getXrdsDocument(final String xrdsDocumentUrl, final String claimedId)
 	    throws AuthenticationProcessException {
 	try {
+	    if (logger.isDebugEnabled()) {
+		logger.debug("trying to get at: " + xrdsDocumentUrl);
+	    }
 	    HttpGet httpget = new HttpGet(xrdsDocumentUrl);
 	    httpget.setHeader("Accept", "application/xrds+xml");
 	    HttpResponse resp = httpService.getHttpClient().execute(httpget);
