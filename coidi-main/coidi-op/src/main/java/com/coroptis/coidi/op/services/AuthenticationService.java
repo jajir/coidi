@@ -33,8 +33,10 @@ public interface AuthenticationService {
      * space URL than return null.
      * 
      * @param authenticationRequest
+     *            required authentication request
      * @param nameSpaceUrl
-     * @return
+     *            required name space url
+     * @return name space
      */
     String getNameSpace(AuthenticationRequest authenticationRequest, String nameSpaceUrl);
 
@@ -42,6 +44,7 @@ public interface AuthenticationService {
      * Convert all HTTP request parameters into map.
      * 
      * @param httpServletRequest
+     *            required HTTP servlet request
      * @return map containing key value
      */
     Map<String, String> convertHttpRequestParametersToMap(HttpServletRequest httpServletRequest);

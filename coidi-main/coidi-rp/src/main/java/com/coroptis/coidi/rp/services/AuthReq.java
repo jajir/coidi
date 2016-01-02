@@ -32,12 +32,15 @@ public interface AuthReq {
     /**
      * 
      * @param authenticationRequest
+     *            required authentication request message
      * @param discoveryResult
+     *            required discovery result
      * @param parameters
      *            required map of parameters, this parameters will be used by
      *            particular implementations, parameters will be used for
      *            passing values from front-end.
-     * @return
+     * @return <code>true</code> when message is processed otherwise
+     *         <code>false</code>
      */
     boolean process(AuthenticationRequest authenticationRequest, DiscoveryResult discoveryResult,
 	    Map<String, String> parameters);

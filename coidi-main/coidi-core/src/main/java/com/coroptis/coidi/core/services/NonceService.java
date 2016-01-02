@@ -25,6 +25,7 @@ public interface NonceService {
      * Extract a date from a nonce.
      * 
      * @param nonce
+     *            string noce value
      * @return date from nonce
      */
     Date extractDate(String nonce);
@@ -34,9 +35,9 @@ public interface NonceService {
      * 
      * @param nonce
      *            nonce to verify
-     * @param expirationMinutes
+     * @param expirationInMinutes
      *            minutes how long the nonce is valid
-     * @return true if nonce is valide, false otherwise
+     * @return <code>true</code> if nonce is valid otherwise <code>false</code>
      */
     boolean verifyNonceExpiration(String nonce, Integer expirationInMinutes);
 

@@ -38,12 +38,16 @@ public interface AuthenticationProcessor {
     /**
      * 
      * @param authenticationRequest
+     *            required authentication request
      * @param response
+     *            required response
      * @param userSession
+     *            required user's session
      * @param fieldsToSign
      *            required parameter where will be added all fields from message
      *            that should be signed
-     * @return
+     * @return if request could be processed than retun response message
+     *         otherwise <code>null</code>
      */
     AbstractMessage process(AuthenticationRequest authenticationRequest,
 	    AuthenticationResponse response, UserSessionSkeleton userSession,

@@ -68,14 +68,14 @@ public interface ConfigurationService {
     String getConfigurationDirectory();
 
     /**
-     * Return configuration file called 'configuration-<server.role>.xml.
+     * Return configuration file called 'configuration-&lt;server.role&gt;.xml'.
      * 
      * @return default application configuration file
      */
     Resource getDefaultConfiguration();
 
     /**
-     * Return configuration file called '<configurationName>-<server.role>.xml'.
+     * Return configuration file called '&lt;configurationName&gt;-&lt;server.role&gt;.xml'.
      * 
      * @param configurationName
      *            required configuration name, name have to be usable as part of
@@ -86,7 +86,7 @@ public interface ConfigurationService {
 
     /**
      * Return configuration file called
-     * '<configurationName>-<server.role>.<fileExtension>'.
+     * '&lt;configurationName&gt;-&lt;server.role&gt;.&lt;fileExtension&gt;'.
      * 
      * @param configurationName
      *            required configuration name, name have to be usable as part of

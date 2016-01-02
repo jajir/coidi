@@ -33,6 +33,7 @@ public interface BaseNonceDao {
      * Remove nonce from store.
      * 
      * @param nonce
+     *            required nonce object
      */
     void delete(Nonce nonce);
 

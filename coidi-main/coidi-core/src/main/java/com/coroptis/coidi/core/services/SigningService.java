@@ -26,9 +26,12 @@ public interface SigningService {
     /**
      * 
      * @param toSign
+     *            required message to sign
      * @param macKey
+     *            required signing macKey
      * @param associationType
-     * @return
+     *            required association type
+     * @return signed message
      */
     String plainSign(String toSign, String macKey, AssociationType associationType);
 }

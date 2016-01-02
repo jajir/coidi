@@ -25,7 +25,8 @@ public interface MessageService {
      * Convert incoming message to map.
      * 
      * @param query
-     * @return
+     *            URL query parameters
+     * @return key value pair generated from URL parameters
      */
     Map<String, String> convertUrlToMap(String query);
 

@@ -23,31 +23,33 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 
 public interface CryptoSessionService {
 
-    final static BigInteger DEFAULT_DH_MODULUS = new BigInteger(
-	    "1551728981814736974712322577637155" + "3991572480196691540447970779531405"
-		    + "7629378541917580651227423698188993" + "7278161526466314385615958256881888"
-		    + "8995127215884267541995034125870655" + "6549803580104870537681476726513255"
-		    + "7470407658574792912915723345106432" + "4509471500722962109419434978392598"
-		    + "4760375594985848253359305585439638443");
+    final static BigInteger DEFAULT_DH_MODULUS = new BigInteger("1551728981814736974712322577637155"
+	    + "3991572480196691540447970779531405" + "7629378541917580651227423698188993"
+	    + "7278161526466314385615958256881888" + "8995127215884267541995034125870655"
+	    + "6549803580104870537681476726513255" + "7470407658574792912915723345106432"
+	    + "4509471500722962109419434978392598" + "4760375594985848253359305585439638443");
 
     public static final BigInteger DEFAULT_DH_GEN = BigInteger.valueOf(2);
 
     /**
      * 
      * @param keyPair
+     *            pair of private and public key
      * @param composite
-     * @return
+     *            composite parameter
+     * @return computed shared secret key
      */
     BigInteger getSharedSecretKey(KeyPair keyPair, BigInteger composite);
 
-    byte[] xorSecret(KeyPair keyPair, BigInteger otherPublic, byte[] secret, SessionType sessionType);
+    byte[] xorSecret(KeyPair keyPair, BigInteger otherPublic, byte[] secret,
+	    SessionType sessionType);
 
     /**
      * Generates key pair (private key and public key) from association request.
      * 
      * @param authenticationRequest
      *            required authentication request.
-     * @return
+     * @return generated pair of keys
      */
     KeyPair generateCryptoSession(AssociationRequest authenticationRequest);
 

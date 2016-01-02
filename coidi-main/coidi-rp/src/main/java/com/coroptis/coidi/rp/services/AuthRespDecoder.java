@@ -17,7 +17,13 @@ public interface AuthRespDecoder {
     /**
      * 
      * @param authenticationResponse
-     * @return
+     *            required authentication response
+     * @param association
+     *            required association
+     * @param authenticationResult
+     *            required result authenticationResult
+     * @return <code>true</code> when message is processed otherwise
+     *         <code>false</code>
      */
     Boolean decode(AuthenticationResponse authenticationResponse, Association association,
 	    AuthenticationResult authenticationResult);

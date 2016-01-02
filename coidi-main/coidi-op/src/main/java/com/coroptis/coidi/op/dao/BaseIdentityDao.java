@@ -30,7 +30,7 @@ public interface BaseIdentityDao {
      * 
      * @param idIdentity
      *            required idenitity's name (id)
-     * @return {@link IdentityImpl} object if there is any otherwise
+     * @return {@link Identity} object if there is any otherwise
      *         <code>null</code>
      */
     Identity getIdentityId(String idIdentity);
