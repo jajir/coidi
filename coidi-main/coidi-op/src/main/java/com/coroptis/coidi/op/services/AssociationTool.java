@@ -36,7 +36,7 @@ public interface AssociationTool {
      * Get date up to which is association handle considered as valid. It's
      * based on co
      * 
-     * @return
+     * @return time
      */
     Date getTimeToLive();
 

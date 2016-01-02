@@ -29,8 +29,8 @@ public interface BaseAssociationDao {
      * Persist new association. During persisting should also persist all
      * including object like nonces.
      * 
-     * @param required
-     *            association
+     * @param association
+     *            required association
      */
     void create(Association association);
 

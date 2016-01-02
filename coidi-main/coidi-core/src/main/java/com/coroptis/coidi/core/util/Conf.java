@@ -38,9 +38,13 @@ public class Conf {
      * static way before T5 application starts to boot up.
      * </p>
      * 
-     * @return
+     * @param systemPropertyConfigurationDirectory
+     *            optional system property name where is stored configuration
+     *            directory
+     * @return configuration directory
      */
-    public static String getConfigurationDirectory(final String systemPropertyConfigurationDirectory) {
+    public static String getConfigurationDirectory(
+	    final String systemPropertyConfigurationDirectory) {
 	if (systemPropertyConfigurationDirectory == null) {
 	    throw new CoidiException(
 		    "name of system property containing congiguration directory is null");

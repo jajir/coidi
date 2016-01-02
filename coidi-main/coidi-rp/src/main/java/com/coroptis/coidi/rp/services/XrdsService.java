@@ -22,7 +22,8 @@ public interface XrdsService {
     /**
      * 
      * @param xrdsDocument
-     * @return
+     *            required XRDS document location
+     * @return discovery result object
      */
     DiscoveryResult extractDiscoveryResult(String xrdsDocument);
 

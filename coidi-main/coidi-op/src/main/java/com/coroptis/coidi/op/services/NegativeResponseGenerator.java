@@ -67,8 +67,10 @@ public interface NegativeResponseGenerator {
      * something.
      * 
      * @param message
+     *            required message
      * @param errorKey
-     * @return
+     *            required error key
+     * @return created error response
      */
     ErrorResponse applicationError(String message, String errorKey);
 
@@ -79,8 +81,10 @@ public interface NegativeResponseGenerator {
      * @param nameSpace
      *            required name space
      * @param message
+     *            required message
      * @param errorKey
-     * @return
+     *            required error key
+     * @return error response object
      */
     ErrorResponse applicationError(String message, String errorKey, String nameSpace);
 

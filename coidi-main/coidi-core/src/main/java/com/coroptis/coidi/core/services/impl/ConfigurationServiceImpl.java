@@ -38,9 +38,11 @@ import com.google.common.base.Preconditions;
  * Loads {@link Properties} from configuration file. Configuration files are
  * located in folder specified in system property "sso.conf.dir". If such a
  * property is not found then configuration files are searched for in
- * <code>src/main/resources/META-INF/</code> folder.<br/>
+ * <code>src/main/resources/META-INF/</code> folder.
+ * <p>
  * Files are named like this: <code>configuration-${server.role}.xml</code>
  * where ${server.role} is replaced by value of system property "server.role".
+ * </p>
  * 
  * @author jan
  */

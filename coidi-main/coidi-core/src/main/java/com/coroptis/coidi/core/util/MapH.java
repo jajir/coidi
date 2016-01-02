@@ -29,9 +29,11 @@ public class MapH {
     /**
      * Create map where keys and values are same type.
      * 
+     * @param <E>
+     *            returning key value type
      * @param values
      *            required parameter
-     * @return
+     * @return new hash map
      */
     public static <E> Map<E, E> make(final E... values) {
 	final HashMap<E, E> out = new HashMap<E, E>();

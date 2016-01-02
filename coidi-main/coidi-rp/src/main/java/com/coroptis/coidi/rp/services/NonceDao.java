@@ -40,7 +40,8 @@ public interface NonceDao {
      * 
      * @param nonce
      *            required string nonce
-     * @return
+     * @return <code>true</code> if nonce already exists otherwise
+     *         <code>false</code>
      */
     boolean isExists(String nonce);
 

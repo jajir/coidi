@@ -163,8 +163,8 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
     }
 
     /**
-     * @param realm
-     *            the realm to set
+     * @param selectedIdentity
+     *            selected identity
      */
     public void setSelectedIdentity(final String selectedIdentity) {
 	put(USERS_SELECTED_IDENTITY, selectedIdentity);

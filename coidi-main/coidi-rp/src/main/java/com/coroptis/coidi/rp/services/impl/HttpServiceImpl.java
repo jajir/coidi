@@ -62,7 +62,7 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    public DefaultHttpClient getHttpClient() throws CoidiException {
+    public DefaultHttpClient getHttpClient() {
 	return httpClient;
     }
 

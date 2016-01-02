@@ -70,7 +70,7 @@ public abstract class AbstractMessage {
      * It should return messages that could be used in direct communication. It
      * should be always implemented.
      * 
-     * @return
+     * @return whole OpenID message
      */
     public abstract String getMessage();
 
@@ -79,11 +79,11 @@ public abstract class AbstractMessage {
      * 
      * @param targetUrl
      *            required URL to which will be user's browser redirected
-     * @return
+     * @return url
      */
     public String getUrl(final String targetUrl) {
-	throw new CoidiException("indirect communication message is not supported"
-		+ " for this type of message");
+	throw new CoidiException(
+		"indirect communication message is not supported" + " for this type of message");
     }
 
     AbstractMessage() {

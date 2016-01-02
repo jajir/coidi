@@ -28,8 +28,10 @@ public interface XmlProcessing {
      * 'http-equiv' equal name and return value of attribute 'content'.
      * 
      * @param htmlDocument
+     *            required html document
      * @param name
-     * @return
+     *            required name
+     * @return meta content value
      */
     String getMetaContent(String htmlDocument, String name);
 
