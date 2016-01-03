@@ -24,17 +24,18 @@ import org.apache.tapestry5.ioc.ServiceResources;
  * @author jan
  * 
  * @param <T>
+ *            class service that will be constructed
  */
 public class EasyMockServicebuilder<T> implements ServiceBuilder<T> {
 
-	private final T service;
+    private final T service;
 
-	public EasyMockServicebuilder(final T service) {
-		this.service = service;
-	}
+    public EasyMockServicebuilder(final T service) {
+	this.service = service;
+    }
 
-	public T buildService(ServiceResources resources) {
-		return service;
-	}
+    public T buildService(ServiceResources resources) {
+	return service;
+    }
 
 }

@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.coroptis.coidi</groupId>
-		<artifactId>coidi</artifactId>
+		<artifactId>coidi-main</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>coidi-op</artifactId>
+	<artifactId>coidi-op-t5</artifactId>
 	<packaging>jar</packaging>
-	<name>OpendId provider library</name>
+	<name>Coidi OpenID provider for Tapestry 5</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -18,6 +18,10 @@
 			<artifactId>coidi-core</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.openxri</groupId>
