@@ -20,15 +20,15 @@ import java.util.Map;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
-import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
+import com.coroptis.coidi.core.services.ConfService;
+import com.coroptis.coidi.core.services.impl.ConfServiceImpl;
 import com.coroptis.coidi.core.util.BaseJunitTest;
 
 public class ConfigurationServiceTest extends BaseJunitTest {
 
     private final static String SERVICE_NAME = "realService";
 
-    private ConfigurationService configurationService;
+    private ConfService configurationService;
 
     public void testGetConfigurationDirectory() throws Exception {
 	services.replay();
@@ -93,7 +93,7 @@ public class ConfigurationServiceTest extends BaseJunitTest {
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class)
+	binder.bind(ConfService.class, ConfServiceImpl.class)
 		.withId(SERVICE_NAME);
     }
 
@@ -101,7 +101,7 @@ public class ConfigurationServiceTest extends BaseJunitTest {
     protected void setUp() throws Exception {
 	System.setProperty("system.property.configuration.directory", "./some-conf-dir");
 	super.setUp();
-	configurationService = getService(SERVICE_NAME, ConfigurationService.class);
+	configurationService = getService(SERVICE_NAME, ConfService.class);
     }
 
     @Override

@@ -18,7 +18,7 @@ package com.coroptis.coidi.core.services.impl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 
 /**
  * Create {@link SymbolProvider} that allows to use constants loaded from
@@ -32,7 +32,7 @@ import com.coroptis.coidi.core.services.ConfigurationService;
 public class AppSymbolProvider implements SymbolProvider {
 
     @Inject
-    private ConfigurationService configurationService;
+    private ConfService configurationService;
 
     @Override
     public String valueForSymbol(String symbolName) {

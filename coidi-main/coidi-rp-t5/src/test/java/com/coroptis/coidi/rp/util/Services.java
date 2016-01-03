@@ -17,7 +17,7 @@ package com.coroptis.coidi.rp.util;
 
 import org.easymock.classextension.EasyMock;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.HttpService;
@@ -28,8 +28,8 @@ public class Services {
     /**
      * Services defined in Coidi
      */
-    private final ConfigurationService configurationService = EasyMock
-	    .createMock(ConfigurationService.class);
+    private final ConfService configurationService = EasyMock
+	    .createMock(ConfService.class);
     private final HttpService httpService = EasyMock.createMock(HttpService.class);
     private final XrdsService xrdsService = EasyMock.createMock(XrdsService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
@@ -75,7 +75,7 @@ public class Services {
     /**
      * @return the configurationService
      */
-    public ConfigurationService getConfigurationService() {
+    public ConfService getConfigurationService() {
 	return configurationService;
     }
 

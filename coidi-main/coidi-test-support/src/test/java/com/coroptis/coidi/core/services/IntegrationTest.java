@@ -17,13 +17,13 @@ package com.coroptis.coidi.core.services;
 
 import java.util.Map;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 import com.coroptis.coidi.core.util.AbstractIntegrationTest;
 
 public class IntegrationTest extends AbstractIntegrationTest {
 
     public void testClient() throws Exception {
-	ConfigurationService configurationService = getService(ConfigurationService.class);
+	ConfService configurationService = getService(ConfService.class);
 
 	Map<String, String> conf = configurationService.loadDefaultConfiguration("test");
 	assertEquals("George", conf.get("name"));

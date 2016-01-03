@@ -29,7 +29,7 @@ import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
 import com.coroptis.coidi.core.services.impl.AppSymbolProvider;
-import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
+import com.coroptis.coidi.core.services.impl.ConfServiceImpl;
 import com.coroptis.coidi.core.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptoSessionServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
@@ -50,7 +50,7 @@ public class CoreModule {
     private final static Logger logger = Logger.getLogger(CoreModule.class);
 
     public static void bind(ServiceBinder binder) {
-	binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
+	binder.bind(ConfService.class, ConfServiceImpl.class);
 	binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId("appSymbolProvider");
 	binder.bind(MessageService.class, MessageServiceImpl.class);
 	binder.bind(CryptographyService.class, CryptographyServiceImpl.class);
@@ -67,7 +67,7 @@ public class CoreModule {
 
     public static void contributeApplicationInitializer(
 	    OrderedConfiguration<ApplicationInitializerFilter> configuration,
-	    @Inject @Symbol(ConfigurationService.CONF_KEY_CONFIGURATION_DIRECTORY) final String systemPropertyConfigurationDirectory) {
+	    @Inject @Symbol(ConfService.CONF_KEY_CONFIGURATION_DIRECTORY) final String systemPropertyConfigurationDirectory) {
 	String configFile = Conf.getConfigurationDirectory(systemPropertyConfigurationDirectory)
 		+ "log4j-" + Conf.getServerRole() + ".xml";
 	initLog4jFromConfigXml(configFile);

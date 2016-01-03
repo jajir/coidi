@@ -18,7 +18,7 @@ package com.coroptis.coidi.core.util;
 import java.io.File;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 
 /**
  * Class that allows to access configuration feature in a static way. It should
@@ -51,7 +51,7 @@ public class Conf {
 	}
 	String confDir = System.getProperty(systemPropertyConfigurationDirectory);
 	if (confDir == null || confDir.length() == 0) {
-	    return ConfigurationService.DEFAULT_CONFIGURATION_DIRECTORY;
+	    return ConfService.DEFAULT_CONFIGURATION_DIRECTORY;
 	} else {
 	    if (!confDir.endsWith("/") && !confDir.endsWith("\\")) {
 		confDir = confDir + File.separator;
@@ -65,11 +65,11 @@ public class Conf {
      *         defined.
      */
     public static String getServerRole() {
-	String value = System.getProperty(ConfigurationService.SYSTEM_PROPERTY_SERVER_ROLE);
+	String value = System.getProperty(ConfService.SYSTEM_PROPERTY_SERVER_ROLE);
 	if (value != null) {
 	    return value;
 	}
-	return ConfigurationService.DEFAULT_SERVER_ROLE;
+	return ConfService.DEFAULT_SERVER_ROLE;
     }
 
 }

@@ -17,7 +17,7 @@ package com.coroptis.coidi.op.util;
 
 import org.easymock.EasyMock;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
@@ -38,8 +38,8 @@ import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
 
-    private final ConfigurationService configurationService = EasyMock
-	    .createMock(ConfigurationService.class);
+    private final ConfService configurationService = EasyMock
+	    .createMock(ConfService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
     private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
@@ -107,7 +107,7 @@ public class Services {
     /**
      * @return the configurationService
      */
-    public ConfigurationService getConfigurationService() {
+    public ConfService getConfigurationService() {
 	return configurationService;
     }
 

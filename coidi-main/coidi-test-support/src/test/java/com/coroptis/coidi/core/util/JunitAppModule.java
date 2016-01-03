@@ -17,7 +17,7 @@ package com.coroptis.coidi.core.util;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
+import com.coroptis.coidi.core.services.ConfService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.services.MessageService;
@@ -34,7 +34,7 @@ public class JunitAppModule {
 
 	Services services = Services.getServices();
 
-	binder.bind(ConfigurationService.class, new EasyMockServicebuilder<ConfigurationService>(
+	binder.bind(ConfService.class, new EasyMockServicebuilder<ConfService>(
 		services.getConfigurationService()));
 	binder.bind(ConvertorService.class,
 		new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
