@@ -1,14 +1,21 @@
 package com.coroptis.coidi.op.junit.services;
 
-import junit.framework.TestCase;
+import org.easymock.EasyMock;
 
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 
+import junit.framework.TestCase;
+
 public class RealmToolTest extends TestCase {
 
+    private OpConfigurationService conf;
+
+    private Object[] mocks;
+
     public void test_isMatching_missingRealm() throws Exception {
-	RealmTool service = new RealmToolImpl(true);
+	final RealmTool service = init(true);
 
 	try {
 	    service.isMatching(null, "anything");
@@ -19,7 +26,7 @@ public class RealmToolTest extends TestCase {
     }
 
     public void test_isMatching_missingReturnto() throws Exception {
-	RealmTool service = new RealmToolImpl(true);
+	final RealmTool service = init(true);
 
 	try {
 	    service.isMatching("anything", null);
@@ -30,7 +37,7 @@ public class RealmToolTest extends TestCase {
     }
 
     public void test_isMatching_wilcardsEnabled() throws Exception {
-	RealmTool service = new RealmToolImpl(true);
+	final RealmTool service = init(true);
 	assertTrue(service.isMatching("http://*.com/", "http://www.bcc.co.uk.com/"));
 	assertFalse(service.isMatching("http://*.com/", "http://www.bcc.co.uk"));
 	assertTrue(service.isMatching("http://www.coidi.com/identity/",
@@ -42,7 +49,7 @@ public class RealmToolTest extends TestCase {
     }
 
     public void test_isMatching_wilcardsDisabled() throws Exception {
-	RealmTool service = new RealmToolImpl(false);
+	final RealmTool service = init(false);
 	assertFalse(service.isMatching("http://*.com/", "http://www.bcc.co.uk.com/"));
 	assertFalse(service.isMatching("http://*.com/", "http://www.bcc.co.uk"));
 	assertFalse(service.isMatching("http://www.coidi.com/identity/*",
@@ -53,18 +60,28 @@ public class RealmToolTest extends TestCase {
 		"http://karel.coidi.com/identity/"));
 	assertTrue(service.isMatching("http://www.coidi.com/identity/karel",
 		"http://www.coidi.com/identity/karel"));
-	assertTrue(service
-		.isMatching("https://login.janrain.com/",
-			"https://login.janrain.com/openid/finish?token=63ebc6f6f135c697058a468f449ea92af3297e1e"));
+	assertTrue(service.isMatching("https://login.janrain.com/",
+		"https://login.janrain.com/openid/finish?token=63ebc6f6f135c697058a468f449ea92af3297e1e"));
+    }
+
+    private RealmToolImpl init(boolean isWildcardAllowed) {
+	EasyMock.expect(conf.isWildcardAllowedInRealm()).andReturn(isWildcardAllowed);
+	EasyMock.replay(mocks);
+	return new RealmToolImpl(conf);
     }
 
     @Override
     protected void setUp() throws Exception {
 	super.setUp();
+	conf = EasyMock.createMock(OpConfigurationService.class);
+	mocks = new Object[] { conf };
     }
 
     @Override
     protected void tearDown() throws Exception {
+	EasyMock.verify(mocks);
+	conf = null;
+	mocks = null;
 	super.tearDown();
     }
 

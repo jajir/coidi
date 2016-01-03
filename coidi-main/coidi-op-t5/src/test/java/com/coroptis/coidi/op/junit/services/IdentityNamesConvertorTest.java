@@ -15,11 +15,14 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
-import junit.framework.TestCase;
+import org.easymock.EasyMock;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for {@link IdentityNamesConvertor}.
@@ -29,8 +32,12 @@ import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
  */
 public class IdentityNamesConvertorTest extends TestCase {
 
+    private OpConfigurationService conf;
+
+    private Object[] mocks;
+
     public void test_convertToOpLocalIdentifier() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%");
 
 	assertEquals("http://localhost:8080/user/karel",
@@ -38,7 +45,7 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void test_convertToOpLocalIdentifier_null() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%");
 
 	try {
@@ -50,7 +57,7 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void test_convertToOpLocalIdentifier_invalidPattern() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%idenity%");
 
 	try {
@@ -62,28 +69,29 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void test_convertToOpLocalIdentifier_placeholderInTheMiddle() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://%identity%.server.com:8080/");
 
-	assertEquals("http://karel.server.com:8080/", convertor.convertToOpLocalIdentifier("karel"));
+	assertEquals("http://karel.server.com:8080/",
+		convertor.convertToOpLocalIdentifier("karel"));
     }
 
     public void test_convertToIdentityId() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%");
 
 	assertEquals("karel", convertor.convertToIdentityId("http://localhost:8080/user/karel"));
     }
 
     public void test_convertToIdentityId_placeholderInTheMiddle() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://%identity%.server.com:8080/");
 
 	assertEquals("karel", convertor.convertToIdentityId("http://karel.server.com:8080/"));
     }
 
     public void test_convertToIdentityId_placeholderInTheMiddle_invalidInput() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://%identity%.server.com:8080/");
 
 	try {
@@ -95,7 +103,7 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void test_convertToIdentityId_null() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%");
 
 	try {
@@ -107,7 +115,7 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void test_convertToIdentityId_invalidInoutIdentity() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%");
 
 	try {
@@ -119,7 +127,7 @@ public class IdentityNamesConvertorTest extends TestCase {
     }
 
     public void testIsOpLocalIdentifier() throws Exception {
-	IdentityNamesConvertor convertor = new IdentityNamesConvertorImpl(
+	final IdentityNamesConvertor convertor = initConvertor(
 		"http://localhost:8080/user/%identity%/");
 
 	assertFalse(convertor.isOpLocalIdentifier(null));
@@ -132,6 +140,28 @@ public class IdentityNamesConvertorTest extends TestCase {
 	 */
 	assertTrue(convertor.isOpLocalIdentifier("http://localhost:8080/user/karel//"));
 
+    }
+
+    private IdentityNamesConvertor initConvertor(final String pattern) {
+	EasyMock.expect(conf.getOpIdentityPattern()).andReturn(pattern);
+	EasyMock.replay(mocks);
+	return new IdentityNamesConvertorImpl(conf);
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+	super.setUp();
+	conf = EasyMock.createMock(OpConfigurationService.class);
+	mocks = new Object[] { conf };
+
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+	EasyMock.verify(mocks);
+	mocks = null;
+	conf = null;
+	super.tearDown();
     }
 
 }
