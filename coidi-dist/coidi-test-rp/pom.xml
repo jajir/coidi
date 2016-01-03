@@ -25,7 +25,12 @@
 			<version>${parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>6.1.10</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -55,6 +60,7 @@
 				<configuration>
 					<contextPath>/</contextPath>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<port>8081</port>
 					<systemProperties>
 						<systemProperty>
 							<name>jetty.port</name>

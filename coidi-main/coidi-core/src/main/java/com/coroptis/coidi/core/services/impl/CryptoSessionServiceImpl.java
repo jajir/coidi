@@ -18,7 +18,7 @@ package com.coroptis.coidi.core.services.impl;
 import java.math.BigInteger;
 import java.util.Random;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
+import javax.inject.Inject;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AssociationRequest;

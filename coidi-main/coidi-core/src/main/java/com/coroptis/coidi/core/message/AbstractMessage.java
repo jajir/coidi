@@ -23,13 +23,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 
 public abstract class AbstractMessage {
 
-    private final Logger logger = Logger.getLogger(AbstractMessage.class);
+    private final Logger logger = LoggerFactory.getLogger(AbstractMessage.class);
 
     public static final String OPENID = "openid.";
 

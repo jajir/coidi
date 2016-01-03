@@ -23,8 +23,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
@@ -37,8 +39,7 @@ import com.google.common.base.Preconditions;
  */
 public class NonceServiceImpl implements NonceService {
 
-    @Inject
-    private Logger logger;
+    private Logger logger = LoggerFactory.getLogger(CryptographyServiceImpl.class);
 
     private final SecureRandom random;
 

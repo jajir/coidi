@@ -23,9 +23,10 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.inject.Inject;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.CryptoSessionService;
@@ -37,8 +38,7 @@ import com.google.common.base.Preconditions;
 
 public class CryptographyServiceImpl implements CryptographyService {
 
-    @Inject
-    private Logger logger;
+    private Logger logger = LoggerFactory.getLogger(CryptographyServiceImpl.class);
 
     @Inject
     private CryptoSessionService cryptoSessionService;

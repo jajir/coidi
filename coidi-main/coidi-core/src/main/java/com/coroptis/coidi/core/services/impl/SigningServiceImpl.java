@@ -17,8 +17,10 @@ package com.coroptis.coidi.core.services.impl;
 
 import java.io.UnsupportedEncodingException;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -31,8 +33,7 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 
 public class SigningServiceImpl implements SigningService {
 
-    @Inject
-    private Logger logger;
+    private Logger logger = LoggerFactory.getLogger(CryptographyServiceImpl.class);
 
     @Inject
     private CryptographyService cryptoService;
