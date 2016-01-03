@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -37,8 +38,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
  */
 public class AuthProcAx10 implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcAx10.class);
 
     @Inject
     private AuthenticationService authenticationService;

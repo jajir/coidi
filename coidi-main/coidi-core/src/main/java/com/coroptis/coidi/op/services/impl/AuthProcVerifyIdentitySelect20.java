@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -39,8 +40,8 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
  */
 public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory
+	    .getLogger(AuthProcVerifyIdentitySelect20.class);
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
@@ -53,10 +54,10 @@ public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
 
 	if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
 	    if (StringUtils.isEmpty(authenticationRequest.getSelectedIdentity())) {
-		return negativeResponseGenerator.applicationError("requested identity is '"
-			+ AuthenticationRequest.IDENTITY_SELECT
-			+ "' but user didn't put selected identity in property '"
-			+ AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
+		return negativeResponseGenerator.applicationError(
+			"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
+				+ "' but user didn't put selected identity in property '"
+				+ AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
 			NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
 	    } else {
 		response.setIdentity(authenticationRequest.getSelectedIdentity());

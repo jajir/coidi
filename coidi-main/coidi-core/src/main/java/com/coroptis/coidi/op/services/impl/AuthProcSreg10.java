@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -39,8 +40,7 @@ import com.coroptis.coidi.op.services.SregService;
  */
 public class AuthProcSreg10 implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcSreg10.class);
 
     @Inject
     private SregService sregService;
@@ -57,8 +57,8 @@ public class AuthProcSreg10 implements AuthenticationProcessor {
 	    final Set<String> fieldsToSign) {
 	if (sregService.isSreg10(authenticationRequest)) {
 	    logger.debug("simple registration extension 1.0 was detected");
-	    Identity identity = identityService.getByOpLocalIdentifier(authenticationRequest
-		    .getIdentity());
+	    Identity identity = identityService
+		    .getByOpLocalIdentifier(authenticationRequest.getIdentity());
 	    if (identity == null) {
 		return negativeResponseGenerator
 			.simpleError("For sreg extension is identity required.");

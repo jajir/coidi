@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
@@ -39,8 +40,7 @@ public class OpenIdRequestToolImpl implements OpenIdRequestTool {
     @Inject
     private IdentityService identityService;
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(OpenIdRequestToolImpl.class);
 
     @Override
     public boolean isOpenIdVersion20(final Map<String, String> requestParams) {

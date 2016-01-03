@@ -3,6 +3,7 @@ package com.coroptis.coidi.rp.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
@@ -23,8 +24,7 @@ import com.coroptis.coidi.rp.services.NonceDao;
  */
 public class AuthRespDecoderOpenId implements AuthRespDecoder {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthRespDecoderOpenId.class);
 
     @Inject
     private NonceService nonceService;

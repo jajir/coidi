@@ -18,9 +18,8 @@ package com.coroptis.coidi.rp.services.impl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -29,8 +28,7 @@ import com.google.common.base.Preconditions;
 
 public class XmlProcessingImpl implements XmlProcessing {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(XmlProcessingImpl.class);
 
     @Override
     public boolean isThereTag(Node node, String tagName, String value) {

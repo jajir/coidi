@@ -3,9 +3,8 @@ package com.coroptis.coidi.rp.services.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.NsSreg;
@@ -22,8 +21,7 @@ import com.coroptis.coidi.rp.services.AuthRespDecoder;
  */
 public class AuthRespDecoderSreg implements AuthRespDecoder, NsSreg {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthRespDecoderSreg.class);
 
     @Override
     public Boolean decode(AuthenticationResponse authenticationResponse, Association association,

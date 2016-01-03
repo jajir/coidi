@@ -26,6 +26,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.rp.services.HttpService;
@@ -33,8 +34,7 @@ import com.coroptis.coidi.rp.services.YadisService;
 
 public class YadisServiceImpl implements YadisService {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(YadisServiceImpl.class);
 
     @Inject
     private HttpService httpService;

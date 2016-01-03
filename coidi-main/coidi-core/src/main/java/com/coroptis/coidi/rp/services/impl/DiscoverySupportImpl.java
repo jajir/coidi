@@ -27,6 +27,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
@@ -36,6 +37,8 @@ import com.coroptis.coidi.rp.services.XrdsService;
 
 public class DiscoverySupportImpl implements DiscoverySupport {
 
+    private final static Logger logger = LoggerFactory.getLogger(DiscoverySupportImpl.class);
+
     private final Pattern patternEmail;
 
     private final Pattern patternXri;
@@ -43,9 +46,6 @@ public class DiscoverySupportImpl implements DiscoverySupport {
     private final Pattern patternDomainSlash;
 
     private final UrlValidator urlValidator;
-
-    @Inject
-    private Logger logger;
 
     @Inject
     private HttpService httpService;

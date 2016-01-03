@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -38,8 +39,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
  */
 public class AuthProcAssociation implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcAssociation.class);
 
     @Inject
     private AssociationService associationService;
@@ -60,8 +60,8 @@ public class AuthProcAssociation implements AuthenticationProcessor {
 	    } else {
 		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
 		response.setAssocHandle(null);
-		logger.debug("Invalid association handle '"
-			+ authenticationRequest.getAssocHandle() + "'");
+		logger.debug("Invalid association handle '" + authenticationRequest.getAssocHandle()
+			+ "'");
 	    }
 	}
 	return null;

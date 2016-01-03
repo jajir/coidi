@@ -18,6 +18,7 @@ package com.coroptis.coidi.rp.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
@@ -28,8 +29,7 @@ import com.coroptis.coidi.rp.services.AuthenticationService;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     @Inject
     private AuthRespDecoder authRespDecoder;

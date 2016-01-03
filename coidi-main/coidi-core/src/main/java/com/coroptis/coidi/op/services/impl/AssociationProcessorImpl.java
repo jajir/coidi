@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AssociationRequest;
@@ -36,8 +37,7 @@ import com.coroptis.coidi.op.services.CryptoService;
 
 public class AssociationProcessorImpl implements AssociationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AssociationProcessorImpl.class);
 
     @Inject
     private BaseAssociationDao baseAssociationDao;
@@ -60,22 +60,22 @@ public class AssociationProcessorImpl implements AssociationProcessor {
     @Override
     public AbstractMessage processAssociation(final AssociationRequest request,
 	    final SessionType sessionType, final AssociationType associationType) {
-	Association association = associationService
-		.createAssociation(associationType, sessionType);
+	Association association = associationService.createAssociation(associationType,
+		sessionType);
 	AssociationResponse out = new AssociationResponse();
 	if (association.getSessionType().equals(SessionType.NO_ENCRYPTION)) {
 	    logger.info("No encryption was setup during association request/response.");
-	    byte macKey[] = cryptoService.generateAssociationRandom(association
-		    .getAssociationType());
+	    byte macKey[] = cryptoService
+		    .generateAssociationRandom(association.getAssociationType());
 	    association.setMacKey(convertorService.convertToString(macKey));
 	    out.setMacKey(macKey);
 	} else {
-	    association.setMacKey(convertorService.convertToString(cryptoService
-		    .generateSessionRandom(association.getSessionType())));
+	    association.setMacKey(convertorService.convertToString(
+		    cryptoService.generateSessionRandom(association.getSessionType())));
 	    KeyPair cryptoSession = cryptoSessionService.generateCryptoSession(request);
-	    out.setEncMacKey(cryptographyService.encryptSecret(cryptoSession,
-		    request.getDhConsumerPublic(),
-		    convertorService.convertToBytes(association.getMacKey()), sessionType));
+	    out.setEncMacKey(
+		    cryptographyService.encryptSecret(cryptoSession, request.getDhConsumerPublic(),
+			    convertorService.convertToBytes(association.getMacKey()), sessionType));
 	    out.setDhServerPublic(cryptoSession.getPublicKey());
 	}
 
@@ -84,8 +84,8 @@ public class AssociationProcessorImpl implements AssociationProcessor {
 	out.setSessionType(association.getSessionType());
 	out.setAssociationType(association.getAssociationType());
 	out.setAssocHandle(association.getAssocHandle());
-	out.setExpiresIn(String.valueOf((association.getExpiredIn().getTime() - System
-		.currentTimeMillis()) / 1000L));
+	out.setExpiresIn(String.valueOf(
+		(association.getExpiredIn().getTime() - System.currentTimeMillis()) / 1000L));
 	return out;
     }
 

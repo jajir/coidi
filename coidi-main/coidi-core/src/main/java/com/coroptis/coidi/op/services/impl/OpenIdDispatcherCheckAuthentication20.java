@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
@@ -40,8 +41,8 @@ import com.coroptis.coidi.op.services.StatelessModeNonceService;
  */
 public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory
+	    .getLogger(OpenIdDispatcherCheckAuthentication20.class);
 
     @Inject
     private StatelessModeNonceService statelessModeNonceService;
@@ -55,8 +56,8 @@ public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
-	if (requestParams.get(OPENID_MODE).equals(
-		CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
+	if (requestParams.get(OPENID_MODE)
+		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);
 	    logger.debug("processing: " + request);
 	    CheckAuthenticationResponse response = new CheckAuthenticationResponse();
@@ -69,8 +70,8 @@ public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
 		    response.setIsValid(false);
 		    return response;
 		}
-		if (!request.getSignature().equals(
-			signingService.sign(request, nonce.getAssociation()))) {
+		if (!request.getSignature()
+			.equals(signingService.sign(request, nonce.getAssociation()))) {
 		    response.setIsValid(false);
 		    logger.info("Signature is not valid " + request);
 		    return response;

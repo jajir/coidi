@@ -27,6 +27,12 @@ public abstract class AbstractLocalJunitTest extends AbstractJunitTest {
 
     @Override
     protected void setUp() throws Exception {
+	System.setProperty("openid.realm", "http://localhost:8080/");
+	System.setProperty("proxy.server", "");
+	System.setProperty("proxy.port", "-1");
+	System.setProperty("proxy.userName", "");
+	System.setProperty("proxy.password", "");
+	
 	services = Services.getServices();
 	services.reset();
 	super.setUp();

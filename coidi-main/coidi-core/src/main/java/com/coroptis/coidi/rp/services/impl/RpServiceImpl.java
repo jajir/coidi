@@ -18,6 +18,7 @@ package com.coroptis.coidi.rp.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.entities.Association;
@@ -29,8 +30,7 @@ import com.coroptis.coidi.rp.services.RpService;
 
 public class RpServiceImpl implements RpService {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(RpServiceImpl.class);
 
     @Inject
     private AuthReq authReq;

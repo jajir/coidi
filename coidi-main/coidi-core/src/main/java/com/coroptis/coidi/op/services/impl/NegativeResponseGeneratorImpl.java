@@ -18,10 +18,11 @@ package com.coroptis.coidi.op.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.ErrorResponse;
-import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 
 /**
  * Simple {@link NegativeResponseGenerator} implementation.
@@ -31,8 +32,8 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
  */
 public class NegativeResponseGeneratorImpl implements NegativeResponseGenerator {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory
+	    .getLogger(NegativeResponseGeneratorImpl.class);
 
     private final String errorContact;
 

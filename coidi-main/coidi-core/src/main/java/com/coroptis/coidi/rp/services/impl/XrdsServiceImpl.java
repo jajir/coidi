@@ -24,6 +24,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,8 +39,7 @@ import com.coroptis.coidi.rp.services.XrdsService;
 
 public class XrdsServiceImpl implements XrdsService {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(XrdsServiceImpl.class);
 
     @Inject
     private ConvertorService convertorService;

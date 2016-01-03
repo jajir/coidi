@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
@@ -38,8 +39,7 @@ import com.coroptis.coidi.op.services.StatelessModeNonceService;
 
 public class Services {
 
-    private final ConfService configurationService = EasyMock
-	    .createMock(ConfService.class);
+    private final ConfService configurationService = EasyMock.createMock(ConfService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
     private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
@@ -65,6 +65,8 @@ public class Services {
     private final OpenIdDispatcher openIdDispatcher20 = EasyMock.createMock(OpenIdDispatcher.class);
     private final OpenIdRequestTool openIdRequestTool = EasyMock
 	    .createMock(OpenIdRequestTool.class);
+    private final OpConfigurationService opConfigurationService = EasyMock
+	    .createMock(OpConfigurationService.class);
 
     private final Object[] mocks = new Object[] { getBaseNonceDao(), getConfigurationService(),
 	    getNonceService(), getSigningService(), getStatelessModeNonceService(),
@@ -72,7 +74,7 @@ public class Services {
 	    getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
 	    getCryptoService(), getAssociationTool(), getAssociationService(),
 	    getBaseAssociationDao(), getRealmTool(), getOpenIdDispatcher11(),
-	    getOpenIdDispatcher20(), getOpenIdRequestTool() };
+	    getOpenIdDispatcher20(), getOpenIdRequestTool(), getOpConfigurationService() };
 
     private static Services services;
 
@@ -235,5 +237,12 @@ public class Services {
      */
     public OpenIdRequestTool getOpenIdRequestTool() {
 	return openIdRequestTool;
+    }
+
+    /**
+     * @return the opConfigurationService
+     */
+    public OpConfigurationService getOpConfigurationService() {
+	return opConfigurationService;
     }
 }

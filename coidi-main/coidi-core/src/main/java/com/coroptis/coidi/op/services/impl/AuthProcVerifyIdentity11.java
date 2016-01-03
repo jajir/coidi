@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -38,8 +39,7 @@ import com.coroptis.coidi.op.services.OpenIdRequestTool;
  */
 public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity11.class);
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;

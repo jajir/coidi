@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -48,8 +49,7 @@ public class AuthReqRegistration11 implements AuthReq {
 
     public final static String SREG_POLICY_URL = "sreg.policy_url";
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthReqRegistration11.class);
 
     private final String policyUrl;
 

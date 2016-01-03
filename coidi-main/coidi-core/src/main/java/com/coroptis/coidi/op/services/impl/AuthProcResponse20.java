@@ -21,14 +21,15 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
-import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 
 /**
  * Verify that identity and claimed identities are correctly entered. Initialize
@@ -39,8 +40,7 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
  */
 public class AuthProcResponse20 implements AuthenticationProcessor {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcResponse20.class);
 
     private final String opServer;
 

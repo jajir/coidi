@@ -45,6 +45,7 @@ import com.coroptis.coidi.rp.services.impl.DiscoverySupportImpl;
 import com.coroptis.coidi.rp.services.impl.HttpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.HttpTranportServiceImpl;
 import com.coroptis.coidi.rp.services.impl.NonceDaoImpl;
+import com.coroptis.coidi.rp.services.impl.RpConfigurationServiceImpl;
 import com.coroptis.coidi.rp.services.impl.RpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.XmlProcessingImpl;
 import com.coroptis.coidi.rp.services.impl.XrdsServiceImpl;
@@ -65,6 +66,7 @@ public class RpModule {
 	binder.bind(AuthenticationService.class, AuthenticationServiceImpl.class);
 	binder.bind(HttpTransportService.class, HttpTranportServiceImpl.class);
 	binder.bind(AuthRespSupport.class, AuthRespSupportImpl.class);
+	binder.bind(RpConfigurationService.class, RpConfigurationServiceImpl.class);
     }
 
     public static DiscoveryProcessor buildRestChainProcessor(List<DiscoveryProcessor> commands,

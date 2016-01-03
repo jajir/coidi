@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.services.NonceService;
@@ -31,8 +32,7 @@ import com.google.common.base.Preconditions;
 
 public class StatelessModeNonceServiceImpl implements StatelessModeNonceService {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(StatelessModeNonceServiceImpl.class);
 
     @Inject
     private BaseNonceDao baseNonceDao;

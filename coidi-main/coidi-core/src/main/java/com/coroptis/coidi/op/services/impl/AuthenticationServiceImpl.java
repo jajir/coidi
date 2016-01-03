@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -33,7 +34,7 @@ import com.google.common.base.Preconditions;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     @Override
     public String getNameSpace(AuthenticationRequest authenticationRequest, String nameSpaceUrl) {

@@ -17,9 +17,8 @@ package com.coroptis.coidi.rp.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -29,8 +28,7 @@ import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 
 public class AuthReqPreconditions implements AuthReq {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AuthReqPreconditions.class);
 
     @Override
     public boolean process(AuthenticationRequest authenticationRequest,

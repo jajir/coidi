@@ -18,9 +18,8 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
@@ -40,8 +39,7 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(OpenIdDispatcherTerminator.class);
 
     private final String contact;
 

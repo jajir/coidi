@@ -21,6 +21,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
@@ -38,8 +39,7 @@ import com.google.common.base.Preconditions;
 
 public class AssociationServiseImpl implements AssociationServise {
 
-    @Inject
-    private Logger logger;
+    private final static Logger logger = LoggerFactory.getLogger(AssociationServiseImpl.class);
 
     @Inject
     private CryptoSessionService cryptoSessionService;

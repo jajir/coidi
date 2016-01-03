@@ -47,6 +47,7 @@ import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
 import com.coroptis.coidi.op.services.impl.IdentityServiceImpl;
 import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
+import com.coroptis.coidi.op.services.impl.OpConfigurationServiceImpl;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation11;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherCheckAuthentication11;
@@ -88,7 +89,7 @@ public class OpModule {// NO_UCD
 	binder.bind(OpenIdRequestProcessor.class, OpenIdRequestProcessorImpl.class);
 	binder.bind(AssociationProcessor.class, AssociationProcessorImpl.class);
 	binder.bind(OpenIdRequestTool.class, OpenIdRequestToolImpl.class);
-
+	binder.bind(OpConfigurationService.class, OpConfigurationServiceImpl.class);
     }
 
     public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
@@ -182,7 +183,8 @@ public class OpModule {// NO_UCD
 	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
 	    @Autobuild AuthProcAssociation authProcAssociation,
 	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
-	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
+	    @Autobuild AuthProcNonce authProcNonce,
+	    @Autobuild AuthProcResponse20 authProcResponse20) {
 	configuration.add("authProcResponse20", authProcResponse20);
 	configuration.add("authProcVerifyLoggedUser", authProcVerifyLoggedUser);
 	configuration.add("verifyIdentitySelect", authProcVerifyIdentitySelect20);
@@ -219,7 +221,8 @@ public class OpModule {// NO_UCD
 	    @Autobuild AuthProcVerifyIdentity20 authProcVerifyIdentity20,
 	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
 	    @Autobuild AuthProcAssociation authProcAssociation,
-	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse20 authProcResponse20) {
+	    @Autobuild AuthProcNonce authProcNonce,
+	    @Autobuild AuthProcResponse20 authProcResponse20) {
 	configuration.add("authProcResponse20", authProcResponse20);
 	configuration.add("verifyIdentity20", authProcVerifyIdentity20);
 	configuration.add("authProcNonce", authProcNonce);
@@ -253,7 +256,8 @@ public class OpModule {// NO_UCD
 	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
 	    @Autobuild AuthProcVerifyIdentity11 authProcVerifyIdentity11,
 	    @Autobuild AuthProcVerifyLoggedUser authProcVerifyLoggedUser,
-	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse11 authProcResponse11) {
+	    @Autobuild AuthProcNonce authProcNonce,
+	    @Autobuild AuthProcResponse11 authProcResponse11) {
 	configuration.add("authProcResponse11", authProcResponse11);
 	configuration.add("authProcVerifyLoggedUser", authProcVerifyLoggedUser);
 	configuration.add("authProcVerifyIdentity11", authProcVerifyIdentity11);
@@ -285,7 +289,8 @@ public class OpModule {// NO_UCD
 	    @Autobuild AuthProcVerifyIdentity11 authProcVerifyIdentity11,
 	    @Autobuild AuthProcAssociation authProcAssociation,
 	    @Autobuild AuthProcStateLessAssociation authProcStateLessAssociation,
-	    @Autobuild AuthProcNonce authProcNonce, @Autobuild AuthProcResponse11 authProcResponse11) {
+	    @Autobuild AuthProcNonce authProcNonce,
+	    @Autobuild AuthProcResponse11 authProcResponse11) {
 	configuration.add("authProcResponse11", authProcResponse11);
 	configuration.add("authProcVerifyIdentity11", authProcVerifyIdentity11);
 	configuration.add("authProcNonce", authProcNonce);

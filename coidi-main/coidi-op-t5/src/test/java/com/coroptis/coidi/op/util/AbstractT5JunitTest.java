@@ -49,6 +49,8 @@ public abstract class AbstractT5JunitTest extends AbstractJunitTest {
 	System.setProperty("op.err.contact", "john@gmail.com");
 	System.setProperty(RealmTool.KEY_IS_WILD_CARD_IN_REALM_ENABLED, "true");
 	System.setProperty(OpenIdRequestProcessor.CONF_OPENID_VERSION_11_ENABLED, "true");
+	System.setProperty("op.identity.pattern", "http://localhost:8080/user/%identity%");
+	
 	services = Services.getServices();
 	services.reset();
 	super.setUp();

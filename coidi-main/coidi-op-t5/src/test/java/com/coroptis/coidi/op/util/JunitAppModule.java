@@ -31,10 +31,12 @@ import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
+import com.coroptis.coidi.op.services.impl.OpConfigurationServiceImpl;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
 import com.coroptis.coidi.test.EasyMockServicebuilder;
 
@@ -49,28 +51,27 @@ public class JunitAppModule {
 
 	Services services = Services.getServices();
 
-	binder.bind(ConfService.class, new EasyMockServicebuilder<ConfService>(
-		services.getConfigurationService()));
+	binder.bind(OpConfigurationService.class, OpConfigurationServiceImpl.class);
+	
+	binder.bind(ConfService.class,
+		new EasyMockServicebuilder<ConfService>(services.getConfigurationService()));
 	binder.bind(NonceService.class,
 		new EasyMockServicebuilder<NonceService>(services.getNonceService()));
 	binder.bind(AuthenticationService.class, new EasyMockServicebuilder<AuthenticationService>(
 		services.getAuthenticationService()));
 	binder.bind(IdentityService.class,
 		new EasyMockServicebuilder<IdentityService>(services.getIdentityService()));
-	binder.bind(
-		NegativeResponseGenerator.class,
-		new EasyMockServicebuilder<NegativeResponseGenerator>(services
-			.getNegativeResponseGenerator()));
+	binder.bind(NegativeResponseGenerator.class,
+		new EasyMockServicebuilder<NegativeResponseGenerator>(
+			services.getNegativeResponseGenerator()));
 	binder.bind(SigningService.class,
 		new EasyMockServicebuilder<SigningService>(services.getSigningService()));
-	binder.bind(
-		StatelessModeNonceService.class,
-		new EasyMockServicebuilder<StatelessModeNonceService>(services
-			.getStatelessModeNonceService()));
-	binder.bind(
-		AuthenticationProcessor.class,
-		new EasyMockServicebuilder<AuthenticationProcessor>(services
-			.getAuthenticationProcessor()));
+	binder.bind(StatelessModeNonceService.class,
+		new EasyMockServicebuilder<StatelessModeNonceService>(
+			services.getStatelessModeNonceService()));
+	binder.bind(AuthenticationProcessor.class,
+		new EasyMockServicebuilder<AuthenticationProcessor>(
+			services.getAuthenticationProcessor()));
 	binder.bind(BaseUserDao.class,
 		new EasyMockServicebuilder<BaseUserDao>(services.getBaseUserDao()));
 	binder.bind(ConvertorService.class,
@@ -81,11 +82,12 @@ public class JunitAppModule {
 		new EasyMockServicebuilder<AssociationTool>(services.getAssociationTool()));
 	binder.bind(BaseNonceDao.class,
 		new EasyMockServicebuilder<BaseNonceDao>(services.getBaseNonceDao()));
-	binder.bind(AssociationService.class, new EasyMockServicebuilder<AssociationService>(
-		services.getAssociationService()));
-	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(
-		services.getBaseAssociationDao()));
-	binder.bind(RealmTool.class, new EasyMockServicebuilder<RealmTool>(services.getRealmTool()));
+	binder.bind(AssociationService.class,
+		new EasyMockServicebuilder<AssociationService>(services.getAssociationService()));
+	binder.bind(BaseAssociationDao.class,
+		new EasyMockServicebuilder<BaseAssociationDao>(services.getBaseAssociationDao()));
+	binder.bind(RealmTool.class,
+		new EasyMockServicebuilder<RealmTool>(services.getRealmTool()));
 	binder.bind(OpenIdDispatcher.class,
 		new EasyMockServicebuilder<OpenIdDispatcher>(services.getOpenIdDispatcher11()))
 		.withId("openIdDispatcher11").withMarker(OpenId11.class);
