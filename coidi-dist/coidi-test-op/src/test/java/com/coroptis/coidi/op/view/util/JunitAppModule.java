@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.view.util;
 
 import org.apache.tapestry5.ioc.ServiceBinder;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
@@ -27,6 +26,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.test.AdditionalBinderProvider;
@@ -42,8 +42,8 @@ public class JunitAppModule {
 
 	Services services = Services.getServices();
 
-	binder.bind(ConfigurationService.class, new EasyMockServicebuilder<ConfigurationService>(
-		services.getConfigurationService()));
+	binder.bind(OpConfigurationService.class, new EasyMockServicebuilder<OpConfigurationService>(
+		services.getOpConfigurationService()));
 	binder.bind(NonceService.class,
 		new EasyMockServicebuilder<NonceService>(services.getNonceService()));
 	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(

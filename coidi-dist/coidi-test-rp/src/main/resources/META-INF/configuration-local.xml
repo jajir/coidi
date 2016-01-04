@@ -8,12 +8,12 @@
 		<property name="extension.registration.optionalFields">email</property>
 		<property name="extension.registration.policyUrl">http://www.trainindex.com/</property>
 	</common>
-	<!-- 
+	<!-- from technical reasons proxy configuration section should be here even 
+		when it is not used -->
 	<proxy>
-		<property name="server">proxy.server.com</property>
-		<property name="port">8080</property>
-		<property name="userName">someName</property>
-		<property name="password">passwd</property>
+		<property name="server"></property>
+		<property name="port">-1</property>
+		<property name="userName"></property>
+		<property name="password"></property>
 	</proxy>
-	-->
 </configuration>

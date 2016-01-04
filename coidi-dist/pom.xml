@@ -8,7 +8,7 @@
 	<name>Create Coidi distribution</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<t5.version>5.3.6</t5.version>
+		<t5.version>5.3.8</t5.version>
 		<easymock.version>2.4</easymock.version>
 		<icu4j.version>3.6.1</icu4j.version>
 		<log4j.version>1.2.14</log4j.version>

@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.view.util;
 
 import org.easymock.EasyMock;
 
-import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
@@ -28,6 +27,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.op.view.dao.UserDao;
 
@@ -40,8 +40,8 @@ import com.coroptis.coidi.op.view.dao.UserDao;
 public class Services {
 
     private final BaseNonceDao statelessModeNonceDao = EasyMock.createMock(BaseNonceDao.class);
-    private final ConfigurationService configurationService = EasyMock
-	    .createMock(ConfigurationService.class);
+    private final OpConfigurationService opConfigurationService = EasyMock
+	    .createMock(OpConfigurationService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
     private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
@@ -59,7 +59,7 @@ public class Services {
     private final UserDao userDao = EasyMock.createMock(UserDao.class);
 
     private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
-	    getConfigurationService(), getNonceService(), getAssociationDao(), getSigningService(),
+	    getOpConfigurationService(), getNonceService(), getAssociationDao(), getSigningService(),
 	    getStatelessModeNonceService(), getAuthenticationProcessor(),
 	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator(),
 	    getBaseUserDao(), getConvertorService(), getUserDao() };
@@ -92,13 +92,6 @@ public class Services {
 	for (Object object : mocks) {
 	    EasyMock.replay(object);
 	}
-    }
-
-    /**
-     * @return the configurationService
-     */
-    public ConfigurationService getConfigurationService() {
-	return configurationService;
     }
 
     /**
@@ -183,6 +176,13 @@ public class Services {
      */
     public UserDao getUserDao() {
 	return userDao;
+    }
+
+    /**
+     * @return the opConfigurationService
+     */
+    public OpConfigurationService getOpConfigurationService() {
+        return opConfigurationService;
     }
 
 }
