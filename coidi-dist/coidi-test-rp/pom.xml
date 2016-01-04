@@ -15,14 +15,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-core</artifactId>
-			<version>${parent.version}</version>
+			<artifactId>coidi-test-common</artifactId>
+			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-rp</artifactId>
-			<version>${parent.version}</version>
+			<artifactId>coidi-rp-t5</artifactId>
+			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
