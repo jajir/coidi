@@ -57,10 +57,10 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherChecker20;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 import com.coroptis.coidi.op.services.impl.OpenIdRequestProcessorImpl;
 import com.coroptis.coidi.op.services.impl.OpenIdRequestToolImpl;
-import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate11;
-import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationImmediate20;
-import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup11;
-import com.coroptis.coidi.op.services.impl.OpenidDispatcherAuthenticationSetup20;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAuthenticationImmediate11;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAuthenticationImmediate20;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAuthenticationSetup11;
+import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAuthenticationSetup20;
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
@@ -116,8 +116,8 @@ public class OpModule {// NO_UCD
     public static void contributeOpenIdDispatcher20(
 	    OrderedConfiguration<OpenIdDispatcher> configuration,
 	    @Autobuild OpenIdDispatcherChecker20 openIdDispatcherChecker20,
-	    @Autobuild OpenidDispatcherAuthenticationImmediate20 openidDispatcherAuthenticationImmediate20,
-	    @Autobuild OpenidDispatcherAuthenticationSetup20 openidDispatcherAuthenticationSetup20,
+	    @Autobuild OpenIdDispatcherAuthenticationImmediate20 openidDispatcherAuthenticationImmediate20,
+	    @Autobuild OpenIdDispatcherAuthenticationSetup20 openidDispatcherAuthenticationSetup20,
 	    @Autobuild OpenIdDispatcherCheckAuthentication20 openIdDispatcherCheckAuthentication20,
 	    @Autobuild OpenIdDispatcherAssociation20 openIdDispatcherAssociation20,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {
@@ -137,8 +137,8 @@ public class OpModule {// NO_UCD
     public static void contributeOpenIdDispatcher11(
 	    OrderedConfiguration<OpenIdDispatcher> configuration,
 	    @Autobuild OpenIdDispatcherChecker11 openIdDispatcherChecker11,
-	    @Autobuild OpenidDispatcherAuthenticationImmediate11 openidDispatcherAuthenticationImmediate11,
-	    @Autobuild OpenidDispatcherAuthenticationSetup11 openidDispatcherAuthenticationSetup11,
+	    @Autobuild OpenIdDispatcherAuthenticationImmediate11 openidDispatcherAuthenticationImmediate11,
+	    @Autobuild OpenIdDispatcherAuthenticationSetup11 openidDispatcherAuthenticationSetup11,
 	    @Autobuild OpenIdDispatcherCheckAuthentication11 openIdDispatcherCheckAuthentication11,
 	    @Autobuild OpenIdDispatcherAssociation11 openIdDispatcherAssociation11,
 	    @Autobuild OpenIdDispatcherTerminator openIdDispatcherTerminator) {

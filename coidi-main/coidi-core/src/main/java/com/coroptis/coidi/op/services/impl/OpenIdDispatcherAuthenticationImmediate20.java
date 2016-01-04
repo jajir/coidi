@@ -27,32 +27,32 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.CheckIdSetup;
-import com.coroptis.coidi.op.util.OpenId11;
+import com.coroptis.coidi.op.util.CheckIdImmediate;
+import com.coroptis.coidi.op.util.OpenId20;
 
 /**
- * Authentication setup for OpenID 1.1.
+ * Process openid.more=checkid_immediate.
  * 
  * @author jirout
  * 
  */
-public class OpenidDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
+public class OpenIdDispatcherAuthenticationImmediate20 implements OpenIdDispatcher {
 
     @Inject
-    @OpenId11
-    @CheckIdSetup
+    @OpenId20
+    @CheckIdImmediate
     private AuthenticationProcessor authenticationProcessor;
 
-    public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
-	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
+    @Override
+    public AbstractMessage process(final Map<String, String> requestParams,
+	    final UserSessionSkeleton userSession) {
+	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
+	    AuthenticationResponse response = new AuthenticationResponse();
 	    Set<String> fieldToSign = new HashSet<String>();
-	    AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-	    return authenticationProcessor.process(authenticationRequest, authenticationResponse,
-		    userSession, fieldToSign);
+	    return authenticationProcessor.process(authenticationRequest, response, userSession,
+		    fieldToSign);
 	}
 	return null;
     }
-
 }

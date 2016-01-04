@@ -28,7 +28,7 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.CheckIdImmediate;
-import com.coroptis.coidi.op.util.OpenId20;
+import com.coroptis.coidi.op.util.OpenId11;
 
 /**
  * Process openid.more=checkid_immediate.
@@ -36,10 +36,10 @@ import com.coroptis.coidi.op.util.OpenId20;
  * @author jirout
  * 
  */
-public class OpenidDispatcherAuthenticationImmediate20 implements OpenIdDispatcher {
+public class OpenIdDispatcherAuthenticationImmediate11 implements OpenIdDispatcher {
 
     @Inject
-    @OpenId20
+    @OpenId11
     @CheckIdImmediate
     private AuthenticationProcessor authenticationProcessor;
 

@@ -28,23 +28,29 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.CheckIdSetup;
-import com.coroptis.coidi.op.util.OpenId20;
+import com.coroptis.coidi.op.util.OpenId11;
 
-public class OpenidDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
+/**
+ * Authentication setup for OpenID 1.1.
+ * 
+ * @author jirout
+ * 
+ */
+public class OpenIdDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
 
     @Inject
-    @OpenId20
+    @OpenId11
     @CheckIdSetup
     private AuthenticationProcessor authenticationProcessor;
 
-    @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
 	    Set<String> fieldToSign = new HashSet<String>();
-	    return authenticationProcessor.process(authenticationRequest,
-		    new AuthenticationResponse(), userSession, fieldToSign);
+	    AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+	    return authenticationProcessor.process(authenticationRequest, authenticationResponse,
+		    userSession, fieldToSign);
 	}
 	return null;
     }
