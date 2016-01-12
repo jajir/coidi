@@ -64,8 +64,8 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAuthenticationSetup20
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
-import com.coroptis.coidi.op.util.CheckIdImmediate;
-import com.coroptis.coidi.op.util.CheckIdSetup;
+import com.coroptis.coidi.op.util.OpenId11CheckIdImmediate;
+import com.coroptis.coidi.op.util.OpenId11CheckIdSetup;
 import com.coroptis.coidi.op.util.OpenId11;
 import com.coroptis.coidi.op.util.OpenId20;
 
@@ -163,7 +163,7 @@ public class OpModule {// NO_UCD
      * mode=checkid_setup version 2.0
      * #########################################################################
      */
-    @Marker({ OpenId20.class, CheckIdSetup.class })
+    @Marker({ OpenId20.class, OpenId11CheckIdSetup.class })
     @Local
     public static AuthenticationProcessor buildAuthenticationSetupProcessor20(
 	    List<AuthenticationProcessor> commands,
@@ -173,7 +173,7 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId20
-    @CheckIdSetup
+    @OpenId11CheckIdSetup
     public static void contributeAuthenticationSetupProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSreg10 authProcSreg10, @Autobuild AuthProcSreg11 authProcSreg11,
@@ -202,7 +202,7 @@ public class OpModule {// NO_UCD
      * mode=checkid_immediate version 2.0
      * #########################################################################
      */
-    @Marker({ OpenId20.class, CheckIdImmediate.class })
+    @Marker({ OpenId20.class, OpenId11CheckIdImmediate.class })
     @Local
     public static AuthenticationProcessor buildAuthenticationImmediateProcessor20(
 	    List<AuthenticationProcessor> commands,
@@ -212,7 +212,7 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId20
-    @CheckIdImmediate
+    @OpenId11CheckIdImmediate
     public static void contributeAuthenticationImmediateProcessor20(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSreg10 authProcSreg10, @Autobuild AuthProcSreg11 authProcSreg11,
@@ -238,7 +238,7 @@ public class OpModule {// NO_UCD
      * mode=checkid_setup version 1.0 & 1.1
      * #########################################################################
      */
-    @Marker({ OpenId11.class, CheckIdSetup.class })
+    @Marker({ OpenId11.class, OpenId11CheckIdSetup.class })
     @Local
     public static AuthenticationProcessor buildAuthenticationSetupProcessor11(
 	    List<AuthenticationProcessor> commands,
@@ -248,7 +248,7 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId11
-    @CheckIdSetup
+    @OpenId11CheckIdSetup
     public static void contributeAuthenticationSetupProcessor11(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSign authProcSign,
@@ -272,7 +272,7 @@ public class OpModule {// NO_UCD
      * mode=checkid_immediate version 1.0 & 1.1
      * #########################################################################
      */
-    @Marker({ OpenId11.class, CheckIdImmediate.class })
+    @Marker({ OpenId11.class, OpenId11CheckIdImmediate.class })
     @Local
     public static AuthenticationProcessor buildAuthenticationImmediateProcessor11(
 	    List<AuthenticationProcessor> commands,
@@ -282,7 +282,7 @@ public class OpModule {// NO_UCD
 
     @Contribute(AuthenticationProcessor.class)
     @OpenId11
-    @CheckIdImmediate
+    @OpenId11CheckIdImmediate
     public static void contributeAuthenticationImmediateProcessor11(
 	    OrderedConfiguration<AuthenticationProcessor> configuration,
 	    @Autobuild AuthProcSign authProcSign,

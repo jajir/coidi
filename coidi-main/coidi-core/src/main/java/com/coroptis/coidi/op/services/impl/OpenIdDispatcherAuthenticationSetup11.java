@@ -27,7 +27,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.CheckIdSetup;
+import com.coroptis.coidi.op.util.OpenId11CheckIdSetup;
 import com.coroptis.coidi.op.util.OpenId11;
 
 /**
@@ -39,8 +39,7 @@ import com.coroptis.coidi.op.util.OpenId11;
 public class OpenIdDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
 
     @Inject
-    @OpenId11
-    @CheckIdSetup
+    @OpenId11CheckIdSetup
     private AuthenticationProcessor authenticationProcessor;
 
     public AbstractMessage process(Map<String, String> requestParams,

@@ -15,6 +15,16 @@ import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.op.services.impl.AssociationProcessorImpl;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.services.impl.AssociationToolImpl;
+import com.coroptis.coidi.op.services.impl.AuthProcAssociation;
+import com.coroptis.coidi.op.services.impl.AuthProcNonce;
+import com.coroptis.coidi.op.services.impl.AuthProcResponse20;
+import com.coroptis.coidi.op.services.impl.AuthProcSign;
+import com.coroptis.coidi.op.services.impl.AuthProcSreg10;
+import com.coroptis.coidi.op.services.impl.AuthProcSreg11;
+import com.coroptis.coidi.op.services.impl.AuthProcStateLessAssociation;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity20;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentitySelect20;
+import com.coroptis.coidi.op.services.impl.AuthProcVerifyLoggedUser;
 import com.coroptis.coidi.op.services.impl.AuthenticationServiceImpl;
 import com.coroptis.coidi.op.services.impl.CryptoServiceImpl;
 import com.coroptis.coidi.op.services.impl.IdentityNamesConvertorImpl;
@@ -36,12 +46,16 @@ import com.coroptis.coidi.op.services.impl.OpenIdRequestToolImpl;
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.services.impl.StatelessModeNonceServiceImpl;
+import com.coroptis.coidi.op.util.OpenId11CheckIdImmediate;
+import com.coroptis.coidi.op.util.OpenId11CheckIdSetup;
+import com.coroptis.coidi.op.util.OpenId20CheckIdImmediate;
+import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
 public class OpModule extends AbstractModule {
 
-	@Override
+    @Override
 	protected void configure() {
 
 		/**
@@ -104,6 +118,13 @@ public class OpModule extends AbstractModule {
 				.to(OpenIdDispatcherAssociation11.class);
 		bind(OpenIdDispatcher.class).annotatedWith(Names.named("openIdDispatcher11")).to(OpenIdDispatcher11.class);
 
+		bind(AuthenticationProcessor.class).annotatedWith(OpenId11CheckIdSetup.class).to(AuthProcCheckIdSetup11.class);
+		bind(AuthenticationProcessor.class).annotatedWith(OpenId11CheckIdImmediate.class).to(AuthProcCheckIdImmediate11.class);
+		bind(AuthenticationProcessor.class).annotatedWith(OpenId20CheckIdSetup.class).to(AuthProcCheckIdSetup20.class);
+		bind(AuthenticationProcessor.class).annotatedWith(OpenId20CheckIdImmediate.class).to(AuthProcCheckIdImmediate20.class);
+		
+		
+		
 		/**
 		 * OpenID 1.1 - Authentication processor - mode=checkid_setup
 		 */
@@ -115,6 +136,16 @@ public class OpModule extends AbstractModule {
 		/**
 		 * OpenID 2.0 - Authentication processor - mode=checkid_setup
 		 */
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcSreg10")).to(AuthProcSreg10.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcSreg11")).to(AuthProcSreg11.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcSign")).to(AuthProcSign.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcVerifyLoggedUser")).to(AuthProcVerifyLoggedUser.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcVerifyIdentitySelect20")).to(AuthProcVerifyIdentitySelect20.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcVerifyIdentity20")).to(AuthProcVerifyIdentity20.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcAssociation")).to(AuthProcAssociation.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcStateLessAssociation")).to(AuthProcStateLessAssociation.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcNonce")).to(AuthProcNonce.class);
+		bind(AuthenticationProcessor.class).annotatedWith(Names.named("authProcResponse20")).to(AuthProcResponse20.class);
 
 		/**
 		 * OpenID 2.0 - Authentication processor - mode=checkid_immediate

@@ -31,6 +31,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface CheckIdImmediate {
+public @interface OpenId11CheckIdImmediate {
 
 }

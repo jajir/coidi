@@ -47,6 +47,7 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
 
+    @Inject
     public AuthProcResponse20(final OpConfigurationService configurationService) {
 	this.opServer = configurationService.getOpServerUrl();
     }

@@ -27,14 +27,12 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.CheckIdSetup;
-import com.coroptis.coidi.op.util.OpenId20;
+import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
 
 public class OpenIdDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
     @Inject
-    @OpenId20
-    @CheckIdSetup
+    @OpenId20CheckIdSetup
     private AuthenticationProcessor authenticationProcessor;
 
     @Override
