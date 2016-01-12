@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     private final String identityPattern;
 
+    @Inject
     public IdentityNamesConvertorImpl( // NO_UCD
 	    final OpConfigurationService configurationService) {
 	this.identityPattern = configurationService.getOpIdentityPattern();

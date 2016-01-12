@@ -49,6 +49,7 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
     @Inject
     private OpenIdRequestTool openIdRequestTool;
 
+    @Inject
     public OpenIdRequestProcessorImpl(final OpConfigurationService configurationService) {
 	this.openidVersion11Enabled = configurationService.isOpenId11Enabled();
     }
