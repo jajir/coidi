@@ -20,6 +20,7 @@ import org.easymock.EasyMock;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
+import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
@@ -61,13 +62,14 @@ public class Services {
 	private final OpenIdDispatcher openIdDispatcher20 = EasyMock.createMock(OpenIdDispatcher.class);
 	private final OpenIdRequestTool openIdRequestTool = EasyMock.createMock(OpenIdRequestTool.class);
 	private final OpConfigurationService opConfigurationService = EasyMock.createMock(OpConfigurationService.class);
+	private final UserSessionSkeleton userSession = EasyMock.createMock(UserSessionSkeleton.class);
 
 	private final Object[] mocks = new Object[] { getBaseNonceDao(), getNonceService(), getSigningService(),
 			getStatelessModeNonceService(), getAuthenticationProcessor(), getAuthenticationService(),
 			getIdentityService(), getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
 			getCryptoService(), getAssociationTool(), getAssociationService(), getBaseAssociationDao(), getRealmTool(),
 			getOpenIdDispatcher11(), getOpenIdDispatcher20(), getOpenIdRequestTool(), getOpConfigurationService(),
-			getBaseIdentityDao() };
+			getBaseIdentityDao(), getUserSession() };
 
 	private static Services services;
 
@@ -234,5 +236,9 @@ public class Services {
 
 	public BaseIdentityDao getBaseIdentityDao() {
 		return baseIdentityDao;
+	}
+
+	public UserSessionSkeleton getUserSession() {
+		return userSession;
 	}
 }

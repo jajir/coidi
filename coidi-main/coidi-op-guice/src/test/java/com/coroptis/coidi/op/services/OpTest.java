@@ -8,9 +8,10 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
@@ -27,26 +28,36 @@ import com.google.inject.Injector;
  *
  */
 public class OpTest {
-
+	
+    private final Logger logger = LoggerFactory.getLogger(OpTest.class);
+	
 	/**
 	 * Guice context.
 	 */
 	private Injector injector;
 
-	private OpenIdRequestProcessor service;
-	private AuthenticationRequest request;
-	private AuthenticationResponse response;
+	private OpenIdRequestProcessor requestProcessor;
+
+	private Services services;
 
 	@Test
 	public void test_initialization() throws Exception {
 		assertNotNull(injector);
-		assertNotNull(service);
-		assertNotNull(request);
-		assertNotNull(response);
+		assertNotNull(requestProcessor);
+	}
+
+	@Test
+	public void test_authenticationRequest() throws Exception {
+		services.replay();
+		final AbstractMessage msg = requestProcessor.process(prepareRequest(), services.getUserSession());
+
+		logger.debug(msg.getMessage());
 	}
 
 	@Before
 	public void setup() {
+		services = Services.getServices();
+		services.reset();
 		injector = Guice.createInjector(new PropertyModule(), new AbstractModule() {
 			@Override
 			protected void configure() {
@@ -57,27 +68,16 @@ public class OpTest {
 				bind(BaseIdentityDao.class).toInstance(services.getBaseIdentityDao());
 			}
 		}, new OpModule());
-
-		Map<String, String> params = new HashMap<String, String>();
-		params.put(OpenIdDispatcher.OPENID_MODE, CheckAuthenticationRequest.MODE_CHECKID_SETUP);
-		params.put("openid.identity", "http://www.coidi.com/identity/qwe");
-		params.put("openid.assoc_handle", "cc5b843b-e375-4640-8f71-38e40b2950a6");
-		params.put("openid.return_to", "https://sourceforge.net/account/openid_verify.php");
-		service = injector.getInstance(OpenIdRequestProcessor.class);
-		request = new AuthenticationRequest(params);
-		response = new AuthenticationResponse();
-
+		requestProcessor = injector.getInstance(OpenIdRequestProcessor.class);
 	}
 
 	@After
 	public void tearDown() {
-		response = null;
-		request = null;
-		service = null;
+		requestProcessor = null;
 		injector = null;
 	}
 
-	public void testSimple() throws Exception {
+	public Map<String, String> prepareRequest() throws Exception {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put(OpenIdDispatcher.OPENID_MODE, CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION);
 		params.put("openid.assoc_handle", "e12ccf51-2484-442c-ba08-61b05be6546f");
@@ -91,9 +91,6 @@ public class OpTest {
 		params.put("openid.response_nonce", "2013-04-14T00:31:31ZivR4+/GQEHI6sw==");
 		params.put("openid.claimed_id", "http://specs.openid.net/auth/2.0/identifier_select");
 		params.put("openid.sig", "tPjev37UGi1As2UdcA9T/dMOMZref9ND4dBHwa4gwT4=");
-
-		CheckAuthenticationRequest request = new CheckAuthenticationRequest(params);
-		System.out.println(request.getSignature());
-		// TODO should be used in test
+		return params;
 	}
 }
