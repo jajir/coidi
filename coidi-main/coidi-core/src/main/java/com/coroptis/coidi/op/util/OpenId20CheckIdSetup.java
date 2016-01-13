@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.google.inject.BindingAnnotation;
+
 /**
  * Classes marked with this annotation should be just for OpenID with mode
  * checkid_setup
@@ -28,6 +30,7 @@ import java.lang.annotation.Target;
  * @author jirout
  * 
  */
+@BindingAnnotation
 @Target({ ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

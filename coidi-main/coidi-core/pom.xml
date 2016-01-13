@@ -56,6 +56,12 @@
 			<version>4.1.3</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<!-- Guice dependency should not be here. But annotation binding in guice 
+				require annotation class BindingAnnotation from guice package -->
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
