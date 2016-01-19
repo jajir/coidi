@@ -27,7 +27,7 @@ public interface BaseNonceDao {
 
     void save(Nonce statelessModeNonce);
 
-    Nonce getByNonce(String noce);
+    Nonce getByNonce(String nonce);
 
     /**
      * Remove nonce from store.
