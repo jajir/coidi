@@ -18,18 +18,18 @@ package com.coroptis.coidi.op.junit.services;
 import junit.framework.TestCase;
 
 import com.coroptis.coidi.OpenIdNs;
-import com.coroptis.coidi.op.util.Xrd;
-import com.coroptis.coidi.op.util.XrdService;
-import com.coroptis.coidi.op.util.Xrds;
+import com.coroptis.coidi.op.util.PrintableXrd;
+import com.coroptis.coidi.op.util.PrintableXrdService;
+import com.coroptis.coidi.op.util.PrintableXrds;
 
 public class XrdsPrintingTest extends TestCase {
 
     public void testPrint() throws Exception {
-	Xrds xrds = new Xrds();
-	xrds.getXrds().add(new Xrd());
+	PrintableXrds xrds = new PrintableXrds();
+	xrds.getXrds().add(new PrintableXrd());
 	xrds.getXrds().get(0).setVersion("2.0");
 
-	XrdService service = new XrdService();
+	PrintableXrdService service = new PrintableXrdService();
 	service.getTypes().add(OpenIdNs.TYPE_OPENID_2_0);
 	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 	service.setPriority(4);
@@ -37,7 +37,7 @@ public class XrdsPrintingTest extends TestCase {
 	service.setOpenidDelegate("http://coidi.com/identity/qwe");
 	xrds.getXrds().get(0).getServices().add(service);
 
-	service = new XrdService();
+	service = new PrintableXrdService();
 	service.getTypes().add(OpenIdNs.TYPE_OPENID_2_0);
 	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 	service.setUri("http://coidi.com/openid");

@@ -18,29 +18,29 @@ package com.coroptis.coidi.op.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Xrds implements Printable {
+public class PrintableXrds implements Printable {
 
-    private final List<Xrd> xrds;
+    private final List<PrintableXrd> xrds;
 
     @Override
     public StringBuffer print(final StringBuffer buffer, final String currentIntend) {
 	buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	buffer.append("<xrds:XRDS xmlns:xrds=\"xri://$xrds\" xmlns=\"xri://$xrd*($v*2.0)\" xmlns:openid=\"http://openid.net/xmlns/1.0\">\n");
-	for (Xrd xrd : xrds) {
+	for (PrintableXrd xrd : xrds) {
 	    xrd.print(buffer, LINE_INTEND);
 	}
 	buffer.append("</xrds:XRDS>");
 	return buffer;
     }
 
-    public Xrds() {
-	xrds = new ArrayList<Xrd>();
+    public PrintableXrds() {
+	xrds = new ArrayList<PrintableXrd>();
     }
 
     /**
      * @return the xrds
      */
-    public List<Xrd> getXrds() {
+    public List<PrintableXrd> getXrds() {
 	return xrds;
     }
 }

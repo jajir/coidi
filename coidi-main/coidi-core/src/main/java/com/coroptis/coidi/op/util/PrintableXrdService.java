@@ -20,7 +20,7 @@ import java.util.List;
 
 import com.coroptis.coidi.CoidiException;
 
-public class XrdService implements Printable {
+public class PrintableXrdService implements Printable {
 
     private Integer priority;
 
@@ -32,7 +32,7 @@ public class XrdService implements Printable {
 
     private String localID;
 
-    public XrdService() {
+    public PrintableXrdService() {
 	types = new ArrayList<String>();
     }
 

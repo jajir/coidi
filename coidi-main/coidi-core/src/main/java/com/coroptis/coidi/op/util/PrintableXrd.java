@@ -18,14 +18,14 @@ package com.coroptis.coidi.op.util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Xrd implements Printable {
+public class PrintableXrd implements Printable {
 
     private String version;
 
-    private final List<XrdService> services;
+    private final List<PrintableXrdService> services;
 
-    public Xrd() {
-	services = new ArrayList<XrdService>();
+    public PrintableXrd() {
+	services = new ArrayList<PrintableXrdService>();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Xrd implements Printable {
 	}
 	buffer.append(">\n");
 
-	for (XrdService service : services) {
+	for (PrintableXrdService service : services) {
 	    service.print(buffer, currentIntend + LINE_INTEND);
 	}
 	buffer.append(currentIntend);
@@ -65,7 +65,7 @@ public class Xrd implements Printable {
     /**
      * @return the services
      */
-    public List<XrdService> getServices() {
+    public List<PrintableXrdService> getServices() {
 	return services;
     }
 
