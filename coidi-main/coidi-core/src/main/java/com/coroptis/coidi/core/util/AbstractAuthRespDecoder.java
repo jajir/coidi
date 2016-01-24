@@ -21,12 +21,12 @@ public class AbstractAuthRespDecoder implements AuthRespDecoder {
     protected final List<AuthRespDecoder> dispatchers = new ArrayList<AuthRespDecoder>();
 
     @Override
-    public Boolean decode(AuthenticationResponse authenticationResponse, Association association,
-	    AuthenticationResult authenticationResult) {
+    public Boolean decode(final AuthenticationResponse authenticationResponse,
+	    final Association association, final AuthenticationResult authenticationResult) {
 	for (final AuthRespDecoder builder : dispatchers) {
-	    final boolean processed = builder.decode(authenticationResponse, association,
+	    final Boolean processed = builder.decode(authenticationResponse, association,
 		    authenticationResult);
-	    if (processed) {
+	    if (processed != null && processed) {
 		return true;
 	    }
 	}

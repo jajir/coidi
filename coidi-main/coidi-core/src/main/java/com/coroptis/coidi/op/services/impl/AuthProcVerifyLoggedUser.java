@@ -28,6 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that use is logged in. When is not logged than application error
@@ -49,6 +50,7 @@ public class AuthProcVerifyLoggedUser implements AuthenticationProcessor {
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
+	Preconditions.checkNotNull("UserSession is null");
 	if (!userSession.isLogged()) {
 	    logger.debug("User is not logged in.");
 	    userSession.setAuthenticationRequest(authenticationRequest);

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-
+@Singleton
 public abstract class AbstractOpenIdDispatcher implements OpenIdDispatcher {
 
     protected final List<OpenIdDispatcher> dispatchers = new ArrayList<OpenIdDispatcher>();

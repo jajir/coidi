@@ -2,7 +2,8 @@ package com.coroptis.coidi.op.services;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
+import javax.inject.Singleton;
+@Singleton
 public class AuthProcCheckIdImmediate20 extends AbstractAuthProc {
 
 	@Inject

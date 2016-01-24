@@ -52,11 +52,13 @@ public class AuthProcSign implements AuthenticationProcessor {
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
-	Association association = associationDao.getByAssocHandle(response.getAssocHandle());
+	response.setAssocHandle(authenticationRequest.getAssocHandle());
+	Association association = associationDao
+		.getByAssocHandle(authenticationRequest.getAssocHandle());
 	if (association == null) {
-	    throw new CoidiException("Invalid assoc handle '"
-		    + authenticationRequest.getAssocHandle()
-		    + "', let's try to response in stateless mode.");
+	    throw new CoidiException(
+		    "Invalid assoc handle '" + authenticationRequest.getAssocHandle()
+			    + "', let's try to response in stateless mode.");
 	} else {
 	    response.setSignature(signingService.sign(response, association));
 	}

@@ -89,7 +89,8 @@ public class OpModule extends AbstractModule {
 		bind(AssociationProcessor.class).to(AssociationProcessorImpl.class);
 		bind(OpenIdRequestTool.class).to(OpenIdRequestToolImpl.class);
 		bind(OpConfigurationService.class).to(OpConfigurationServiceImpl.class);
-
+		
+		//TODO following bindings should singletons
 		/**
 		 * OpenID 2.0 - message dispatcher
 		 */

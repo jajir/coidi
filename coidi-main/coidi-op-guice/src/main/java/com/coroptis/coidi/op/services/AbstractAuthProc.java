@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Singleton;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 
+@Singleton
 public class AbstractAuthProc implements AuthenticationProcessor {
 
     protected final List<AuthenticationProcessor> dispatchers = new ArrayList<AuthenticationProcessor>();

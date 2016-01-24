@@ -34,6 +34,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.RpConfigurationService;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 public class HttpServiceImpl implements HttpService {
 
@@ -43,20 +44,19 @@ public class HttpServiceImpl implements HttpService {
     public HttpServiceImpl(final RpConfigurationService configurationService) {
 	httpClient = new DefaultHttpClient();
 	String proxyServer = configurationService.getProxyServer();
-	if (proxyServer != null) {
+	if (!Strings.isNullOrEmpty(proxyServer)) {
 	    Integer proxyPort = configurationService.getProxyPort();
-	    if (proxyPort == null) {
-		proxyPort = -1;
-	    }
-	    HttpHost proxy = new HttpHost(proxyServer, proxyPort);
-	    httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+	    if (proxyPort != null && proxyPort > 0) {
+		HttpHost proxy = new HttpHost(proxyServer, proxyPort);
+		httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
-	    String userName = configurationService.getProxyUsername();
-	    String password = configurationService.getProxyPassword();
-	    if (userName != null) {
-		httpClient.getCredentialsProvider().setCredentials(
-			new AuthScope(proxyServer, proxyPort),
-			new UsernamePasswordCredentials(userName, password));
+		String userName = configurationService.getProxyUsername();
+		String password = configurationService.getProxyPassword();
+		if (userName != null) {
+		    httpClient.getCredentialsProvider().setCredentials(
+			    new AuthScope(proxyServer, proxyPort),
+			    new UsernamePasswordCredentials(userName, password));
+		}
 	    }
 	}
 	Preconditions.checkNotNull(httpClient, "httpClient");
