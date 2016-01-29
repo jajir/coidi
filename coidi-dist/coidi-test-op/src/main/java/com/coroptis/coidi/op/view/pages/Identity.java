@@ -27,9 +27,9 @@ import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
-import com.coroptis.coidi.op.util.Xrd;
-import com.coroptis.coidi.op.util.XrdService;
-import com.coroptis.coidi.op.util.Xrds;
+import com.coroptis.coidi.op.util.PrintableXrd;
+import com.coroptis.coidi.op.util.PrintableXrdService;
+import com.coroptis.coidi.op.util.PrintableXrds;
 import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 
 /**
@@ -102,11 +102,11 @@ public class Identity { // NO_UCD
     }
 
     private XrdsStreamResponse generateXrds() {
-	Xrds xrds = new Xrds();
-	xrds.getXrds().add(new Xrd());
+	PrintableXrds xrds = new PrintableXrds();
+	xrds.getXrds().add(new PrintableXrd());
 	xrds.getXrds().get(0).setVersion("2.0");
 
-	XrdService service = new XrdService();
+	PrintableXrdService service = new PrintableXrdService();
 	service.setPriority(1);
 	service.getTypes().add(OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0);
 	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
@@ -114,7 +114,7 @@ public class Identity { // NO_UCD
 	service.setLocalID(identityNamesConvertor.convertToOpLocalIdentifier(opLocalIdentifier));
 	xrds.getXrds().get(0).getServices().add(service);
 
-	service = new XrdService();
+	service = new PrintableXrdService();
 	service.setPriority(3);
 	service.getTypes().add(OpenIdNs.TYPE_OPENID_2_0);
 	service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);

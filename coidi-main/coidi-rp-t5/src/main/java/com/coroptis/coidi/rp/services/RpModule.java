@@ -116,6 +116,7 @@ public class RpModule {
     public static void contributeAuthRespDecoderChainProcessor(
 	    OrderedConfiguration<AuthRespDecoder> configuration,
 	    @Autobuild AuthRespDecoderOpenId authRespDecoderOpenId,
+	    @Autobuild AuthRespDecoderOpenId authRespDecoderOpenId,
 	    @Autobuild AuthRespDecoderSreg authRespDecoderSreg,
 	    @Autobuild AuthRespDecoderTerminator authRespDecoderTerminator) {
 	configuration.add("authRespDecoderOpenId", authRespDecoderOpenId);
