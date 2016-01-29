@@ -69,7 +69,7 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
     }
 
     @Override
-    public boolean dispatch(Request request, Response response) throws IOException {
+    public boolean dispatch(final Request request, final Response response) throws IOException {
 
 	HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
 
@@ -80,8 +80,8 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 
 	    if (asm.exists(Association.class)) {
 		logger.debug("there is association.");
-		AuthenticationResult authenticationResult = authenticationService.verify(
-			authenticationResponse, asm.get(Association.class));
+		AuthenticationResult authenticationResult = authenticationService
+			.verify(authenticationResponse, asm.get(Association.class));
 		if (authenticationResult.isPositive()) {
 		    UserSession session = asm.get(UserSession.class);
 		    session.setAuthenticationResult(authenticationResult);
@@ -92,8 +92,8 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 		// TODO finish stateless mode, move it to RP library
 		CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
 		checkAuthenticationRequest.setIdentity(authenticationResponse.getIdentity());
-		checkAuthenticationRequest.setInvalidateHandle(authenticationResponse
-			.getInvalidateHandle());
+		checkAuthenticationRequest
+			.setInvalidateHandle(authenticationResponse.getInvalidateHandle());
 		checkAuthenticationRequest.setNonce(authenticationResponse.getNonce());
 		checkAuthenticationRequest.setReturnTo(authenticationResponse.getReturnTo());
 		checkAuthenticationRequest.setSignature(authenticationResponse.getSignature());

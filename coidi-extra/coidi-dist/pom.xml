@@ -6,7 +6,7 @@
 		<artifactId>coidi-dist</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>coidi-dist2</artifactId>
+	<artifactId>coidi-dist</artifactId>
 	<packaging>pom</packaging>
 	<name>Coidi distribution package and documentation</name>
 	<properties>
