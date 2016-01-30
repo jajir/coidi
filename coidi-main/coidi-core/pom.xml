@@ -58,7 +58,8 @@
 		</dependency>
 		<dependency>
 			<!-- Guice dependency should not be here. But annotation binding in guice 
-				require annotation class BindingAnnotation from guice package -->
+				require annotation class BindingAnnotation from guice package. If core is 
+				used with different IoC this dependency could be excluded. -->
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 		</dependency>
