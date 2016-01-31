@@ -1,123 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.coroptis.coidi</groupId>
-		<artifactId>coidi-extra</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	<artifactId>coidi-dist</artifactId>
+	<groupId>com.coroptis.coidi</groupId>
+	<artifactId>coidi-site</artifactId>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Coidi distribution package and documentation</name>
+	<name>Coidi maven site</name>
+	<description>Contains maven site. Site is published at project site page.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.global.server>github</github.global.server>
 	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-test-op</artifactId>
-			<version>${project.parent.version}</version>
-			<type>war</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-test-rp</artifactId>
-			<version>${project.parent.version}</version>
-			<type>war</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-runner</artifactId>
-			<version>8.1.9.v20130131</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-plus</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-annotations</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-jndi</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-jsp</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				 <version>2.2-beta-2</version>
-				<configuration>
-					<descriptors>
-						<descriptor>${basedir}/src/main/assembly/coidi-dist.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.3</version>
-				<inherited>true</inherited>
-				<executions>
-					<execution>
-						<id>build-version</id>
-						<phase>prepare-package</phase>
-						<configuration>
-							<!-- this task replaces version placeholder in build.xml -->
-							<tasks>
-								<echo>Property replacement started </echo>
-								<copy todir="${project.build.directory}/dist">
-									<fileset dir="${basedir}/src/dist">
-										<include name="**/*" />
-									</fileset>
-								</copy>
-								<replace dir="${project.build.directory}/dist" token="${coidi.version}"
-									value="${project.version}">
-									<include name="**/*.sh" />
-								</replace>
-								<echo>Property replacement is done</echo>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>fix-crlf</id>
-						<phase>prepare-package</phase>
-						<configuration>
-							<tasks>
-								<fixcrlf srcdir="${project.build.directory}" includes="**/*sh,**/*.properties"
-									eol="unix" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.3</version>
 				<executions>
 					<execution>
 						<id>attach-site</id>
@@ -130,43 +28,44 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.0</version>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.12</version>
+				<configuration>
+					<message>Official ${project.name} build of the ${project.version}
+						release</message>
+					<server>github</server>
+				</configuration>
 				<executions>
 					<execution>
-						<id>unpack</id>
-						<phase>package</phase>
 						<goals>
-							<goal>unpack</goal>
+							<goal>site</goal>
 						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.coroptis.coidi</groupId>
-									<artifactId>coidi</artifactId>
-									<version>${project.version}</version>
-									<type>zip</type>
-									<classifier>site</classifier>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/dist/doc</outputDirectory>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
+						<phase>site</phase>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.8.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
 	<distributionManagement>
 		<site>
-			<id>coidi.sf.net</id>
-			<url>scp://shell.sourceforge.net/home/project-web/coidi/htdocs</url>
+			<id>github</id>
+			<url>http://jajir.github.io/coidi/</url>
 		</site>
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>${sonatypeOssDistMgmtSnapshotsUrl}</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
 	</distributionManagement>
+	<scm>
+		<url>http://jajir.github.io/coidi/</url>
+		<connection>scm:git:git://github.com/jajir/coidi.git</connection>
+		<developerConnection>scm:git:git@github.com/jajir/coidi.git</developerConnection>
+	</scm>
+	<url>http://jajir.github.io/coidi/</url>
 </project>
