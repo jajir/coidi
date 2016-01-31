@@ -1,6 +1,0 @@
-<html t:type="layout" t:title="literal:Error 404 - Page not found" 
-	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-	<h2 style="background:none;font-size:35px;margin:30px 0 30px 0;padding-left:0;">
-		Error 404 - Page not found
-	</h2>
-</html>

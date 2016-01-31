@@ -1,8 +1,0 @@
-<configuration>
-	<proxy>
-		<property name="server">proxy.indra.es</property>
-		<property name="port">8080</property>
-		<property name="userName">jjirout</property>
-		<property name="password">kocicka0</property>
-	</proxy>
-</configuration>
