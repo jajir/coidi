@@ -28,7 +28,6 @@ import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.OpenId11CheckIdImmediate;
-import com.coroptis.coidi.op.util.OpenId11;
 
 /**
  * Process openid.more=checkid_immediate.
