@@ -47,6 +47,9 @@ public interface UserSessionSkeleton {
      * When authentication request is processed and user is not logged than
      * original authentication request have to be stored. After user logged in
      * original request should be processed again.
+     * 
+     * @param authenticationRequest
+     *            optional authentication request
      */
     void setAuthenticationRequest(AuthenticationRequest authenticationRequest);
 
