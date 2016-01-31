@@ -9,8 +9,16 @@
 	<description>OpenID relaying party and OpenID provider servers will find here all required code</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<t5.version>5.3.8</t5.version>
+		<guice.version>3.0</guice.version>
+		<guava.version>r09</guava.version>
+		<easymock.version>2.4</easymock.version>
+		<xml-apis.version>1.3.04</xml-apis.version>
+		<icu4j.version>3.6.1</icu4j.version>
+		<log4j.version>1.2.14</log4j.version>
+		<cobertura.version>2.5.1</cobertura.version>
 	</properties>
-	
+
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -19,19 +27,19 @@
 			<comments>A business-friendly OSS license</comments>
 		</license>
 	</licenses>
-	
+
 	<issueManagement>
 		<system>Github ticketing system</system>
 		<url>https://github.com/jajir/coidi/issues</url>
 	</issueManagement>
-	
+
 	<developers>
 		<developer>
 			<id>jan</id>
 			<name>Jan Jirout</name>
 		</developer>
 	</developers>
-	
+
 	<scm>
 		<connection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</connection>
 		<developerConnection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</developerConnection>
