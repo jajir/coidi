@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xrds:XRDS xmlns:xrds="xri://$xrds" xmlns="xri://$xrd*($v*2.0)" xmlns:openid="http://openid.net/xmlns/1.0">
+  <XRD>
+    <Service priority="100" xmlns="xri://$xrd*($v*2.0)">
+      <Type>http://specs.openid.net/auth/2.0/signon</Type>
+      <Type>http://openid.net/sreg/1.1</Type>
+      <URI>http://localhost:8080/openid</URI>
+      <LocalID>http://localhost:8080/user/juan</LocalID>
+    </Service>
+    <Service priority="10" xmlns="xri://$xrd*($v*2.0)">
+      <Type>http://specs.openid.net/auth/2.0/server</Type>
+      <Type>http://openid.net/sreg/1.1</Type>
+      <URI>http://localhost:8080/openid</URI>
+    </Service>
+  </XRD>
+</xrds:XRDS>
