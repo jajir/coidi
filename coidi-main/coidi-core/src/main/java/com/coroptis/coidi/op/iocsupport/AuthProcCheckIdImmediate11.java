@@ -1,8 +1,10 @@
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.iocsupport;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import com.coroptis.coidi.op.services.AuthenticationProcessor;
 @Singleton
 public class AuthProcCheckIdImmediate11 extends AbstractAuthProc {
 

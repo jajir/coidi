@@ -7,6 +7,8 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Coidi parent pom</name>
+	<description>Implementation of OpenID. Target is to create simple and easy to integrate implementation of OpenId  
+	</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<t5.version>5.3.8</t5.version>
@@ -18,8 +20,6 @@
 		<log4j.version>1.2.14</log4j.version>
 		<cobertura.version>2.5.1</cobertura.version>
 	</properties>
-	<description>Implementation of OpenID. Target is to create simple and easy to integrate implementation of OpenId  
-	</description>
 	<url>http://sourceforge.net/p/coidi/</url>
 	<modules>
 		<module>coidi-test-support</module>
@@ -92,6 +92,12 @@
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>easymock</artifactId>
+				<version>${easymock.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>easymockclassextension</artifactId>
 				<version>${easymock.version}</version>
 				<scope>test</scope>
 			</dependency>
@@ -316,8 +322,8 @@
 		</license>
 	</licenses>
 	<issueManagement>
-		<system>Sourceforge ticketing system</system>
-		<url>https://sourceforge.net/p/coidi/tickets/</url>
+		<system>Github ticketing system</system>
+		<url>https://github.com/jajir/coidi/issues</url>
 	</issueManagement>
 	<developers>
 		<developer>

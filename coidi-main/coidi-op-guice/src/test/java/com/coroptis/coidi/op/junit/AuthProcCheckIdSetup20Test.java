@@ -12,7 +12,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.services.AuthProcCheckIdSetup20;
+import com.coroptis.coidi.op.iocsupport.AuthProcCheckIdSetup20;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.google.common.base.Objects;
 

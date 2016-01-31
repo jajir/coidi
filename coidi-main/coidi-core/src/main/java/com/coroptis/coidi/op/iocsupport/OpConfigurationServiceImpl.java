@@ -1,8 +1,13 @@
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.iocsupport;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import com.coroptis.coidi.op.services.AssociationTool;
+import com.coroptis.coidi.op.services.OpConfigurationService;
+import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.services.RealmTool;
 @Singleton
 public class OpConfigurationServiceImpl implements OpConfigurationService {
 

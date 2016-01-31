@@ -1,4 +1,4 @@
-package com.coroptis.coidi.op.services;
+package com.coroptis.coidi.op.iocsupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import com.coroptis.coidi.op.services.OpenIdDispatcher;
 @Singleton
 public abstract class AbstractOpenIdDispatcher implements OpenIdDispatcher {
 
