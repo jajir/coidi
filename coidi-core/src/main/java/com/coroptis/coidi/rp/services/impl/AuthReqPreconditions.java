@@ -25,6 +25,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AuthReq;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
+import com.google.common.base.Strings;
 
 public class AuthReqPreconditions implements AuthReq {
 
@@ -37,6 +38,10 @@ public class AuthReqPreconditions implements AuthReq {
 	    logger.info("Discovery process failed, found XRDS document is not valid.");
 	    throw new AuthenticationProcessException(
 		    "Discovery process failed, found XRDS document is not valid.");
+	}
+	if(Strings.isNullOrEmpty(discoveryResult.getClaimedId())){
+		throw new AuthenticationProcessException(
+				"Claimed id is missing in discovery result.");		
 	}
 	/**
 	 * Look for OP identifier element
