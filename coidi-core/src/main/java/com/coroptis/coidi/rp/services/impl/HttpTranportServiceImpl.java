@@ -61,4 +61,8 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 	}
     }
 
+	public void setHttpService(HttpService httpService) {
+		this.httpService = httpService;
+	}
+
 }

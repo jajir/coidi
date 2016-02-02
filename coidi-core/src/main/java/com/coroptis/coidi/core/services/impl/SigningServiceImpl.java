@@ -64,4 +64,16 @@ public class SigningServiceImpl implements SigningService {
 	}
     }
 
+	public void setCryptoService(CryptographyService cryptoService) {
+		this.cryptoService = cryptoService;
+	}
+
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
+	}
+
+	public void setConvertorService(ConvertorService convertorService) {
+		this.convertorService = convertorService;
+	}
+
 }

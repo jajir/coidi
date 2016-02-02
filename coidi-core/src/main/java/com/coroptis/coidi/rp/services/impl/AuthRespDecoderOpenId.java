@@ -72,4 +72,16 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 	return null;
     }
 
+	public void setNonceService(NonceService nonceService) {
+		this.nonceService = nonceService;
+	}
+
+	public void setSigningService(SigningService signingService) {
+		this.signingService = signingService;
+	}
+
+	public void setNonceDao(NonceDao nonceDao) {
+		this.nonceDao = nonceDao;
+	}
+
 }

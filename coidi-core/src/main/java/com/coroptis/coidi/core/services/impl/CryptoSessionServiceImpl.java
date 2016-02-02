@@ -90,4 +90,9 @@ public class CryptoSessionServiceImpl implements CryptoSessionService {
 	    return new KeyPair(pkey, dhGen.modPow(pkey, dhModulo));
 	}
     }
+
+	public void setCryptographyService(CryptographyService cryptographyService) {
+		this.cryptographyService = cryptographyService;
+	}
+    
 }

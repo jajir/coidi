@@ -45,4 +45,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	    throw new CoidiException("There was some error in message");
 	}
     }
+
+	public void setAuthRespDecoder(AuthRespDecoder authRespDecoder) {
+		this.authRespDecoder = authRespDecoder;
+	}
+    
 }

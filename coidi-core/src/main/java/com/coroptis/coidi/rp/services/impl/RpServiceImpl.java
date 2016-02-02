@@ -65,4 +65,8 @@ public class RpServiceImpl implements RpService {
 	return authenticationRequest.getUrl(discoveryResult.getEndPoint());
     }
 
+	public void setAuthReq(AuthReq authReq) {
+		this.authReq = authReq;
+	}
+
 }

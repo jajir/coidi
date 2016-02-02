@@ -99,4 +99,16 @@ public class AssociationServiseImpl implements AssociationServise {
 	return cal.getTime();
     }
 
+	public void setCryptoSessionService(CryptoSessionService cryptoSessionService) {
+		this.cryptoSessionService = cryptoSessionService;
+	}
+
+	public void setConvertorService(ConvertorService convertorService) {
+		this.convertorService = convertorService;
+	}
+
+	public void setHttpTransportService(HttpTransportService httpTransportService) {
+		this.httpTransportService = httpTransportService;
+	}
+
 }

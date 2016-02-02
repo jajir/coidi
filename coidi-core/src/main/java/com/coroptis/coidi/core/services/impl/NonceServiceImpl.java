@@ -94,4 +94,9 @@ public class NonceServiceImpl implements NonceService {
 	random.nextBytes(b);
 	return convertorService.convertToString(b);
     }
+
+	public void setConvertorService(ConvertorService convertorService) {
+		this.convertorService = convertorService;
+	}
+    
 }

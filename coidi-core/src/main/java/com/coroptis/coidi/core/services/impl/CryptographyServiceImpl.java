@@ -82,4 +82,8 @@ public class CryptographyServiceImpl implements CryptographyService {
 	}
     }
 
+	public void setCryptoSessionService(CryptoSessionService cryptoSessionService) {
+		this.cryptoSessionService = cryptoSessionService;
+	}
+
 }
