@@ -1,4 +1,4 @@
-package com.coroptis.coidi.op.junit.services;
+package com.coroptis.coidi.junit.op.services;
 
 import org.easymock.EasyMock;
 

@@ -1,4 +1,4 @@
-package com.coroptis.coidi.core.junit.message;
+package com.coroptis.coidi.junit.core.message;
 
 import junit.framework.TestCase;
 

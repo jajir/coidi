@@ -9,29 +9,28 @@ import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.google.common.base.Strings;
 
 /**
- * When OpenID response missing name space than it's OpendID 1.1 or 1.0 or it's
- * not OpenID message at all.
+ * VErify that incoming authentication response is valid OpenID 2.0 message.
  * 
  * @author jirout
  * 
  */
 public class AuthRespOpenId20Verify implements AuthRespDecoder {
 
-    @Override
-    public Boolean decode(final AuthenticationResponse authenticationResponse,
-	    final Association association, final AuthenticationResult authenticationResult) {
-	if (Strings.isNullOrEmpty(authenticationResponse.getNameSpace())) {
-	    throw new CoidiException("OpenID namespace was not filled.");
+	@Override
+	public Boolean decode(final AuthenticationResponse authenticationResponse, final Association association,
+			final AuthenticationResult authenticationResult) {
+		if (Strings.isNullOrEmpty(authenticationResponse.getNameSpace())) {
+			throw new CoidiException("OpenID namespace was not filled.");
+		}
+		if (!AbstractMessage.OPENID_NS_20.equals(authenticationResponse.getNameSpace())) {
+			throw new CoidiException(
+					"OpenID namespace contains invalid value '" + authenticationResponse.getNameSpace() + "'.");
+		}
+		if (authenticationResponse.getMap().size() < 3) {
+			throw new CoidiException("AuthenticationResponse probably it's not OpenID message becauses there is just '"
+					+ authenticationResponse.getMap().size() + "' key value pairs.");
+		}
+		return null;
 	}
-	if (!AbstractMessage.OPENID_NS.equals(authenticationResponse.getNameSpace())) {
-	    throw new CoidiException("OpenID namespace contains invalid value '"
-		    + authenticationResponse.getNameSpace() + "'.");
-	}
-	if (authenticationResponse.getMap().size() < 3) {
-	    throw new CoidiException(
-		    "Probably it's not OpenID message there is only one key value pair.");
-	}
-	return null;
-    }
 
 }

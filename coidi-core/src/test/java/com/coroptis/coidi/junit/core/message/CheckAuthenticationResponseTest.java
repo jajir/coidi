@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.core.junit.message;
+package com.coroptis.coidi.junit.core.message;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 
