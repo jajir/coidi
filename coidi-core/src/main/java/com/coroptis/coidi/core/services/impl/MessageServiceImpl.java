@@ -40,7 +40,9 @@ public class MessageServiceImpl implements MessageService {
 	    for (String tuple : query.split("&")) {
 		int equals = tuple.indexOf('=');
 		if (equals <= 0) {
-		    throw new CoidiException("invalid URL format '" + tuple + "'.");
+		    //throw new CoidiException("invalid URL format '" + tuple + "'.");
+			//Parameter without equal is used in wicket for marking page version so exception is not wanted, just skip
+			continue;
 		}
 		map.put(URLDecoder.decode(tuple.substring(0, equals), "UTF-8"),
 			URLDecoder.decode(tuple.substring(equals + 1), "UTF-8"));
