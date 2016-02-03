@@ -3,7 +3,7 @@
 	<bannerLeft>
 		<name>Coidi</name>
 		<src>./coidi-logo.png</src>
-		<href>http://coidi.sourceforge.net/</href>
+		<href>http://jajir.github.io/coidi/</href>
 	</bannerLeft>
 
 	<publishDate format="dd MMM yyyy" position="right" />
@@ -38,8 +38,8 @@
 		</head>
 		
 		<breadcrumbs>
-			<item name="Coidi at Souceforge" href="https://sourceforge.net/projects/coidi/" />
-			<item name="Documentation" href="http://coidi.sourceforge.net/"/>
+			<item name="Coidi at Github" href="https://github.com/jajir/coidi" />
+			<item name="Documentation" href="http://jajir.github.io/coidi/"/>
 		</breadcrumbs>
     		
 		<menu name="Coidi">

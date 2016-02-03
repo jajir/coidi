@@ -34,6 +34,10 @@ Auditorium
 
 Development status
 
+ Currently is project refactored, because lot of technical decision was taken under special conditions, now it's clear that project have to be simplified.. 
+ 
+ Refently was project on sourceforge, now (late 2015) is migrated to github.
+ 
  Following table show how are supported particular features implemented in latest coidi version:
  
 *--------+------+------+------+
