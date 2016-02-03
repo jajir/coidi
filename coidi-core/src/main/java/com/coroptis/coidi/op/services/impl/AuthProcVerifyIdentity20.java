@@ -57,12 +57,12 @@ public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
 	    return negativeResponseGenerator.simpleError("User is not logged at OP");
 	}
 
-	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-	    if (!openIdRequestTool.verify(authenticationRequest.getIdentity(), userSession)) {
-		return negativeResponseGenerator.simpleError("Requested identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't exists.");
-	    }
-	}
+//	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+//	    if (!openIdRequestTool.verify(authenticationRequest.getIdentity(), userSession)) {
+//		return negativeResponseGenerator.simpleError("Requested identity '"
+//			+ authenticationRequest.getIdentity() + "' doesn't exists.");
+//	    }
+//	}
 	return null;
 
     }
