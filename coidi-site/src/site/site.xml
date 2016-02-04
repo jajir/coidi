@@ -68,10 +68,6 @@
 			<item name="Abbreviations" href="./abbreviations.html" />
 		</menu>
 		
-		<menu ref="modules" />
-		
-		<menu ref="reports" />
-		
 		<footer>
 		</footer>
 

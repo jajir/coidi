@@ -63,7 +63,7 @@ public class AssociationMock implements Association {
 
 	@Override
 	public void setExpiredIn(Date date) {
-		this.expiredIn = expiredIn;
+		this.expiredIn = date;
 	}
 
 	@Override

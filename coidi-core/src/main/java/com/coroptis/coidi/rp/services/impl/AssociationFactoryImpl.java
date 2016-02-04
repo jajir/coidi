@@ -35,14 +35,14 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationBean;
-import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.AssociationFactory;
 import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-public class AssociationServiseImpl implements AssociationServise {
+public class AssociationFactoryImpl implements AssociationFactory {
 
-	private final static Logger logger = LoggerFactory.getLogger(AssociationServiseImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(AssociationFactoryImpl.class);
 
 	@Inject
 	private CryptoSessionService cryptoSessionService;

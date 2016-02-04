@@ -19,6 +19,9 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -31,63 +34,72 @@ import com.google.common.base.Preconditions;
 
 public class AssociationServiceImpl implements AssociationService {
 
-    @Inject
-    private BaseAssociationDao baseAssociationDao;
+	private final Logger logger = LoggerFactory.getLogger(AssociationServiceImpl.class);
 
-    @Inject
-    private CryptoService cryptoService;
+	@Inject
+	private BaseAssociationDao baseAssociationDao;
 
-    @Inject
-    private AssociationTool associationTool;
+	@Inject
+	private CryptoService cryptoService;
 
-    @Inject
-    private ConvertorService convertorService;
+	@Inject
+	private AssociationTool associationTool;
 
-    @Override
-    public void delete(final String associationHandle) {
-	Association association = baseAssociationDao.getByAssocHandle(associationHandle);
-	if (association != null) {
-	    baseAssociationDao.delete(association);
+	@Inject
+	private ConvertorService convertorService;
+
+	@Override
+	public void delete(final String associationHandle) {
+		Association association = baseAssociationDao.getByAssocHandle(associationHandle);
+		if (association != null) {
+			baseAssociationDao.delete(association);
+		}
 	}
-    }
 
-    @Override
-    public boolean isValid(final String assoc_handle) {
-	if (assoc_handle == null) {
-	    return false;
+	@Override
+	public boolean isValid(final String assoc_handle) {
+		if (assoc_handle == null) {
+			logger.debug("Association is invalid - association handle is null");
+			return false;
+		}
+		Association association = baseAssociationDao.getByAssocHandle(assoc_handle);
+		if (association == null) {
+			logger.debug("Association is invalid - association '{}' was not found", assoc_handle);
+			return false;
+		}
+		if (new Date().before(association.getExpiredIn())) {
+			return true;
+		} else {
+			logger.debug("Association is invalid - association '{}' with date '{}' is expired ", assoc_handle,
+					association.getExpiredIn());
+			return false;
+		}
 	}
-	Association association = baseAssociationDao.getByAssocHandle(assoc_handle);
-	if (association == null) {
-	    return false;
+
+	@Override
+	public Association createAssociation(final AssociationType associationType, final SessionType sessionType) {
+		Preconditions.checkNotNull(associationType, "associationType is null");
+		Preconditions.checkNotNull(sessionType, "sessionType is null");
+		Association association = buildAssociation();
+		association.setAssociationType(associationType);
+		association.setSessionType(sessionType);
+		return association;
 	}
-	return new Date().before(association.getExpiredIn());
-    }
 
-    @Override
-    public Association createAssociation(final AssociationType associationType,
-	    final SessionType sessionType) {
-	Preconditions.checkNotNull(associationType, "associationType is null");
-	Preconditions.checkNotNull(sessionType, "sessionType is null");
-	Association association = buildAssociation();
-	association.setAssociationType(associationType);
-	association.setSessionType(sessionType);
-	return association;
-    }
+	@Override
+	public Association createStateLessAssociation() {
+		Association association = buildAssociation();
+		association.setAssociationType(associationTool.getDefaultAssociationType());
+		association.setMacKey(convertorService
+				.convertToString(cryptoService.generateAssociationRandom(association.getAssociationType())));
+		return association;
+	}
 
-    @Override
-    public Association createStateLessAssociation() {
-	Association association = buildAssociation();
-	association.setAssociationType(associationTool.getDefaultAssociationType());
-	association.setMacKey(convertorService.convertToString(cryptoService
-		.generateAssociationRandom(association.getAssociationType())));
-	return association;
-    }
-
-    private Association buildAssociation() {
-	Association association = baseAssociationDao.createNewInstance();
-	association.setAssocHandle(cryptoService.generateUUID());
-	association.setExpiredIn(associationTool.getTimeToLive());
-	return association;
-    }
+	private Association buildAssociation() {
+		Association association = baseAssociationDao.createNewInstance();
+		association.setAssocHandle(cryptoService.generateUUID());
+		association.setExpiredIn(associationTool.getTimeToLive());
+		return association;
+	}
 
 }
