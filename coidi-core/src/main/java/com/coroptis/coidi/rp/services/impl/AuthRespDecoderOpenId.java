@@ -12,7 +12,7 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.base.AuthenticationResult.Status;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
-import com.coroptis.coidi.rp.services.AuthenticationService;
+import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
 import com.coroptis.coidi.rp.services.NonceDao;
 
 /**
@@ -48,7 +48,7 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 	} else if (authenticationResponse.getMode().equals("id_res")) {
 	    authenticationResult.setStatus(Status.res);
 	    if (nonceService.verifyNonceExpiration(authenticationResponse.getNonce(),
-		    AuthenticationService.NONCE_EXPIRATION_TIME_IN_MINUTES)) {
+		    AuthenticationVerificationService.NONCE_EXPIRATION_TIME_IN_MINUTES)) {
 		nonceDao.storeNonce(authenticationResponse.getNonce());
 	    } else {
 		logger.warn("nonce is expired in authentication response: "

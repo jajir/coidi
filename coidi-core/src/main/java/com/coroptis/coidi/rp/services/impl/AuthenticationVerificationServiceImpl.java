@@ -25,11 +25,11 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
-import com.coroptis.coidi.rp.services.AuthenticationService;
+import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
 
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthenticationVerificationServiceImpl implements AuthenticationVerificationService {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthenticationVerificationServiceImpl.class);
 
     @Inject
     private AuthRespDecoder authRespDecoder;

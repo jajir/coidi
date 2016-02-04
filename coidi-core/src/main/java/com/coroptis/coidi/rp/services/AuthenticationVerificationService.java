@@ -19,7 +19,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 
-public interface AuthenticationService {
+public interface AuthenticationVerificationService {
 
     public final static Integer NONCE_EXPIRATION_TIME_IN_MINUTES = 30;
 
