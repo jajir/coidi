@@ -20,16 +20,16 @@ import com.coroptis.coidi.op.entities.Identity;
 
 /**
  * Identity managing service.
- * 
+ *
  * @author jan
- * 
- * 
+ *
+ *
  */
 public interface IdentityService {
 
     /**
      * Get {@link Identity} by it's identity id.
-     * 
+     *
      * @param identityId
      *            required identity id
      * @return {@link Identity} object if there is any otherwise
@@ -39,7 +39,7 @@ public interface IdentityService {
 
     /**
      * Get {@link Identity} by it's OP local identifier.
-     * 
+     *
      * @param opLocalIdentifier
      *            required OP local identifier, could be any string that could
      *            contains identity. Method check if parameter is in correct
@@ -51,7 +51,7 @@ public interface IdentityService {
 
     /**
      * Verify that claimed identity is logged into given user session.
-     * 
+     *
      * @param userSession
      *            optional user session
      * @param claimedIdentity
@@ -64,7 +64,7 @@ public interface IdentityService {
 
     /**
      * Verify that identity belongs to user.
-     * 
+     *
      * @param idUser
      *            required user's id
      * @param opLocalIdentifier
@@ -72,5 +72,5 @@ public interface IdentityService {
      * @return <code>true</code> if identity belongs to user otherwise return
      *         <code>false</code>
      */
-    Boolean isUsersOpIdentifier(Integer idUser, String opLocalIdentifier);
+    Boolean isUsersOpIdentifier(Object idUser, String opLocalIdentifier);
 }

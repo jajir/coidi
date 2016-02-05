@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.time.DateUtils;
 
-import junit.framework.TestCase;
-
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.util.MapH;
@@ -16,6 +14,8 @@ import com.coroptis.coidi.op.services.SregService;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.util.IdentityMock;
 import com.google.common.collect.Sets;
+
+import junit.framework.TestCase;
 
 public class SregServiceTest extends TestCase {
 
@@ -67,7 +67,7 @@ public class SregServiceTest extends TestCase {
     }
 
     public void test_fillSregResponse_keysAreFilled_idenitityIsFilled() throws Exception {
-	Identity identity = new IdentityMock();
+    IdentityMock identity = new IdentityMock();
 	identity.setNickname("kacer");
 	identity.setEmail("kachna@hnizdo.cz");
 	identity.setFullname("Kachna Obecna");

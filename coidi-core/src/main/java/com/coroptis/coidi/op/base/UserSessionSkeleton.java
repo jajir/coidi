@@ -20,34 +20,34 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 /**
  * OpenID provider application should implement it. Object should be stored in
  * HTTP session.
- * 
+ *
  * @author jirout
- * 
+ *
  */
-public interface UserSessionSkeleton {
+public interface UserSessionSkeleton<T> {
 
     /**
      * Return return <code>true</code> when user is logged into OP otherwise
      * return <code>false</code>.
-     * 
+     *
      * @return return boolean
      */
     boolean isLogged();
 
     /**
      * Logger user id.
-     * 
+     *
      * TODO remove it, not all users have unique id.
-     * 
+     *
      * @return the idUser
      */
-    Integer getIdUser();
+    T getIdUser();
 
     /**
      * When authentication request is processed and user is not logged than
      * original authentication request have to be stored. After user logged in
      * original request should be processed again.
-     * 
+     *
      * @param authenticationRequest
      *            optional authentication request
      */

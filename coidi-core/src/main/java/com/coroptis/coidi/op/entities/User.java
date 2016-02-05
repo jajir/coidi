@@ -17,28 +17,19 @@ package com.coroptis.coidi.op.entities;
 
 import java.util.Set;
 
-public interface User {
+public interface User<T> {
 
     /**
      * @return the idUser
      */
-    Integer getIdUser();
+    T getIdUser();
 
-    /**
-     * @param idUser
-     *            the idUser to set
-     */
-    void setIdUser(Integer idUser);
+
 
     /**
      * @return the identities
      */
     Set<Identity> getIdentities();
 
-    /**
-     * @param identities
-     *            the identities to set
-     */
-    void setIdentities(Set<Identity> identities);
 
 }

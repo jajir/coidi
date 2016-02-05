@@ -61,7 +61,7 @@ public class IdentityServiceImpl implements IdentityService {
 	if (userSession == null) {
 	    return false;
 	}
-	User user = userDao.getById(userSession.getIdUser());
+	User<?> user = userDao.getById(userSession.getIdUser());
 	if (user == null) {
 	    return false;
 	}
@@ -74,8 +74,8 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public Boolean isUsersOpIdentifier(final Integer idUser, final String opLocalIdentifier) {
-	final User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
+    public Boolean isUsersOpIdentifier(final Object idUser, final String opLocalIdentifier) {
+	final User<?> user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
 	final String identityId = identityNamesConvertor.convertToIdentityId(opLocalIdentifier);
 	Preconditions.checkNotNull(identityId, "opLocalIdentifier is null");
 

@@ -17,15 +17,15 @@ package com.coroptis.coidi.op.dao;
 
 import com.coroptis.coidi.op.entities.User;
 
-public interface BaseUserDao {
+public interface BaseUserDao<T> {
 
     /**
      * Get user by it's id.
-     * 
+     *
      * @param idUser
      *            required is of user
      * @return found {@link User} object of <code>null</code> if there is no
      *         such user
      */
-    User getById(Integer idUser);
+    User<T> getById(T idUser);
 }
