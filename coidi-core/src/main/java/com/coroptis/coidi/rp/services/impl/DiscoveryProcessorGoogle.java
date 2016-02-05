@@ -38,6 +38,7 @@ public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
     @Inject
     private DiscoverySupport discoverySupport;
 
+    @Override
     public DiscoveryResult dicovery(String userSuppliedId) {
 	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 	if (discoverySupport.isItEmail(userSuppliedId)) {

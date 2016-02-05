@@ -45,10 +45,12 @@ public class NonceDaoImpl implements NonceDao {
 
     private static final int NONCE_EXPIRATION_MINUTES = 30;
 
+    @Override
     public synchronized boolean isExists(String nonce) {
 	return nonces.contains(nonce);
     }
 
+    @Override
     public synchronized void storeNonce(String nonce) {
 	nonces.add(nonce);
     }
@@ -77,6 +79,7 @@ public class NonceDaoImpl implements NonceDao {
 	return noncesToRemove;
     }
 
+    @Override
     public synchronized void removeOldNonces() {
 	logger.debug("number of nonces before cleaning: " + nonces.size());
 	List<String> noncesToRemove = getNoncesToRemove();

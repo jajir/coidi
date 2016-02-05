@@ -39,6 +39,7 @@ public class YadisServiceImpl implements YadisService {
     @Inject
     private HttpService httpService;
 
+    @Override
     public void readXrdsDocument(String url) {
 	try {
 	    HttpClient httpClient = httpService.getHttpClient();

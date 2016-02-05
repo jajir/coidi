@@ -29,6 +29,7 @@ public class AbstractOpenIdRequest extends AbstractMessage {
 	super(map, OPENID);
     }
 
+    @Override
     public String getMessage() {
 	return getPrefixedMessage(OPENID);
     }

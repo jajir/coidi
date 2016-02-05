@@ -41,6 +41,7 @@ public class OpenIdDispatcherAuthenticationSetup11 implements OpenIdDispatcher {
     @OpenId11CheckIdSetup
     private AuthenticationProcessor authenticationProcessor;
 
+    @Override
     public AbstractMessage process(Map<String, String> requestParams,
 	    UserSessionSkeleton userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {

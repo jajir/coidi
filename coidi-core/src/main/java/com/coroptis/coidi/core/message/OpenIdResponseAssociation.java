@@ -23,10 +23,12 @@ public class OpenIdResponseAssociation extends AbstractOpenIdResponse {
 
     private final Map<String, String> map = new HashMap<String, String>();
 
+    @Override
     public void put(final String key, final String value) {
 	map.put(key, value);
     }
 
+    @Override
     public String getMessage() {
 	StringBuilder sb = new StringBuilder();
 	// try {

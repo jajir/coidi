@@ -27,6 +27,7 @@ public class AbstractOpenIdResponse extends AbstractMessage {
 	super(map, null);
     }
 
+    @Override
     public String getMessage() {
 	return getPrefixedMessage(null);
     }

@@ -57,6 +57,7 @@ public class RealmToolImpl implements RealmTool {
 	}
     }
 
+    @Override
     public RealmRequest createRealmRequest(final Map<String, String> parameters) {
 	AuthenticationRequest request = new AuthenticationRequest(parameters);
 	if (openIdRequestTool.isOpenIdVersion1x(parameters)) {

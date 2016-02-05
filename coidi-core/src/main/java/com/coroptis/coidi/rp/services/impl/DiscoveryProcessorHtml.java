@@ -20,6 +20,7 @@ import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 
 public class DiscoveryProcessorHtml implements DiscoveryProcessor {
 
+    @Override
     public DiscoveryResult dicovery(String userSuppliedId) {
 	return null;
     }

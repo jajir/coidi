@@ -120,6 +120,7 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 	}
     }
 
+    @Override
     public DiscoveryResult dicovery(String userSuppliedId) {
 	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 	userSuppliedId = userSuppliedId.trim();

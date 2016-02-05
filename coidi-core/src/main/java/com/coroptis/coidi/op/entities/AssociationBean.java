@@ -44,6 +44,7 @@ public class AssociationBean implements Association {
     /**
      * @return the assocHandle
      */
+    @Override
     public String getAssocHandle() {
 	return assocHandle;
     }
@@ -52,6 +53,7 @@ public class AssociationBean implements Association {
      * @param assocHandle
      *            the assocHandle to set
      */
+    @Override
     public void setAssocHandle(String assocHandle) {
 	this.assocHandle = assocHandle;
     }
@@ -59,6 +61,7 @@ public class AssociationBean implements Association {
     /**
      * @return the associationType
      */
+    @Override
     public AssociationType getAssociationType() {
 	return associationType;
     }
@@ -67,6 +70,7 @@ public class AssociationBean implements Association {
      * @param associationType
      *            the associationType to set
      */
+    @Override
     public void setAssociationType(AssociationType associationType) {
 	this.associationType = associationType;
     }
@@ -74,6 +78,7 @@ public class AssociationBean implements Association {
     /**
      * @return the sessionType
      */
+    @Override
     public SessionType getSessionType() {
 	return sessionType;
     }
@@ -82,6 +87,7 @@ public class AssociationBean implements Association {
      * @param sessionType
      *            the sessionType to set
      */
+    @Override
     public void setSessionType(SessionType sessionType) {
 	this.sessionType = sessionType;
     }
@@ -89,6 +95,7 @@ public class AssociationBean implements Association {
     /**
      * @return the macKey
      */
+    @Override
     public String getMacKey() {
 	return macKey;
     }
@@ -97,6 +104,7 @@ public class AssociationBean implements Association {
      * @param macKey
      *            the macKey to set
      */
+    @Override
     public void setMacKey(String macKey) {
 	this.macKey = macKey;
     }
@@ -104,6 +112,7 @@ public class AssociationBean implements Association {
     /**
      * @return the expiredIn
      */
+    @Override
     public Date getExpiredIn() {
 	return expiredIn;
     }
@@ -112,6 +121,7 @@ public class AssociationBean implements Association {
      * @param expiredIn
      *            the expiredIn to set
      */
+    @Override
     public void setExpiredIn(Date expiredIn) {
 	this.expiredIn = expiredIn;
     }
@@ -126,6 +136,7 @@ public class AssociationBean implements Association {
     /**
      * @return the nonces
      */
+    @Override
     public Set<Nonce> getNonces() {
 	return nonces;
     }
@@ -134,6 +145,7 @@ public class AssociationBean implements Association {
      * @param nonces
      *            the nonces to set
      */
+    @Override
     public void setNonces(Set<Nonce> nonces) {
 	this.nonces = nonces;
     }

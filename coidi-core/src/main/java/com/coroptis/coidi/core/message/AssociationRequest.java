@@ -65,6 +65,7 @@ public class AssociationRequest extends AbstractOpenIdRequest {
      * This provide map, because it have to be written in to HTTP post with
      * http-client which is not part of this module.
      */
+    @Override
     public Map<String, String> getMap() {
 	return super.getMap();
     }
