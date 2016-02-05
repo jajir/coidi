@@ -126,7 +126,7 @@ public class DiscoverySupportImpl implements DiscoverySupport {
 		userSuppliedId = userSuppliedId.substring("xri://".length());
 	    }
 	} else {
-	    if (!userSuppliedId.startsWith("http") && !userSuppliedId.startsWith("http")) {
+	    if (!userSuppliedId.startsWith("http") && !userSuppliedId.startsWith("https")) {
 		userSuppliedId = "http://" + userSuppliedId;
 	    }
 	    if (userSuppliedId.indexOf("#") > 0) {

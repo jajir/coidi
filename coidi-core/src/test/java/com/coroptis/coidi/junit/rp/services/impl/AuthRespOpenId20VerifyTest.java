@@ -22,7 +22,7 @@ public class AuthRespOpenId20VerifyTest {
 	public void testName() throws Exception {
 		Boolean ret = resp.decode(authenticationResponse, association, authenticationResult);
 
-		assertNull(ret);
+		assertFalse(ret);
 	}
 
 	@Before

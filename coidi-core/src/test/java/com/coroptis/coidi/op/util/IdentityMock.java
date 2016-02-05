@@ -17,10 +17,10 @@ package com.coroptis.coidi.op.util;
 
 import java.util.Date;
 
-import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.entities.User;
 
-public class IdentityMock implements Identity {
+public class IdentityMock implements IdentitySreg {
 
     private String idIdentity;
 
@@ -56,6 +56,7 @@ public class IdentityMock implements Identity {
      * @param idIdentity
      *            the idIdentity to set
      */
+    @Override
     public void setIdIdentity(String idIdentity) {
 	this.idIdentity = idIdentity;
     }
@@ -63,6 +64,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the user
      */
+    @Override
     public User getUser() {
 	return user;
     }
@@ -71,6 +73,7 @@ public class IdentityMock implements Identity {
      * @param user
      *            the user to set
      */
+    @Override
     public void setUser(User user) {
 	this.user = user;
     }
@@ -78,6 +81,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the nickname
      */
+    @Override
     public String getNickname() {
 	return nickname;
     }
@@ -86,6 +90,7 @@ public class IdentityMock implements Identity {
      * @param nickname
      *            the nickname to set
      */
+    @Override
     public void setNickname(String nickname) {
 	this.nickname = nickname;
     }
@@ -93,6 +98,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the email
      */
+    @Override
     public String getEmail() {
 	return email;
     }
@@ -101,6 +107,7 @@ public class IdentityMock implements Identity {
      * @param email
      *            the email to set
      */
+    @Override
     public void setEmail(String email) {
 	this.email = email;
     }
@@ -108,6 +115,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the fullname
      */
+    @Override
     public String getFullname() {
 	return fullname;
     }
@@ -116,6 +124,7 @@ public class IdentityMock implements Identity {
      * @param fullname
      *            the fullname to set
      */
+    @Override
     public void setFullname(String fullname) {
 	this.fullname = fullname;
     }
@@ -123,6 +132,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the dob
      */
+    @Override
     public Date getDob() {
 	return dob;
     }
@@ -131,6 +141,7 @@ public class IdentityMock implements Identity {
      * @param dob
      *            the dob to set
      */
+    @Override
     public void setDob(Date dob) {
 	this.dob = dob;
     }
@@ -138,6 +149,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the gendre
      */
+    @Override
     public Gendre getGendre() {
 	return gendre;
     }
@@ -146,6 +158,7 @@ public class IdentityMock implements Identity {
      * @param gendre
      *            the gendre to set
      */
+    @Override
     public void setGendre(Gendre gendre) {
 	this.gendre = gendre;
     }
@@ -153,6 +166,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the postcode
      */
+    @Override
     public String getPostcode() {
 	return postcode;
     }
@@ -161,6 +175,7 @@ public class IdentityMock implements Identity {
      * @param postcode
      *            the postcode to set
      */
+    @Override
     public void setPostcode(String postcode) {
 	this.postcode = postcode;
     }
@@ -168,6 +183,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the country
      */
+    @Override
     public String getCountry() {
 	return country;
     }
@@ -176,6 +192,7 @@ public class IdentityMock implements Identity {
      * @param country
      *            the country to set
      */
+    @Override
     public void setCountry(String country) {
 	this.country = country;
     }
@@ -183,7 +200,8 @@ public class IdentityMock implements Identity {
     /**
      * @return the language
      */
-    public String getLanguage() {
+    @Override
+   public String getLanguage() {
 	return language;
     }
 
@@ -191,6 +209,7 @@ public class IdentityMock implements Identity {
      * @param language
      *            the language to set
      */
+    @Override
     public void setLanguage(String language) {
 	this.language = language;
     }
@@ -198,6 +217,7 @@ public class IdentityMock implements Identity {
     /**
      * @return the timezone
      */
+    @Override
     public String getTimezone() {
 	return timezone;
     }
@@ -206,6 +226,7 @@ public class IdentityMock implements Identity {
      * @param timezone
      *            the timezone to set
      */
+    @Override
     public void setTimezone(String timezone) {
 	this.timezone = timezone;
     }

@@ -27,6 +27,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
@@ -63,8 +64,12 @@ public class AuthProcSreg10 implements AuthenticationProcessor {
 		return negativeResponseGenerator
 			.simpleError("For sreg extension is identity required.");
 	    }
+	    if (!(identity instanceof IdentitySreg)) {
+		return negativeResponseGenerator
+			.simpleError("For sreg is required extended identity.");
+	    }
 	    Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
-	    sregService.fillSregResponse(keys, response, identity, fieldsToSign);
+	    sregService.fillSregResponse(keys, response, (IdentitySreg) identity, fieldsToSign);
 	}
 	return null;
     }

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 
 /**
  * Service helps process OpenID simple registration extension.
@@ -78,6 +78,6 @@ public interface SregService {
      * @param fieldsToSign
      *            required set of fields that will be signed.
      */
-    void fillSregResponse(Set<String> keys, AuthenticationResponse response, Identity identity,
+    void fillSregResponse(Set<String> keys, AuthenticationResponse response, IdentitySreg identity,
 	    Set<String> fieldsToSign);
 }

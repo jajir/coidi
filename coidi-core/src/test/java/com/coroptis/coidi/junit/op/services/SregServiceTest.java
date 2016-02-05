@@ -10,6 +10,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.util.MapH;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.Identity.Gendre;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.op.util.IdentityMock;
@@ -44,7 +45,7 @@ public class SregServiceTest extends TestCase {
     }
 
     public void test_fillSregResponse() throws Exception {
-	Identity identity = new IdentityMock();
+	IdentitySreg identity = new IdentityMock();
 	Set<String> fieldsToSign = new HashSet<String>();
 	AuthenticationResponse response = new AuthenticationResponse();
 	service.fillSregResponse(Sets.newHashSet(""), response, identity, fieldsToSign);
@@ -55,7 +56,7 @@ public class SregServiceTest extends TestCase {
     }
 
     public void test_fillSregResponse_keysAreFilled() throws Exception {
-	Identity identity = new IdentityMock();
+	IdentitySreg identity = new IdentityMock();
 	Set<String> fieldsToSign = new HashSet<String>();
 	AuthenticationResponse response = new AuthenticationResponse();
 	service.fillSregResponse(Sets.newHashSet("nickname", "email", "fullname", "dob", "gendre",

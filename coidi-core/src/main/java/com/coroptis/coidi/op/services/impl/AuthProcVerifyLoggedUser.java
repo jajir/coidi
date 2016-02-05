@@ -50,7 +50,7 @@ public class AuthProcVerifyLoggedUser implements AuthenticationProcessor {
 	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
-	Preconditions.checkNotNull("UserSession is null");
+	Preconditions.checkNotNull(userSession, "UserSession is null");
 	if (!userSession.isLogged()) {
 	    logger.debug("User is not logged in.");
 	    userSession.setAuthenticationRequest(authenticationRequest);

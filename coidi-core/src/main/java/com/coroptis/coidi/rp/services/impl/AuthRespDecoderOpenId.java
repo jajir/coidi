@@ -69,7 +69,7 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 	    return false;
 	}
 	authenticationResult.setIdentity(authenticationResponse.getIdentity());
-	return null;
+	return false;
     }
 
 	public void setNonceService(NonceService nonceService) {

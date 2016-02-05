@@ -17,14 +17,7 @@ package com.coroptis.coidi.op.entities;
 
 import java.util.Set;
 
-public interface User<T> {
-
-    /**
-     * @return the idUser
-     */
-    T getIdUser();
-
-
+public interface User {
 
     /**
      * @return the identities

@@ -30,7 +30,7 @@ public class AuthRespOpenId20Verify implements AuthRespDecoder {
 			throw new CoidiException("AuthenticationResponse probably it's not OpenID message becauses there is just '"
 					+ authenticationResponse.getMap().size() + "' key value pairs.");
 		}
-		return null;
+		return false;
 	}
 
 }

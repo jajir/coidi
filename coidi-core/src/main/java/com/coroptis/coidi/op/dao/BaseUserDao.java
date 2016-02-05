@@ -27,5 +27,5 @@ public interface BaseUserDao<T> {
      * @return found {@link User} object of <code>null</code> if there is no
      *         such user
      */
-    User<T> getById(T idUser);
+    User getById(T idUser);
 }

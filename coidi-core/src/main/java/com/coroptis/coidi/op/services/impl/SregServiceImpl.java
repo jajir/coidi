@@ -15,6 +15,7 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 
 public class SregServiceImpl implements SregService {
@@ -55,46 +56,46 @@ public class SregServiceImpl implements SregService {
     }
 
     @Override
-	public void fillSregResponse(final Set<String> keys, final AuthenticationResponse response,
-	    final Identity identity, final Set<String> fieldsToSign) {
-    	//FIXME following code disable sreg extension, correct it
-//	if (keys.contains(SREG_NICKNAME) && StringUtils.isNotEmpty(identity.getNickname())) {
-//	    response.put(SREG + SREG_NICKNAME, identity.getNickname());
-//	    fieldsToSign.add(SREG + SREG_NICKNAME);
-//	}
-//	if (keys.contains(SREG_EMAIL) && StringUtils.isNotEmpty(identity.getEmail())) {
-//	    response.put(SREG + SREG_EMAIL, identity.getEmail());
-//	    fieldsToSign.add(SREG + SREG_EMAIL);
-//	}
-//	if (keys.contains(SREG_FULLNAME) && StringUtils.isNotEmpty(identity.getFullname())) {
-//	    response.put(SREG + SREG_FULLNAME, identity.getFullname());
-//	    fieldsToSign.add(SREG + SREG_FULLNAME);
-//	}
-//	if (keys.contains(SREG_DOB) && identity.getDob() != null) {
-//	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-//	    response.put(SREG + SREG_DOB, sdf.format(identity.getDob()));
-//	    fieldsToSign.add(SREG + SREG_DOB);
-//	}
-//	if (keys.contains(SREG_GENDRE) && identity.getGendre() != null) {
-//	    response.put(SREG + SREG_GENDRE, identity.getGendre().name());
-//	    fieldsToSign.add(SREG + SREG_GENDRE);
-//	}
-//	if (keys.contains(SREG_POSTCODE) && StringUtils.isNotEmpty(identity.getPostcode())) {
-//	    response.put(SREG + SREG_POSTCODE, identity.getPostcode());
-//	    fieldsToSign.add(SREG + SREG_POSTCODE);
-//	}
-//	if (keys.contains(SREG_COUNTRY) && StringUtils.isNotEmpty(identity.getCountry())) {
-//	    response.put(SREG + SREG_COUNTRY, identity.getCountry());
-//	    fieldsToSign.add(SREG + SREG_COUNTRY);
-//	}
-//	if (keys.contains(SREG_LANGUAGE) && StringUtils.isNotEmpty(identity.getLanguage())) {
-//	    response.put(SREG + SREG_LANGUAGE, identity.getLanguage());
-//	    fieldsToSign.add(SREG + SREG_LANGUAGE);
-//	}
-//	if (keys.contains(SREG_TIMEZONE) && StringUtils.isNotEmpty(identity.getTimezone())) {
-//	    response.put(SREG + SREG_TIMEZONE, identity.getTimezone());
-//	    fieldsToSign.add(SREG + SREG_TIMEZONE);
-//	}
+    public void fillSregResponse(final Set<String> keys, final AuthenticationResponse response,
+	    final IdentitySreg identity, final Set<String> fieldsToSign) {
+	// FIXME following code disable sreg extension, correct it
+	if (keys.contains(SREG_NICKNAME) && StringUtils.isNotEmpty(identity.getNickname())) {
+	    response.put(SREG + SREG_NICKNAME, identity.getNickname());
+	    fieldsToSign.add(SREG + SREG_NICKNAME);
+	}
+	if (keys.contains(SREG_EMAIL) && StringUtils.isNotEmpty(identity.getEmail())) {
+	    response.put(SREG + SREG_EMAIL, identity.getEmail());
+	    fieldsToSign.add(SREG + SREG_EMAIL);
+	}
+	if (keys.contains(SREG_FULLNAME) && StringUtils.isNotEmpty(identity.getFullname())) {
+	    response.put(SREG + SREG_FULLNAME, identity.getFullname());
+	    fieldsToSign.add(SREG + SREG_FULLNAME);
+	}
+	if (keys.contains(SREG_DOB) && identity.getDob() != null) {
+	    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	    response.put(SREG + SREG_DOB, sdf.format(identity.getDob()));
+	    fieldsToSign.add(SREG + SREG_DOB);
+	}
+	if (keys.contains(SREG_GENDRE) && identity.getGendre() != null) {
+	    response.put(SREG + SREG_GENDRE, identity.getGendre().name());
+	    fieldsToSign.add(SREG + SREG_GENDRE);
+	}
+	if (keys.contains(SREG_POSTCODE) && StringUtils.isNotEmpty(identity.getPostcode())) {
+	    response.put(SREG + SREG_POSTCODE, identity.getPostcode());
+	    fieldsToSign.add(SREG + SREG_POSTCODE);
+	}
+	if (keys.contains(SREG_COUNTRY) && StringUtils.isNotEmpty(identity.getCountry())) {
+	    response.put(SREG + SREG_COUNTRY, identity.getCountry());
+	    fieldsToSign.add(SREG + SREG_COUNTRY);
+	}
+	if (keys.contains(SREG_LANGUAGE) && StringUtils.isNotEmpty(identity.getLanguage())) {
+	    response.put(SREG + SREG_LANGUAGE, identity.getLanguage());
+	    fieldsToSign.add(SREG + SREG_LANGUAGE);
+	}
+	if (keys.contains(SREG_TIMEZONE) && StringUtils.isNotEmpty(identity.getTimezone())) {
+	    response.put(SREG + SREG_TIMEZONE, identity.getTimezone());
+	    fieldsToSign.add(SREG + SREG_TIMEZONE);
+	}
     }
 
 }
