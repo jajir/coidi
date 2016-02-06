@@ -28,7 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
-import com.coroptis.coidi.op.services.OpenIdRequestTool;
+import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
  * Verify that user is logged in. If is not logged in than return negative
@@ -45,7 +45,7 @@ public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
     private NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    private OpenIdRequestTool openIdRequestTool;
+    private UserVerifier userVerifier;
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
@@ -57,7 +57,7 @@ public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
 		    AbstractMessage.OPENID_NS_11);
 	}
 
-	if (!openIdRequestTool.verify(authenticationRequest.getIdentity(), userSession)) {
+	if (!userVerifier.verify(authenticationRequest.getIdentity(), userSession)) {
 	    return negativeResponseGenerator.simpleError("Requested identity '"
 		    + authenticationRequest.getIdentity() + "' doesn't exists.",
 		    AbstractMessage.OPENID_NS_11);

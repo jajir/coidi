@@ -17,6 +17,7 @@ package com.coroptis.coidi.rp.services;
 
 public class HttpHelper {
 
+    //FIXME do something with following code
     /**
      * Makes a HTTP call to the specified URL with the parameters specified in
      * the Message.

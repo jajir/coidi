@@ -17,11 +17,8 @@ package com.coroptis.coidi.op.services.impl;
 
 import javax.inject.Inject;
 
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.google.common.base.Preconditions;
@@ -30,9 +27,6 @@ public class IdentityServiceImpl implements IdentityService {
 
     @Inject
     private BaseIdentityDao identityDao;
-
-    @Inject
-    private BaseUserDao userDao;
 
     @Inject
     private IdentityNamesConvertor identityNamesConvertor;
@@ -54,37 +48,5 @@ public class IdentityServiceImpl implements IdentityService {
 	}
     }
 
-    @Override
-    public Boolean isIdentityLogged(final UserSessionSkeleton userSession,
-	    final Identity claimedIdentity) {
-	Preconditions.checkNotNull(claimedIdentity, "claimedIdentity is null");
-	if (userSession == null) {
-	    return false;
-	}
-	User user = userDao.getById(userSession.getIdUser());
-	if (user == null) {
-	    return false;
-	}
-	for (final Identity identity : user.getIdentities()) {
-	    if (identity.equals(claimedIdentity)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    @Override
-    public Boolean isUsersOpIdentifier(final Object idUser, final String opLocalIdentifier) {
-	final User user = Preconditions.checkNotNull(userDao.getById(idUser), "user is null");
-	final String identityId = identityNamesConvertor.convertToIdentityId(opLocalIdentifier);
-	Preconditions.checkNotNull(identityId, "opLocalIdentifier is null");
-
-	for (Identity identity : user.getIdentities()) {
-	    if (identityId.equals(identity.getIdIdentity())) {
-		return true;
-	    }
-	}
-	return false;
-    }
 
 }

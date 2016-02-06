@@ -24,7 +24,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
  * @author jirout
  *
  */
-public interface UserSessionSkeleton<T> {
+public interface UserSessionSkeleton {
 
     /**
      * Return return <code>true</code> when user is logged into OP otherwise
@@ -33,15 +33,6 @@ public interface UserSessionSkeleton<T> {
      * @return return boolean
      */
     boolean isLogged();
-
-    /**
-     * Logger user id.
-     *
-     * TODO remove it, not all users have unique id.
-     *
-     * @return the idUser
-     */
-    T getIdUser();
 
     /**
      * When authentication request is processed and user is not logged than

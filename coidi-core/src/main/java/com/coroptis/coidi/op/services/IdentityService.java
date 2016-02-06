@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.services;
 
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Identity;
 
 /**
@@ -49,28 +48,4 @@ public interface IdentityService {
      */
     Identity getByOpLocalIdentifier(String opLocalIdentifier);
 
-    /**
-     * Verify that claimed identity is logged into given user session.
-     *
-     * @param userSession
-     *            optional user session
-     * @param claimedIdentity
-     *            required claimed identity
-     * @return return <code>true</code> when user session is not
-     *         <code>null</code> and contains user that owns claimed identity
-     *         otherwise return <code>false</code>
-     */
-    Boolean isIdentityLogged(UserSessionSkeleton userSession, Identity claimedIdentity);
-
-    /**
-     * Verify that identity belongs to user.
-     *
-     * @param idUser
-     *            required user's id
-     * @param opLocalIdentifier
-     *            required OP local identifier
-     * @return <code>true</code> if identity belongs to user otherwise return
-     *         <code>false</code>
-     */
-    Boolean isUsersOpIdentifier(Object idUser, String opLocalIdentifier);
 }
