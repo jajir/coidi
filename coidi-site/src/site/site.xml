@@ -84,6 +84,7 @@
 			</item>
 			<item name="Development" href="./development.html">
 				<item name="Project structure" href="./project.html" />
+				<item name="Message processing" href="./op-processing.html" />
 				<item name="Release methodology" href="./release.html" />
 			</item>
 			<item name="Abbreviations" href="./abbreviations.html" />

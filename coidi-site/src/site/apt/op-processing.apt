@@ -1,0 +1,22 @@
+ ----
+ OpenID message processing on OP
+ ----
+
+OpenID message processing on OP
+
+ Page describe processing of OpenID message at OP.
+
+* MainFlow
+
+ When OpenID message comes to OpenID endpoint than have to processed. 
+ Following diagram show main message processing. 
+ 
+[op-req-dispatcher-structure.png] Selecting dispatcher based on mode.
+
+* Processing of checkid_setup a checkid_immediate
+
+ This two modes are most complicated, so both of them are process by separate chain of commands.
+ Chains of command reuse most of commands.
+
+[op-authproc-structure.png] Processing of checkid_setup a checkid_immediate.
+
