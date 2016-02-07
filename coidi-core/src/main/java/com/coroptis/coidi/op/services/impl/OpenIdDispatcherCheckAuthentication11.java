@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.services.AssociationService;
@@ -55,7 +55,7 @@ public class OpenIdDispatcherCheckAuthentication11 implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
+	    HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE)
 		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);

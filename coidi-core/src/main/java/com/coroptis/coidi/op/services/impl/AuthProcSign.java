@@ -18,13 +18,13 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
@@ -49,7 +49,7 @@ public class AuthProcSign implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
 	response.setAssocHandle(authenticationRequest.getAssocHandle());

@@ -29,17 +29,6 @@ public interface IdentitySreg extends Identity{
     void setIdIdentity(String idIdentity);
 
     /**
-     * @return the user
-     */
-    User getUser();
-
-    /**
-     * @param user
-     *            the user to set
-     */
-    void setUser(User user);
-
-    /**
      * @return the nickname
      */
     String getNickname();

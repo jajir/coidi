@@ -1,6 +1,8 @@
 package com.coroptis.coidi.op.services;
 
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
+import javax.servlet.http.HttpSession;
+
+import com.coroptis.coidi.core.message.AuthenticationRequest;
 
 public interface UserVerifier {
 
@@ -15,5 +17,27 @@ public interface UserVerifier {
      * @return <code>true</code> when user own given OP local identity otherwise
      *         return false <code>true</code>
      */
-    boolean verify(String opLocalIdentity, UserSessionSkeleton session);
+    boolean verify(String opLocalIdentity, HttpSession session);
+
+    /**
+     * Check if users is logged into HTTP session.
+     * 
+     * @param session
+     *            required HTTP session
+     * @return return <code>true</code> when user is logged in otherwise return
+     *         <code>false</code>
+     */
+    boolean isUserLogged(HttpSession session);
+
+    /**
+     * Store authentication request into HTTP session for further use.
+     * 
+     * @param session
+     *            required HTTP session
+     * @param authenticationRequest
+     *            required authentication request to store
+     */
+    void storeAuthenticatonRequest(HttpSession session,
+	    AuthenticationRequest authenticationRequest);
+
 }

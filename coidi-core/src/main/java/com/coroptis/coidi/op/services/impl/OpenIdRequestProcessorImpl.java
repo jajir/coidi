@@ -18,9 +18,9 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
@@ -56,7 +56,7 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
-	    final UserSessionSkeleton userSession) {
+	    final HttpSession userSession) {
 	if (openidVersion11Enabled && openIdRequestTool.isOpenIdVersion1x(requestParams)) {
 	    return openIdDispatcher11.process(requestParams, userSession);
 	} else {

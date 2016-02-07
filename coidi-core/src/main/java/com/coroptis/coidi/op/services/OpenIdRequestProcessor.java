@@ -17,8 +17,9 @@ package com.coroptis.coidi.op.services;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 
 /**
  * This interface should be called by OP application. Interface optionally call
@@ -31,6 +32,6 @@ public interface OpenIdRequestProcessor {
 
     final static String CONF_OPENID_VERSION_11_ENABLED = "op.openid.version11.enabled";
 
-    AbstractMessage process(Map<String, String> requestParams, UserSessionSkeleton userSession);
+    AbstractMessage process(Map<String, String> requestParams, HttpSession userSession);
 
 }

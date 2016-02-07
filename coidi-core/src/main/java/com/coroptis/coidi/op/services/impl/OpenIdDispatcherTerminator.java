@@ -19,13 +19,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
@@ -52,7 +52,7 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
+	    HttpSession userSession) {
 	ErrorResponse errorResponse = new ErrorResponse(false);
 	StringBuilder buff = new StringBuilder();
 	buff.append("Unable to process incoming message, incorrect 'openid.mode'");

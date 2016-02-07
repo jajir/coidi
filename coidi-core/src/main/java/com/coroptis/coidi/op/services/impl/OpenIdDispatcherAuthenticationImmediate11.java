@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.OpenId11CheckIdImmediate;
@@ -43,7 +43,7 @@ public class OpenIdDispatcherAuthenticationImmediate11 implements OpenIdDispatch
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
-	    final UserSessionSkeleton userSession) {
+	    final HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_IMMEDIATE)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
 	    AuthenticationResponse response = new AuthenticationResponse();

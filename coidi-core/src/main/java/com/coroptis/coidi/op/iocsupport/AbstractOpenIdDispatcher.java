@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Singleton;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 @Singleton
 public abstract class AbstractOpenIdDispatcher implements OpenIdDispatcher {
@@ -16,7 +16,7 @@ public abstract class AbstractOpenIdDispatcher implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
-	    final UserSessionSkeleton userSession) {
+	    final HttpSession userSession) {
 	for (final OpenIdDispatcher builder : dispatchers) {
 	    final AbstractMessage row = builder.process(requestParams, userSession);
 	    if (row != null) {

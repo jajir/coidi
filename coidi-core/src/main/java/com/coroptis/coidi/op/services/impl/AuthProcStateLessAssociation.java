@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -27,7 +28,6 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -58,7 +58,7 @@ public class AuthProcStateLessAssociation implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("processing nonce: " + authenticationRequest);
 	if (StringUtils.isEmpty(response.getAssocHandle())) {

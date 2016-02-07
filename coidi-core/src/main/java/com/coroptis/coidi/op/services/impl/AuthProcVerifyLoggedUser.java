@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,9 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.UserVerifier;
 import com.google.common.base.Preconditions;
 
 /**
@@ -45,15 +46,18 @@ public class AuthProcVerifyLoggedUser implements AuthenticationProcessor {
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
 
+    @Inject
+    private UserVerifier userVerifier;
+
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
 	Preconditions.checkNotNull(userSession, "UserSession is null");
-	if (!userSession.isLogged()) {
+	if (!userVerifier.isUserLogged(userSession)) {
 	    logger.debug("User is not logged in.");
-	    userSession.setAuthenticationRequest(authenticationRequest);
+	    userVerifier.storeAuthenticatonRequest(userSession, authenticationRequest);
 	    return negativeResponseGenerator.applicationError("User is not logged in",
 		    NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN);
 	}

@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,6 @@ import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 
@@ -45,7 +45,7 @@ public class AuthProcAx10 implements AuthenticationProcessor {
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final UserSessionSkeleton userSession,
+	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	String nameSpaceName = authenticationService.getNameSpace(authenticationRequest,
 		OpenIdNs.TYPE_ATTRIBUTE_EXCHANGE_1_0);

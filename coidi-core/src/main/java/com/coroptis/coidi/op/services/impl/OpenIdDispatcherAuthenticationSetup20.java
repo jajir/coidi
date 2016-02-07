@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
@@ -37,7 +37,7 @@ public class OpenIdDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
+	    HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
 	    Set<String> fieldToSign = new HashSet<String>();

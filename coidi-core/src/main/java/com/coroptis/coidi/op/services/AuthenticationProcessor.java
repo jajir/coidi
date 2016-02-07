@@ -17,10 +17,11 @@ package com.coroptis.coidi.op.services;
 
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 
 /**
  * Interface define chain of commands that process incoming authentication
@@ -50,6 +51,6 @@ public interface AuthenticationProcessor {
      *         otherwise <code>null</code>
      */
     AbstractMessage process(AuthenticationRequest authenticationRequest,
-	    AuthenticationResponse response, UserSessionSkeleton userSession,
+	    AuthenticationResponse response, HttpSession userSession,
 	    Set<String> fieldsToSign);
 }

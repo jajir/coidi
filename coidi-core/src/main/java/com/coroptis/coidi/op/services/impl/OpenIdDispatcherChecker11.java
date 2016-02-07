@@ -18,9 +18,9 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
@@ -37,7 +37,7 @@ public class OpenIdDispatcherChecker11 implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
-	    final UserSessionSkeleton userSession) {
+	    final HttpSession userSession) {
 	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
 	    return negativeResponseGenerator.simpleError("key value '"
 		    + OpenIdDispatcher.OPENID_MODE + "' is empty", AbstractMessage.OPENID_NS_11);

@@ -18,10 +18,10 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AssociationRequest;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationProcessor;
@@ -45,7 +45,7 @@ public class OpenIdDispatcherAssociation11 implements OpenIdDispatcher {
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,
-	    UserSessionSkeleton userSession) {
+	    HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AbstractMessage.MODE_ASSOCIATE)) {
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    if (request.getDhConsumerPublic() == null) {
