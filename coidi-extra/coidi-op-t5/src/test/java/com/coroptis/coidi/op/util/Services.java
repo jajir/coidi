@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.op.util;
 
+import javax.servlet.http.HttpSession;
+
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConfService;
@@ -23,7 +25,6 @@ import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
@@ -36,12 +37,12 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
+import com.coroptis.coidi.op.services.UserVerifier;
 
 public class Services {
 
     private final ConfService configurationService = EasyMock.createMock(ConfService.class);
     private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-    private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
     private final NonceService nonceService = EasyMock.createMock(NonceService.class);
     private final SigningService signingService = EasyMock.createMock(SigningService.class);
     private final StatelessModeNonceService statelessModeNonceService = EasyMock
@@ -67,14 +68,17 @@ public class Services {
 	    .createMock(OpenIdRequestTool.class);
     private final OpConfigurationService opConfigurationService = EasyMock
 	    .createMock(OpConfigurationService.class);
+    private final HttpSession httpSession = EasyMock.createMock(HttpSession.class);
+    private final UserVerifier userVerifier = EasyMock.createMock(UserVerifier.class);
 
     private final Object[] mocks = new Object[] { getBaseNonceDao(), getConfigurationService(),
 	    getNonceService(), getSigningService(), getStatelessModeNonceService(),
 	    getAuthenticationProcessor(), getAuthenticationService(), getIdentityService(),
-	    getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
+	    getNegativeResponseGenerator(), getHttpSession(), getConvertorService(),
 	    getCryptoService(), getAssociationTool(), getAssociationService(),
 	    getBaseAssociationDao(), getRealmTool(), getOpenIdDispatcher11(),
-	    getOpenIdDispatcher20(), getOpenIdRequestTool(), getOpConfigurationService() };
+	    getOpenIdDispatcher20(), getOpenIdRequestTool(), getOpConfigurationService(),
+	    getUserVerifier() };
 
     private static Services services;
 
@@ -163,13 +167,6 @@ public class Services {
     }
 
     /**
-     * @return the userDao
-     */
-    public BaseUserDao getBaseUserDao() {
-	return baseUserDao;
-    }
-
-    /**
      * @return the convertorService
      */
     public ConvertorService getConvertorService() {
@@ -244,5 +241,19 @@ public class Services {
      */
     public OpConfigurationService getOpConfigurationService() {
 	return opConfigurationService;
+    }
+
+    /**
+     * @return the httpSession
+     */
+    public HttpSession getHttpSession() {
+	return httpSession;
+    }
+
+    /**
+     * @return the userVerifier
+     */
+    public UserVerifier getUserVerifier() {
+	return userVerifier;
     }
 }

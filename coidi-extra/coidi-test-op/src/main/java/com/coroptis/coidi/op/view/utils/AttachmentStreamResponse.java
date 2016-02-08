@@ -38,14 +38,17 @@ class AttachmentStreamResponse implements StreamResponse {
 	this.is = is;
     }
 
+    @Override
     public String getContentType() {
 	return contentType;
     }
 
+    @Override
     public InputStream getStream() throws IOException {
 	return is;
     }
 
+    @Override
     public void prepareResponse(Response arg0) {
 	arg0.setHeader("Expires", "0");
 	arg0.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");

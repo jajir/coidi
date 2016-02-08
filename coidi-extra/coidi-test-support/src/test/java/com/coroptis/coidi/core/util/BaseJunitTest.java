@@ -32,6 +32,7 @@ public abstract class BaseJunitTest extends AbstractJunitTest {
 	super(JunitAppModule.class);
     }
 
+    @Override
     protected <T> T getService(Class<T> serviceInterface) {
 	return registry.getService(serviceInterface);
     }

@@ -80,7 +80,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 		return databaseConnection;
 	}
 
-	public void closeConnection() throws SQLException {
+	public void closeConnection()  {
 		if (session != null) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().commit();
@@ -91,44 +91,54 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 		}
 	}
 
+	@Override
 	public void close() throws SQLException {
 		closeConnection();
 	}
 
+	@Override
 	public IDataSet createDataSet() throws SQLException {
 		return getIDatabaseConnection().createDataSet();
 	}
 
+	@Override
 	public IDataSet createDataSet(String[] tableNames) throws SQLException {
 		return getIDatabaseConnection().createDataSet(tableNames);
 	}
 
+	@Override
 	public ITable createQueryTable(String tableName, String sql)
 			throws DataSetException, SQLException {
 		return getIDatabaseConnection().createQueryTable(tableName, sql);
 	}
 
+	@Override
 	public DatabaseConfig getConfig() {
 		return getIDatabaseConnection().getConfig();
 	}
 
+	@Override
 	public Connection getConnection() throws SQLException {
 		return getIDatabaseConnection().getConnection();
 	}
 
+	@Override
 	public int getRowCount(String tableName) throws SQLException {
 		return getIDatabaseConnection().getRowCount(tableName);
 	}
 
+	@Override
 	public int getRowCount(String tableName, String whereClause)
 			throws SQLException {
 		return getIDatabaseConnection().getRowCount(tableName, whereClause);
 	}
 
+	@Override
 	public String getSchema() {
 		return getIDatabaseConnection().getSchema();
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public IStatementFactory getStatementFactory() {
 		return getIDatabaseConnection().getStatementFactory();

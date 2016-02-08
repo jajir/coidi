@@ -34,6 +34,7 @@ public class EasyMockServicebuilder<T> implements ServiceBuilder<T> {
 	this.service = service;
     }
 
+    @Override
     public T buildService(ServiceResources resources) {
 	return service;
     }

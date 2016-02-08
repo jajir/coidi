@@ -16,7 +16,6 @@ import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.junit.Services;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -49,7 +48,7 @@ public class OpTest {
 	@Test
 	public void test_authenticationRequest() throws Exception {
 		services.replay();
-		final AbstractMessage msg = requestProcessor.process(prepareRequest(), services.getUserSession());
+		final AbstractMessage msg = requestProcessor.process(prepareRequest(), services.getHttpSession());
 
 		logger.debug(msg.getMessage());
 	}
@@ -64,7 +63,7 @@ public class OpTest {
 				final Services services = Services.getServices();
 				bind(BaseAssociationDao.class).toInstance(services.getBaseAssociationDao());
 				bind(BaseNonceDao.class).toInstance(services.getBaseNonceDao());
-				bind(BaseUserDao.class).toInstance(services.getBaseUserDao());
+				bind(UserVerifier.class).toInstance(services.getUserVerifier());
 				bind(BaseIdentityDao.class).toInstance(services.getBaseIdentityDao());
 			}
 		}, new OpModule());

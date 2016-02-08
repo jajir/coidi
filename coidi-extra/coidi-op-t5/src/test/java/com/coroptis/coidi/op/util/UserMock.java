@@ -18,9 +18,8 @@ package com.coroptis.coidi.op.util;
 import java.util.Set;
 
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.User;
-
-public class UserMock implements User {
+@Deprecated
+public class UserMock {
 
     private Integer idUser;
 

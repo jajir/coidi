@@ -34,7 +34,7 @@ import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
-import com.coroptis.coidi.rp.services.AuthenticationService;
+import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
 import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
@@ -57,7 +57,7 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
     private MessageService messageService;
 
     @Inject
-    private AuthenticationService authenticationService;
+    private AuthenticationVerificationService authenticationVerificationService;
 
     @Inject
     private HttpTransportService httpTransportService;
@@ -80,7 +80,7 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 
 	    if (asm.exists(Association.class)) {
 		logger.debug("there is association.");
-		AuthenticationResult authenticationResult = authenticationService
+		AuthenticationResult authenticationResult = authenticationVerificationService
 			.verify(authenticationResponse, asm.get(Association.class));
 		if (authenticationResult.isPositive()) {
 		    UserSession session = asm.get(UserSession.class);

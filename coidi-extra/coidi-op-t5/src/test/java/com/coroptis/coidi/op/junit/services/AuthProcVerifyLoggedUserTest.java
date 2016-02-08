@@ -17,6 +17,8 @@ package com.coroptis.coidi.op.junit.services;
 
 import java.util.HashSet;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
@@ -26,8 +28,7 @@ import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.impl.AuthProcVerifyLoggedUser;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
-import com.coroptis.coidi.op.util.TestUserSession;
-import com.coroptis.coidi.op.util.UserMock;
+import com.coroptis.coidi.op.util.MockHttpSession;
 
 public class AuthProcVerifyLoggedUserTest extends AbstractT5JunitTest {
 
@@ -35,17 +36,16 @@ public class AuthProcVerifyLoggedUserTest extends AbstractT5JunitTest {
 
     private AuthenticationProcessor service;
     private AuthenticationRequest request;
-    private UserMock user;
-    private TestUserSession session;
+    private HttpSession session;
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(AuthenticationProcessor.class, AuthProcVerifyLoggedUser.class).withId(
-		SERVICE_NAME);
+	binder.bind(AuthenticationProcessor.class, AuthProcVerifyLoggedUser.class)
+		.withId(SERVICE_NAME);
     }
 
     public void testProcess_userIsLoggedIn() throws Exception {
-	session.setUser(user);
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
 	services.replay();
 
 	AbstractMessage ret = service.process(request, null, session, new HashSet<String>());
@@ -56,14 +56,14 @@ public class AuthProcVerifyLoggedUserTest extends AbstractT5JunitTest {
 
     public void testProcess_userIsNotLoggedIn() throws Exception {
 	ErrorResponse err = new ErrorResponse(false);
-	EasyMock.expect(
-		services.getNegativeResponseGenerator().applicationError("User is not logged in",
-			"pleaseLogin")).andReturn(err);
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(false);
+	services.getUserVerifier().storeAuthenticatonRequest(session, request);
+	EasyMock.expect(services.getNegativeResponseGenerator()
+		.applicationError("User is not logged in", "pleaseLogin")).andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, null, session, new HashSet<String>());
 
 	assertSame(err, ret);
-	assertSame(request, session.getAuthenticationRequest());
 	services.verify();
     }
 
@@ -72,15 +72,13 @@ public class AuthProcVerifyLoggedUserTest extends AbstractT5JunitTest {
 	super.setUp();
 	service = getService(SERVICE_NAME, AuthenticationProcessor.class);
 	request = new AuthenticationRequest();
-	user = new UserMock();
-	session = new TestUserSession();
+	session = new MockHttpSession();
     }
 
     @Override
     protected void tearDown() throws Exception {
 	service = null;
 	request = null;
-	user = null;
 	session = null;
 	super.tearDown();
     }

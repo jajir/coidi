@@ -61,6 +61,7 @@ public class ExtendedTapestryFilter extends TapestryFilter {
      * Overridden in subclasses to provide additional module definitions beyond
      * those normally located. This implementation returns an empty array.
      */
+    @Override
     protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
 	final String prop = context.getInitParameter("system.property.configuration.directory");
 	if (prop == null) {

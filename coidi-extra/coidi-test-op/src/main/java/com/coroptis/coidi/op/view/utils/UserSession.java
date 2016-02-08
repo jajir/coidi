@@ -18,12 +18,10 @@ package com.coroptis.coidi.op.view.utils;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.entities.UserImpl;
 import com.coroptis.coidi.op.view.services.UserService;
 
-public class UserSession implements UserSessionSkeleton {
+public class UserSession {
 
     @Inject
     private UserService userService;
@@ -32,7 +30,6 @@ public class UserSession implements UserSessionSkeleton {
 
     private AuthenticationRequest authenticationRequest;
 
-    @Override
     public boolean isLogged() {
 	return idUser != null;
     }
@@ -49,7 +46,7 @@ public class UserSession implements UserSessionSkeleton {
      * @param user
      *            the user to set
      */
-    public void setUser(User user) {
+    public void setUser(UserImpl user) {
 	this.idUser = user.getIdUser();
     }
 
@@ -64,12 +61,10 @@ public class UserSession implements UserSessionSkeleton {
      * @param authenticationRequest
      *            the authenticationRequest to set
      */
-    @Override
     public void setAuthenticationRequest(AuthenticationRequest authenticationRequest) {
 	this.authenticationRequest = authenticationRequest;
     }
 
-    @Override
     public Integer getIdUser() {
 	return idUser;
     }

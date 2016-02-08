@@ -8,7 +8,6 @@ import org.apache.commons.lang.time.DateUtils;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.util.MapH;
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.Identity.Gendre;
 import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;

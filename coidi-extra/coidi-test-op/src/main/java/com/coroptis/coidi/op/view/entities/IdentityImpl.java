@@ -25,13 +25,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.User;
+import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.google.common.base.Objects;
 
 @Entity
 @Table(name = "identity")
-public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identity {
+public class IdentityImpl extends AbstractEntity<IdentityImpl> implements IdentitySreg {
 
     @Id
     @Column(nullable = false, length = 50, name = "id_identity")
@@ -116,8 +115,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
      * 
      * @see com.coroptis.coidi.op.entities.Identity#getUser()
      */
-    @Override
-    public User getUser() {
+    public UserImpl getUser() {
 	return user;
     }
 
@@ -128,9 +126,8 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
      * com.coroptis.coidi.op.entities.Identity#setUser(com.coroptis.coidi.op
      * .entities.UserImpl)
      */
-    @Override
-    public void setUser(User user) {
-	this.user = (UserImpl) user;
+    public void setUser(UserImpl user) {
+	this.user = user;
     }
 
     /*

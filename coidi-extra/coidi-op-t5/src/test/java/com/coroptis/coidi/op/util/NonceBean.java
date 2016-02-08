@@ -27,6 +27,7 @@ public class NonceBean implements Nonce {
     /**
      * @return the nonce
      */
+    @Override
     public String getNonce() {
 	return nonce;
     }
@@ -35,6 +36,7 @@ public class NonceBean implements Nonce {
      * @param nonce
      *            the nonce to set
      */
+    @Override
     public void setNonce(String nonce) {
 	this.nonce = nonce;
     }
@@ -42,6 +44,7 @@ public class NonceBean implements Nonce {
     /**
      * @return the association
      */
+    @Override
     public Association getAssociation() {
 	return association;
     }
@@ -50,6 +53,7 @@ public class NonceBean implements Nonce {
      * @param association
      *            the association to set
      */
+    @Override
     public void setAssociation(Association association) {
 	this.association = association;
     }

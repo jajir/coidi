@@ -56,6 +56,7 @@ public class AccessControllerDispatcher implements Dispatcher {
 	this.componentSource = componentSource;
     }
 
+    @Override
     public boolean dispatch(Request request, Response response) throws IOException {
 	String path = request.getPath();
 	if (path.equals("")) {

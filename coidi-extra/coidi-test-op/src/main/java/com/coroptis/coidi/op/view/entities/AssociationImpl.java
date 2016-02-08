@@ -96,6 +96,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
      * @param assocHandle
      *            the assocHandle to set
      */
+    @Override
     public void setAssocHandle(String assocHandle) {
 	this.assocHandle = assocHandle;
     }
@@ -112,6 +113,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
      * @param associationType
      *            the associationType to set
      */
+    @Override
     public void setAssociationType(AssociationType associationType) {
 	this.associationType = associationType;
     }
@@ -128,6 +130,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
      * @param sessionType
      *            the sessionType to set
      */
+    @Override
     public void setSessionType(SessionType sessionType) {
 	this.sessionType = sessionType;
     }
@@ -144,6 +147,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
      * @param macKey
      *            the macKey to set
      */
+    @Override
     public void setMacKey(String macKey) {
 	this.macKey = macKey;
     }
@@ -160,6 +164,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
      * @param expiredIn
      *            the expiredIn to set
      */
+    @Override
     public void setExpiredIn(Date expiredIn) {
 	this.expiredIn = expiredIn;
     }

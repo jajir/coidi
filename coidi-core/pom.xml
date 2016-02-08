@@ -42,10 +42,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</connection>
-		<developerConnection>scm:svn:http://svn.code.sf.net/p/coidi/code/trunk</developerConnection>
-		<tag>HEAD</tag>
-		<url>svn://svn.code.sf.net/p/coidi/code/trunk</url>
+		<connection>https://github.com/kevinsawicki/github-maven-example</connection>
+		<developerConnection>scm:git:git@github.com:jajir/coidi.git</developerConnection>
+		<url>scm:git:git://github.com/jajir/coidi.git</url>
 	</scm>
 
 	<dependencies>

@@ -18,6 +18,8 @@ package com.coroptis.coidi.op.junit.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
@@ -30,8 +32,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.impl.AuthProcVerifyIdentity20;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
-import com.coroptis.coidi.op.util.TestUserSession;
-import com.coroptis.coidi.op.util.UserMock;
+import com.coroptis.coidi.op.util.MockHttpSession;
 
 public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
 
@@ -40,20 +41,18 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
     private AuthenticationProcessor service;
     private AuthenticationRequest request;
     private AuthenticationResponse response;
-    private TestUserSession session;
-    private UserMock user;
+    private HttpSession session;
 
     @Override
     public void bind(ServiceBinder binder) {
-	binder.bind(AuthenticationProcessor.class, AuthProcVerifyIdentity20.class).withId(
-		SERVICE_NAME);
+	binder.bind(AuthenticationProcessor.class, AuthProcVerifyIdentity20.class)
+		.withId(SERVICE_NAME);
     }
 
     public void testProcess() throws Exception {
-	session.setUser(user);
-	EasyMock.expect(
-		services.getOpenIdRequestTool()
-			.verify("http://www.coidi.com/identity/qwe", session)).andReturn(true);
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
+	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+		session)).andReturn(true);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
 
@@ -62,7 +61,7 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
     }
 
     public void testProcess_missingIdentity() throws Exception {
-	session.setUser(user);
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
 	request.setIdentity(null);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
@@ -72,8 +71,8 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
     }
 
     public void testProcess_userIsNotLogged() throws Exception {
-	session.setUser(null);
 	ErrorResponse err = new ErrorResponse(false);
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(false);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator().simpleError("User is not logged at OP"))
 		.andReturn(err);
@@ -86,14 +85,12 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
     }
 
     public void testProcess_userIsNotValid() throws Exception {
-	session.setUser(user);
 	ErrorResponse err = new ErrorResponse(false);
-	EasyMock.expect(
-		services.getOpenIdRequestTool()
-			.verify("http://www.coidi.com/identity/qwe", session)).andReturn(false);
-	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError(
-			"Requested identity 'http://www.coidi.com/identity/qwe' doesn't exists."))
+	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
+	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+		session)).andReturn(false);
+	EasyMock.expect(services.getNegativeResponseGenerator().simpleError(
+		"Requested identity 'http://www.coidi.com/identity/qwe' doesn't exists."))
 		.andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
@@ -114,8 +111,7 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
 	params.put("openid.claimed_id", "http://www.coidi.com/identity/qwe");
 	request = new AuthenticationRequest(params);
 	response = new AuthenticationResponse();
-	session = new TestUserSession();
-	user = new UserMock();
+	session = new MockHttpSession();
     }
 
     @Override
@@ -123,7 +119,6 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
 	service = null;
 	request = null;
 	response = null;
-	user = null;
 	session = null;
 	super.tearDown();
     }

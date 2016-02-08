@@ -15,16 +15,16 @@
  */
 package com.coroptis.coidi.op.junit;
 
+import javax.servlet.http.HttpSession;
+
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
@@ -37,11 +37,11 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
+import com.coroptis.coidi.op.services.UserVerifier;
 
 public class Services {
 
 	private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-	private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
 	private final BaseIdentityDao baseIdentityDao = EasyMock.createMock(BaseIdentityDao.class);
 	private final NonceService nonceService = EasyMock.createMock(NonceService.class);
 	private final SigningService signingService = EasyMock.createMock(SigningService.class);
@@ -62,14 +62,15 @@ public class Services {
 	private final OpenIdDispatcher openIdDispatcher20 = EasyMock.createMock(OpenIdDispatcher.class);
 	private final OpenIdRequestTool openIdRequestTool = EasyMock.createMock(OpenIdRequestTool.class);
 	private final OpConfigurationService opConfigurationService = EasyMock.createMock(OpConfigurationService.class);
-	private final UserSessionSkeleton userSession = EasyMock.createMock(UserSessionSkeleton.class);
+	private final UserVerifier userVerifier = EasyMock.createMock(UserVerifier.class);
+	private final HttpSession httpSession = EasyMock.createMock(HttpSession.class);
 
 	private final Object[] mocks = new Object[] { getBaseNonceDao(), getNonceService(), getSigningService(),
 			getStatelessModeNonceService(), getAuthenticationProcessor(), getAuthenticationService(),
-			getIdentityService(), getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(),
+			getIdentityService(), getNegativeResponseGenerator(), getConvertorService(),
 			getCryptoService(), getAssociationTool(), getAssociationService(), getBaseAssociationDao(), getRealmTool(),
 			getOpenIdDispatcher11(), getOpenIdDispatcher20(), getOpenIdRequestTool(), getOpConfigurationService(),
-			getBaseIdentityDao(), getUserSession() };
+			getBaseIdentityDao(),getUserVerifier(), getHttpSession() };
 
 	private static Services services;
 
@@ -148,13 +149,6 @@ public class Services {
 	 */
 	public NegativeResponseGenerator getNegativeResponseGenerator() {
 		return negativeResponseGenerator;
-	}
-
-	/**
-	 * @return the userDao
-	 */
-	public BaseUserDao getBaseUserDao() {
-		return baseUserDao;
 	}
 
 	/**
@@ -238,7 +232,18 @@ public class Services {
 		return baseIdentityDao;
 	}
 
-	public UserSessionSkeleton getUserSession() {
-		return userSession;
+	/**
+	 * @return the userVerifier
+	 */
+	public UserVerifier getUserVerifier() {
+	    return userVerifier;
 	}
+
+	/**
+	 * @return the httpSession
+	 */
+	public HttpSession getHttpSession() {
+	    return httpSession;
+	}
+
 }

@@ -20,7 +20,6 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.op.view.entities.IdentityImpl;
 import com.coroptis.coidi.op.view.entities.UserImpl;
@@ -49,7 +48,7 @@ public class UserDaoImpl implements UserDao {
 	UserImpl user = new UserImpl();
 	user.setName(name);
 	user.setPassword(password);
-	Identity identity = new IdentityImpl();
+	IdentityImpl identity = new IdentityImpl();
 	identity.setUser(user);
 	identity.setIdIdentity(identityId);
 	session.save(user);

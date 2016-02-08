@@ -19,7 +19,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import com.coroptis.coidi.op.dao.BaseUserDao;
+import com.coroptis.coidi.op.view.dao.BaseUserDao;
 import com.coroptis.coidi.op.view.entities.UserImpl;
 
 public class BaseUserDaoImpl implements BaseUserDao {

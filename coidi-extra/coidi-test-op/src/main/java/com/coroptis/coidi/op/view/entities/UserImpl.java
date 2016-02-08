@@ -29,12 +29,11 @@ import javax.persistence.Table;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.entities.User;
 import com.google.common.base.Objects;
 
 @Entity
 @Table(name = "user")
-public class UserImpl implements User {
+public class UserImpl {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,7 +61,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#getIdUser()
      */
-    @Override
     public Integer getIdUser() {
 	return idUser;
     }
@@ -72,7 +70,6 @@ public class UserImpl implements User {
      * 
      * @see com.coroptis.coidi.op.entities.User#setIdUser(java.lang.Integer)
      */
-    @Override
     public void setIdUser(Integer idUser) {
 	this.idUser = idUser;
     }
@@ -119,7 +116,6 @@ public class UserImpl implements User {
      * @see com.coroptis.coidi.op.entities.User#getIdentities()
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
     public Set<Identity> getIdentities() {
 	return (Set) identities;
     }
@@ -130,7 +126,6 @@ public class UserImpl implements User {
      * @see com.coroptis.coidi.op.entities.User#setIdentities(java.util.Set)
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    @Override
     public void setIdentities(Set<Identity> identities) {
 	this.identities = (Set) identities;
     }

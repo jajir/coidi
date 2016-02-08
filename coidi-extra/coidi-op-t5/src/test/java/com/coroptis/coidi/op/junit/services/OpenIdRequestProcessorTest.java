@@ -18,6 +18,8 @@ package com.coroptis.coidi.op.junit.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
@@ -27,7 +29,7 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.impl.OpenIdRequestProcessorImpl;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
-import com.coroptis.coidi.op.util.TestUserSession;
+import com.coroptis.coidi.op.util.MockHttpSession;
 
 public class OpenIdRequestProcessorTest extends AbstractT5JunitTest {
     private final static String SERVICE_NAME = "realService";
@@ -37,7 +39,7 @@ public class OpenIdRequestProcessorTest extends AbstractT5JunitTest {
     public void testProcess_openId_11() throws Exception {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put(OpenIdDispatcher.OPENID_MODE, "some_mode");
-	TestUserSession userSession = new TestUserSession();
+	HttpSession userSession = new MockHttpSession();
 	AbstractMessage out = new ErrorResponse(true, "some error");
 	EasyMock.expect(services.getOpenIdRequestTool().isOpenIdVersion1x(params)).andReturn(true);
 	EasyMock.expect(services.getOpenIdDispatcher11().process(params, userSession)).andReturn(
@@ -53,7 +55,7 @@ public class OpenIdRequestProcessorTest extends AbstractT5JunitTest {
 	Map<String, String> params = new HashMap<String, String>();
 	params.put(OpenIdDispatcher.OPENID_NS, "some_ns");
 	params.put(OpenIdDispatcher.OPENID_MODE, "some_mode");
-	TestUserSession userSession = new TestUserSession();
+	HttpSession userSession = new MockHttpSession();
 	AbstractMessage out = new ErrorResponse(true, "some error");
 	EasyMock.expect(services.getOpenIdRequestTool().isOpenIdVersion1x(params)).andReturn(false);
 	EasyMock.expect(services.getOpenIdDispatcher20().process(params, userSession)).andReturn(

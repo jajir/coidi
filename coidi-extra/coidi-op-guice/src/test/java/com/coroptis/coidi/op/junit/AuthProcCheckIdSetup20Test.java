@@ -4,6 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.base.UserSessionSkeleton;
 import com.coroptis.coidi.op.iocsupport.AuthProcCheckIdSetup20;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.google.common.base.Objects;
@@ -57,7 +58,7 @@ public class AuthProcCheckIdSetup20Test {
 
 	@Override
 	public AbstractMessage process(AuthenticationRequest authenticationRequest,
-		AuthenticationResponse response, UserSessionSkeleton userSession,
+		AuthenticationResponse response, HttpSession userSession,
 		Set<String> fieldsToSign) {
 	    logger.debug("code: {}", code);
 	    return null;

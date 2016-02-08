@@ -34,7 +34,7 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.rp.base.AuthenticationParameters;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
-import com.coroptis.coidi.rp.services.AssociationServise;
+import com.coroptis.coidi.rp.services.AssociationFactory;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
 import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.services.RpService;
@@ -55,7 +55,7 @@ public class Login {
     private DiscoveryProcessor discoveryProcessor;
 
     @Inject
-    private AssociationServise associationServise;
+    private AssociationFactory associationFactory;
 
     @Inject
     @Symbol("common.return_to")
@@ -151,7 +151,7 @@ public class Login {
 	    if (statelessMode) {
 		authenticationRequestUrl = rpService.authentication(discoveryResult, null, params);
 	    } else {
-		association = associationServise.generateAssociation(discoveryResult.getEndPoint(),
+		association = associationFactory.generateAssociation(discoveryResult.getEndPoint(),
 			sessionType, associationType);
 		authenticationRequestUrl = rpService.authentication(discoveryResult, association,
 			params);
