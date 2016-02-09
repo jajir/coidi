@@ -42,8 +42,8 @@
 	</developers>
 
 	<scm>
-		<connection>https://github.com/kevinsawicki/github-maven-example</connection>
-		<developerConnection>scm:git:git@github.com:jajir/coidi.git</developerConnection>
+		<connection>https://github.com/jajir/coidi</connection>
+		<developerConnection>scm:git:git/github.com/jajir/coidi.git</developerConnection>
 		<url>scm:git:git://github.com/jajir/coidi.git</url>
 	</scm>
 
