@@ -21,7 +21,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.entities.UserImpl;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
@@ -50,7 +49,7 @@ public class UserServiceTest extends BaseJunitTest {
 		.andReturn("hashedPasswd");
 	EasyMock.expect(services.getUserDao().login("karel", "hashedPasswd")).andReturn(user);
 	services.replay();
-	User ret = service.login("karel", "monkey");
+	UserImpl ret = service.login("karel", "monkey");
 
 	assertNotNull(ret);
 	assertSame(user, ret);

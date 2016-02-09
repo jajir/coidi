@@ -48,7 +48,7 @@ import com.coroptis.coidi.core.services.ConfigurationService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
+import com.coroptis.coidi.op.view.dao.BaseUserDao;
 import com.coroptis.coidi.op.view.dao.IdentityDao;
 import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.op.view.dao.impl.BaseAssociationDaoImpl;

@@ -24,6 +24,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.corelib.components.PasswordField;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.RequestGlobals;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
@@ -55,6 +56,9 @@ public class Login { // NO_UCD
     @Inject
     private OpenIdRequestProcessor openIdRequestProcessor;
 
+    @Inject
+    private RequestGlobals request;
+
     void onValidateFromLoginForm() {
 	if (userService.login(userName, password) == null) {
 	    loginForm.recordError(passwordField, "Invalid user name or password.");
@@ -65,7 +69,7 @@ public class Login { // NO_UCD
 	userSession.setUser(userService.login(userName, password));
 	if (userSession.getAuthenticationRequest() != null) {
 	    AbstractMessage response = openIdRequestProcessor.process(userSession
-		    .getAuthenticationRequest().getMap(), userSession);
+		    .getAuthenticationRequest().getMap(), request.getHTTPServletRequest().getSession());
 	    return new URL(response.getMessage());
 	}
 	return UserProfile.class;

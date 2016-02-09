@@ -65,7 +65,7 @@ public class OpenId { // NO_UCD
 	    Map<String, String> map = authenticationService
 		    .convertHttpRequestParametersToMap(request.getHTTPServletRequest());
 	    logger.info("SSO openId request is " + httpRequest.getQueryString());
-	    AbstractMessage requestResponse = openIdRequestProcessor.process(map, userSession);
+	    AbstractMessage requestResponse = openIdRequestProcessor.process(map, httpRequest.getSession());
 	    logger.debug("openId response: " + requestResponse.getMessage());
 	    if (requestResponse.isUrl()) {
 		String redirUrl = requestResponse.getUrl(null);

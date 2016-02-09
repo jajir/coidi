@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.op.view.util;
 
+import javax.servlet.http.HttpSession;
+
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConvertorService;
@@ -22,13 +24,14 @@ import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
-import com.coroptis.coidi.op.dao.BaseUserDao;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
+import com.coroptis.coidi.op.services.UserVerifier;
+import com.coroptis.coidi.op.view.dao.BaseUserDao;
 import com.coroptis.coidi.op.view.dao.UserDao;
 
 /**
@@ -57,12 +60,14 @@ public class Services {
     private final NegativeResponseGenerator negativeResponseGenerator = EasyMock
 	    .createMock(NegativeResponseGenerator.class);
     private final UserDao userDao = EasyMock.createMock(UserDao.class);
+    private final HttpSession httpSession = EasyMock.createMock(HttpSession.class);
+    private final UserVerifier userVerifier = EasyMock.createMock(UserVerifier.class);
 
     private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
 	    getOpConfigurationService(), getNonceService(), getAssociationDao(), getSigningService(),
 	    getStatelessModeNonceService(), getAuthenticationProcessor(),
 	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator(),
-	    getBaseUserDao(), getConvertorService(), getUserDao() };
+	    getBaseUserDao(), getConvertorService(), getUserDao(), getHttpSession(), getUserVerifier() };
 
     private static Services services;
 
@@ -183,6 +188,20 @@ public class Services {
      */
     public OpConfigurationService getOpConfigurationService() {
         return opConfigurationService;
+    }
+
+    /**
+     * @return the httpSession
+     */
+    public HttpSession getHttpSession() {
+        return httpSession;
+    }
+
+    /**
+     * @return the userVerifier
+     */
+    public UserVerifier getUserVerifier() {
+        return userVerifier;
     }
 
 }

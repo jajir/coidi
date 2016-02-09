@@ -15,16 +15,15 @@
  */
 package com.coroptis.coidi.op.view.services;
 
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.entities.UserImpl;
 
 public interface UserService {
 
-    User login(String name, String password);
+    UserImpl login(String name, String password);
 
-    User register(String name, String password, String identityId);
+    UserImpl register(String name, String password, String identityId);
 
-    User getUserByName(String userName);
+    UserImpl getUserByName(String userName);
 
     /**
      * Get user by it's id.
