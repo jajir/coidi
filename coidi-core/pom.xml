@@ -8,6 +8,7 @@
 	<name>Coidi OpenID core</name>
 	<inceptionYear>2013</inceptionYear>
 	<description>OpenID relaying party and OpenID provider servers will find here all required code</description>
+	<url>https://github.com/jajir/coidi</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<t5.version>5.3.8</t5.version>
