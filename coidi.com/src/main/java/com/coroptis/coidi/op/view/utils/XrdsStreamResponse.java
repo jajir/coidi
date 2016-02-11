@@ -32,16 +32,13 @@ public class XrdsStreamResponse implements StreamResponse {
 		this.xml = Preconditions.checkNotNull(xml, "xrds xml");
 	}
 
-	@Override
 	public void prepareResponse(Response response) {
 	}
 
-	@Override
 	public InputStream getStream() throws IOException {
 		return new ByteArrayInputStream(xml.getBytes());
 	}
 
-	@Override
 	public String getContentType() {
 		return "application/xrds+xml";
 	}

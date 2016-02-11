@@ -24,7 +24,7 @@ import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.op.services.IdentityService;
-import com.coroptis.coidi.op.services.UserService;
+import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 import com.coroptis.coidi.op.view.utils.UserSession;
 

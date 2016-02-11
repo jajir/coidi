@@ -25,6 +25,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
+import org.apache.tapestry5.services.Session;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -52,6 +53,9 @@ public class OpenId { // NO_UCD
 
 	@Inject
 	private OpenIdDispatcher openIdRequestDispatcher;
+	
+	@Inject
+	private Session session;
 
 	@SessionState
 	private UserSession userSession;
@@ -67,7 +71,7 @@ public class OpenId { // NO_UCD
 			}
 			logger.info("SSO openId request is " + httpRequest.getQueryString());
 			AbstractMessage requestResponse = openIdRequestDispatcher.process(
-					map, userSession);
+					map, session);
 			logger.debug("openId response: " + requestResponse.getMessage());
 			if (requestResponse.isUrl()) {
 				String redirUrl = requestResponse.getMessage();

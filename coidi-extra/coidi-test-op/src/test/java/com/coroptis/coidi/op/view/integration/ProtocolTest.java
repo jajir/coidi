@@ -6,6 +6,7 @@ import java.util.Map;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.util.MockHttpSession;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 
 public class ProtocolTest extends AbstractIntegrationDaoTest {
@@ -17,9 +18,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.mode", "checkid_setup");
 	req.put("openid.return_to", "http://localhost:8081/somePage");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -46,9 +45,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 		"http://peeron.com/cgi-bin/invcgis/login?openid=1&oic.identity=http://www.coidi.com/identity/prasatko&oic.time=1368959102-cb98caa75b05fd288a01");
 	req.put("openid.signed", "assoc_handle,identity,return_to,mode");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -72,9 +69,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -118,9 +113,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -156,9 +149,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -182,9 +173,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 
@@ -213,9 +202,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 
-	UserSessionMock userSession = new UserSessionMock();
-	userSession.setLogged(true);
-	userSession.setIdUser(2);
+	MockHttpSession userSession = new MockHttpSession();
 	OpenIdRequestProcessor authentication = getService(OpenIdRequestProcessor.class);
 	AbstractMessage ret = authentication.process(req, userSession);
 

@@ -27,18 +27,11 @@ import org.hibernate.jdbc.Work;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.UserService;
-import com.coroptis.coidi.op.services.XrdsService;
+import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
 import com.google.common.io.Files;
 
 public class StartupTest extends AbstractIntegrationDaoTest {
-
-	public void testStartup() throws Exception {
-		XrdsService xrdsService = getService(XrdsService.class);
-		assertEquals("http://localhost:8080/userxrds/zdenek",
-				xrdsService.getXrdsLocation("zdenek"));
-	}
 
 	public void testLogin() throws Exception {
 		UserService userService = getService(UserService.class);
@@ -57,7 +50,6 @@ public class StartupTest extends AbstractIntegrationDaoTest {
 				logger.debug("executing: " + line);
 				session.doWork(new Work() {
 
-					@Override
 					public void execute(Connection connection)
 							throws SQLException {
 						connection.createStatement().execute(line);

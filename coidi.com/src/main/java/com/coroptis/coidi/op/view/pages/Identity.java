@@ -23,8 +23,8 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.IdentityService;
-import com.coroptis.coidi.op.services.XrdsService;
 import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
+import com.coroptis.coidi.rp.services.XrdsService;
 
 /**
  * Main public profile page.

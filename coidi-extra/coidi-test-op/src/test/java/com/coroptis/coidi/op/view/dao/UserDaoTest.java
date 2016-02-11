@@ -15,7 +15,6 @@
  */
 package com.coroptis.coidi.op.view.dao;
 
-import com.coroptis.coidi.op.entities.User;
 import com.coroptis.coidi.op.view.entities.UserImpl;
 import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
@@ -30,7 +29,7 @@ public class UserDaoTest extends AbstractDaoTest {
     }
 
     public void testLogin_notFound() throws Exception {
-	User ret = dao.login("Jane", "not_exists");
+	UserImpl ret = dao.login("Jane", "not_exists");
 
 	assertNull(ret);
     }
@@ -43,7 +42,7 @@ public class UserDaoTest extends AbstractDaoTest {
     }
 
     public void testGetUserByName_notFound() throws Exception {
-	User ret = dao.getUserByName("Jane3");
+	UserImpl ret = dao.getUserByName("Jane3");
 
 	assertNull(ret);
     }

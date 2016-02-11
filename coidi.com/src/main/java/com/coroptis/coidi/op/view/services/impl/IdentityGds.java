@@ -22,8 +22,8 @@ import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.op.dao.IdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
+import com.coroptis.coidi.op.view.dao.IdentityDao;
 
 public class IdentityGds implements GridDataSource {
 
@@ -34,25 +34,21 @@ public class IdentityGds implements GridDataSource {
 
     private List<Identity> currentPage;
 
-    @Override
     public int getAvailableRows() {
 	return identityDao.getCount();
     }
 
-    @Override
     public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints) {
 	logger.debug("start: " + startIndex);
 	logger.debug("end  : " + endIndex);
 	currentPage = identityDao.getChunk(startIndex, endIndex);
     }
 
-    @Override
     public Object getRowValue(int index) {
 	logger.debug("max: " + currentPage.size() + ", getting: " + index);
 	return currentPage.get(index);
     }
 
-    @Override
     public Class<Identity> getRowType() {
 	return Identity.class;
     }
