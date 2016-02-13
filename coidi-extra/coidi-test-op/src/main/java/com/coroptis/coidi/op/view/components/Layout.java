@@ -21,24 +21,22 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.pages.Index;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 @Import(stylesheet = "context:css/layout.css")
 public class Layout { // NO_UCD
 
-    @SuppressWarnings("unused")
     @Property
     @Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
     private String title;
 
-    @SuppressWarnings("unused")
     @Property
     @SessionState
-    private UserSession userSession;
+    private User user;
 
     Object onActionFromLogout() {
-	userSession = null;
+	user = null;
 	return Index.class;
     }
 

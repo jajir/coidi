@@ -21,9 +21,8 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
 import com.coroptis.coidi.op.view.entities.IdentityImpl;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * Main public profile page.
@@ -35,19 +34,17 @@ import com.coroptis.coidi.op.view.utils.UserSession;
 public class UserProfile { // NO_UCD
 
     @SessionState
-    private UserSession userSession;
+    private User userSession;
 
-    @SuppressWarnings("unused")
     @Property
     private IdentityImpl identity;
 
-    public UserImpl getUser() {
-	return userSession.getUser();
+    public User getUser() {
+	return userSession;
     }
 
-    @SuppressWarnings("unchecked")
     public Set<IdentityImpl> getIdentities() {
-	return (Set) userSession.getUser().getIdentities();
+	return (Set) userSession.getIdentities();
     }
 
 }

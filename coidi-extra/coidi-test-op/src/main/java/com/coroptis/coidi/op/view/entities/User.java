@@ -33,7 +33,7 @@ import com.google.common.base.Objects;
 
 @Entity
 @Table(name = "user")
-public class UserImpl {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +52,7 @@ public class UserImpl {
 
     @Override
     public String toString() {
-	return Objects.toStringHelper(UserImpl.class).add("idUser", idUser).add("name", name)
+	return Objects.toStringHelper(User.class).add("idUser", idUser).add("name", name)
 		.toString();
     }
 

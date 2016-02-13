@@ -20,7 +20,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.coroptis.coidi.op.view.dao.BaseUserDao;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 
 public class BaseUserDaoImpl implements BaseUserDao {
 
@@ -28,8 +28,8 @@ public class BaseUserDaoImpl implements BaseUserDao {
     private Session session;
 
     @Override
-    public UserImpl getById(final Integer idUser) {
-	return (UserImpl) session.createCriteria(UserImpl.class)
+    public User getById(final Integer idUser) {
+	return (User) session.createCriteria(User.class)
 		.add(Restrictions.eq("idUser", idUser)).uniqueResult();
     }
 }

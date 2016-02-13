@@ -22,7 +22,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.coroptis.coidi.op.view.dao.UserDao;
 import com.coroptis.coidi.op.view.entities.IdentityImpl;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 
 public class UserDaoImpl implements UserDao {
 
@@ -30,22 +30,22 @@ public class UserDaoImpl implements UserDao {
     private Session session;
 
     @Override
-    public UserImpl getById(Integer idUser) {
-	return (UserImpl) session.get(UserImpl.class, idUser);
+    public User getById(Integer idUser) {
+	return (User) session.get(User.class, idUser);
     }
 
     @Override
-    public UserImpl login(final String name, final String password) {
-	return (UserImpl) session
-		.createCriteria(UserImpl.class)
+    public User login(final String name, final String password) {
+	return (User) session
+		.createCriteria(User.class)
 		.add(Restrictions.and(Restrictions.eq("name", name),
 			Restrictions.eq("password", password))).uniqueResult();
     }
 
     @CommitAfter
     @Override
-    public UserImpl register(final String name, final String password, final String identityId) {
-	UserImpl user = new UserImpl();
+    public User register(final String name, final String password, final String identityId) {
+	User user = new User();
 	user.setName(name);
 	user.setPassword(password);
 	IdentityImpl identity = new IdentityImpl();
@@ -57,8 +57,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserImpl getUserByName(final String userName) {
-	return (UserImpl) session.createCriteria(UserImpl.class)
+    public User getUserByName(final String userName) {
+	return (User) session.createCriteria(User.class)
 		.add(Restrictions.eq("name", userName)).uniqueResult();
     }
 }

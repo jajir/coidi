@@ -21,7 +21,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.easymock.EasyMock;
 
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.services.impl.UserServiceImpl;
 import com.coroptis.coidi.op.view.util.BaseJunitTest;
@@ -38,7 +38,7 @@ public class UserServiceTest extends BaseJunitTest {
 
     private UserService service;
 
-    private UserImpl user;
+    private User user;
 
     public void testLogin() throws Exception {
 	MessageDigest md = MessageDigest.getInstance("MD5");
@@ -49,7 +49,7 @@ public class UserServiceTest extends BaseJunitTest {
 		.andReturn("hashedPasswd");
 	EasyMock.expect(services.getUserDao().login("karel", "hashedPasswd")).andReturn(user);
 	services.replay();
-	UserImpl ret = service.login("karel", "monkey");
+	User ret = service.login("karel", "monkey");
 
 	assertNotNull(ret);
 	assertSame(user, ret);
@@ -83,7 +83,7 @@ public class UserServiceTest extends BaseJunitTest {
     protected void setUp() throws Exception {
 	super.setUp();
 	service = getService(SERVICE_NAME, UserService.class);
-	user = new UserImpl();
+	user = new User();
 	user.setIdUser(3);
 	user.setName("karel");
     }

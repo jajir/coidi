@@ -1,9 +1,9 @@
 package com.coroptis.coidi.op.view.dao;
 
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 
 public interface BaseUserDao {
 
-    UserImpl getById(final Integer idUser);
+    User getById(final Integer idUser);
     
 }

@@ -21,7 +21,6 @@
 		<module>coidi-test-common</module>
 		<module>coidi-test-op</module>
 		<module>coidi-test-rp</module>
-		<module>coidi-dist</module>
 		<module>coidi-test-support</module>
 		<module>coidi-op-guice</module>
 		<module>coidi-op-t5</module>
@@ -48,6 +47,26 @@
 					<exclusion>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tapestry</groupId>
+				<artifactId>tapestry-hibernate</artifactId>
+				<version>${t5.version}</version>
+				<scope>compile</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -99,6 +118,12 @@
 				<groupId>org.easymock</groupId>
 				<artifactId>easymockclassextension</artifactId>
 				<version>${easymock.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tapestry</groupId>
+				<artifactId>tapestry-test</artifactId>
+				<version>${t5.version}</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>

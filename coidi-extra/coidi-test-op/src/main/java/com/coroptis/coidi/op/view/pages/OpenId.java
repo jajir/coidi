@@ -29,8 +29,8 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.utils.TextResponse;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * This end point will accept and process all OpenID (direct and indirect)
@@ -57,7 +57,7 @@ public class OpenId { // NO_UCD
     private AuthenticationService authenticationService;
 
     @SessionState
-    private UserSession userSession;
+    private User userSession;
 
     public StreamResponse onActivate() {
 	try {

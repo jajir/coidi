@@ -15,15 +15,15 @@
  */
 package com.coroptis.coidi.op.view.dao;
 
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 
 public interface UserDao {
 
-    UserImpl getById(Integer idUser);
+    User getById(Integer idUser);
 
-    UserImpl login(String name, String password);
+    User login(String name, String password);
 
-    UserImpl register(String name, String password, String identityId);
+    User register(String name, String password, String identityId);
 
-    UserImpl getUserByName(String userName);
+    User getUserByName(String userName);
 }

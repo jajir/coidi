@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.op.view.dao.UserDao;
-import com.coroptis.coidi.op.view.entities.UserImpl;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -42,22 +42,22 @@ public class UserServiceImpl implements UserService {
     public final static String SALT = "23t4bcdjs@()&d431f#";
 
     @Override
-    public UserImpl login(final String name, final String password) {
+    public User login(final String name, final String password) {
 	return userDao.login(name, md5(password));
     }
 
     @Override
-    public UserImpl register(final String name, final String password, final String identityId) {
+    public User register(final String name, final String password, final String identityId) {
 	return userDao.register(name, md5(password), identityId);
     }
 
     @Override
-    public UserImpl getUserByName(final String userName) {
+    public User getUserByName(final String userName) {
 	return userDao.getUserByName(userName);
     }
 
     @Override
-    public UserImpl getById(final Integer idUser) {
+    public User getById(final Integer idUser) {
 	return userDao.getById(idUser);
     }
 

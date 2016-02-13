@@ -24,9 +24,9 @@ import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * User registration page.
@@ -44,7 +44,7 @@ public class Registration { // NO_UCD
     private IdentityService identityService;
 
     @SessionState
-    private UserSession userSession;
+    private User userSession;
 
     @Component
     private Form registrationForm;
@@ -83,7 +83,7 @@ public class Registration { // NO_UCD
     }
 
     Object onSuccess() {
-	userSession.setUser(userService.register(userName, password, identityId));
+	userSession = userService.register(userName, password, identityId);
 	return UserProfile.class;
     }
 }

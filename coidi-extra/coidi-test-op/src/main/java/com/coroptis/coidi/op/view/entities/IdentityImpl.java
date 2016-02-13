@@ -38,7 +38,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
-    private UserImpl user;
+    private User user;
 
     @Column(length = 50)
     private String nickname;
@@ -115,7 +115,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
      * 
      * @see com.coroptis.coidi.op.entities.Identity#getUser()
      */
-    public UserImpl getUser() {
+    public User getUser() {
 	return user;
     }
 
@@ -126,7 +126,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
      * com.coroptis.coidi.op.entities.Identity#setUser(com.coroptis.coidi.op
      * .entities.UserImpl)
      */
-    public void setUser(UserImpl user) {
+    public void setUser(User user) {
 	this.user = user;
     }
 

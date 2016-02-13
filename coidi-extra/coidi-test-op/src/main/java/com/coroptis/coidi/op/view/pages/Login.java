@@ -27,10 +27,11 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
-import com.coroptis.coidi.op.view.utils.UserSession;
 
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD
@@ -39,7 +40,10 @@ public class Login { // NO_UCD
     private UserService userService;
 
     @SessionState
-    private UserSession userSession;
+    private User userSession;
+
+    @SessionState
+    private AuthenticationRequest authenticationRequest;
 
     @Component
     private Form loginForm;
@@ -66,10 +70,10 @@ public class Login { // NO_UCD
     }
 
     Object onSuccess() throws MalformedURLException {
-	userSession.setUser(userService.login(userName, password));
-	if (userSession.getAuthenticationRequest() != null) {
-	    AbstractMessage response = openIdRequestProcessor.process(userSession
-		    .getAuthenticationRequest().getMap(), request.getHTTPServletRequest().getSession());
+	userSession = userService.login(userName, password);
+	if (authenticationRequest != null) {
+	    AbstractMessage response = openIdRequestProcessor.process(
+		    authenticationRequest.getMap(), request.getHTTPServletRequest().getSession());
 	    return new URL(response.getMessage());
 	}
 	return UserProfile.class;
