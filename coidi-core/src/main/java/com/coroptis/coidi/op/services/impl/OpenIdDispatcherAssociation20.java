@@ -22,6 +22,8 @@ import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AssociationRequest;
+import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
@@ -42,23 +44,32 @@ public class OpenIdDispatcherAssociation20 implements OpenIdDispatcher {
     private AssociationProcessor associationProcessor;
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
+    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AbstractMessage.MODE_ASSOCIATE)) {
-	    AssociationRequest request = new AssociationRequest(requestParams);
-	    if (request.getAssociationType() == null) {
-		return negativeResponseGenerator.simpleError("Parameter '"
-			+ AssociationRequest.ASSOCIATION_TYPE + "' is required");
-	    }
-	    if (request.getSessionType() == null) {
-		return negativeResponseGenerator.simpleError("Parameter '"
-			+ AssociationRequest.SESSION_TYPE + "' is required");
-	    }
-	    if (request.getDhConsumerPublic() == null) {
-		return negativeResponseGenerator.simpleError("Parameter '"
-			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required");
+
+	    final String assocTypeName = requestParams.get(OPENID_ASSOC_TYPE);
+	    if (assocTypeName == null) {
+		return negativeResponseGenerator.missingParameter(OPENID_ASSOC_TYPE);
+	    } else if (AssociationType.convert(assocTypeName) == null) {
+		return negativeResponseGenerator.buildError("Invalid value '", assocTypeName,
+			"' of property '", OPENID_ASSOC_TYPE, "'");
 	    }
 
+	    final String sessionTypeName = requestParams.get(OPENID_SESSION_TYPE);
+	    if (sessionTypeName == null) {
+		return negativeResponseGenerator.missingParameter(OPENID_SESSION_TYPE);
+	    } else if (SessionType.convert(sessionTypeName) == null) {
+		return negativeResponseGenerator.buildError("Invalid value '", sessionTypeName,
+			"' of property '", OPENID_SESSION_TYPE, "'");
+	    }
+
+	    final String dhConsumerPublic = requestParams.get(OPENID_DH_CONSUMER_PUBLIC);
+	    if (dhConsumerPublic == null) {
+		return negativeResponseGenerator.missingParameter(OPENID_DH_CONSUMER_PUBLIC);
+	    }
+	    //TODO values are computed twice here and in AssociationRequest getters.
+	    
+	    AssociationRequest request = new AssociationRequest(requestParams);
 	    return associationProcessor.processAssociation(request, request.getSessionType(),
 		    request.getAssociationType());
 	} else {

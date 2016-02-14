@@ -54,8 +54,8 @@ public class AuthProcResponse11 implements AuthenticationProcessor {
 	response.setNameSpace(AbstractMessage.OPENID_NS_11);
 	response.setReturnTo(authenticationRequest.getReturnTo());
 	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-	    return negativeResponseGenerator.simpleError(
-		    "Mandatory field 'openid.identity' is missing", AbstractMessage.OPENID_NS_11);
+	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
+		    "Mandatory field 'openid.identity' is missing");
 	}
 	response.setIdentity(authenticationRequest.getIdentity());
 	fieldsToSign.add(AuthenticationResponse.MODE);

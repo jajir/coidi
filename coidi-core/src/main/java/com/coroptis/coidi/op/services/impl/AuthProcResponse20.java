@@ -63,15 +63,15 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
 		 * Both are empty. It could be some OpenID extension request.
 		 */
 	    } else {
-		return negativeResponseGenerator.simpleError("field '"
-			+ AuthenticationResponse.CLAIMED_ID + "' is filled and field '"
-			+ AuthenticationResponse.IDENTITY + "' is empty, this is forbiden state.");
+		return negativeResponseGenerator.buildError("field '",
+			AuthenticationResponse.CLAIMED_ID, "' is filled and field '",
+			AuthenticationResponse.IDENTITY, "' is empty, this is forbiden state.");
 	    }
 	} else {
 	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
-		return negativeResponseGenerator.simpleError("field '"
-			+ AuthenticationResponse.CLAIMED_ID + "' is empty and field '"
-			+ AuthenticationResponse.IDENTITY + "' is filled, this is forbiden state.");
+		return negativeResponseGenerator.buildError("field '",
+			AuthenticationResponse.CLAIMED_ID, "' is empty and field '",
+			AuthenticationResponse.IDENTITY, "' is filled, this is forbiden state.");
 	    } else {
 		/**
 		 * Both are filled

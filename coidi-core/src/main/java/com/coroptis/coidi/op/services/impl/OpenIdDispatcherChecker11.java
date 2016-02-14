@@ -39,8 +39,8 @@ public class OpenIdDispatcherChecker11 implements OpenIdDispatcher {
     public AbstractMessage process(final Map<String, String> requestParams,
 	    final HttpSession userSession) {
 	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
-	    return negativeResponseGenerator.simpleError("key value '"
-		    + OpenIdDispatcher.OPENID_MODE + "' is empty", AbstractMessage.OPENID_NS_11);
+	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
+		    "key value '", OpenIdDispatcher.OPENID_MODE, "' is empty");
 	}
 	return null;
     }

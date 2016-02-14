@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
+import com.coroptis.coidi.core.message.AssociationRequest;
 
 /**
  * Allows to process one specific openID message that are coming to technical
@@ -39,6 +40,21 @@ public interface OpenIdDispatcher {
      * OpenID mode.
      */
     final static String OPENID_MODE = AbstractMessage.OPENID + AbstractMessage.MODE;
+
+    /**
+     * OpenID session type.
+     */
+    final static String OPENID_SESSION_TYPE = AbstractMessage.OPENID + AssociationRequest.SESSION_TYPE;
+
+    /**
+     * OpenID association type.
+     */
+    final static String OPENID_ASSOC_TYPE = AbstractMessage.OPENID + AssociationRequest.ASSOCIATION_TYPE;
+    
+    /**
+     * OpenID DH consumer public.
+     */
+    final static String OPENID_DH_CONSUMER_PUBLIC = AbstractMessage.OPENID + AssociationRequest.DH_CONSUMER_PUBLIC;
 
     /**
      * Process message. If return value is <code>null</code> then next openID

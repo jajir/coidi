@@ -54,13 +54,13 @@ public class AuthProcVerifyIdentity20 implements AuthenticationProcessor {
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
 	if (!userVerifier.isUserLogged(userSession)) {
-	    return negativeResponseGenerator.simpleError("User is not logged at OP");
+	    return negativeResponseGenerator.buildError("User is not logged at OP");
 	}
 
 	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
 	    if (!userVerifier.verify(authenticationRequest.getIdentity(), userSession)) {
-		return negativeResponseGenerator.simpleError("Requested identity '"
-			+ authenticationRequest.getIdentity() + "' doesn't exists.");
+		return negativeResponseGenerator.buildError("Requested identity '"
+			, authenticationRequest.getIdentity() , "' doesn't exists.");
 	    }
 	}
 	return null;

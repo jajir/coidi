@@ -16,17 +16,12 @@
 package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.ErrorResponse;
-import com.coroptis.coidi.op.services.OpConfigurationService;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 
 /**
@@ -41,34 +36,19 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 
-    private final static Logger logger = LoggerFactory.getLogger(OpenIdDispatcherTerminator.class);
-
-    private final String contact;
+    private final NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    public OpenIdDispatcherTerminator(final OpConfigurationService configurationService) {
-	this.contact = configurationService.getErrorContact();
+    public OpenIdDispatcherTerminator(final NegativeResponseGenerator negativeResponseGenerator) {
+	this.negativeResponseGenerator = negativeResponseGenerator;
     }
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
-	ErrorResponse errorResponse = new ErrorResponse(false);
-	StringBuilder buff = new StringBuilder();
-	buff.append("Unable to process incoming message, incorrect 'openid.mode'");
-	buff.append(" or missing parameters or missing OpenID extension support.");
-	String errMsg = buff.toString();
-	buff.append("\n");
-	for (Entry<String, String> entry : requestParams.entrySet()) {
-	    buff.append(entry.getKey());
-	    buff.append("=");
-	    buff.append(entry.getValue());
-	    buff.append("\n");
-	}
-	logger.info(buff.toString());
-	errorResponse.setError(errMsg);
-	errorResponse.setContact(contact);
-	return errorResponse;
+    public AbstractMessage process(final Map<String, String> requestParams,
+	    final HttpSession userSession) {
+	return negativeResponseGenerator.buildError(
+		"Unable to process incoming message, invalid 'openid.mode'",
+		" or missing parameters or missing OpenID extension support.");
     }
 
 }

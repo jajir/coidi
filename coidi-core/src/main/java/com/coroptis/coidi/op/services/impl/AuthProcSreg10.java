@@ -62,11 +62,11 @@ public class AuthProcSreg10 implements AuthenticationProcessor {
 		    .getByOpLocalIdentifier(authenticationRequest.getIdentity());
 	    if (identity == null) {
 		return negativeResponseGenerator
-			.simpleError("For sreg extension is identity required.");
+			.buildError("For sreg extension is identity required.");
 	    }
 	    if (!(identity instanceof IdentitySreg)) {
 		return negativeResponseGenerator
-			.simpleError("For sreg is required extended identity.");
+			.buildError("For sreg is required extended identity.");
 	    }
 	    Set<String> keys = sregService.extractRequestedKeys(authenticationRequest);
 	    sregService.fillSregResponse(keys, response, (IdentitySreg) identity, fieldsToSign);

@@ -90,8 +90,9 @@ public class AuthProcResponse20Test extends AbstractT5JunitTest {
 	ErrorResponse err = new ErrorResponse(false);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator()
-			.simpleError(
-				"field 'claimed_id' is filled and field 'identity' is empty, this is forbiden state."))
+			.buildError("field '",
+				AuthenticationResponse.CLAIMED_ID, "' is filled and field '",
+				AuthenticationResponse.IDENTITY, "' is empty, this is forbiden state."))
 		.andReturn(err);
 	services.replay();
 
@@ -108,8 +109,9 @@ public class AuthProcResponse20Test extends AbstractT5JunitTest {
 	ErrorResponse err = new ErrorResponse(false);
 	EasyMock.expect(
 		services.getNegativeResponseGenerator()
-			.simpleError(
-				"field 'claimed_id' is empty and field 'identity' is filled, this is forbiden state."))
+			.buildError("field '",
+				AuthenticationResponse.CLAIMED_ID, "' is empty and field '",
+				AuthenticationResponse.IDENTITY, "' is filled, this is forbiden state."))
 		.andReturn(err);
 	services.replay();
 

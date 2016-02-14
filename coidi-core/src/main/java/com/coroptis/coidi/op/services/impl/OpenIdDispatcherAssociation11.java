@@ -44,14 +44,12 @@ public class OpenIdDispatcherAssociation11 implements OpenIdDispatcher {
     private AssociationProcessor associationProcessor;
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
+    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AbstractMessage.MODE_ASSOCIATE)) {
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    if (request.getDhConsumerPublic() == null) {
-		return negativeResponseGenerator.simpleError("Parameter '"
-			+ AssociationRequest.DH_CONSUMER_PUBLIC + "' is required",
-			AbstractMessage.OPENID_NS_11);
+		return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
+			"Parameter '", AssociationRequest.DH_CONSUMER_PUBLIC, "' is required");
 	    }
 	    AbstractMessage out = associationProcessor.processAssociation(request,
 		    extractSessionType(request), extractAssociationType(request));

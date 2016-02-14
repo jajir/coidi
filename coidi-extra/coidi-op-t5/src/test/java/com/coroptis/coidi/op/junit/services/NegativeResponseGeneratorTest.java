@@ -15,22 +15,29 @@
  */
 package com.coroptis.coidi.op.junit.services;
 
-import org.apache.tapestry5.ioc.ServiceBinder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.easymock.EasyMock;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.coroptis.coidi.core.message.AbstractOpenIdResponse;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.impl.NegativeResponseGeneratorImpl;
-import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 
-public class NegativeResponseGeneratorTest extends AbstractT5JunitTest {
-    
-    private final static String SERVICE_NAME = "realService";
+public class NegativeResponseGeneratorTest {
 
     private NegativeResponseGenerator service;
 
-    public void testSimpleError() throws Exception {
-	ErrorResponse ret = service.simpleError("some error");
+    private OpConfigurationService conf;
+
+    @Test
+    public void test_buildError() throws Exception {
+	ErrorResponse ret = service.buildError("some error");
 
 	assertNotNull(ret);
 	assertEquals("some error", ret.getError());
@@ -39,31 +46,23 @@ public class NegativeResponseGeneratorTest extends AbstractT5JunitTest {
 	assertEquals(AbstractOpenIdResponse.OPENID_NS_20, ret.getNameSpace());
     }
 
-    public void testSimpleError_messageIsNull() throws Exception {
-	ErrorResponse ret = service.simpleError(null);
-
-	assertNotNull(ret);
-	assertNull(ret.getError());
-	assertEquals(false, ret.isUrl());
-	assertEquals("john@gmail.com", ret.getContact());
-	assertEquals(AbstractOpenIdResponse.OPENID_NS_20, ret.getNameSpace());
+    @Test(expected = NullPointerException.class)
+    public void test_buildError_messageIsNull() throws Exception {
+	 service.buildError((String[])null);
     }
 
-    @Override
-    public void bind(ServiceBinder binder) {
-	binder.bind(NegativeResponseGenerator.class, NegativeResponseGeneratorImpl.class).withId(
-		SERVICE_NAME);
+    @Before
+    public void setUp() throws Exception {
+	conf = EasyMock.createMock(OpConfigurationService.class);
+	EasyMock.expect(conf.getErrorContact()).andReturn("john@gmail.com");
+	EasyMock.replay(conf);
+	service = new NegativeResponseGeneratorImpl(conf);
     }
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	service = getService(SERVICE_NAME, NegativeResponseGenerator.class);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
+	EasyMock.verify(conf);
+	conf = null;
 	service = null;
-	super.tearDown();
     }
 }

@@ -43,26 +43,6 @@ public interface NegativeResponseGenerator {
     static final String APPLICATION_ERROR_PLEASE_LOGIN = "pleaseLogin";
 
     /**
-     * Generated error with given message.
-     * 
-     * @param message
-     *            required error message
-     * @return created instance of {@link ErrorResponse} class
-     */
-    ErrorResponse simpleError(String message);
-
-    /**
-     * Generated error with given message.
-     * 
-     * @param nameSpace
-     *            required name space
-     * @param message
-     *            required error message
-     * @return created instance of {@link ErrorResponse} class
-     */
-    ErrorResponse simpleError(String message, String nameSpace);
-
-    /**
      * This generate error that tells application that there should correct
      * something.
      * 
@@ -87,5 +67,36 @@ public interface NegativeResponseGenerator {
      * @return error response object
      */
     ErrorResponse applicationError(String message, String errorKey, String nameSpace);
+
+    /**
+     * Allows to create standard error response that some parameter is missing.
+     * 
+     * @param parameter
+     *            required missing parameter name
+     * @return error OpenID message
+     */
+    ErrorResponse missingParameter(final String parameter);
+
+    /**
+     * Build error response message by concatenating of array of string to one
+     * error message.
+     * 
+     * @param strings
+     *            required array of string
+     * @return error OpenID message
+     */
+    ErrorResponse buildError(String... strings);
+
+    /**
+     * Build error response message by concatenating of array of string to one
+     * error message.
+     * 
+     * @param nameSpace
+     *            optional OpenID name space
+     * @param strings
+     *            required array of string
+     * @return error OpenID message
+     */
+    ErrorResponse buildErrorWithNs(String nameSpace, String... strings);
 
 }

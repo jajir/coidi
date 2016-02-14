@@ -66,10 +66,9 @@ public class AuthProcResponse11Test extends AbstractT5JunitTest {
 	request.setIdentity(null);
 	Set<String> fieldsToSign = new HashSet<String>();
 	ErrorResponse err = new ErrorResponse(false);
-	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError(
-			"Mandatory field 'openid.identity' is missing",
-			"http://openid.net/signon/1.1")).andReturn(err);
+	EasyMock.expect(services.getNegativeResponseGenerator().buildErrorWithNs(
+		"http://openid.net/signon/1.1", "Mandatory field 'openid.identity' is missing"))
+		.andReturn(err);
 	services.replay();
 
 	AbstractMessage ret = service.process(request, response, null, fieldsToSign);

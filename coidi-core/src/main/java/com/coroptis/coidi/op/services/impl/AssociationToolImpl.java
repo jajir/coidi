@@ -19,15 +19,15 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Implementation relay on configuration.
@@ -35,11 +35,10 @@ import com.google.common.base.Preconditions;
  * @author jirout
  * 
  */
+@Singleton
 public class AssociationToolImpl implements AssociationTool {
 
     private final Integer timeToLiveInSeconds;
-
-    private final Logger logger = LoggerFactory.getLogger(AssociationToolImpl.class);
 
     /**
      * This value is initialized in constructor, because it's good to know that
@@ -50,10 +49,19 @@ public class AssociationToolImpl implements AssociationTool {
     @Inject
     public AssociationToolImpl( // NO_UCD
 	    final OpConfigurationService configurationService) {
-	this.defaultAssociationType = AssociationType
+	Preconditions.checkNotNull(configurationService, "OP configuration service is null");
+	if (Strings.isNullOrEmpty(configurationService.getDefaultAssociationType())) {
+	    throw new CoidiException("Default association type is empty");
+	}
+	defaultAssociationType = AssociationType
 		.convert(configurationService.getDefaultAssociationType());
-	this.timeToLiveInSeconds = configurationService.getAssociationTimeToLiveInSeconds();
-	logger.debug("stateless mode association type: " + defaultAssociationType);
+	if (defaultAssociationType == null) {
+	    throw new CoidiException("Invalid default association type value '"
+		    + configurationService.getDefaultAssociationType() + "'");
+	}
+	this.timeToLiveInSeconds = Preconditions.checkNotNull(
+		configurationService.getAssociationTimeToLiveInSeconds(),
+		"Configuration association time to live in seconds is empty");
     }
 
     @Override

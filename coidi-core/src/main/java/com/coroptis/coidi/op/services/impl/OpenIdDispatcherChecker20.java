@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.services.OpenIdRequestTool;
 
 /**
  * Verify that openid.mode is filled. And that there is correct namespace. This
@@ -37,19 +36,18 @@ public class OpenIdDispatcherChecker20 implements OpenIdDispatcher {
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
 
-    @Inject
-    private OpenIdRequestTool openIdRequestTool;
-
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,
 	    final HttpSession userSession) {
 	if (requestParams.get(OpenIdDispatcher.OPENID_MODE) == null) {
-	    return negativeResponseGenerator.simpleError("key value '"
-		    + OpenIdDispatcher.OPENID_MODE + "' is empty");
+	    return negativeResponseGenerator.missingParameter(OpenIdDispatcher.OPENID_MODE);
 	}
-	if (!openIdRequestTool.isOpenIdVersion20(requestParams)) {
-	    return negativeResponseGenerator.simpleError("Unsupported OpenId namespace '"
-		    + requestParams.get(OPENID_NS) + "'");
+	if (requestParams.get(OpenIdDispatcher.OPENID_NS) == null) {
+	    return negativeResponseGenerator.missingParameter(OpenIdDispatcher.OPENID_NS);
+	} else if (!AbstractMessage.OPENID_NS_20
+		.equals(requestParams.get(OpenIdDispatcher.OPENID_NS))) {
+	    return negativeResponseGenerator.buildError("Unsupported OpenId namespace '",
+		    requestParams.get(OPENID_NS), "'");
 	}
 	return null;
     }

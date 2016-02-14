@@ -5,10 +5,11 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
+
 @Singleton
 public class AuthProcCheckIdImmediate11 extends AbstractAuthProc {
 
-	@Inject
+    @Inject
     public AuthProcCheckIdImmediate11(
 
 	    final @Named("authProcSign") AuthenticationProcessor authProcSign,
@@ -18,12 +19,12 @@ public class AuthProcCheckIdImmediate11 extends AbstractAuthProc {
 	    final @Named("authProcNonce") AuthenticationProcessor authProcNonce,
 	    final @Named("authProcResponse11") AuthenticationProcessor authProcResponse11) {
 
-	dispatchers.add(authProcSign);
+	dispatchers.add(authProcResponse11);
 	dispatchers.add(authProcVerifyIdentity11);
+	dispatchers.add(authProcNonce);
 	dispatchers.add(authProcAssociation);
 	dispatchers.add(authProcStateLessAssociation);
-	dispatchers.add(authProcNonce);
-	dispatchers.add(authProcResponse11);
+	dispatchers.add(authProcSign);
 
     }
 

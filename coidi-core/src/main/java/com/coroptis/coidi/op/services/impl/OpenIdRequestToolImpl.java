@@ -30,12 +30,6 @@ import com.coroptis.coidi.op.services.OpenIdRequestTool;
 public class OpenIdRequestToolImpl implements OpenIdRequestTool {
 
     @Override
-    public boolean isOpenIdVersion20(final Map<String, String> requestParams) {
-	return requestParams.get(OpenIdDispatcher.OPENID_NS) != null && AbstractMessage.OPENID_NS_20
-		.equals(requestParams.get(OpenIdDispatcher.OPENID_NS));
-    }
-
-    @Override
     public boolean isOpenIdVersion1x(final Map<String, String> requestParams) {
 	return requestParams.get(OpenIdDispatcher.OPENID_NS) == null
 		|| AbstractMessage.OPENID_NS_10

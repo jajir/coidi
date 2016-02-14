@@ -252,7 +252,7 @@ public abstract class AbstractMessage {
 	this.isUrl = isUrl;
     }
 
-    public byte[] convertToBytes(final String s) {
+    public static byte[] convertToBytes(final String s) {
 	return Base64.decodeBase64(s.getBytes());
     }
 
@@ -264,7 +264,7 @@ public abstract class AbstractMessage {
 	return convertToString(b.toByteArray());
     }
 
-    public BigInteger convertToBigIntegerFromString(final String s) {
+    public static BigInteger convertToBigIntegerFromString(final String s) {
 	return new BigInteger(convertToBytes(s));
     }
 

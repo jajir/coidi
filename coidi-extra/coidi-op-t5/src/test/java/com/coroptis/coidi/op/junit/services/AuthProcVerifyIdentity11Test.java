@@ -65,7 +65,7 @@ public class AuthProcVerifyIdentity11Test extends AbstractT5JunitTest {
 	ErrorResponse err = new ErrorResponse(false);
 	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(false);
 	EasyMock.expect(services.getNegativeResponseGenerator()
-		.simpleError("User is not logged at OP", "http://openid.net/signon/1.1"))
+		.buildErrorWithNs("http://openid.net/signon/1.1", "User is not logged at OP"))
 		.andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
@@ -81,9 +81,10 @@ public class AuthProcVerifyIdentity11Test extends AbstractT5JunitTest {
 	EasyMock.expect(
 		services.getUserVerifier().verify("http://www.coidi.com/identity/qwe", session))
 		.andReturn(false);
-	EasyMock.expect(services.getNegativeResponseGenerator().simpleError(
-		"Requested identity 'http://www.coidi.com/identity/qwe' doesn't exists.",
-		"http://openid.net/signon/1.1")).andReturn(err);
+	EasyMock.expect(services.getNegativeResponseGenerator().buildErrorWithNs(
+		"http://openid.net/signon/1.1",
+		"Requested identity 'http://www.coidi.com/identity/qwe' doesn't exists."))
+		.andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
 

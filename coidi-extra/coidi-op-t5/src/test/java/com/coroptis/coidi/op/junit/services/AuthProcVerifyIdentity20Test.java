@@ -51,8 +51,9 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
 
     public void testProcess() throws Exception {
 	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
-	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
-		session)).andReturn(true);
+	EasyMock.expect(
+		services.getUserVerifier().verify("http://www.coidi.com/identity/qwe", session))
+		.andReturn(true);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
 
@@ -74,7 +75,7 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
 	ErrorResponse err = new ErrorResponse(false);
 	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(false);
 	EasyMock.expect(
-		services.getNegativeResponseGenerator().simpleError("User is not logged at OP"))
+		services.getNegativeResponseGenerator().buildError("User is not logged at OP"))
 		.andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
@@ -87,11 +88,11 @@ public class AuthProcVerifyIdentity20Test extends AbstractT5JunitTest {
     public void testProcess_userIsNotValid() throws Exception {
 	ErrorResponse err = new ErrorResponse(false);
 	EasyMock.expect(services.getUserVerifier().isUserLogged(session)).andReturn(true);
-	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
-		session)).andReturn(false);
-	EasyMock.expect(services.getNegativeResponseGenerator().simpleError(
-		"Requested identity 'http://www.coidi.com/identity/qwe' doesn't exists."))
-		.andReturn(err);
+	EasyMock.expect(
+		services.getUserVerifier().verify("http://www.coidi.com/identity/qwe", session))
+		.andReturn(false);
+	EasyMock.expect(services.getNegativeResponseGenerator().buildError("Requested identity '",
+		"http://www.coidi.com/identity/qwe", "' doesn't exists.")).andReturn(err);
 	services.replay();
 	AbstractMessage ret = service.process(request, response, session, null);
 
