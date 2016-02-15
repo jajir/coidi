@@ -23,7 +23,7 @@ package com.coroptis.coidi.rp.services;
  * @author jan
  * 
  */
-public interface NonceDao {
+public interface NonceStorage {
 
     public static String ISO_DATETIME_FORMAT = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
 

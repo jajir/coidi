@@ -13,7 +13,7 @@ import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.base.AuthenticationResult.Status;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
-import com.coroptis.coidi.rp.services.NonceDao;
+import com.coroptis.coidi.rp.services.NonceStorage;
 
 /**
  * authentication response decoder verify that openid.mode is correct and
@@ -33,7 +33,7 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
     private SigningService signingService;
 
     @Inject
-    private NonceDao nonceDao;
+    private NonceStorage nonceDao;
 
     @Override
     public Boolean decode(final AuthenticationResponse authenticationResponse,
@@ -80,7 +80,7 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 		this.signingService = signingService;
 	}
 
-	public void setNonceDao(NonceDao nonceDao) {
+	public void setNonceDao(NonceStorage nonceDao) {
 		this.nonceDao = nonceDao;
 	}
 
