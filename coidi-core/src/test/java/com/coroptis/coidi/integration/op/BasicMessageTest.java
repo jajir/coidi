@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.integration.op.util.OpModule;
-import com.coroptis.coidi.integration.op.util.PropertyModule;
 import com.coroptis.coidi.integration.op.util.Services;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.util.PropertyModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 

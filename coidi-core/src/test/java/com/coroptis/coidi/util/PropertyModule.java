@@ -1,4 +1,4 @@
-package com.coroptis.coidi.integration.op.util;
+package com.coroptis.coidi.util;
 
 import java.io.FileReader;
 import java.io.IOException;

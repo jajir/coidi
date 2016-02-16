@@ -12,7 +12,7 @@ import com.coroptis.coidi.op.entities.Identity.Gendre;
 import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
-import com.coroptis.coidi.op.util.IdentityMock;
+import com.coroptis.coidi.util.IdentityMock;
 import com.google.common.collect.Sets;
 
 import junit.framework.TestCase;
