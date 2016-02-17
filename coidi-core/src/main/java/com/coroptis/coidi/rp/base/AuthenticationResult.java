@@ -3,6 +3,8 @@ package com.coroptis.coidi.rp.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * This object is generated as result of authentication response.
  * 
@@ -11,59 +13,65 @@ import java.util.Map;
  */
 public class AuthenticationResult {
 
-    public enum Status {
-	res, cancel;
-    }
+	public enum Status {
+		res, cancel;
+	}
 
-    private Status status;
+	private Status status;
 
-    private String identity;
+	private String identity;
 
-    private final Map<String, ExtensionResult> extensions = new HashMap<String, ExtensionResult>();
+	private final Map<String, ExtensionResult> extensions = new HashMap<String, ExtensionResult>();
 
-    public boolean isPositive() {
-	return Status.res.equals(status);
-    }
+	public boolean isPositive() {
+		return Status.res.equals(status);
+	}
 
-    /**
-     * @return the extensions
-     */
-    public Map<String, ExtensionResult> getExtensions() {
-	return extensions;
-    }
+	/**
+	 * @return the extensions
+	 */
+	public Map<String, ExtensionResult> getExtensions() {
+		return extensions;
+	}
 
-    public ExtensionResultSreg getSreg() {
-	return (ExtensionResultSreg) extensions.get(ExtensionResultSreg.CODE);
-    }
+	public ExtensionResultSreg getSreg() {
+		return (ExtensionResultSreg) extensions.get(ExtensionResultSreg.CODE);
+	}
 
-    /**
-     * @return the status
-     */
-    public Status getStatus() {
-	return status;
-    }
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(AuthenticationResult.class).add("identity", identity).add("status", status)
+				.toString();
+	}
 
-    /**
-     * @param status
-     *            the status to set
-     */
-    public void setStatus(Status status) {
-	this.status = status;
-    }
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
 
-    /**
-     * @return the identity
-     */
-    public String getIdentity() {
-	return identity;
-    }
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-    /**
-     * @param identity
-     *            the identity to set
-     */
-    public void setIdentity(String identity) {
-	this.identity = identity;
-    }
+	/**
+	 * @return the identity
+	 */
+	public String getIdentity() {
+		return identity;
+	}
+
+	/**
+	 * @param identity
+	 *            the identity to set
+	 */
+	public void setIdentity(String identity) {
+		this.identity = identity;
+	}
 
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
+import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
@@ -30,9 +31,10 @@ public class PropertyModule extends AbstractModule {
 
 	private void bindApplicationProperties() {
 		try {
+			final String configurationFile = System.getProperty("configuration-file");
+			Preconditions.checkNotNull(configurationFile, "System property 'configuration-file' have to be filled.");
 			final Properties properties = new Properties();
-			properties
-					.load(new FileReader(getClass().getClassLoader().getResource("application.properties").getFile()));
+			properties.load(new FileReader(getClass().getClassLoader().getResource(configurationFile).getFile()));
 			for (final String name : properties.stringPropertyNames()) {
 				final String value = properties.getProperty(name);
 				logger.debug("setting value '{}' to key '{}'", value, name);

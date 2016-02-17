@@ -16,6 +16,7 @@ import com.coroptis.coidi.rp.iocsupport.AuthProcSimpleRp;
 import com.coroptis.coidi.rp.iocsupport.RpConfigurationServiceImpl;
 import com.coroptis.coidi.rp.iocsupport.SimpleAuthRsponseDecoder;
 import com.coroptis.coidi.rp.services.AssociationFactory;
+import com.coroptis.coidi.rp.services.AssociationHelper;
 import com.coroptis.coidi.rp.services.AuthReq;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthRespSupport;
@@ -32,6 +33,7 @@ import com.coroptis.coidi.rp.services.XmlProcessing;
 import com.coroptis.coidi.rp.services.XrdsService;
 import com.coroptis.coidi.rp.services.YadisService;
 import com.coroptis.coidi.rp.services.impl.AssociationFactoryImpl;
+import com.coroptis.coidi.rp.services.impl.AssociationHelperImpl;
 import com.coroptis.coidi.rp.services.impl.AuthReqPreconditions;
 import com.coroptis.coidi.rp.services.impl.AuthReqTerminator;
 import com.coroptis.coidi.rp.services.impl.AuthReqUiIcon;
@@ -90,6 +92,7 @@ public class RpModule extends AbstractModule {
 	bind(AuthRespSupport.class).to(AuthRespSupportImpl.class);
 	bind(RpConfigurationService.class).to(RpConfigurationServiceImpl.class);
 	bind(DiscoveryProcessor.class).to(DiscoveryProcessorYadis.class);
+	bind(AssociationHelper.class).to(AssociationHelperImpl.class);
 
 	bind(AuthReq.class)
 		.to(AuthProcSimpleRp.class);

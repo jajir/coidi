@@ -1,4 +1,4 @@
-package com.coroptis.coidi.junit.rp.services.impl;
+package com.coroptis.coidi.junit.op.services;
 
 import static org.junit.Assert.assertNotNull;
 

@@ -81,6 +81,7 @@ import com.coroptis.coidi.op.util.OpenId11CheckIdSetup;
 import com.coroptis.coidi.op.util.OpenId20;
 import com.coroptis.coidi.op.util.OpenId20CheckIdImmediate;
 import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
+import com.coroptis.coidi.util.Services;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 

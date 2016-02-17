@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.integration.op.util.OpModule;
-import com.coroptis.coidi.integration.op.util.Services;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.util.PropertyModule;
+import com.coroptis.coidi.util.Services;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -103,6 +103,7 @@ public class BasicMessageTest {
 	params.put("openid.dh_consumer_public",
 		"NbTkEmk0bUfs5DcLplIBuAo3UXixzCcQDUTP84o5mqp/ZoFss7ct8Fq0KTyb21XeOen5uVL+2n/BttaeuNA5FyaCCv7F5CTaRIwUrLOY12nIQsTZIoiBKlrD+xUpGjbQe31ckwCu1oJ3mEG2pKUfs/3yX3Ginn+1LthEoOxc3lY=");
 
+	System.setProperty("configuration-file", "op_application.properties");
 	Injector injector = Guice.createInjector(new OpModule(), new PropertyModule());
 	openIdRequestProcessor = injector.getInstance(OpenIdRequestProcessor.class);
 	services = injector.getInstance(Services.class);

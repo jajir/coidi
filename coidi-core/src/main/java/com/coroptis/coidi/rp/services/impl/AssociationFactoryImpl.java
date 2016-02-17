@@ -23,8 +23,6 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
 import com.coroptis.coidi.core.services.ConvertorService;
@@ -36,9 +34,9 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.rp.services.AssociationFactory;
+import com.coroptis.coidi.rp.services.AssociationHelper;
 import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 
 public class AssociationFactoryImpl implements AssociationFactory {
 
@@ -52,6 +50,9 @@ public class AssociationFactoryImpl implements AssociationFactory {
 
 	@Inject
 	private HttpTransportService httpTransportService;
+
+	@Inject
+	private AssociationHelper associationHelper;
 
 	@Override
 	public Association generateAssociation(final String opEndpoint, final SessionType sessionType,
@@ -76,7 +77,8 @@ public class AssociationFactoryImpl implements AssociationFactory {
 
 		AssociationResponse associationResponse = new AssociationResponse(
 				httpTransportService.doPost(opEndpoint, associationRequest.getMap()));
-		verifyResponse(associationResponse);
+		associationHelper.verifyNameSpace20(associationResponse);
+		associationHelper.verify(associationResponse);
 		AssociationBean association = new AssociationBean();
 		association.setAssocHandle(associationResponse.getAssocHandle());
 		association.setAssociationType(associationResponse.getAssociationType());
@@ -101,15 +103,6 @@ public class AssociationFactoryImpl implements AssociationFactory {
 		return cal.getTime();
 	}
 
-	public void verifyResponse(final AssociationResponse message) {
-		if (Strings.isNullOrEmpty(message.getNameSpace())) {
-			throw new CoidiException("OpenID namespace was not filled.");
-		}
-		if (!AbstractMessage.OPENID_NS_20.equals(message.getNameSpace())) {
-			throw new CoidiException("OpenID namespace contains invalid value '" + message.getNameSpace() + "'.");
-		}
-	}
-
 	public void setCryptoSessionService(CryptoSessionService cryptoSessionService) {
 		this.cryptoSessionService = cryptoSessionService;
 	}
@@ -120,6 +113,10 @@ public class AssociationFactoryImpl implements AssociationFactory {
 
 	public void setHttpTransportService(HttpTransportService httpTransportService) {
 		this.httpTransportService = httpTransportService;
+	}
+
+	public void setAssociationHelper(AssociationHelper associationHelper) {
+		this.associationHelper = associationHelper;
 	}
 
 }
