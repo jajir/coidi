@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.google.common.base.Preconditions;
-
+@Singleton
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Inject

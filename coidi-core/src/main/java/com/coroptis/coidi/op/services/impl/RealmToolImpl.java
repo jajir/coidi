@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -28,7 +29,7 @@ import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.util.RealmRequest;
 import com.google.common.base.Preconditions;
-
+@Singleton
 public class RealmToolImpl implements RealmTool {
 
     @Inject

@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -34,6 +35,7 @@ import com.coroptis.coidi.op.util.OpenId20;
  * @author jirout
  * 
  */
+@Singleton
 public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
     @Inject

@@ -16,6 +16,7 @@
 package com.coroptis.coidi.op.services.impl;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import com.google.common.base.Preconditions;
  * @author jirout
  * 
  */
+@Singleton
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     private final Logger logger = LoggerFactory.getLogger(IdentityNamesConvertor.class);

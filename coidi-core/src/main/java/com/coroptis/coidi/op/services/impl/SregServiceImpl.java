@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.inject.Singleton;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
@@ -27,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 
+@Singleton
 public class SregServiceImpl implements SregService {
 
     @Override

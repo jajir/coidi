@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Date;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.google.common.base.Preconditions;
-
+@Singleton
 public class AssociationServiceImpl implements AssociationService {
 
 	private final Logger logger = LoggerFactory.getLogger(AssociationServiceImpl.class);

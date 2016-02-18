@@ -16,6 +16,7 @@
 package com.coroptis.coidi.op.services.impl;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,7 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationProcessor;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.CryptoService;
-
+@Singleton
 public class AssociationProcessorImpl implements AssociationProcessor {
 
     private final static Logger logger = LoggerFactory.getLogger(AssociationProcessorImpl.class);

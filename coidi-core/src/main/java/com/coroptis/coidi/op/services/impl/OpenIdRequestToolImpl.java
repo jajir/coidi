@@ -17,6 +17,8 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
+import javax.inject.Singleton;
+
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
@@ -27,6 +29,7 @@ import com.coroptis.coidi.op.services.OpenIdRequestTool;
  * @author jirout
  * 
  */
+@Singleton
 public class OpenIdRequestToolImpl implements OpenIdRequestTool {
 
     @Override
