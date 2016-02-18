@@ -27,13 +27,13 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.impl.AuthProcStateLessAssociation;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
 import com.coroptis.coidi.op.util.NonceBean;
+import com.coroptis.coidi.rp.base.AssociationBean;
 
 public class AuthProcStatelessAssociationTest extends AbstractT5JunitTest {
 

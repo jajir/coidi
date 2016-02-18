@@ -29,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
  * In case of 'identity select' authentication request verify that end user
@@ -46,24 +47,26 @@ public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
 
+    @Inject
+    private UserVerifier userVerifier;
+
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final HttpSession userSession,
+	    final AuthenticationResponse response, final HttpSession session,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify parameters: " + authenticationRequest);
 
 	if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
-	    if (StringUtils.isEmpty(authenticationRequest.getSelectedIdentity())) {
+	    if (StringUtils.isEmpty(userVerifier.getSelectedIdenity(session))) {
 		return negativeResponseGenerator.applicationError(
 			"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
-				+ "' but user didn't put selected identity in property '"
-				+ AuthenticationRequest.USERS_SELECTED_IDENTITY + "'",
+				+ "' but user didn't selected identity",
 			NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
 	    } else {
-		response.setIdentity(authenticationRequest.getSelectedIdentity());
-		response.setClaimedId(authenticationRequest.getSelectedIdentity());
-		authenticationRequest.setIdentity(authenticationRequest.getSelectedIdentity());
-		authenticationRequest.setClaimedId(authenticationRequest.getSelectedIdentity());
+		response.setIdentity(userVerifier.getSelectedIdenity(session));
+		response.setClaimedId(userVerifier.getSelectedIdenity(session));
+		authenticationRequest.setIdentity(userVerifier.getSelectedIdenity(session));
+		authenticationRequest.setClaimedId(userVerifier.getSelectedIdenity(session));
 	    }
 	}
 	return null;

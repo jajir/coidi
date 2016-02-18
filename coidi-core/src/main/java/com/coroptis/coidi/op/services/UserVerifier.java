@@ -40,4 +40,21 @@ public interface UserVerifier {
     void storeAuthenticatonRequest(HttpSession session,
 	    AuthenticationRequest authenticationRequest);
 
+    /**
+     * When in identity comes value AuthenticationRequest.IDENTITY_SELECT than
+     * user at OP should select his identity. In many cases there is simple
+     * mapping between identity and user.
+     * <p>
+     * This method allows coidi to ask users selected identity.
+     * </p>
+     * <p>
+     * Method should not ask end user. Because could be called in
+     * mode=checkid_immediate.
+     * </p>
+     * 
+     * @param session
+     *            required HTTP session
+     * @return selected identity
+     */
+    String getSelectedIdenity(HttpSession session);
 }

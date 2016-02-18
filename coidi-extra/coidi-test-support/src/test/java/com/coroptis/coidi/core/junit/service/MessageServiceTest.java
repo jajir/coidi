@@ -26,7 +26,7 @@ import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
 import com.coroptis.coidi.core.util.BaseJunitTest;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
-import com.coroptis.coidi.op.entities.AssociationBean;
+import com.coroptis.coidi.rp.base.AssociationBean;
 
 public class MessageServiceTest extends BaseJunitTest {
 

@@ -33,13 +33,6 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
      */
     public final static String TRUST_ROOT = "trust_root";
 
-    /**
-     * When authentication request have identity with value
-     * {@link #IDENTITY_SELECT} then under this key should be identity selected
-     * by end user.
-     */
-    public final static String USERS_SELECTED_IDENTITY = "users_selected_identity";
-
     @Override
     public String getUrl(final String targetUrl) {
 	return getUrlMessage(OPENID, targetUrl);
@@ -154,20 +147,4 @@ public class AuthenticationRequest extends AbstractOpenIdRequest {
     public void setTrustRoot(final String trustRoot) {
 	put(TRUST_ROOT, trustRoot);
     }
-
-    /**
-     * @return the realm
-     */
-    public String getSelectedIdentity() {
-	return get(USERS_SELECTED_IDENTITY);
-    }
-
-    /**
-     * @param selectedIdentity
-     *            selected identity
-     */
-    public void setSelectedIdentity(final String selectedIdentity) {
-	put(USERS_SELECTED_IDENTITY, selectedIdentity);
-    }
-
 }

@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
-import com.coroptis.coidi.op.entities.AssociationBean;
+import com.coroptis.coidi.rp.base.AssociationBean;
 import com.coroptis.coidi.rp.util.AbstractIntegrationTest;
 
 public class SigningServiceTest extends AbstractIntegrationTest {

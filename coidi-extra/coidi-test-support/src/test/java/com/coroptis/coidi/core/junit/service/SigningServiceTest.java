@@ -23,7 +23,7 @@ import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.core.util.BaseJunitTest;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
-import com.coroptis.coidi.op.entities.AssociationBean;
+import com.coroptis.coidi.rp.base.AssociationBean;
 
 public class SigningServiceTest extends BaseJunitTest {
 

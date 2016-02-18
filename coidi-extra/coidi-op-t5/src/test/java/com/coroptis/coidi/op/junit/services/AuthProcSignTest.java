@@ -28,11 +28,11 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
-import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.impl.AuthProcSign;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
+import com.coroptis.coidi.rp.base.AssociationBean;
 import com.google.common.collect.Sets;
 
 public class AuthProcSignTest extends AbstractT5JunitTest {

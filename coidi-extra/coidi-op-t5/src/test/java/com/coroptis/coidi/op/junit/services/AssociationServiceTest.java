@@ -24,10 +24,10 @@ import org.easymock.EasyMock;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.entities.AssociationBean;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.op.util.AbstractT5JunitTest;
+import com.coroptis.coidi.rp.base.AssociationBean;
 
 public class AssociationServiceTest extends AbstractT5JunitTest {
 

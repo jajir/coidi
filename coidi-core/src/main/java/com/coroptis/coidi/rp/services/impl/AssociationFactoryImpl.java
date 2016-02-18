@@ -32,7 +32,7 @@ import com.coroptis.coidi.core.util.KeyPair;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.coroptis.coidi.op.entities.AssociationBean;
+import com.coroptis.coidi.rp.base.AssociationBean;
 import com.coroptis.coidi.rp.services.AssociationFactory;
 import com.coroptis.coidi.rp.services.AssociationHelper;
 import com.coroptis.coidi.rp.services.HttpTransportService;

@@ -13,16 +13,21 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.entities;
+package com.coroptis.coidi.rp.base;
 
 import java.util.Date;
 import java.util.Set;
 
+import com.coroptis.coidi.op.entities.Association;
+import com.coroptis.coidi.op.entities.Nonce;
 import com.google.common.base.Objects;
 
 /**
  * Simple {@link Association} implementation. Contains just setter and getters
  * for private fields containing values.
+ * <p>
+ * Class in used at RP and could be stored in session.
+ * </p>
  * 
  * @author jirout
  * 
