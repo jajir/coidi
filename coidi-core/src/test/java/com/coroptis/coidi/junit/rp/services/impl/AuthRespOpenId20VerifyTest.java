@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.util.AssociationMock;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.services.impl.AuthRespOpenId20Verify;
+import com.coroptis.coidi.util.AssociationMock;
 
 public class AuthRespOpenId20VerifyTest {
 

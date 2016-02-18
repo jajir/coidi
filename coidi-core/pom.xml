@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<t5.version>5.3.8</t5.version>
 		<guice.version>3.0</guice.version>
-		<guava.version>r09</guava.version>
+		<guava.version>19.0</guava.version>
 		<easymock.version>2.4</easymock.version>
 		<xml-apis.version>1.3.04</xml-apis.version>
 		<icu4j.version>3.6.1</icu4j.version>
@@ -178,7 +178,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -189,7 +189,7 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>

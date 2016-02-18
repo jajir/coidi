@@ -16,6 +16,7 @@
 package com.coroptis.coidi.op.services.impl;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
@@ -23,6 +24,7 @@ import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.google.common.base.Preconditions;
 
+@Singleton
 public class IdentityServiceImpl implements IdentityService {
 
     @Inject
@@ -30,12 +32,6 @@ public class IdentityServiceImpl implements IdentityService {
 
     @Inject
     private IdentityNamesConvertor identityNamesConvertor;
-
-    @Override
-    public Identity getByIdentityId(final String identityId) {
-	Preconditions.checkNotNull(identityId, "identityId is null");
-	return identityDao.getIdentityId(identityId);
-    }
 
     @Override
     public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {

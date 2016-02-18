@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.integration.op.util;
+package com.coroptis.coidi.util;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,14 +78,12 @@ public class Services {
 
 	private static Services services;
 
+	@Deprecated
 	public static Services getServices() {
 		if (services == null) {
 			services = new Services();
 		}
 		return services;
-	}
-
-	private Services() {
 	}
 
 	public void reset() {

@@ -1,4 +1,4 @@
-package com.coroptis.coidi.junit.rp.services.impl;
+package com.coroptis.coidi.junit.op.services;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -18,7 +18,7 @@ import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
-import com.coroptis.coidi.op.util.AssociationMock;
+import com.coroptis.coidi.util.AssociationMock;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;

@@ -27,16 +27,6 @@ import com.coroptis.coidi.op.entities.Identity;
 public interface IdentityService {
 
     /**
-     * Get {@link Identity} by it's identity id.
-     *
-     * @param identityId
-     *            required identity id
-     * @return {@link Identity} object if there is any otherwise
-     *         <code>null</code>
-     */
-    Identity getByIdentityId(String identityId);
-
-    /**
      * Get {@link Identity} by it's OP local identifier.
      *
      * @param opLocalIdentifier

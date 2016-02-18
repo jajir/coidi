@@ -24,14 +24,14 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.integration.op.util.OpModule;
-import com.coroptis.coidi.integration.op.util.PropertyModule;
-import com.coroptis.coidi.integration.op.util.Services;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.util.PropertyModule;
+import com.coroptis.coidi.util.Services;
 import com.google.common.collect.Sets;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -177,6 +177,7 @@ public class AuthenticationTest {
 	params.put("openid.return_to", "https://sourceforge.net/account/openid_verify.php");
 	params.put("openid.realm", "https://sourceforge.net");
 
+	System.setProperty("configuration-file", "op_application.properties");
 	Injector injector = Guice.createInjector(new OpModule(), new PropertyModule());
 	openIdRequestProcessor = injector.getInstance(OpenIdRequestProcessor.class);
 	services = injector.getInstance(Services.class);

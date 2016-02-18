@@ -1,4 +1,4 @@
-package com.coroptis.coidi.op.util;
+package com.coroptis.coidi.util;
 
 import java.util.Date;
 import java.util.Set;

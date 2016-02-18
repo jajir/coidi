@@ -81,6 +81,7 @@ import com.coroptis.coidi.op.util.OpenId11CheckIdSetup;
 import com.coroptis.coidi.op.util.OpenId20;
 import com.coroptis.coidi.op.util.OpenId20CheckIdImmediate;
 import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
+import com.coroptis.coidi.util.Services;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
@@ -117,7 +118,6 @@ public class OpModule extends AbstractModule {
 		bind(OpenIdRequestTool.class).to(OpenIdRequestToolImpl.class);
 		bind(OpConfigurationService.class).to(OpConfigurationServiceImpl.class);
 		
-		//TODO following bindings should singletons
 		/**
 		 * OpenID 2.0 - message dispatcher
 		 */

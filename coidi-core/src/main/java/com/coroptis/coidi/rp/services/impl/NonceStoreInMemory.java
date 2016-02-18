@@ -51,24 +51,19 @@ public class NonceStoreInMemory implements NonceStorage {
 
 	private static final int NONCE_EXPIRATION_MINUTES = 5;
 
-	private final int cleaningPeriodInSeconds;
-
 	private Set<String> nonces = new HashSet<String>();
 
 	private final ReentrantLock lock;
+
+	private final Timer timer;
 
 	public NonceStoreInMemory() {
 		this(DEFAULT_CLEANING_PERIOD_IN_SECONDS);
 	}
 
 	public NonceStoreInMemory(final int cleaningPeriodInSeconds) {
-		this.cleaningPeriodInSeconds = cleaningPeriodInSeconds;
 		lock = new ReentrantLock();
-		startTask();
-	}
-
-	private void startTask() {
-		Timer timer = new Timer("Nonce removing task");
+		timer = new Timer("Nonce removing task");
 		timer.scheduleAtFixedRate(new TimerTask() {
 
 			@Override
@@ -76,6 +71,13 @@ public class NonceStoreInMemory implements NonceStorage {
 				privateRemoveOldNonces();
 			}
 		}, cleaningPeriodInSeconds * 1000, cleaningPeriodInSeconds * 1000);
+	}
+
+	/**
+	 * Manually stop timer.
+	 */
+	public void stopTimer() {
+		timer.cancel();
 	}
 
 	@Override

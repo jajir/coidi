@@ -33,7 +33,7 @@ import com.coroptis.coidi.rp.services.RpConfigurationService;
  * based on requirement specified in discovery.
  * <p>
  * Registration is applied just when discovered OP support it and user set
- * {@value #REG_NEW_IDENTITY} parameter to true.
+ * AuthReq.REG_NEW_IDENTITY. parameter to true.
  * </p>
  * 
  * @author jan
@@ -41,32 +41,32 @@ import com.coroptis.coidi.rp.services.RpConfigurationService;
  */
 public class AuthReqRegistration10 implements AuthReq {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthReqRegistration10.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthReqRegistration10.class);
 
-    private final String requiredFields;
+	private final String requiredFields;
 
-    private final String optionalFields;
+	private final String optionalFields;
 
-    private final String policyUrl;
+	private final String policyUrl;
 
-    @Inject
-    public AuthReqRegistration10(final RpConfigurationService configurationService) {
-	this.policyUrl = configurationService.getRegistrationPolicyUrl();
-	this.requiredFields = configurationService.getRegistrationRequiredFields();
-	this.optionalFields = configurationService.getRegistrationOptionalFields();
-    }
-
-    @Override
-    public boolean process(AuthenticationRequest authenticationRequest,
-	    DiscoveryResult discoveryResult, Map<String, String> parameters) {
-	if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_SREG_1_0)
-		&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
-	    logger.debug("Registration extension 1.0 will be applied");
-	    authenticationRequest.putIgnoreEmpty("sreg.required", requiredFields);
-	    authenticationRequest.putIgnoreEmpty("sreg.optional", optionalFields);
-	    authenticationRequest.putIgnoreEmpty("sreg.policy_url", policyUrl);
+	@Inject
+	public AuthReqRegistration10(final RpConfigurationService configurationService) {
+		this.policyUrl = configurationService.getRegistrationPolicyUrl();
+		this.requiredFields = configurationService.getRegistrationRequiredFields();
+		this.optionalFields = configurationService.getRegistrationOptionalFields();
 	}
-	return false;
-    }
+
+	@Override
+	public boolean process(AuthenticationRequest authenticationRequest, DiscoveryResult discoveryResult,
+			Map<String, String> parameters) {
+		if (discoveryResult.getPreferedService().idPresent(OpenIdNs.TYPE_SREG_1_0)
+				&& Boolean.parseBoolean(parameters.get(REG_NEW_IDENTITY))) {
+			logger.debug("Registration extension 1.0 will be applied");
+			authenticationRequest.putIgnoreEmpty("sreg.required", requiredFields);
+			authenticationRequest.putIgnoreEmpty("sreg.optional", optionalFields);
+			authenticationRequest.putIgnoreEmpty("sreg.policy_url", policyUrl);
+		}
+		return false;
+	}
 
 }

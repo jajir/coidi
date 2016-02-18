@@ -23,8 +23,8 @@ public class AuthProcCheckIdImmediate20 extends AbstractAuthProc {
 	    final @Named("authProcResponse20") AuthenticationProcessor authProcResponse20) {
 
 	dispatchers.add(authProcResponse20);
-	dispatchers.add(authProcVerifyIdentitySelect20);
 	dispatchers.add(authProcVerifyIdentity20);
+	dispatchers.add(authProcVerifyIdentitySelect20);
 	dispatchers.add(authProcNonce);
 	dispatchers.add(authProcAssociation);
 	dispatchers.add(authProcStateLessAssociation);

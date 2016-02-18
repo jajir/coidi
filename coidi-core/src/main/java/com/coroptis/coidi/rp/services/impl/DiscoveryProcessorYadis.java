@@ -24,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +65,7 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
     private DiscoveryResult doHead(String userSuppliedId)
 	    throws ClientProtocolException, IOException {
 	logger.debug("trying HEAD at '" + userSuppliedId + "'");
-	DefaultHttpClient httpClient = httpService.getHttpClient();
+	HttpClient httpClient = httpService.getHttpClient();
 	HttpHead httpHead = new HttpHead(userSuppliedId);
 	httpHead.setHeader("Accept", "application/xrds+xml");
 	HttpResponse response = httpClient.execute(httpHead);

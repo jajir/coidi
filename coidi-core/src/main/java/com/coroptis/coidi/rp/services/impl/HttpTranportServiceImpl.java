@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -36,30 +37,37 @@ import com.google.common.base.Preconditions;
 
 public class HttpTranportServiceImpl implements HttpTransportService {
 
-    private final static Logger logger = LoggerFactory.getLogger(HttpTranportServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(HttpTranportServiceImpl.class);
 
-    @Inject
-    private HttpService httpService;
+	@Inject
+	private HttpService httpService;
 
-    @Override
-    public Map<String, String> doPost(final String url, final Map<String, String> map) {
-	Preconditions.checkNotNull(url, "URL");
-	try {
-	    HttpPost post = new HttpPost(url);
-	    post.getParams().setBooleanParameter(AllClientPNames.HANDLE_REDIRECTS, false);
-	    post.setEntity(new UrlEncodedFormEntity(httpService.toList(map), "UTF-8"));
-	    HttpResponse httpResponse = httpService.getHttpClient().execute(post);
-	    String resp = EntityUtils.toString(httpResponse.getEntity());
-	    logger.debug("response: " + resp);
-	    return httpService.convertToMap(resp);
-	} catch (ParseException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	} catch (IOException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
+	@Override
+	public Map<String, String> doPost(final String url, final Map<String, String> map) {
+		Preconditions.checkNotNull(url, "URL");
+		try {
+			HttpPost post = new HttpPost(url);
+			post.getParams().setBooleanParameter(AllClientPNames.HANDLE_REDIRECTS, false);
+			post.setEntity(new UrlEncodedFormEntity(httpService.toList(map), "UTF-8"));
+			HttpResponse httpResponse = httpService.getHttpClient().execute(post);
+			String resp = EntityUtils.toString(httpResponse.getEntity());
+			if (HttpServletResponse.SC_OK == httpResponse.getStatusLine().getStatusCode()) {
+				logger.debug("HTTP status code '{}' response: {}", httpResponse.getStatusLine().getStatusCode(), resp);
+				return httpService.convertToMap(resp);
+			} else {
+				logger.error("HTTP status code '{}' invalid response: {}", httpResponse.getStatusLine().getStatusCode(),
+						resp);
+				throw new CoidiException(
+						"Unable to process response code '" + httpResponse.getStatusLine().getStatusCode() + "'");
+			}
+		} catch (ParseException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
 	}
-    }
 
 	public void setHttpService(HttpService httpService) {
 		this.httpService = httpService;

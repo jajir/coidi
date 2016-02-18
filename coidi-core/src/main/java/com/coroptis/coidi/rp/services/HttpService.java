@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 public interface HttpService {
 
@@ -29,7 +28,7 @@ public interface HttpService {
      * 
      * @return {@link HttpClient} object
      */
-    DefaultHttpClient getHttpClient();
+    HttpClient getHttpClient();
 
     List<NameValuePair> toList(Map<String, String> parameters);
 
