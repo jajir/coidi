@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.coroptis.coidi</groupId>
 	<artifactId>coidi-core</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<packaging>jar</packaging>
 	<name>Coidi OpenID core</name>
 	<inceptionYear>2013</inceptionYear>
