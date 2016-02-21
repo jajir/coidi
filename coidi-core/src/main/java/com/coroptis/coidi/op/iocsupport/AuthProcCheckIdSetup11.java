@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import com.coroptis.coidi.core.util.AbstractAuthProc;
 import com.coroptis.coidi.op.services.AuthenticationProcessor;
 @Singleton
 public class AuthProcCheckIdSetup11 extends AbstractAuthProc {
