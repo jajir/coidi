@@ -57,11 +57,6 @@ public class AuthProcVerifyLoggedUser11 implements AuthProc {
 		    "User is not logged at OP");
 	}
 
-	if (!userVerifier.verify(authenticationRequest.getIdentity(), userSession)) {
-	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
-		    "Requested identity '", authenticationRequest.getIdentity(),
-		    "' doesn't exists.");
-	}
 	return null;
 
     }

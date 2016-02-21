@@ -32,8 +32,7 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
- * Verify that user is logged in. If is not logged in than return negative
- * authentication response.
+ * Verify that requested identity belongs logged user.
  * 
  * @author jirout
  * 

@@ -57,6 +57,8 @@ public interface AuthProc {
 
 	String AUTH_PROC_AX_10 = "authProcAx10";
 
+	String AUTH_PROC_IDENTITY_11 = "authProcIdentity11";
+
 	String AUTH_PROC_IDENTITY_20 = "authProcIdentity20";
 
 	String AUTH_PROC_NONCE = "authProcNonce";
@@ -72,8 +74,6 @@ public interface AuthProc {
 	String AUTH_PROC_VERIFY_IDENTITY_11 = "authProcVerifyIdentity11";
 
 	String AUTH_PROC_VERIFY_IDENTITY_20 = "authProcVerifyIdentity20";
-
-	String AUTH_PROC_VERIFY_IDENTITY_SELECT_20 = "authProcIdentitySelect20";
 
 	String AUTH_PROC_VERIFY_LOGGED_USER_11 = "authProcVerifyLoggedUser11";
 

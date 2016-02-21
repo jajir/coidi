@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.integration.op.AuthenticationTest;
+import com.coroptis.coidi.integration.op.AuthenticationSetupTest;
 import com.coroptis.coidi.integration.rp.util.RpModule;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
@@ -30,7 +30,7 @@ import com.google.inject.Injector;
  */
 public class AuthenticationResponseTest {
 	
-	private final Logger logger = LoggerFactory.getLogger(AuthenticationTest.class);
+	private final Logger logger = LoggerFactory.getLogger(AuthenticationSetupTest.class);
 
 	private AuthenticationVerificationService authVerification;
 

@@ -7,7 +7,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 public interface UserVerifier {
 
     /**
-     * verify that OP local identity exists, that identity exists and that user
+     * Verify that OP local identity exists, that identity exists and that user
      * in user session own given identity.
      * 
      * @param opLocalIdentity

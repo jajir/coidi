@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,16 +31,14 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
- * Put correct identity id and claimed identity to response. In case of
- * 'identity select' authentication request verify that end user select
- * requested identity. If user didn't select application error is returned.
+ * Verify that requested identity belongs logged user.
  * 
  * @author jirout
  * 
  */
-public class AuthProcVerifyIdentitySelect20 implements AuthProc {
+public class AuthProcVerifyIdentity11 implements AuthProc {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentitySelect20.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity11.class);
 
 	@Inject
 	private NegativeResponseGenerator negativeResponseGenerator;
@@ -52,21 +49,10 @@ public class AuthProcVerifyIdentitySelect20 implements AuthProc {
 	@Override
 	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 			final AuthenticationResponse response, final HttpSession session, final Set<String> fieldsToSign) {
-		logger.debug("verify parameters: " + authenticationRequest);
-
-		if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
-			if (StringUtils.isEmpty(userVerifier.getSelectedIdenity(session))) {
-				return negativeResponseGenerator.applicationError(
-						"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
-								+ "' but user didn't selected identity",
-						NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
-			} else {
-				response.setIdentity(userVerifier.getSelectedIdenity(session));
-				response.setClaimedId(userVerifier.getSelectedIdenity(session));
-			}
-		} else {
-			response.setIdentity(authenticationRequest.getIdentity());
-			response.setClaimedId(authenticationRequest.getClaimedId());
+		logger.debug("verify identity: " + authenticationRequest);
+		if (!userVerifier.verify(authenticationRequest.getIdentity(), session)) {
+			return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11, "Requested identity '",
+					authenticationRequest.getIdentity(), "' doesn't exists.");
 		}
 		return null;
 	}
