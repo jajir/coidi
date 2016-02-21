@@ -27,7 +27,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.google.common.base.Joiner;
 
 /**
@@ -37,7 +37,7 @@ import com.google.common.base.Joiner;
  * @author jirout
  * 
  */
-public class AuthProcSign implements AuthenticationProcessor {
+public class AuthProcSign implements AuthProc {
 
     @Inject
     private BaseAssociationDao associationDao;

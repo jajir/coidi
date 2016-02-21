@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 
@@ -38,9 +38,9 @@ import com.coroptis.coidi.op.services.OpConfigurationService;
  * @author jirout
  * 
  */
-public class AuthProcResponse20 implements AuthenticationProcessor {
+public class AuthProcIdentity20 implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcResponse20.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcIdentity20.class);
 
     private final String opServer;
 
@@ -48,7 +48,7 @@ public class AuthProcResponse20 implements AuthenticationProcessor {
     private NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    public AuthProcResponse20(final OpConfigurationService configurationService) {
+    public AuthProcIdentity20(final OpConfigurationService configurationService) {
 	this.opServer = configurationService.getOpServerUrl();
     }
 

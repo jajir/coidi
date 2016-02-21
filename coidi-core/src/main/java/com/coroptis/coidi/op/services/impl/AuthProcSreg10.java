@@ -28,7 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.entities.IdentitySreg;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.SregService;
@@ -39,7 +39,7 @@ import com.coroptis.coidi.op.services.SregService;
  * @author jirout
  * 
  */
-public class AuthProcSreg10 implements AuthenticationProcessor {
+public class AuthProcSreg10 implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcSreg10.class);
 

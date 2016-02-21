@@ -9,29 +9,29 @@ import javax.servlet.http.HttpSession;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 
 /**
  * Abstract class helps to build chain of commands from
- * {@link AuthenticationProcessor} implementations. It could be used at RP
+ * {@link AuthProc} implementations. It could be used at RP
  * sides.
  * 
  * @author jan
  *
  */
-public class AbstractAuthProc implements AuthenticationProcessor {
+public class AbstractAuthProc implements AuthProc {
 
-    protected final List<AuthenticationProcessor> dispatchers = new ArrayList<AuthenticationProcessor>();
+    protected final List<AuthProc> dispatchers = new ArrayList<AuthProc>();
 
     /**
-     * Implementations just choose first {@link AuthenticationProcessor} which
+     * Implementations just choose first {@link AuthProc} which
      * process inputs.
      */
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
-	for (final AuthenticationProcessor builder : dispatchers) {
+	for (final AuthProc builder : dispatchers) {
 	    final AbstractMessage row = builder.process(authenticationRequest, response,
 		    userSession, fieldsToSign);
 	    if (row != null) {

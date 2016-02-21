@@ -20,47 +20,47 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
-import com.coroptis.coidi.op.services.UserVerifier;
-import com.google.common.base.Preconditions;
 
 /**
- * Verify that use is logged in. When is not logged than application error
- * returned. This error should be handled by application, this error should not
- * be passed to RP.
+ * Perform basic setting of authentication response for OpenID 1.1.
+ * <p>
+ * Also verify that correct identity was entered by user.
+ * </p>
  * 
  * @author jirout
  * 
  */
-public class AuthProcVerifyLoggedUser implements AuthenticationProcessor {
+public class AuthProcIdentity11 implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcIdentity11.class);
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;
-
-    @Inject
-    private UserVerifier userVerifier;
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
-	logger.debug("verify identity: " + authenticationRequest);
-	Preconditions.checkNotNull(userSession, "UserSession is null");
-	if (!userVerifier.isUserLogged(userSession)) {
-	    logger.debug("User is not logged in.");
-	    userVerifier.storeAuthenticatonRequest(userSession, authenticationRequest);
-	    return negativeResponseGenerator.applicationError("User is not logged in",
-		    NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN);
+	logger.debug("creating athentication response for: " + authenticationRequest);
+	response.setNameSpace(AbstractMessage.OPENID_NS_11);
+	response.setReturnTo(authenticationRequest.getReturnTo());
+	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
+		    "Mandatory field 'openid.identity' is missing");
 	}
+	response.setIdentity(authenticationRequest.getIdentity());
+	fieldsToSign.add(AuthenticationResponse.MODE);
+	fieldsToSign.add(AuthenticationResponse.IDENTITY);
+	fieldsToSign.add(AuthenticationResponse.RETURN_TO);
 	return null;
     }
 

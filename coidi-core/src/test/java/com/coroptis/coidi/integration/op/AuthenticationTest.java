@@ -84,7 +84,7 @@ public class AuthenticationTest {
     @Test
     public void test_invalid_association() throws Exception {
 	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
-		.andReturn(true).times(2);
+		.andReturn(true);
 	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
 		services.getHttpSession())).andReturn(true);
 	EasyMock.expect(services.getBaseAssociationDao()
@@ -135,7 +135,7 @@ public class AuthenticationTest {
     @Test
     public void test_all_pass() throws Exception {
 	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
-		.andReturn(true).times(2);
+		.andReturn(true);
 	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
 		services.getHttpSession())).andReturn(true);
 	EasyMock.expect(services.getBaseAssociationDao()

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 
@@ -37,9 +37,9 @@ import com.coroptis.coidi.op.services.UserVerifier;
  * @author jirout
  * 
  */
-public class AuthProcVerifyIdentity11 implements AuthenticationProcessor {
+public class AuthProcVerifyLoggedUser11 implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity11.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser11.class);
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;

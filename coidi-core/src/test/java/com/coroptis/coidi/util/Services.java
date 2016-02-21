@@ -29,7 +29,7 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.AuthenticationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.IdentityService;
@@ -49,7 +49,7 @@ public class Services {
 	private final SigningService signingService = EasyMock.createMock(SigningService.class);
 	private final StatelessModeNonceService statelessModeNonceService = EasyMock
 			.createMock(StatelessModeNonceService.class);
-	private final AuthenticationProcessor authenticationProcessor = EasyMock.createMock(AuthenticationProcessor.class);
+	private final AuthProc authenticationProcessor = EasyMock.createMock(AuthProc.class);
 	private final AuthenticationService authenticationService = EasyMock.createMock(AuthenticationService.class);
 	private final IdentityService identityService = EasyMock.createMock(IdentityService.class);
 	private final NegativeResponseGenerator negativeResponseGenerator = EasyMock
@@ -128,7 +128,7 @@ public class Services {
 	/**
 	 * @return the authenticationProcessor
 	 */
-	public AuthenticationProcessor getAuthenticationProcessor() {
+	public AuthProc getAuthenticationProcessor() {
 		return authenticationProcessor;
 	}
 

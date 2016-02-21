@@ -27,7 +27,7 @@ import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.AuthenticationService;
 
 /**
@@ -36,7 +36,7 @@ import com.coroptis.coidi.op.services.AuthenticationService;
  * @author jirout
  * 
  */
-public class AuthProcAx10 implements AuthenticationProcessor {
+public class AuthProcAx10 implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcAx10.class);
 

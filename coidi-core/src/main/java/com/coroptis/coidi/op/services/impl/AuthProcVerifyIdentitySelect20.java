@@ -27,49 +27,48 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
- * In case of 'identity select' authentication request verify that end user
- * select requested identity. If user didn't select application error is
- * returned.
+ * Put correct identity id and claimed identity to response. In case of
+ * 'identity select' authentication request verify that end user select
+ * requested identity. If user didn't select application error is returned.
  * 
  * @author jirout
  * 
  */
-public class AuthProcVerifyIdentitySelect20 implements AuthenticationProcessor {
+public class AuthProcVerifyIdentitySelect20 implements AuthProc {
 
-    private final static Logger logger = LoggerFactory
-	    .getLogger(AuthProcVerifyIdentitySelect20.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentitySelect20.class);
 
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+	@Inject
+	private NegativeResponseGenerator negativeResponseGenerator;
 
-    @Inject
-    private UserVerifier userVerifier;
+	@Inject
+	private UserVerifier userVerifier;
 
-    @Override
-    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final HttpSession session,
-	    final Set<String> fieldsToSign) {
-	logger.debug("verify parameters: " + authenticationRequest);
+	@Override
+	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+			final AuthenticationResponse response, final HttpSession session, final Set<String> fieldsToSign) {
+		logger.debug("verify parameters: " + authenticationRequest);
 
-	if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
-	    if (StringUtils.isEmpty(userVerifier.getSelectedIdenity(session))) {
-		return negativeResponseGenerator.applicationError(
-			"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
-				+ "' but user didn't selected identity",
-			NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
-	    } else {
-		response.setIdentity(userVerifier.getSelectedIdenity(session));
-		response.setClaimedId(userVerifier.getSelectedIdenity(session));
-		authenticationRequest.setIdentity(userVerifier.getSelectedIdenity(session));
-		authenticationRequest.setClaimedId(userVerifier.getSelectedIdenity(session));
-	    }
+		if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
+			if (StringUtils.isEmpty(userVerifier.getSelectedIdenity(session))) {
+				return negativeResponseGenerator.applicationError(
+						"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
+								+ "' but user didn't selected identity",
+						NegativeResponseGenerator.APPLICATION_ERROR_SELECT_IDENTITY);
+			} else {
+				response.setIdentity(userVerifier.getSelectedIdenity(session));
+				response.setClaimedId(userVerifier.getSelectedIdenity(session));
+			}
+		} else {
+			response.setIdentity(authenticationRequest.getIdentity());
+			response.setClaimedId(authenticationRequest.getClaimedId());
+		}
+		return null;
 	}
-	return null;
-    }
 
 }

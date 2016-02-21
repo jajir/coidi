@@ -27,7 +27,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AssociationService;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 
 /**
  * Perform association verification. It validates that association exists and is
@@ -37,7 +37,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
  * @author jirout
  * 
  */
-public class AuthProcAssociation implements AuthenticationProcessor {
+public class AuthProcAssociation implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcAssociation.class);
 

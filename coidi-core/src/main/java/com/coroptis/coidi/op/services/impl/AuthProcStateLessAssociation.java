@@ -33,7 +33,7 @@ import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 
 /**
  * When response doesn't contains value in association handle than it's
@@ -42,7 +42,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
  * @author jirout
  * 
  */
-public class AuthProcStateLessAssociation implements AuthenticationProcessor {
+public class AuthProcStateLessAssociation implements AuthProc {
 
     private final static Logger logger = LoggerFactory
 	    .getLogger(AuthProcStateLessAssociation.class);

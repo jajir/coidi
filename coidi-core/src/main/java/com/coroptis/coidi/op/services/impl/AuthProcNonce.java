@@ -27,7 +27,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
-import com.coroptis.coidi.op.services.AuthenticationProcessor;
+import com.coroptis.coidi.op.services.AuthProc;
 
 /**
  * Just create nonce and add it to signed fields.
@@ -35,7 +35,7 @@ import com.coroptis.coidi.op.services.AuthenticationProcessor;
  * @author jirout
  * 
  */
-public class AuthProcNonce implements AuthenticationProcessor {
+public class AuthProcNonce implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcNonce.class);
 
