@@ -39,9 +39,10 @@ import com.google.common.base.Preconditions;
  * @author jirout
  * 
  */
-public class AuthProcVerifyLoggedUser20 implements AuthProc {
+public class AuthProcVerifyLoggedUser20Setup implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser20.class);
+    private final static Logger logger = LoggerFactory
+	    .getLogger(AuthProcVerifyLoggedUser20Setup.class);
 
     @Inject
     private NegativeResponseGenerator negativeResponseGenerator;

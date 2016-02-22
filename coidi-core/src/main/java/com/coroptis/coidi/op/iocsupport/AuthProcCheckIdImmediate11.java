@@ -18,9 +18,9 @@ public class AuthProcCheckIdImmediate11 extends AbstractAuthProc {
 			final @Named(AUTH_PROC_ASSOCIATION) AuthProc authProcAssociation,
 			final @Named(AUTH_PROC_STATE_LESS_ASSOCIATION) AuthProc authProcStateLessAssociation,
 			final @Named(AUTH_PROC_NONCE) AuthProc authProcNonce,
-			final @Named(AUTH_PROC_VERIFY_LOGGED_USER_11) AuthProc authProcVerifyLoggedUser11) {
+			final @Named(AUTH_PROC_VERIFY_LOGGED_USER_11_IMMEDIATE) AuthProc authProcVerifyLoggedUser11Immediate) {
 
-		dispatchers.add(authProcVerifyLoggedUser11);
+		dispatchers.add(authProcVerifyLoggedUser11Immediate);
 		dispatchers.add(authProcVerifyIdentity11);
 		dispatchers.add(authProcNonce);
 		dispatchers.add(authProcAssociation);

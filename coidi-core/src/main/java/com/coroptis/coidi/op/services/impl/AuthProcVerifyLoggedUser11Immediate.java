@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
+import com.coroptis.coidi.core.message.SetupNeededResponse;
 import com.coroptis.coidi.op.services.AuthProc;
-import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 
 /**
@@ -37,12 +37,10 @@ import com.coroptis.coidi.op.services.UserVerifier;
  * @author jirout
  * 
  */
-public class AuthProcVerifyLoggedUser11 implements AuthProc {
+public class AuthProcVerifyLoggedUser11Immediate implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser11.class);
-
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private final static Logger logger = LoggerFactory
+	    .getLogger(AuthProcVerifyLoggedUser11Immediate.class);
 
     @Inject
     private UserVerifier userVerifier;
@@ -53,8 +51,7 @@ public class AuthProcVerifyLoggedUser11 implements AuthProc {
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
 	if (!userVerifier.isUserLogged(userSession)) {
-	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
-		    "User is not logged at OP");
+	    return new SetupNeededResponse(AbstractMessage.OPENID_NS_11);
 	}
 
 	return null;

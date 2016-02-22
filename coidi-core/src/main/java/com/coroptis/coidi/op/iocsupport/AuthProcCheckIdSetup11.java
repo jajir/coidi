@@ -19,9 +19,9 @@ public class AuthProcCheckIdSetup11 extends AbstractAuthProc {
 			final @Named(AUTH_PROC_VERIFY_IDENTITY_11) AuthProc authProcVerifyIdentity11,
 			final @Named(AUTH_PROC_IDENTITY_11) AuthProc authProcIdentity11,
 			final @Named(AUTH_PROC_NONCE) AuthProc authProcNonce,
-			final @Named(AUTH_PROC_VERIFY_LOGGED_USER_11) AuthProc authProcVerifyLoggedUser11) {
+			final @Named(AUTH_PROC_VERIFY_LOGGED_USER_11_SETUP) AuthProc authProcVerifyLoggedUser11Setup) {
 
-		dispatchers.add(authProcVerifyLoggedUser11);
+		dispatchers.add(authProcVerifyLoggedUser11Setup);
 		dispatchers.add(authProcVerifyIdentity11);
 		dispatchers.add(authProcIdentity11);
 		dispatchers.add(authProcAssociation);

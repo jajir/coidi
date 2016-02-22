@@ -75,8 +75,12 @@ public interface AuthProc {
 
 	String AUTH_PROC_VERIFY_IDENTITY_20 = "authProcVerifyIdentity20";
 
-	String AUTH_PROC_VERIFY_LOGGED_USER_11 = "authProcVerifyLoggedUser11";
+	String AUTH_PROC_VERIFY_LOGGED_USER_11_IMMEDIATE = "authProcVerifyLoggedUser11Immediate";
 
-	String AUTH_PROC_VERIFY_LOGGED_USER_20 = "authProcVerifyLoggedUser20";
+	String AUTH_PROC_VERIFY_LOGGED_USER_11_SETUP = "authProcVerifyLoggedUser11Setup";
+
+	String AUTH_PROC_VERIFY_LOGGED_USER_20_IMMEDIATE = "authProcVerifyLoggedUser20Immediate";
+
+	String AUTH_PROC_VERIFY_LOGGED_USER_20_SETUP = "authProcVerifyLoggedUser20Setup";
 
 }
