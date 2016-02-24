@@ -26,28 +26,29 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
+import com.google.common.base.Preconditions;
 
 public class AuthenticationVerificationServiceImpl implements AuthenticationVerificationService {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthenticationVerificationServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthenticationVerificationServiceImpl.class);
 
-    @Inject
-    private AuthRespDecoder authRespDecoder;
+	private final AuthRespDecoder authRespDecoder;
 
-    @Override
-    public AuthenticationResult verify(final AuthenticationResponse authenticationResponse,
-	    final Association association) {
-	AuthenticationResult authenticationResult = new AuthenticationResult();
-	if (authRespDecoder.decode(authenticationResponse, association, authenticationResult)) {
-	    return authenticationResult;
-	} else {
-	    logger.debug("message error");
-	    throw new CoidiException("There was some error in message");
+	@Inject
+	public AuthenticationVerificationServiceImpl(final AuthRespDecoder authRespDecoder) {
+		this.authRespDecoder = Preconditions.checkNotNull(authRespDecoder);
 	}
-    }
 
-	public void setAuthRespDecoder(AuthRespDecoder authRespDecoder) {
-		this.authRespDecoder = authRespDecoder;
+	@Override
+	public AuthenticationResult verify(final AuthenticationResponse authenticationResponse,
+			final Association association) {
+		AuthenticationResult authenticationResult = new AuthenticationResult();
+		if (authRespDecoder.decode(authenticationResponse, association, authenticationResult)) {
+			return authenticationResult;
+		} else {
+			logger.debug("message error");
+			throw new CoidiException("There was some error in message");
+		}
 	}
-    
+
 }

@@ -48,100 +48,99 @@ import com.google.common.base.Preconditions;
  */
 public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 
-    private final static Logger logger = LoggerFactory.getLogger(DiscoveryProcessorYadis.class);
+	private final static Logger logger = LoggerFactory.getLogger(DiscoveryProcessorYadis.class);
 
-    @Inject
-    private HttpService httpService;
+	private final HttpService httpService;
 
-    @Inject
-    private XrdsService xrdsService;
+	private final XrdsService xrdsService;
 
-    @Inject
-    private XmlProcessing xmlProcessing;
+	private final XmlProcessing xmlProcessing;
 
-    @Inject
-    private DiscoverySupport discoverySupport;
+	private final DiscoverySupport discoverySupport;
 
-    private DiscoveryResult doHead(String userSuppliedId)
-	    throws ClientProtocolException, IOException {
-	logger.debug("trying HEAD at '" + userSuppliedId + "'");
-	HttpClient httpClient = httpService.getHttpClient();
-	HttpHead httpHead = new HttpHead(userSuppliedId);
-	httpHead.setHeader("Accept", "application/xrds+xml");
-	HttpResponse response = httpClient.execute(httpHead);
-	if (HttpServletResponse.SC_OK == response.getStatusLine().getStatusCode()) {
-	    Header header = response.getFirstHeader("X-XRDS-Location");
-	    if (header == null) {
-		return doGet(userSuppliedId);
-	    } else {
-		return discoverySupport.getXrdsDocument(header.getValue(), userSuppliedId);
-	    }
-	} else {
-	    logger.info(
-		    "OpendID provider response for YADIS HEAD request is:" + response.toString());
-	    return null;
+	@Inject
+	public DiscoveryProcessorYadis(final HttpService httpService, final XrdsService xrdsService,
+			final XmlProcessing xmlProcessing, final DiscoverySupport discoverySupport) {
+		this.httpService = Preconditions.checkNotNull(httpService);
+		this.xrdsService = Preconditions.checkNotNull(xrdsService);
+		this.xmlProcessing = Preconditions.checkNotNull(xmlProcessing);
+		this.discoverySupport = Preconditions.checkNotNull(discoverySupport);
 	}
-    }
 
-    private boolean isContentType(Header headerContentType) {
-	if (headerContentType == null) {
-	    return false;
-	} else {
-	    return headerContentType.getValue().indexOf("application/xrds+xml") >= 0;
-	}
-    }
-
-    private DiscoveryResult doGet(String userSuppliedId)
-	    throws ClientProtocolException, IOException {
-	logger.debug("trying GET at '" + userSuppliedId + "'");
-	HttpGet httpget = new HttpGet(userSuppliedId);
-	httpget.setHeader("Accept", "application/xrds+xml");
-	HttpResponse response = httpService.getHttpClient().execute(httpget);
-	Header headerXrdsLocation = response.getFirstHeader("X-XRDS-Location");
-	if (headerXrdsLocation == null) {
-	    Header headerContentType = response.getFirstHeader("Content-Type");
-	    String body = EntityUtils.toString(response.getEntity());
-	    if (isContentType(headerContentType)) {
-		// it's XRDS document
-		DiscoveryResult out = xrdsService.extractDiscoveryResult(body);
-		out.setClaimedId(userSuppliedId);
-		return out;
-	    } else {
-		// try if it's HTML with meta
-		String meta = xmlProcessing.getMetaContent(body, "X-XRDS-Location");
-		if (meta == null) {
-		    throw new AuthenticationProcessException("Unable to find XRDS document.");
+	private DiscoveryResult doHead(String userSuppliedId) throws ClientProtocolException, IOException {
+		logger.debug("trying HEAD at '" + userSuppliedId + "'");
+		HttpClient httpClient = httpService.getHttpClient();
+		HttpHead httpHead = new HttpHead(userSuppliedId);
+		httpHead.setHeader("Accept", "application/xrds+xml");
+		HttpResponse response = httpClient.execute(httpHead);
+		if (HttpServletResponse.SC_OK == response.getStatusLine().getStatusCode()) {
+			Header header = response.getFirstHeader("X-XRDS-Location");
+			if (header == null) {
+				return doGet(userSuppliedId);
+			} else {
+				return discoverySupport.getXrdsDocument(header.getValue(), userSuppliedId);
+			}
 		} else {
-		    return discoverySupport.getXrdsDocument(meta, userSuppliedId);
+			logger.info("OpendID provider response for YADIS HEAD request is:" + response.toString());
+			return null;
 		}
-	    }
-	} else {
-	    return discoverySupport.getXrdsDocument(headerXrdsLocation.getValue(), userSuppliedId);
 	}
-    }
 
-    @Override
-    public DiscoveryResult dicovery(String userSuppliedId) {
-	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
-	userSuppliedId = userSuppliedId.trim();
-	try {
-	    return doHead(userSuppliedId);
-	} catch (IllegalArgumentException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new AuthenticationProcessException("Invalid format of you identificator");
-	} catch (ClientProtocolException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new AuthenticationProcessException(
-		    "There is problem to get XRDS document, check your identificator");
-	} catch (ConnectException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new AuthenticationProcessException(
-		    "Unable to connect to OpenID provider, check your identificator");
-	} catch (IOException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new AuthenticationProcessException(
-		    "There is problem to get XRDS document, check your identificator");
+	private boolean isContentType(Header headerContentType) {
+		if (headerContentType == null) {
+			return false;
+		} else {
+			return headerContentType.getValue().indexOf("application/xrds+xml") >= 0;
+		}
 	}
-    }
+
+	private DiscoveryResult doGet(String userSuppliedId) throws ClientProtocolException, IOException {
+		logger.debug("trying GET at '" + userSuppliedId + "'");
+		HttpGet httpget = new HttpGet(userSuppliedId);
+		httpget.setHeader("Accept", "application/xrds+xml");
+		HttpResponse response = httpService.getHttpClient().execute(httpget);
+		Header headerXrdsLocation = response.getFirstHeader("X-XRDS-Location");
+		if (headerXrdsLocation == null) {
+			Header headerContentType = response.getFirstHeader("Content-Type");
+			String body = EntityUtils.toString(response.getEntity());
+			if (isContentType(headerContentType)) {
+				// it's XRDS document
+				DiscoveryResult out = xrdsService.extractDiscoveryResult(body);
+				out.setClaimedId(userSuppliedId);
+				return out;
+			} else {
+				// try if it's HTML with meta
+				String meta = xmlProcessing.getMetaContent(body, "X-XRDS-Location");
+				if (meta == null) {
+					throw new AuthenticationProcessException("Unable to find XRDS document.");
+				} else {
+					return discoverySupport.getXrdsDocument(meta, userSuppliedId);
+				}
+			}
+		} else {
+			return discoverySupport.getXrdsDocument(headerXrdsLocation.getValue(), userSuppliedId);
+		}
+	}
+
+	@Override
+	public DiscoveryResult dicovery(String userSuppliedId) {
+		Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
+		userSuppliedId = userSuppliedId.trim();
+		try {
+			return doHead(userSuppliedId);
+		} catch (IllegalArgumentException e) {
+			logger.error(e.getMessage(), e);
+			throw new AuthenticationProcessException("Invalid format of you identificator");
+		} catch (ClientProtocolException e) {
+			logger.error(e.getMessage(), e);
+			throw new AuthenticationProcessException("There is problem to get XRDS document, check your identificator");
+		} catch (ConnectException e) {
+			logger.error(e.getMessage(), e);
+			throw new AuthenticationProcessException("Unable to connect to OpenID provider, check your identificator");
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+			throw new AuthenticationProcessException("There is problem to get XRDS document, check your identificator");
+		}
+	}
 
 }

@@ -14,7 +14,7 @@ import com.coroptis.coidi.core.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.rp.iocsupport.AuthProcSimpleRp;
 import com.coroptis.coidi.rp.iocsupport.RpConfigurationServiceImpl;
-import com.coroptis.coidi.rp.iocsupport.SimpleAuthRsponseDecoder;
+import com.coroptis.coidi.rp.iocsupport.SimpleAuthResponseDecoder;
 import com.coroptis.coidi.rp.services.AssociationFactory;
 import com.coroptis.coidi.rp.services.AssociationHelper;
 import com.coroptis.coidi.rp.services.AuthReq;
@@ -103,7 +103,7 @@ public class RpModule extends AbstractModule {
 		.to(AuthReqTerminator.class);
 	
 
-	bind(AuthRespDecoder.class).to(SimpleAuthRsponseDecoder.class);
+	bind(AuthRespDecoder.class).to(SimpleAuthResponseDecoder.class);
 	bind(AuthRespDecoder.class).annotatedWith(Names.named("authRespDecoderOpenId"))
 		.to(AuthRespDecoderOpenId.class);
 	bind(AuthRespDecoder.class).annotatedWith(Names.named("authRespDecoderTerminator"))

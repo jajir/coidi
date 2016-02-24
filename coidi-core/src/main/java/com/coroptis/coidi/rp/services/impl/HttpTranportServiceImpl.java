@@ -39,8 +39,12 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 
 	private final static Logger logger = LoggerFactory.getLogger(HttpTranportServiceImpl.class);
 
+	private final HttpService httpService;
+
 	@Inject
-	private HttpService httpService;
+	public HttpTranportServiceImpl(final HttpService httpService) {
+		this.httpService = Preconditions.checkNotNull(httpService);
+	}
 
 	@Override
 	public Map<String, String> doPost(final String url, final Map<String, String> map) {
@@ -67,10 +71,6 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 			logger.error(e.getMessage(), e);
 			throw new CoidiException(e.getMessage(), e);
 		}
-	}
-
-	public void setHttpService(HttpService httpService) {
-		this.httpService = httpService;
 	}
 
 }

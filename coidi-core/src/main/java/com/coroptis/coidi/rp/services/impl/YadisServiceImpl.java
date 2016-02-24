@@ -31,35 +31,40 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.YadisService;
+import com.google.common.base.Preconditions;
 
 public class YadisServiceImpl implements YadisService {
 
-    private final static Logger logger = LoggerFactory.getLogger(YadisServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(YadisServiceImpl.class);
 
-    @Inject
-    private HttpService httpService;
+	private final HttpService httpService;
 
-    @Override
-    public void readXrdsDocument(String url) {
-	try {
-	    HttpClient httpClient = httpService.getHttpClient();
-	    HttpGet httpget = new HttpGet(url);
-	    httpget.setHeader("Accept", "application/xrds+xml");
-	    HttpResponse response;
-	    response = httpClient.execute(httpget);
-
-	    HttpEntity entity = response.getEntity();
-	    String string = EntityUtils.toString(entity);
-	    System.out.println(string);
-	    // extract "openid2.provider"
-	} catch (ClientProtocolException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	} catch (IOException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
+	@Inject
+	public YadisServiceImpl(final HttpService httpService) {
+		this.httpService = Preconditions.checkNotNull(httpService);
 	}
 
-    }
+	@Override
+	public void readXrdsDocument(String url) {
+		try {
+			HttpClient httpClient = httpService.getHttpClient();
+			HttpGet httpget = new HttpGet(url);
+			httpget.setHeader("Accept", "application/xrds+xml");
+			HttpResponse response;
+			response = httpClient.execute(httpget);
+
+			HttpEntity entity = response.getEntity();
+			String string = EntityUtils.toString(entity);
+			System.out.println(string);
+			// extract "openid2.provider"
+		} catch (ClientProtocolException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
+
+	}
 
 }

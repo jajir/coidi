@@ -7,12 +7,12 @@ import org.apache.commons.lang.time.DateUtils;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.util.MapH;
 import com.coroptis.coidi.op.entities.Identity.Gendre;
 import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 import com.coroptis.coidi.op.services.impl.SregServiceImpl;
 import com.coroptis.coidi.util.IdentityMock;
+import com.coroptis.coidi.util.MapH;
 import com.google.common.collect.Sets;
 
 import junit.framework.TestCase;

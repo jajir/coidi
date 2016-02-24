@@ -26,73 +26,71 @@ import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
 import com.coroptis.coidi.op.entities.Association.SessionType;
+import com.google.common.base.Preconditions;
 
 public class CryptoSessionServiceImpl implements CryptoSessionService {
 
-    @Inject
-    private CryptographyService cryptographyService;
+	private final CryptographyService cryptographyService;
 
-    private final Random random;
+	private final Random random;
 
-    public CryptoSessionServiceImpl() {
-	random = new Random();
-    }
-
-    @Override
-    public BigInteger getSharedSecretKey(final KeyPair keyPair, final BigInteger composite) {
-	return composite.modPow(keyPair.getPrivateKey(), keyPair.getModulus());
-    }
-
-    @Override
-    public byte[] xorSecret(final KeyPair keyPair, final BigInteger otherPublic,
-	    final byte[] secret, final SessionType sessionType) {
-	if (otherPublic == null) {
-	    throw new IllegalArgumentException("otherPublic cannot be null");
+	@Inject
+	public CryptoSessionServiceImpl(final CryptographyService cryptographyService) {
+		random = new Random();
+		this.cryptographyService = Preconditions.checkNotNull(cryptographyService, "");
 	}
 
-	BigInteger shared = keyPair.getSharedSecret(otherPublic);
-	byte[] hashed = cryptographyService.computeDigest(shared.toByteArray(), sessionType);
-
-	if (secret.length != hashed.length) {
-	    throw new CoidiException("invalid secret byte[] length: secret=" + secret.length
-		    + ", hashed=" + hashed.length);
+	@Override
+	public BigInteger getSharedSecretKey(final KeyPair keyPair, final BigInteger composite) {
+		return composite.modPow(keyPair.getPrivateKey(), keyPair.getModulus());
 	}
 
-	byte[] result = new byte[secret.length];
-	for (int i = 0; i < result.length; i++) {
-	    result[i] = (byte) (hashed[i] ^ secret[i]);
-	}
-	return result;
-    }
+	@Override
+	public byte[] xorSecret(final KeyPair keyPair, final BigInteger otherPublic, final byte[] secret,
+			final SessionType sessionType) {
+		if (otherPublic == null) {
+			throw new IllegalArgumentException("otherPublic cannot be null");
+		}
 
-    @Override
-    public KeyPair generateCryptoSession(final AssociationRequest association) {
-	return generateCryptoSession(association.getDhModulo(), association.getDhGen());
-    }
+		BigInteger shared = keyPair.getSharedSecret(otherPublic);
+		byte[] hashed = cryptographyService.computeDigest(shared.toByteArray(), sessionType);
 
-    @Override
-    public KeyPair generateCryptoSession(BigInteger dhModulo, BigInteger dhGen) {
-	if (dhModulo == null) {
-	    dhModulo = DEFAULT_DH_MODULUS;
-	}
-	if (dhGen == null) {
-	    dhGen = DEFAULT_DH_GEN;
-	}
-	int bits = dhModulo.bitLength();
-	BigInteger max = dhModulo.subtract(BigInteger.ONE);
-	while (true) {
-	    BigInteger pkey = new BigInteger(bits, random);
-	    if (pkey.compareTo(max) >= 0) { // too large
-		continue;
-	    } else if (pkey.compareTo(BigInteger.ONE) <= 0) {// too small
-		continue;
-	    }
-	    return new KeyPair(pkey, dhGen.modPow(pkey, dhModulo));
-	}
-    }
+		if (secret.length != hashed.length) {
+			throw new CoidiException(
+					"invalid secret byte[] length: secret=" + secret.length + ", hashed=" + hashed.length);
+		}
 
-	public void setCryptographyService(CryptographyService cryptographyService) {
-		this.cryptographyService = cryptographyService;
+		byte[] result = new byte[secret.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = (byte) (hashed[i] ^ secret[i]);
+		}
+		return result;
 	}
-    
+
+	@Override
+	public KeyPair generateCryptoSession(final AssociationRequest association) {
+		return generateCryptoSession(association.getDhModulo(), association.getDhGen());
+	}
+
+	@Override
+	public KeyPair generateCryptoSession(BigInteger dhModulo, BigInteger dhGen) {
+		if (dhModulo == null) {
+			dhModulo = DEFAULT_DH_MODULUS;
+		}
+		if (dhGen == null) {
+			dhGen = DEFAULT_DH_GEN;
+		}
+		int bits = dhModulo.bitLength();
+		BigInteger max = dhModulo.subtract(BigInteger.ONE);
+		while (true) {
+			BigInteger pkey = new BigInteger(bits, random);
+			if (pkey.compareTo(max) >= 0) { // too large
+				continue;
+			} else if (pkey.compareTo(BigInteger.ONE) <= 0) {// too small
+				continue;
+			}
+			return new KeyPair(pkey, dhGen.modPow(pkey, dhModulo));
+		}
+	}
+
 }

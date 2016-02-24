@@ -51,7 +51,7 @@ public class NonceStoreInMemory implements NonceStorage {
 
 	private static final int NONCE_EXPIRATION_MINUTES = 5;
 
-	private Set<String> nonces = new HashSet<String>();
+	private final Set<String> nonces = new HashSet<String>();
 
 	private final ReentrantLock lock;
 

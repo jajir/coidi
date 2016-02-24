@@ -42,17 +42,23 @@ public class AssociationFactoryImpl implements AssociationFactory {
 
 	private final static Logger logger = LoggerFactory.getLogger(AssociationFactoryImpl.class);
 
-	@Inject
-	private CryptoSessionService cryptoSessionService;
+	private final CryptoSessionService cryptoSessionService;
+
+	private final ConvertorService convertorService;
+
+	private final HttpTransportService httpTransportService;
+
+	private final AssociationHelper associationHelper;
 
 	@Inject
-	private ConvertorService convertorService;
-
-	@Inject
-	private HttpTransportService httpTransportService;
-
-	@Inject
-	private AssociationHelper associationHelper;
+	public AssociationFactoryImpl(final CryptoSessionService cryptoSessionService,
+			final ConvertorService convertorService, final HttpTransportService httpTransportService,
+			final AssociationHelper associationHelper) {
+		this.cryptoSessionService = Preconditions.checkNotNull(cryptoSessionService);
+		this.convertorService = Preconditions.checkNotNull(convertorService);
+		this.httpTransportService = Preconditions.checkNotNull(httpTransportService);
+		this.associationHelper = Preconditions.checkNotNull(associationHelper);
+	}
 
 	@Override
 	public Association generateAssociation(final String opEndpoint, final SessionType sessionType,
@@ -101,22 +107,6 @@ public class AssociationFactoryImpl implements AssociationFactory {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.SECOND, Integer.valueOf(Preconditions.checkNotNull(seconds, "seconds")));
 		return cal.getTime();
-	}
-
-	public void setCryptoSessionService(CryptoSessionService cryptoSessionService) {
-		this.cryptoSessionService = cryptoSessionService;
-	}
-
-	public void setConvertorService(ConvertorService convertorService) {
-		this.convertorService = convertorService;
-	}
-
-	public void setHttpTransportService(HttpTransportService httpTransportService) {
-		this.httpTransportService = httpTransportService;
-	}
-
-	public void setAssociationHelper(AssociationHelper associationHelper) {
-		this.associationHelper = associationHelper;
 	}
 
 }

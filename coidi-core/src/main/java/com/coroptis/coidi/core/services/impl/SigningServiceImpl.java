@@ -30,50 +30,43 @@ import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
+import com.google.common.base.Preconditions;
 
 public class SigningServiceImpl implements SigningService {
 
-    private Logger logger = LoggerFactory.getLogger(CryptographyServiceImpl.class);
+	private Logger logger = LoggerFactory.getLogger(CryptographyServiceImpl.class);
 
-    @Inject
-    private CryptographyService cryptoService;
+	private final CryptographyService cryptoService;
 
-    @Inject
-    private MessageService messageService;
+	private final MessageService messageService;
 
-    @Inject
-    private ConvertorService convertorService;
+	private final ConvertorService convertorService;
 
-    @Override
-    public String sign(final AbstractMessage response, final Association association) {
-	String toSign = messageService.extractStringForSign(response, null);
-	logger.debug("Message to sign '" + toSign + "'");
-	return plainSign(toSign, association.getMacKey(), association.getAssociationType());
-    }
-
-    @Override
-    public String plainSign(final String toSign, final String macKey,
-	    final AssociationType associationType) {
-	try {
-	    byte[] b = cryptoService.generateMac(convertorService.convertToBytes(macKey),
-		    toSign.getBytes("UTF-8"), associationType);
-	    return convertorService.convertToString(b);
-	} catch (UnsupportedEncodingException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	}
-    }
-
-	public void setCryptoService(CryptographyService cryptoService) {
-		this.cryptoService = cryptoService;
+	@Inject
+	public SigningServiceImpl(final CryptographyService cryptoService, final MessageService messageService,
+			final ConvertorService convertorService) {
+		this.cryptoService = Preconditions.checkNotNull(cryptoService);
+		this.messageService = Preconditions.checkNotNull(messageService);
+		this.convertorService = Preconditions.checkNotNull(convertorService);
 	}
 
-	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
+	@Override
+	public String sign(final AbstractMessage response, final Association association) {
+		String toSign = messageService.extractStringForSign(response, null);
+		logger.debug("Message to sign '" + toSign + "'");
+		return plainSign(toSign, association.getMacKey(), association.getAssociationType());
 	}
 
-	public void setConvertorService(ConvertorService convertorService) {
-		this.convertorService = convertorService;
+	@Override
+	public String plainSign(final String toSign, final String macKey, final AssociationType associationType) {
+		try {
+			byte[] b = cryptoService.generateMac(convertorService.convertToBytes(macKey), toSign.getBytes("UTF-8"),
+					associationType);
+			return convertorService.convertToString(b);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
 	}
 
 }

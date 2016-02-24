@@ -1,5 +1,7 @@
 package com.coroptis.coidi.core.message;
 
+import com.google.common.base.Preconditions;
+
 /**
  * It's negative response to checkid_immediate authentication request.
  * 
@@ -8,13 +10,26 @@ package com.coroptis.coidi.core.message;
  */
 public class SetupNeededResponse extends AbstractOpenIdResponse {
 
-    public final static String MODE_SETUP_NEEDED = "setup_needed";
+	public final static String MODE_SETUP_NEEDED = "setup_needed";
 
-    public SetupNeededResponse(final String nameSpace) {
-	super();
-	setUrl(true);
-	setNameSpace(nameSpace);
-	setMode(MODE_SETUP_NEEDED);
+	private final String returnToUrl;
+
+	public SetupNeededResponse(final String nameSpace, final String returnToUrl) {
+		super();
+		setUrl(true);
+		setNameSpace(nameSpace);
+		setMode(MODE_SETUP_NEEDED);
+		this.returnToUrl=Preconditions.checkNotNull(returnToUrl);
+	}
+
+	@Override
+    public String getUrl(final String targetUrl) {
+    	return getUrl();
     }
+
+	
+	public String getUrl() {
+		return getUrlMessage(OPENID, returnToUrl);
+	}
 
 }

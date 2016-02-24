@@ -26,7 +26,6 @@ import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.message.AssociationResponse;
 import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptoSessionService;
-import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.util.KeyPair;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -45,9 +44,6 @@ public class AssociationProcessorImpl implements AssociationProcessor {
 
     @Inject
     private CryptoSessionService cryptoSessionService;
-
-    @Inject
-    private CryptographyService cryptographyService;
 
     @Inject
     private CryptoService cryptoService;
@@ -75,7 +71,7 @@ public class AssociationProcessorImpl implements AssociationProcessor {
 		    cryptoService.generateSessionRandom(association.getSessionType())));
 	    KeyPair cryptoSession = cryptoSessionService.generateCryptoSession(request);
 	    out.setEncMacKey(
-		    cryptographyService.encryptSecret(cryptoSession, request.getDhConsumerPublic(),
+	    		cryptoSessionService.xorSecret(cryptoSession, request.getDhConsumerPublic(),
 			    convertorService.convertToBytes(association.getMacKey()), sessionType));
 	    out.setDhServerPublic(cryptoSession.getPublicKey());
 	}

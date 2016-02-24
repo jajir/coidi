@@ -27,46 +27,41 @@ import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.AuthReq;
 import com.coroptis.coidi.rp.services.RpConfigurationService;
 import com.coroptis.coidi.rp.services.RpService;
+import com.google.common.base.Preconditions;
 
 public class RpServiceImpl implements RpService {
 
-    private final static Logger logger = LoggerFactory.getLogger(RpServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(RpServiceImpl.class);
 
-    @Inject
-    private AuthReq authReq;
+	private final AuthReq authReq;
 
-    private final String realm;
+	private final String realm;
 
-    @Inject
-    public RpServiceImpl(final RpConfigurationService configurationService) {
-	this.realm = configurationService.getRealm();
-    }
-
-    @Override
-    public String authentication(final DiscoveryResult discoveryResult,
-	    final Association association,
-	    final AuthenticationParameters authenticationParameters) {
-	AuthenticationRequest authenticationRequest = new AuthenticationRequest();
-	if (association == null) {
-	    // no association handle --> stateless mode
-	} else {
-	    authenticationRequest.setAssocHandle(association.getAssocHandle());
+	@Inject
+	public RpServiceImpl(final RpConfigurationService configurationService, final AuthReq authReq) {
+		this.realm = configurationService.getRealm();
+		this.authReq = Preconditions.checkNotNull(authReq);
 	}
 
-	// TODO refactor it
-	authenticationRequest.setIdentity(discoveryResult.getClaimedId());
-	authenticationRequest.setClaimedId(discoveryResult.getClaimedId());
-	authenticationRequest.setMode(authenticationParameters.getMode());
-	authenticationRequest.setRealm(realm);
-	authenticationRequest.setReturnTo(authenticationParameters.getReturnTo());
-	authReq.process(authenticationRequest, discoveryResult,
-		authenticationParameters.getParameters());
-	logger.debug("authentication: " + authenticationRequest.getMessage());
-	return authenticationRequest.getUrl(discoveryResult.getEndPoint());
-    }
+	@Override
+	public String authentication(final DiscoveryResult discoveryResult, final Association association,
+			final AuthenticationParameters authenticationParameters) {
+		AuthenticationRequest authenticationRequest = new AuthenticationRequest();
+		if (association == null) {
+			// no association handle --> stateless mode
+		} else {
+			authenticationRequest.setAssocHandle(association.getAssocHandle());
+		}
 
-	public void setAuthReq(AuthReq authReq) {
-		this.authReq = authReq;
+		// TODO refactor it
+		authenticationRequest.setIdentity(discoveryResult.getClaimedId());
+		authenticationRequest.setClaimedId(discoveryResult.getClaimedId());
+		authenticationRequest.setMode(authenticationParameters.getMode());
+		authenticationRequest.setRealm(realm);
+		authenticationRequest.setReturnTo(authenticationParameters.getReturnTo());
+		authReq.process(authenticationRequest, discoveryResult, authenticationParameters.getParameters());
+		logger.debug("authentication: " + authenticationRequest.getMessage());
+		return authenticationRequest.getUrl(discoveryResult.getEndPoint());
 	}
 
 }

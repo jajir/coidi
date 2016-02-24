@@ -36,71 +36,75 @@ import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.base.XrdService;
 import com.coroptis.coidi.rp.services.XrdsService;
+import com.google.common.base.Preconditions;
 
 public class XrdsServiceImpl implements XrdsService {
 
-    private final static Logger logger = LoggerFactory.getLogger(XrdsServiceImpl.class);
+	private final static Logger logger = LoggerFactory.getLogger(XrdsServiceImpl.class);
 
-    @Inject
-    private ConvertorService convertorService;
+	private final ConvertorService convertorService;
 
-    @Override
-    public DiscoveryResult extractDiscoveryResult(final String xrdsDocument) {
-	logger.debug("Starting processing XRDS document: " + xrdsDocument);
-	try {
-	    DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-	    builderFactory.setFeature(
-		    "http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-	    builderFactory.setFeature("http://xml.org/sax/features/validation", false);
-
-	    DocumentBuilder builder;
-	    builder = builderFactory.newDocumentBuilder();
-
-	    Document document = builder.parse(new ByteArrayInputStream(xrdsDocument.getBytes()));
-
-	    Element element = document.getDocumentElement();
-	    element.normalize();
-
-	    System.out.println(element.getNodeName());
-	    NodeList nl = element.getElementsByTagName("Service");
-	    DiscoveryResult result = new DiscoveryResult();
-	    for (int i = 0; i < nl.getLength(); i++) {
-		Node node = nl.item(i);
-		result.getServices().add(processServiceNode(node));
-	    }
-	    return result;
-	} catch (ParserConfigurationException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	} catch (SAXException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	} catch (IOException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
+	@Inject
+	public XrdsServiceImpl(final ConvertorService convertorService) {
+		this.convertorService = Preconditions.checkNotNull(convertorService);
 	}
-    }
 
-    private XrdService processServiceNode(Node serviceNode) {
-	XrdService out = new XrdService();
-	NodeList nl = serviceNode.getChildNodes();
-	for (int i = 0; i < nl.getLength(); i++) {
-	    Node node = nl.item(i);
-	    if (node.getNodeName().equals("Type")) {
-		out.getTypes().add(node.getTextContent());
-	    }
-	    if (node.getNodeName().equals("URI")) {
-		out.setUrl(node.getTextContent());
-	    }
-	    if (node.getNodeName().equals("LocalID")) {
-		out.setLocalId(node.getTextContent());
-	    }
+	@Override
+	public DiscoveryResult extractDiscoveryResult(final String xrdsDocument) {
+		logger.debug("Starting processing XRDS document: " + xrdsDocument);
+		try {
+			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+			builderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+			builderFactory.setFeature("http://xml.org/sax/features/validation", false);
+
+			DocumentBuilder builder;
+			builder = builderFactory.newDocumentBuilder();
+
+			Document document = builder.parse(new ByteArrayInputStream(xrdsDocument.getBytes()));
+
+			Element element = document.getDocumentElement();
+			element.normalize();
+
+			System.out.println(element.getNodeName());
+			NodeList nl = element.getElementsByTagName("Service");
+			DiscoveryResult result = new DiscoveryResult();
+			for (int i = 0; i < nl.getLength(); i++) {
+				Node node = nl.item(i);
+				result.getServices().add(processServiceNode(node));
+			}
+			return result;
+		} catch (ParserConfigurationException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		} catch (SAXException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
 	}
-	if (serviceNode.getAttributes().getNamedItem("priority") != null) {
-	    out.setPriority(convertorService.getInt(serviceNode.getAttributes()
-		    .getNamedItem("priority").getTextContent()));
+
+	private XrdService processServiceNode(Node serviceNode) {
+		XrdService out = new XrdService();
+		NodeList nl = serviceNode.getChildNodes();
+		for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			if (node.getNodeName().equals("Type")) {
+				out.getTypes().add(node.getTextContent());
+			}
+			if (node.getNodeName().equals("URI")) {
+				out.setUrl(node.getTextContent());
+			}
+			if (node.getNodeName().equals("LocalID")) {
+				out.setLocalId(node.getTextContent());
+			}
+		}
+		if (serviceNode.getAttributes().getNamedItem("priority") != null) {
+			out.setPriority(
+					convertorService.getInt(serviceNode.getAttributes().getNamedItem("priority").getTextContent()));
+		}
+		return out;
 	}
-	return out;
-    }
 
 }

@@ -83,8 +83,7 @@ public class HttpTranportServiceTest {
 	public void setUp() throws UnsupportedEncodingException {
 		httpService = EasyMock.createMock(HttpService.class);
 		httpClient = EasyMock.createMock(HttpClient.class);
-		httpTranportService = new HttpTranportServiceImpl();
-		httpTranportService.setHttpService(httpService);
+		httpTranportService = new HttpTranportServiceImpl(httpService);
 
 		map = new HashMap<String, String>();
 		pairList = new ArrayList<NameValuePair>();

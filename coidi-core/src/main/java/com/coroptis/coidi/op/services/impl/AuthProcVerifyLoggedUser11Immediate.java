@@ -39,23 +39,21 @@ import com.coroptis.coidi.op.services.UserVerifier;
  */
 public class AuthProcVerifyLoggedUser11Immediate implements AuthProc {
 
-    private final static Logger logger = LoggerFactory
-	    .getLogger(AuthProcVerifyLoggedUser11Immediate.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser11Immediate.class);
 
-    @Inject
-    private UserVerifier userVerifier;
+	@Inject
+	private UserVerifier userVerifier;
 
-    @Override
-    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final HttpSession userSession,
-	    final Set<String> fieldsToSign) {
-	logger.debug("verify identity: " + authenticationRequest);
-	if (!userVerifier.isUserLogged(userSession)) {
-	    return new SetupNeededResponse(AbstractMessage.OPENID_NS_11);
+	@Override
+	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+			final AuthenticationResponse response, final HttpSession userSession, final Set<String> fieldsToSign) {
+		logger.debug("verify identity: " + authenticationRequest);
+		if (!userVerifier.isUserLogged(userSession)) {
+			return new SetupNeededResponse(AbstractMessage.OPENID_NS_11, authenticationRequest.getReturnTo());
+		}
+
+		return null;
+
 	}
-
-	return null;
-
-    }
 
 }

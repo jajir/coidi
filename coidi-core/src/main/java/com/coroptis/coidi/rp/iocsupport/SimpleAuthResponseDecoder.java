@@ -6,10 +6,10 @@ import javax.inject.Named;
 import com.coroptis.coidi.core.util.AbstractAuthRespDecoder;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 
-public class SimpleAuthRsponseDecoder extends AbstractAuthRespDecoder {
+public class SimpleAuthResponseDecoder extends AbstractAuthRespDecoder {
 
 	@Inject
-	public SimpleAuthRsponseDecoder(
+	public SimpleAuthResponseDecoder(
 
 			final @Named("authRespOpenId20Verify") AuthRespDecoder authRespOpenId20Verify,
 			final @Named("authRespDecoderOpenId") AuthRespDecoder authRespDecoderOpenId,
