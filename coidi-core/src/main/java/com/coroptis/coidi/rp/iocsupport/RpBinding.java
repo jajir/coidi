@@ -53,423 +53,281 @@ public class RpBinding extends CoreBinding {
 	/**
 	 * {@link NonceStorage}
 	 */
-	private Lazy<NonceStorage> nonceStorage = new Lazy<NonceStorage>(initNonceStorage());
-
-	public final NonceStorage getNonceStorage() {
-		return nonceStorage.get();
-	}
-
-	protected Init<NonceStorage> initNonceStorage() {
-		return new Init<NonceStorage>() {
-			@Override
-			public NonceStorage create() {
-				return new NonceStoreInMemory();
-			}
-		};
+	public NonceStorage getNonceStorage() {
+		NonceStorage out = get(NonceStorage.class);
+		if (out == null) {
+			out = new NonceStoreInMemory();
+			put(NonceStorage.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link HttpService}
 	 */
-	private Lazy<HttpService> httpService = new Lazy<HttpService>(initHttpService());
-
-	public final HttpService getHttpService() {
-		return httpService.get();
-	}
-
-	protected Init<HttpService> initHttpService() {
-		return new Init<HttpService>() {
-			@Override
-			public HttpService create() {
-				return new HttpServiceImpl(conf);
-			}
-		};
+	public HttpService getHttpService() {
+		HttpService out = get(HttpService.class);
+		if (out == null) {
+			out = new HttpServiceImpl(conf);
+			put(HttpService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link YadisService}
 	 */
-	private Lazy<YadisService> yadisService = new Lazy<YadisService>(initYadisService());
-
-	public final YadisService getYadisService() {
-		return yadisService.get();
-	}
-
-	protected Init<YadisService> initYadisService() {
-		return new Init<YadisService>() {
-			@Override
-			public YadisService create() {
-				return new YadisServiceImpl(getHttpService());
-			}
-		};
+	public YadisService getYadisService() {
+		YadisService out = get(YadisService.class);
+		if (out == null) {
+			out = new YadisServiceImpl(getHttpService());
+			put(YadisService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link XrdsService}
 	 */
-	private Lazy<XrdsService> xrdsService = new Lazy<XrdsService>(initXrdsService());
-
-	public final XrdsService getXrdsService() {
-		return xrdsService.get();
-	}
-
-	protected Init<XrdsService> initXrdsService() {
-		return new Init<XrdsService>() {
-			@Override
-			public XrdsService create() {
-				return new XrdsServiceImpl(getConvertorService());
-			}
-		};
+	public XrdsService getXrdsService() {
+		XrdsService out = get(XrdsService.class);
+		if (out == null) {
+			out = new XrdsServiceImpl(getConvertorService());
+			put(XrdsService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link HttpTransportService}
 	 */
-	private Lazy<HttpTransportService> httpTransportService = new Lazy<HttpTransportService>(
-			initHttpTransportService());
-
-	public final HttpTransportService getHttpTransportService() {
-		return httpTransportService.get();
-	}
-
-	protected Init<HttpTransportService> initHttpTransportService() {
-		return new Init<HttpTransportService>() {
-			@Override
-			public HttpTransportService create() {
-				return new HttpTranportServiceImpl(getHttpService());
-			}
-		};
+	public HttpTransportService getHttpTransportService() {
+		HttpTransportService out = get(HttpTransportService.class);
+		if (out == null) {
+			out = new HttpTranportServiceImpl(getHttpService());
+			put(HttpTransportService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AssociationHelper}
 	 */
-	private Lazy<AssociationHelper> associationHelper = new Lazy<AssociationHelper>(initAssociationHelper());
-
-	public final AssociationHelper getAssociationHelper() {
-		return associationHelper.get();
-	}
-
-	protected Init<AssociationHelper> initAssociationHelper() {
-		return new Init<AssociationHelper>() {
-			@Override
-			public AssociationHelper create() {
-				return new AssociationHelperImpl();
-			}
-		};
+	public AssociationHelper getAssociationHelper() {
+		AssociationHelper out = get(AssociationHelper.class);
+		if (out == null) {
+			out = new AssociationHelperImpl();
+			put(AssociationHelper.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AssociationFactory}
 	 */
-	private Lazy<AssociationFactory> associationFactory = new Lazy<AssociationFactory>(initAssociationFactory());
-
-	public final AssociationFactory getAssociationFactory() {
-		return associationFactory.get();
-	}
-
-	protected Init<AssociationFactory> initAssociationFactory() {
-		return new Init<AssociationFactory>() {
-			@Override
-			public AssociationFactory create() {
-				return new AssociationFactoryImpl(getCryptoSessionService(), getConvertorService(),
-						getHttpTransportService(), getAssociationHelper());
-			}
-		};
+	public AssociationFactory getAssociationFactory() {
+		AssociationFactory out = get(AssociationFactory.class);
+		if (out == null) {
+			out = new AssociationFactoryImpl(getCryptoSessionService(), getConvertorService(),
+					getHttpTransportService(), getAssociationHelper());
+			put(AssociationFactory.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link XmlProcessing}
 	 */
-	private Lazy<XmlProcessing> xmlProcessing = new Lazy<XmlProcessing>(initXmlProcessing());
-
-	public final XmlProcessing getXmlProcessing() {
-		return xmlProcessing.get();
-	}
-
-	protected Init<XmlProcessing> initXmlProcessing() {
-		return new Init<XmlProcessing>() {
-			@Override
-			public XmlProcessing create() {
-				return new XmlProcessingImpl();
-			}
-		};
+	public XmlProcessing getXmlProcessing() {
+		XmlProcessing out = get(XmlProcessing.class);
+		if (out == null) {
+			out = new XmlProcessingImpl();
+			put(XmlProcessing.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link DiscoverySupport}
 	 */
-	private Lazy<DiscoverySupport> discoverySupport = new Lazy<DiscoverySupport>(initDiscoverySupport());
-
-	public final DiscoverySupport getDiscoverySupport() {
-		return discoverySupport.get();
-	}
-
-	protected Init<DiscoverySupport> initDiscoverySupport() {
-		return new Init<DiscoverySupport>() {
-			@Override
-			public DiscoverySupport create() {
-				return new DiscoverySupportImpl(getHttpService(), getXrdsService());
-			}
-		};
+	public DiscoverySupport getDiscoverySupport() {
+		DiscoverySupport out = get(DiscoverySupport.class);
+		if (out == null) {
+			out = new DiscoverySupportImpl(getHttpService(), getXrdsService());
+			put(DiscoverySupport.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthRespSupport}
 	 */
-	private Lazy<AuthRespSupport> authRespSupport = new Lazy<AuthRespSupport>(initAuthRespSupport());
-
-	public final AuthRespSupport getAuthRespSupport() {
-		return authRespSupport.get();
-	}
-
-	protected Init<AuthRespSupport> initAuthRespSupport() {
-		return new Init<AuthRespSupport>() {
-			@Override
-			public AuthRespSupport create() {
-				return new AuthRespSupportImpl();
-			}
-		};
+	public AuthRespSupport getAuthRespSupport() {
+		AuthRespSupport out = get(AuthRespSupport.class);
+		if (out == null) {
+			out = new AuthRespSupportImpl();
+			put(AuthRespSupport.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link DiscoveryProcessor}
 	 */
-	private Lazy<DiscoveryProcessor> discoveryProcessor = new Lazy<DiscoveryProcessor>(initDiscoveryProcessor());
-
-	public final DiscoveryProcessor getDiscoveryProcessor() {
-		return discoveryProcessor.get();
-	}
-
-	protected Init<DiscoveryProcessor> initDiscoveryProcessor() {
-		return new Init<DiscoveryProcessor>() {
-			@Override
-			public DiscoveryProcessor create() {
-				return new DiscoveryProcessorYadis(getHttpService(), getXrdsService(), getXmlProcessing(),
-						getDiscoverySupport());
-			}
-		};
+	public DiscoveryProcessor getDiscoveryProcessor() {
+		DiscoveryProcessor out = get(DiscoveryProcessor.class);
+		if (out == null) {
+			out = new DiscoveryProcessorYadis(getHttpService(), getXrdsService(), getXmlProcessing(),
+					getDiscoverySupport());
+			put(DiscoveryProcessor.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link DiscoveryService}
 	 */
-	private Lazy<DiscoveryService> discoveryService = new Lazy<DiscoveryService>(initDiscoveryService());
-
-	public final DiscoveryService getDiscoveryService() {
-		return discoveryService.get();
-	}
-
-	protected Init<DiscoveryService> initDiscoveryService() {
-		return new Init<DiscoveryService>() {
-			@Override
-			public DiscoveryService create() {
-				return new DiscoveryServiceImpl(getDiscoveryProcessor(), getDiscoverySupport());
-			}
-		};
+	public DiscoveryService getDiscoveryService() {
+		DiscoveryService out = get(DiscoveryService.class);
+		if (out == null) {
+			out = new DiscoveryServiceImpl(getDiscoveryProcessor(), getDiscoverySupport());
+			put(DiscoveryService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthReqPreconditions}
 	 */
-	private Lazy<AuthReq> authReqPreconditions = new Lazy<AuthReq>(initAuthReqPreconditions());
-
-	public final AuthReq getAuthReqPreconditions() {
-		return authReqPreconditions.get();
-	}
-
-	protected Init<AuthReq> initAuthReqPreconditions() {
-		return new Init<AuthReq>() {
-			@Override
-			public AuthReq create() {
-				return new AuthReqPreconditions();
-			}
-		};
+	public AuthReq getAuthReqPreconditions() {
+		AuthReq out = get("AuthReqPreconditions");
+		if (out == null) {
+			out = new AuthReqPreconditions();
+			put("AuthReqPreconditions", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthReqUiIcon}
 	 */
-	private Lazy<AuthReq> authReqUiIcon = new Lazy<AuthReq>(initAuthReqUiIcon());
-
-	public final AuthReq getAuthReqUiIcon() {
-		return authReqUiIcon.get();
-	}
-
-	protected Init<AuthReq> initAuthReqUiIcon() {
-		return new Init<AuthReq>() {
-			@Override
-			public AuthReq create() {
-				return new AuthReqUiIcon();
-			}
-		};
+	public AuthReq getAuthReqUiIcon() {
+		AuthReq out = get("AuthReqUiIcon");
+		if (out == null) {
+			out = new AuthReqUiIcon();
+			put("AuthReqUiIcon", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthReqTerminator}
 	 */
-	private Lazy<AuthReq> authReqTerminator = new Lazy<AuthReq>(initAuthReqTerminator());
-
-	public final AuthReq getAuthReqTerminator() {
-		return authReqTerminator.get();
-	}
-
-	protected Init<AuthReq> initAuthReqTerminator() {
-		return new Init<AuthReq>() {
-			@Override
-			public AuthReq create() {
-				return new AuthReqTerminator();
-			}
-		};
+	public AuthReq getAuthReqTerminator() {
+		AuthReq out = get("AuthReqTerminator");
+		if (out == null) {
+			out = new AuthReqTerminator();
+			put("AuthReqTerminator", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthProcSimpleRp}
 	 */
-	private Lazy<AuthReq> authProcSimpleRp = new Lazy<AuthReq>(initAuthProcSimpleRp());
-
-	public final AuthReq getAuthProcSimpleRp() {
-		return authProcSimpleRp.get();
-	}
-
-	protected Init<AuthReq> initAuthProcSimpleRp() {
-		return new Init<AuthReq>() {
-			@Override
-			public AuthReq create() {
-				return new AuthProcSimpleRp(getAuthReqPreconditions(), getAuthReqUiIcon(), getAuthReqTerminator());
-			}
-		};
+	public AuthReq getAuthProcSimpleRp() {
+		AuthReq out = get("AuthProcSimpleRp");
+		if (out == null) {
+			out = new AuthProcSimpleRp(getAuthReqPreconditions(), getAuthReqUiIcon(), getAuthReqTerminator());
+			put("AuthProcSimpleRp", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthRespDecoderOpenId}
 	 */
-	private Lazy<AuthRespDecoder> authRespDecoderOpenId = new Lazy<AuthRespDecoder>(initAuthRespDecoderOpenId());
-
-	public final AuthRespDecoder getAuthRespDecoderOpenId() {
-		return authRespDecoderOpenId.get();
-	}
-
-	protected Init<AuthRespDecoder> initAuthRespDecoderOpenId() {
-		return new Init<AuthRespDecoder>() {
-			@Override
-			public AuthRespDecoder create() {
-				return new AuthRespDecoderOpenId(getNonceService(), getSigningService(), getNonceStorage());
-			}
-		};
+	public AuthRespDecoder getAuthRespDecoderOpenId() {
+		AuthRespDecoder out = get("AuthRespDecoderOpenId");
+		if (out == null) {
+			out = new AuthRespDecoderOpenId(getNonceService(), getSigningService(), getNonceStorage());
+			put("AuthRespDecoderOpenId", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthRespDecoderTerminator}
 	 */
-	private Lazy<AuthRespDecoder> authRespDecoderTerminator = new Lazy<AuthRespDecoder>(
-			initAuthRespDecoderTerminator());
-
-	public final AuthRespDecoder getAuthRespDecoderTerminator() {
-		return authRespDecoderTerminator.get();
-	}
-
-	protected Init<AuthRespDecoder> initAuthRespDecoderTerminator() {
-		return new Init<AuthRespDecoder>() {
-			@Override
-			public AuthRespDecoder create() {
-				return new AuthRespDecoderTerminator();
-			}
-		};
+	public AuthRespDecoder getAuthRespDecoderTerminator() {
+		AuthRespDecoder out = get("AuthRespDecoderTerminator");
+		if (out == null) {
+			out = new AuthRespDecoderTerminator();
+			put("AuthRespDecoderTerminator", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthRespOpenId20Verify}
 	 */
-	private Lazy<AuthRespDecoder> authRespOpenId20Verify = new Lazy<AuthRespDecoder>(initAuthRespOpenId20Verify());
-
-	public final AuthRespDecoder getAuthRespOpenId20Verify() {
-		return authRespOpenId20Verify.get();
-	}
-
-	protected Init<AuthRespDecoder> initAuthRespOpenId20Verify() {
-		return new Init<AuthRespDecoder>() {
-			@Override
-			public AuthRespDecoder create() {
-				return new AuthRespOpenId20Verify();
-			}
-		};
+	public AuthRespDecoder getAuthRespOpenId20Verify() {
+		AuthRespDecoder out = get("AuthRespOpenId20Verify");
+		if (out == null) {
+			out = new AuthRespOpenId20Verify();
+			put("AuthRespOpenId20Verify", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link SimpleAuthResponseDecoder}
 	 */
-	private Lazy<AuthRespDecoder> simpleAuthResponseDecoder = new Lazy<AuthRespDecoder>(
-			initSimpleAuthResponseDecoder());
-
-	public final AuthRespDecoder getSimpleAuthResponseDecoder() {
-		return simpleAuthResponseDecoder.get();
-	}
-
-	protected Init<AuthRespDecoder> initSimpleAuthResponseDecoder() {
-		return new Init<AuthRespDecoder>() {
-			@Override
-			public AuthRespDecoder create() {
-				return new SimpleAuthResponseDecoder(getAuthRespOpenId20Verify(), getAuthRespDecoderOpenId(),
-						getAuthRespDecoderTerminator());
-			}
-		};
+	public AuthRespDecoder getSimpleAuthResponseDecoder() {
+		AuthRespDecoder out = get("simpleAuthResponseDecoder");
+		if (out == null) {
+			out = new SimpleAuthResponseDecoder(getAuthRespOpenId20Verify(), getAuthRespDecoderOpenId(),
+					getAuthRespDecoderTerminator());
+			put("simpleAuthResponseDecoder", out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link RpService}
 	 */
-	private Lazy<RpService> rpService = new Lazy<RpService>(initRpService());
-
-	public final RpService getRpService() {
-		return rpService.get();
-	}
-
-	protected Init<RpService> initRpService() {
-		return new Init<RpService>() {
-			@Override
-			public RpService create() {
-				return new RpServiceImpl(conf, getAuthProcSimpleRp());
-			}
-		};
+	public RpService getRpService() {
+		RpService out = get(RpService.class);
+		if (out == null) {
+			out = new RpServiceImpl(conf, getAuthProcSimpleRp());
+			put(RpService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link AuthenticationVerificationService}
 	 */
-	private Lazy<AuthenticationVerificationService> authenticationVerificationService = new Lazy<AuthenticationVerificationService>(
-			initAuthenticationVerificationService());
-
-	public final AuthenticationVerificationService getAuthenticationVerificationService() {
-		return authenticationVerificationService.get();
-	}
-
-	protected Init<AuthenticationVerificationService> initAuthenticationVerificationService() {
-		return new Init<AuthenticationVerificationService>() {
-			@Override
-			public AuthenticationVerificationService create() {
-				return new AuthenticationVerificationServiceImpl(getSimpleAuthResponseDecoder());
-			}
-		};
+	public AuthenticationVerificationService getAuthenticationVerificationService() {
+		AuthenticationVerificationService out = get(AuthenticationVerificationService.class);
+		if (out == null) {
+			out = new AuthenticationVerificationServiceImpl(getSimpleAuthResponseDecoder());
+			put(AuthenticationVerificationService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link CoidiRp}
 	 */
-	private Lazy<CoidiRp> coidiRp = new Lazy<CoidiRp>(initCoidiRp());
-
-	public final CoidiRp getCoidiRp() {
-		return coidiRp.get();
-	}
-
-	protected Init<CoidiRp> initCoidiRp() {
-		return new Init<CoidiRp>() {
-			@Override
-			public CoidiRp create() {
-				return new CoidiRpImpl(getAssociationFactory(), getDiscoveryProcessor(),
-						getAuthenticationVerificationService(), getMessageService(), getRpService());
-			}
-		};
+	public CoidiRp getCoidiRp() {
+		CoidiRp out = get(CoidiRp.class);
+		if (out == null) {
+			out = new CoidiRpImpl(getAssociationFactory(), getDiscoveryProcessor(),
+					getAuthenticationVerificationService(), getMessageService(), getRpService());
+			put(CoidiRp.class, out);
+		}
+		return out;
 	}
 
 }

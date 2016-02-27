@@ -24,110 +24,73 @@ public class CoreBinding extends AbstractBinding {
 	/**
 	 * {@link ConvertorService}
 	 */
-	private Lazy<ConvertorService> convertorService = new Lazy<ConvertorService>(initConvertorService());
-
 	public final ConvertorService getConvertorService() {
-		return convertorService.get();
-	}
-
-	protected Init<ConvertorService> initConvertorService() {
-		return new Init<ConvertorService>() {
-			@Override
-			public ConvertorService create() {
-				return new ConvertorServiceImpl();
-			}
-		};
+		ConvertorService out = get(ConvertorService.class);
+		if (out == null) {
+			out = new ConvertorServiceImpl();
+			put(ConvertorService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link NonceService}
 	 */
-	private Lazy<NonceService> nonceService = new Lazy<NonceService>(initNonceService());
-
-	public final NonceService getNonceService() {
-		return nonceService.get();
-	}
-
-	protected Init<NonceService> initNonceService() {
-		return new Init<NonceService>() {
-			@Override
-			public NonceService create() {
-				return new NonceServiceImpl(getConvertorService());
-			}
-		};
+	public NonceService getNonceService() {
+		NonceService out = get(NonceService.class);
+		if (out == null) {
+			out = new NonceServiceImpl(getConvertorService());
+			put(NonceService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link MessageService}
 	 */
-	private Lazy<MessageService> messageService = new Lazy<MessageService>(initMessageService());
-
-	public final MessageService getMessageService() {
-		return messageService.get();
-	}
-
-	protected Init<MessageService> initMessageService() {
-		return new Init<MessageService>() {
-			@Override
-			public MessageService create() {
-				return new MessageServiceImpl();
-			}
-		};
+	public MessageService getMessageService() {
+		MessageService out = get(MessageService.class);
+		if (out == null) {
+			out = new MessageServiceImpl();
+			put(MessageService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link CryptographyService}
 	 */
-	private Lazy<CryptographyService> cryptographyService = new Lazy<CryptographyService>(initCryptographyService());
-
-	public final CryptographyService getCryptographyService() {
-		return cryptographyService.get();
-	}
-
-	protected Init<CryptographyService> initCryptographyService() {
-		return new Init<CryptographyService>() {
-			@Override
-			public CryptographyService create() {
-				return new CryptographyServiceImpl();
-			}
-		};
+	public CryptographyService getCryptographyService() {
+		CryptographyService out = get(CryptographyService.class);
+		if (out == null) {
+			out = new CryptographyServiceImpl();
+			put(CryptographyService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link CryptoSessionService}
 	 */
-	private Lazy<CryptoSessionService> cryptoSessionService = new Lazy<CryptoSessionService>(initCryptoSessionService());
-
-	public final CryptoSessionService getCryptoSessionService() {
-		return cryptoSessionService.get();
-	}
-
-	protected Init<CryptoSessionService> initCryptoSessionService() {
-		return new Init<CryptoSessionService>() {
-			@Override	
-			public CryptoSessionService create() {
-				return new CryptoSessionServiceImpl(getCryptographyService());
-			}
-		};
+	public CryptoSessionService getCryptoSessionService() {
+		CryptoSessionService out = get(CryptoSessionService.class);
+		if (out == null) {
+			out = new CryptoSessionServiceImpl(getCryptographyService());
+			put(CryptoSessionService.class, out);
+		}
+		return out;
 	}
 
 	/**
 	 * {@link SigningService}
 	 */
-	private Lazy<SigningService> signingService = new Lazy<SigningService>(initSigningService());
-
-	public final SigningService getSigningService() {
-		return signingService.get();
-	}
-
-	protected Init<SigningService> initSigningService() {
-		return new Init<SigningService>() {
-			@Override	
-			public SigningService create() {
-				return new SigningServiceImpl(getCryptographyService(), getMessageService(),
-						getConvertorService());
-			}
-		};
+	public SigningService getSigningService() {
+		SigningService service = get(SigningService.class);
+		if (service == null) {
+			service = new SigningServiceImpl(getCryptographyService(), getMessageService(), getConvertorService());
+			put(SigningService.class, service);
+		}
+		return service;
 	}
 
 }

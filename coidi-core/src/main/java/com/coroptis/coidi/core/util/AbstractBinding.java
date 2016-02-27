@@ -1,6 +1,7 @@
 package com.coroptis.coidi.core.util;
 
-import com.google.common.base.Preconditions;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Abstract binding class. Provide environment for easy to rewrite binding.
@@ -10,54 +11,22 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractBinding {
 
-	/**
-	 * Allows to define and user lazy initialize singleton service.
-	 * 
-	 * @author jiroutj
-	 *
-	 * @param <S>
-	 *            lazy loaded singleton service
-	 */
-	protected class Lazy<S> {
+	private final Map<String, Object> instances = new HashMap<String, Object>();
 
-		private S service;
-
-		private final Init<S> init;
-
-		/**
-		 * Constructor with {@link Init} instance that allows to create instance
-		 * later.
-		 * 
-		 * @param init
-		 *            required service initialization class
-		 */
-		public Lazy(final Init<S> init) {
-			this.init = Preconditions.checkNotNull(init, "initialization class can't be null.");
-		}
-
-		/**
-		 * Get lazy load service. Service is initialized when is needed first
-		 * time.
-		 * 
-		 * @return service instance
-		 */
-		public S get() {
-			if (service == null) {
-				service = Preconditions.checkNotNull(init.create(), "initialization failed, created null object");
-			}
-			return service;
-		}
+	protected final <T> void put(String identitfier, T instance) {
+		instances.put(identitfier, instance);
 	}
 
-	/**
-	 * Allows to define creating procedure for specific service.
-	 * 
-	 * @author jiroutj
-	 *
-	 * @param <S>
-	 *            lazy loaded singleton service
-	 */
-	public static interface Init<S> {
-		S create();
+	protected final <T> void put(Class<T> clazz, T instance) {
+		put(clazz.getName(), instance);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected final <T> T get(String identifier) {
+		return (T) instances.get(identifier);
+	}
+
+	protected final <T> T get(Class<T> clazz) {
+		return get(clazz.getName());
 	}
 }
