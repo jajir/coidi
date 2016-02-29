@@ -33,6 +33,7 @@ import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.SregService;
+import com.google.common.base.Preconditions;
 
 /**
  * Simple Registration Extension 1.1.
@@ -40,18 +41,23 @@ import com.coroptis.coidi.op.services.SregService;
  * @author jirout
  * 
  */
-public class AuthProcSreg11 extends AuthProcSreg10 implements AuthProc {
+public class AuthProcSreg11 implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcSreg11.class);
 
-    @Inject
-    private IdentityService identityService;
+    private final IdentityService identityService;
+
+    private final SregService sregService;
+
+    private final NegativeResponseGenerator negativeResponseGenerator;
 
     @Inject
-    private SregService sregService;
-
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    public AuthProcSreg11(final IdentityService identityService, final SregService sregService,
+	    final NegativeResponseGenerator negativeResponseGenerator) {
+	this.identityService = Preconditions.checkNotNull(identityService);
+	this.sregService = Preconditions.checkNotNull(sregService);
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

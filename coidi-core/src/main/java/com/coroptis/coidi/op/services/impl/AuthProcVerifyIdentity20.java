@@ -30,6 +30,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that requested identity belongs logged user.
@@ -39,33 +40,39 @@ import com.coroptis.coidi.op.services.UserVerifier;
  */
 public class AuthProcVerifyIdentity20 implements AuthProc {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity20.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity20.class);
 
-	@Inject
-	private NegativeResponseGenerator negativeResponseGenerator;
+    private final NegativeResponseGenerator negativeResponseGenerator;
 
-	@Inject
-	private UserVerifier userVerifier;
+    private final UserVerifier userVerifier;
 
-	@Override
-	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-			final AuthenticationResponse response, final HttpSession userSession, final Set<String> fieldsToSign) {
-		logger.debug("verify identity: " + authenticationRequest);
-		if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-			if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
-				/**
-				 * It's identity select request. Appropriate identity will be
-				 * selected later.
-				 */
-			} else {
-				if (!userVerifier.verify(authenticationRequest.getIdentity(), userSession)) {
-					return negativeResponseGenerator.buildError("Requested identity '",
-							authenticationRequest.getIdentity(), "' doesn't exists.");
-				}
-			}
+    @Inject
+    public AuthProcVerifyIdentity20(final NegativeResponseGenerator negativeResponseGenerator,
+	    final UserVerifier userVerifier) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+    }
+
+    @Override
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final HttpSession userSession,
+	    final Set<String> fieldsToSign) {
+	logger.debug("verify identity: " + authenticationRequest);
+	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	    if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
+		/**
+		 * It's identity select request. Appropriate identity will be
+		 * selected later.
+		 */
+	    } else {
+		if (!userVerifier.verify(authenticationRequest.getIdentity(), userSession)) {
+		    return negativeResponseGenerator.buildError("Requested identity '",
+			    authenticationRequest.getIdentity(), "' doesn't exists.");
 		}
-		return null;
-
+	    }
 	}
+	return null;
+
+    }
 
 }

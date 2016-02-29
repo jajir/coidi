@@ -1,19 +1,25 @@
 package com.coroptis.coidi.junit.op.services;
 
+import static org.junit.Assert.*;
 import org.easymock.EasyMock;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.coroptis.coidi.op.services.OpConfigurationService;
+import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.impl.RealmToolImpl;
 
-import junit.framework.TestCase;
-
-public class RealmToolTest extends TestCase {
+public class RealmToolTest {
 
     private OpConfigurationService conf;
 
+    private OpenIdRequestTool openIdRequestTool;
+
     private Object[] mocks;
 
+    @Test
     public void test_isMatching_missingRealm() throws Exception {
 	final RealmTool service = init(true);
 
@@ -25,6 +31,7 @@ public class RealmToolTest extends TestCase {
 	}
     }
 
+    @Test
     public void test_isMatching_missingReturnto() throws Exception {
 	final RealmTool service = init(true);
 
@@ -36,6 +43,7 @@ public class RealmToolTest extends TestCase {
 	}
     }
 
+    @Test
     public void test_isMatching_wilcardsEnabled() throws Exception {
 	final RealmTool service = init(true);
 	assertTrue(service.isMatching("http://*.com/", "http://www.bcc.co.uk.com/"));
@@ -48,6 +56,7 @@ public class RealmToolTest extends TestCase {
 		"http://karel.coidi.com/identity/"));
     }
 
+    @Test
     public void test_isMatching_wilcardsDisabled() throws Exception {
 	final RealmTool service = init(false);
 	assertFalse(service.isMatching("http://*.com/", "http://www.bcc.co.uk.com/"));
@@ -67,22 +76,22 @@ public class RealmToolTest extends TestCase {
     private RealmToolImpl init(boolean isWildcardAllowed) {
 	EasyMock.expect(conf.isWildcardAllowedInRealm()).andReturn(isWildcardAllowed);
 	EasyMock.replay(mocks);
-	return new RealmToolImpl(conf);
+	return new RealmToolImpl(conf, openIdRequestTool);
     }
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
+    @Before
+    public void setUp() throws Exception {
 	conf = EasyMock.createMock(OpConfigurationService.class);
-	mocks = new Object[] { conf };
+	openIdRequestTool = EasyMock.createMock(OpenIdRequestTool.class);
+	mocks = new Object[] { conf, openIdRequestTool };
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 	EasyMock.verify(mocks);
 	conf = null;
+	openIdRequestTool = null;
 	mocks = null;
-	super.tearDown();
     }
 
 }

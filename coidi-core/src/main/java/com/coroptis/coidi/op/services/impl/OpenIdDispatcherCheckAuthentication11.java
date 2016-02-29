@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.google.common.base.Preconditions;
 
 /**
  * When no previous dispatcher process message then this report that message is
@@ -44,18 +45,23 @@ public class OpenIdDispatcherCheckAuthentication11 implements OpenIdDispatcher {
     private final static Logger logger = LoggerFactory
 	    .getLogger(OpenIdDispatcherCheckAuthentication11.class);
 
-    @Inject
-    private AssociationTool associationTool;
+    private final AssociationTool associationTool;
+
+    private final AssociationService associationService;
+
+    private final BaseAssociationDao baseAssociationDao;
 
     @Inject
-    private AssociationService associationService;
-
-    @Inject
-    private BaseAssociationDao baseAssociationDao;
+    public OpenIdDispatcherCheckAuthentication11(final AssociationTool associationTool,
+	    final AssociationService associationService,
+	    final BaseAssociationDao baseAssociationDao) {
+	this.associationTool = Preconditions.checkNotNull(associationTool);
+	this.associationService = Preconditions.checkNotNull(associationService);
+	this.baseAssociationDao = Preconditions.checkNotNull(baseAssociationDao);
+    }
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
+    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE)
 		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);

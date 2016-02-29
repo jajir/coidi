@@ -29,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that requested identity belongs logged user.
@@ -38,23 +39,31 @@ import com.coroptis.coidi.op.services.UserVerifier;
  */
 public class AuthProcVerifyIdentity11 implements AuthProc {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity11.class);
+    private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyIdentity11.class);
 
-	@Inject
-	private NegativeResponseGenerator negativeResponseGenerator;
+    private final NegativeResponseGenerator negativeResponseGenerator;
 
-	@Inject
-	private UserVerifier userVerifier;
+    private final UserVerifier userVerifier;
 
-	@Override
-	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-			final AuthenticationResponse response, final HttpSession session, final Set<String> fieldsToSign) {
-		logger.debug("verify identity: " + authenticationRequest);
-		if (!userVerifier.verify(authenticationRequest.getIdentity(), session)) {
-			return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11, "Requested identity '",
-					authenticationRequest.getIdentity(), "' doesn't exists.");
-		}
-		return null;
+    @Inject
+    public AuthProcVerifyIdentity11(final NegativeResponseGenerator negativeResponseGenerator,
+	    final UserVerifier userVerifier) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+
+    }
+
+    @Override
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final HttpSession session,
+	    final Set<String> fieldsToSign) {
+	logger.debug("verify identity: " + authenticationRequest);
+	if (!userVerifier.verify(authenticationRequest.getIdentity(), session)) {
+	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
+		    "Requested identity '", authenticationRequest.getIdentity(),
+		    "' doesn't exists.");
 	}
+	return null;
+    }
 
 }

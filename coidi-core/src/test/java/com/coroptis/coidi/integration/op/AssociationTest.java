@@ -14,13 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
-import com.coroptis.coidi.integration.op.util.OpModule;
+import com.coroptis.coidi.integration.op.util.OpBindingMock;
+import com.coroptis.coidi.op.iocsupport.OpConfServiceImpl;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.impl.OpenIdDispatcherAssociation20;
-import com.coroptis.coidi.util.PropertyModule;
-import com.coroptis.coidi.util.Services;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 /**
  * Tests mainly class {@link OpenIdDispatcherAssociation20}. Test verify
@@ -35,15 +32,15 @@ public class AssociationTest {
 
     private OpenIdRequestProcessor openIdRequestProcessor;
 
-    private Services services;
+    private OpBindingMock mocks;
 
     private Map<String, String> params;
 
     @Test
     public void test_dh_consumer_public_missing() throws Exception {
 	params.remove("openid.dh_consumer_public");
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof ErrorResponse);
@@ -56,8 +53,8 @@ public class AssociationTest {
     @Test
     public void test_session_type_missing() throws Exception {
 	params.remove("openid.session_type");
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof ErrorResponse);
@@ -70,8 +67,8 @@ public class AssociationTest {
     @Test
     public void test_session_type_invalid() throws Exception {
 	params.put("openid.session_type", "invalid");
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof ErrorResponse);
@@ -84,8 +81,8 @@ public class AssociationTest {
     @Test
     public void test_assoc_type_missing() throws Exception {
 	params.remove("openid.assoc_type");
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof ErrorResponse);
@@ -98,8 +95,8 @@ public class AssociationTest {
     @Test
     public void test_assoc_type_invalid() throws Exception {
 	params.put("openid.assoc_type", "invalid");
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof ErrorResponse);
@@ -119,17 +116,14 @@ public class AssociationTest {
 	params.put("openid.dh_consumer_public",
 		"NbTkEmk0bUfs5DcLplIBuAo3UXixzCcQDUTP84o5mqp/ZoFss7ct8Fq0KTyb21XeOen5uVL+2n/BttaeuNA5FyaCCv7F5CTaRIwUrLOY12nIQsTZIoiBKlrD+xUpGjbQe31ckwCu1oJ3mEG2pKUfs/3yX3Ginn+1LthEoOxc3lY=");
 
-	System.setProperty("configuration-file", "op_application.properties");
-	Injector injector = Guice.createInjector(new OpModule(), new PropertyModule());
-	openIdRequestProcessor = injector.getInstance(OpenIdRequestProcessor.class);
-	services = injector.getInstance(Services.class);
-	services.reset();
+	mocks = new OpBindingMock(new OpConfServiceImpl("op_application.properties"));
+	openIdRequestProcessor = mocks.getOpenIdRequestProcessor();
     }
 
     @After
     public void tearDown() {
-	services.verify();
-	services = null;
+	mocks.verify();
+	mocks = null;
 	openIdRequestProcessor = null;
     }
 

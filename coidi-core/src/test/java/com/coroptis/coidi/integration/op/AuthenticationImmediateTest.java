@@ -23,17 +23,14 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.SetupNeededResponse;
-import com.coroptis.coidi.integration.op.util.OpModule;
+import com.coroptis.coidi.integration.op.util.OpBindingMock;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Nonce;
+import com.coroptis.coidi.op.iocsupport.OpConfServiceImpl;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
-import com.coroptis.coidi.util.PropertyModule;
-import com.coroptis.coidi.util.Services;
 import com.google.common.collect.Sets;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 public class AuthenticationImmediateTest {
 
@@ -41,7 +38,7 @@ public class AuthenticationImmediateTest {
 
     private OpenIdRequestProcessor openIdRequestProcessor;
 
-    private Services services;
+    private OpBindingMock mocks;
 
     private Map<String, String> params;
 
@@ -52,17 +49,17 @@ public class AuthenticationImmediateTest {
     @Test
     public void test_initialization() throws Exception {
 	assertNotNull(openIdRequestProcessor);
-	assertNotNull(services);
+	assertNotNull(mocks);
 	assertNotNull(params);
-	services.replay();
+	mocks.replay();
     }
 
     @Test
     public void test_user_is_not_logged() throws Exception {
-	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
+	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(false).times(1);
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertTrue(ret instanceof SetupNeededResponse);
@@ -78,33 +75,34 @@ public class AuthenticationImmediateTest {
     @SuppressWarnings("unchecked")
     @Test
     public void test_invalid_association() throws Exception {
-	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
+	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
-	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
-		services.getHttpSession())).andReturn(true);
-	EasyMock.expect(services.getBaseAssociationDao()
+	EasyMock.expect(mocks.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+		mocks.getHttpSession())).andReturn(true);
+	EasyMock.expect(mocks.getBaseAssociationDao()
 		.getByAssocHandle("cc5b843b-e375-4640-8f71-38e40b2950a6")).andReturn(null);
-	EasyMock.expect(services.getBaseAssociationDao().createNewInstance()).andReturn(assoc);
+	EasyMock.expect(mocks.getBaseAssociationDao().createNewInstance()).andReturn(assoc);
 	assoc.setAssocHandle((String) EasyMock.anyObject());
 	assoc.setExpiredIn((Date) EasyMock.anyObject());
 	assoc.setAssociationType(AssociationType.HMAC_SHA1);
 	assoc.setMacKey((String) EasyMock.anyObject());
-	EasyMock.expect(services.getBaseNonceDao().createNewInstance()).andReturn(nonce);
+	EasyMock.expect(mocks.getBaseNonceDao().createNewInstance()).andReturn(nonce);
 	nonce.setNonce((String) EasyMock.anyObject());
 	nonce.setAssociation(assoc);
 	assoc.setNonces((Set<Nonce>) EasyMock.anyObject());
 	EasyMock.expect(assoc.getNonces()).andReturn(new HashSet<Nonce>());
-	services.getBaseAssociationDao().create(assoc);
+	mocks.getBaseAssociationDao().create(assoc);
 	EasyMock.expect(assoc.getAssocHandle()).andReturn("cc5b843b-e375-4640-8f71-new-one");
 
-	EasyMock.expect(services.getBaseAssociationDao()
-		.getByAssocHandle("cc5b843b-e375-4640-8f71-new-one")).andReturn(assoc);
+	EasyMock.expect(
+		mocks.getBaseAssociationDao().getByAssocHandle("cc5b843b-e375-4640-8f71-new-one"))
+		.andReturn(assoc);
 	EasyMock.expect(assoc.getMacKey()).andReturn("1234567890");
 	EasyMock.expect(assoc.getAssociationType()).andReturn(AssociationType.HMAC_SHA1);
 
 	EasyMock.expect(assoc.getAssociationType()).andReturn(AssociationType.HMAC_SHA1);
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
@@ -128,18 +126,18 @@ public class AuthenticationImmediateTest {
 
     @Test
     public void test_all_pass() throws Exception {
-	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
+	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
-	EasyMock.expect(services.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
-		services.getHttpSession())).andReturn(true);
-	EasyMock.expect(services.getBaseAssociationDao()
+	EasyMock.expect(mocks.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+		mocks.getHttpSession())).andReturn(true);
+	EasyMock.expect(mocks.getBaseAssociationDao()
 		.getByAssocHandle("cc5b843b-e375-4640-8f71-38e40b2950a6")).andReturn(assoc)
 		.times(2);
 	EasyMock.expect(assoc.getExpiredIn()).andReturn(nowPlusMinutes(5));
 	EasyMock.expect(assoc.getMacKey()).andReturn("1234567890");
 	EasyMock.expect(assoc.getAssociationType()).andReturn(AssociationType.HMAC_SHA1);
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
@@ -165,18 +163,18 @@ public class AuthenticationImmediateTest {
 	params.put("openid.identity", AuthenticationRequest.IDENTITY_SELECT);
 	params.put("openid.claimed_id", AuthenticationRequest.IDENTITY_SELECT);
 
-	EasyMock.expect(services.getUserVerifier().isUserLogged(services.getHttpSession()))
+	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
-	EasyMock.expect(services.getUserVerifier().getSelectedIdenity(services.getHttpSession()))
+	EasyMock.expect(mocks.getUserVerifier().getSelectedIdenity(mocks.getHttpSession()))
 		.andReturn("http://www.coidi.com/identity/qwe");
-	EasyMock.expect(services.getBaseAssociationDao()
+	EasyMock.expect(mocks.getBaseAssociationDao()
 		.getByAssocHandle("cc5b843b-e375-4640-8f71-38e40b2950a6")).andReturn(assoc)
 		.times(2);
 	EasyMock.expect(assoc.getExpiredIn()).andReturn(nowPlusMinutes(5));
 	EasyMock.expect(assoc.getMacKey()).andReturn("1234567890");
 	EasyMock.expect(assoc.getAssociationType()).andReturn(AssociationType.HMAC_SHA1);
-	services.replay();
-	AbstractMessage ret = openIdRequestProcessor.process(params, services.getHttpSession());
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
 	logger.debug(ret.getMessage());
 	assertEquals(AbstractMessage.OPENID_NS_20, ret.getNameSpace());
@@ -208,19 +206,17 @@ public class AuthenticationImmediateTest {
 	params.put("openid.return_to", "https://sourceforge.net/account/openid_verify.php");
 	params.put("openid.realm", "https://sourceforge.net");
 
-	System.setProperty("configuration-file", "op_application.properties");
-	Injector injector = Guice.createInjector(new OpModule(), new PropertyModule());
-	openIdRequestProcessor = injector.getInstance(OpenIdRequestProcessor.class);
-	services = injector.getInstance(Services.class);
-	services.reset();
-	assoc = services.getAssociation();
-	nonce = services.getNonce();
+	mocks = new OpBindingMock(new OpConfServiceImpl("op_application.properties"));
+	openIdRequestProcessor = mocks.getOpenIdRequestProcessor();
+
+	assoc = mocks.getAssociation();
+	nonce = mocks.getNonce();
     }
 
     @After
     public void tearDown() {
-	services.verify();
-	services = null;
+	mocks.verify();
+	mocks = null;
 	openIdRequestProcessor = null;
 	assoc = null;
 	nonce = null;

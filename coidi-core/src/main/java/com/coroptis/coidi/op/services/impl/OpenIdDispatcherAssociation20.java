@@ -27,6 +27,7 @@ import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.google.common.base.Preconditions;
 
 /**
  * Process openid.mode=associate. OP create valid association and share it with
@@ -37,11 +38,16 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherAssociation20 implements OpenIdDispatcher {
 
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private final NegativeResponseGenerator negativeResponseGenerator;
+
+    private final AssociationProcessor associationProcessor;
 
     @Inject
-    private AssociationProcessor associationProcessor;
+    public OpenIdDispatcherAssociation20(final NegativeResponseGenerator negativeResponseGenerator,
+	    final AssociationProcessor associationProcessor) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.associationProcessor = Preconditions.checkNotNull(associationProcessor);
+    }
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
@@ -67,8 +73,9 @@ public class OpenIdDispatcherAssociation20 implements OpenIdDispatcher {
 	    if (dhConsumerPublic == null) {
 		return negativeResponseGenerator.missingParameter(OPENID_DH_CONSUMER_PUBLIC);
 	    }
-	    //TODO values are computed twice here and in AssociationRequest getters.
-	    
+	    // TODO values are computed twice here and in AssociationRequest
+	    // getters.
+
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    return associationProcessor.processAssociation(request, request.getSessionType(),
 		    request.getAssociationType());

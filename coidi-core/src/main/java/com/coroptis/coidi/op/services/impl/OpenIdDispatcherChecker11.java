@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that openid.mode is filled.
@@ -32,8 +33,12 @@ import com.coroptis.coidi.op.services.OpenIdDispatcher;
  */
 public class OpenIdDispatcherChecker11 implements OpenIdDispatcher {
 
+    private final NegativeResponseGenerator negativeResponseGenerator;
+
     @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    public OpenIdDispatcherChecker11(final NegativeResponseGenerator negativeResponseGenerator) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+    }
 
     @Override
     public AbstractMessage process(final Map<String, String> requestParams,

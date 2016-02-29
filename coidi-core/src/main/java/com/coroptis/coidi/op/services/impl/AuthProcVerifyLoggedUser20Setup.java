@@ -44,11 +44,17 @@ public class AuthProcVerifyLoggedUser20Setup implements AuthProc {
     private final static Logger logger = LoggerFactory
 	    .getLogger(AuthProcVerifyLoggedUser20Setup.class);
 
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private final NegativeResponseGenerator negativeResponseGenerator;
+
+    private final UserVerifier userVerifier;
 
     @Inject
-    private UserVerifier userVerifier;
+    public AuthProcVerifyLoggedUser20Setup(
+	    final NegativeResponseGenerator negativeResponseGenerator,
+	    final UserVerifier userVerifier) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

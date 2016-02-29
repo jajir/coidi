@@ -31,6 +31,7 @@ import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
+import com.google.common.base.Preconditions;
 
 /**
  * When no previous dispatcher process message then this report that message is
@@ -44,18 +45,23 @@ public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
     private final static Logger logger = LoggerFactory
 	    .getLogger(OpenIdDispatcherCheckAuthentication20.class);
 
-    @Inject
-    private StatelessModeNonceService statelessModeNonceService;
+    private final StatelessModeNonceService statelessModeNonceService;
+
+    private final SigningService signingService;
+
+    private final AssociationService associationService;
 
     @Inject
-    private SigningService signingService;
-
-    @Inject
-    private AssociationService associationService;
+    public OpenIdDispatcherCheckAuthentication20(
+	    final StatelessModeNonceService statelessModeNonceService,
+	    final SigningService signingService, final AssociationService associationService) {
+	this.statelessModeNonceService = Preconditions.checkNotNull(statelessModeNonceService);
+	this.signingService = Preconditions.checkNotNull(signingService);
+	this.associationService = Preconditions.checkNotNull(associationService);
+    }
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
+    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE)
 		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);

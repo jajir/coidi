@@ -29,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.AuthenticationService;
+import com.google.common.base.Preconditions;
 
 /**
  * Attribute exchange extension version 1.0.
@@ -40,8 +41,12 @@ public class AuthProcAx10 implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcAx10.class);
 
+    private final AuthenticationService authenticationService;
+
     @Inject
-    private AuthenticationService authenticationService;
+    public AuthProcAx10(final AuthenticationService authenticationService) {
+	this.authenticationService = Preconditions.checkNotNull(authenticationService);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

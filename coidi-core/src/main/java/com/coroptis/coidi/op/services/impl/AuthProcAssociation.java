@@ -28,6 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthProc;
+import com.google.common.base.Preconditions;
 
 /**
  * Perform association verification. It validates that association exists and is
@@ -41,8 +42,12 @@ public class AuthProcAssociation implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcAssociation.class);
 
+    private final AssociationService associationService;
+
     @Inject
-    private AssociationService associationService;
+    public AuthProcAssociation(final AssociationService associationService) {
+	this.associationService = Preconditions.checkNotNull(associationService);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

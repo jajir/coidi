@@ -29,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that user is logged in. If is not logged in than return negative
@@ -42,11 +43,17 @@ public class AuthProcVerifyLoggedUser11Setup implements AuthProc {
     private final static Logger logger = LoggerFactory
 	    .getLogger(AuthProcVerifyLoggedUser11Setup.class);
 
-    @Inject
-    private NegativeResponseGenerator negativeResponseGenerator;
+    private final NegativeResponseGenerator negativeResponseGenerator;
+
+    private final UserVerifier userVerifier;
 
     @Inject
-    private UserVerifier userVerifier;
+    public AuthProcVerifyLoggedUser11Setup(
+	    final NegativeResponseGenerator negativeResponseGenerator,
+	    final UserVerifier userVerifier) {
+	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

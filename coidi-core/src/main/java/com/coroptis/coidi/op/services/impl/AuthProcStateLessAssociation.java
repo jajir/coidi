@@ -34,6 +34,7 @@ import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthProc;
+import com.google.common.base.Preconditions;
 
 /**
  * When response doesn't contains value in association handle than it's
@@ -47,14 +48,20 @@ public class AuthProcStateLessAssociation implements AuthProc {
     private final static Logger logger = LoggerFactory
 	    .getLogger(AuthProcStateLessAssociation.class);
 
-    @Inject
-    private AssociationService associationService;
+    private final AssociationService associationService;
+
+    private final BaseAssociationDao baseAssociationDao;
+
+    private final BaseNonceDao baseNonceDao;
 
     @Inject
-    private BaseAssociationDao baseAssociationDao;
+    public AuthProcStateLessAssociation(final AssociationService associationService,
+	    final BaseAssociationDao baseAssociationDao, final BaseNonceDao baseNonceDao) {
+	this.associationService = Preconditions.checkNotNull(associationService);
+	this.baseAssociationDao = Preconditions.checkNotNull(baseAssociationDao);
+	this.baseNonceDao = Preconditions.checkNotNull(baseNonceDao);
 
-    @Inject
-    private BaseNonceDao baseNonceDao;
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

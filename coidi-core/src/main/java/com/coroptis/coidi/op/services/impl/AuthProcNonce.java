@@ -28,6 +28,7 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.op.services.AuthProc;
+import com.google.common.base.Preconditions;
 
 /**
  * Just create nonce and add it to signed fields.
@@ -39,8 +40,12 @@ public class AuthProcNonce implements AuthProc {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthProcNonce.class);
 
+    private final NonceService nonceService;
+
     @Inject
-    private NonceService nonceService;
+    public AuthProcNonce(final NonceService nonceService) {
+	this.nonceService = Preconditions.checkNotNull(nonceService);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,

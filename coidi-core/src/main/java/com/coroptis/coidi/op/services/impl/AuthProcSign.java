@@ -29,6 +29,7 @@ import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 
 /**
  * Class just sign already processes authentication response. If processing
@@ -39,13 +40,18 @@ import com.google.common.base.Joiner;
  */
 public class AuthProcSign implements AuthProc {
 
-    @Inject
-    private BaseAssociationDao associationDao;
+    private final BaseAssociationDao associationDao;
 
-    @Inject
-    private SigningService signingService;
+    private final SigningService signingService;
 
     private final Joiner joiner = Joiner.on(",").skipNulls();
+
+    @Inject
+    public AuthProcSign(final BaseAssociationDao associationDao,
+	    final SigningService signingService) {
+	this.associationDao = Preconditions.checkNotNull(associationDao);
+	this.signingService = Preconditions.checkNotNull(signingService);
+    }
 
     @Override
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
@@ -53,12 +59,9 @@ public class AuthProcSign implements AuthProc {
 	    final Set<String> fieldsToSign) {
 	response.setSigned(joiner.join(fieldsToSign));
 	response.setAssocHandle(response.getAssocHandle());
-	Association association = associationDao
-		.getByAssocHandle(response.getAssocHandle());
+	Association association = associationDao.getByAssocHandle(response.getAssocHandle());
 	if (association == null) {
-	    throw new CoidiException(
-		    "Invalid assoc handle '" + response.getAssocHandle()
-			    + "'.");
+	    throw new CoidiException("Invalid assoc handle '" + response.getAssocHandle() + "'.");
 	} else {
 	    response.setSignature(signingService.sign(response, association));
 	}

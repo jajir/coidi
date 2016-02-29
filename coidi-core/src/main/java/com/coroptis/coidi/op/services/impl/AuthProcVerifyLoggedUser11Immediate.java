@@ -29,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.SetupNeededResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.google.common.base.Preconditions;
 
 /**
  * Verify that user is logged in. If is not logged in than return negative
@@ -39,21 +40,28 @@ import com.coroptis.coidi.op.services.UserVerifier;
  */
 public class AuthProcVerifyLoggedUser11Immediate implements AuthProc {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser11Immediate.class);
+    private final static Logger logger = LoggerFactory
+	    .getLogger(AuthProcVerifyLoggedUser11Immediate.class);
 
-	@Inject
-	private UserVerifier userVerifier;
+    private final UserVerifier userVerifier;
 
-	@Override
-	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-			final AuthenticationResponse response, final HttpSession userSession, final Set<String> fieldsToSign) {
-		logger.debug("verify identity: " + authenticationRequest);
-		if (!userVerifier.isUserLogged(userSession)) {
-			return new SetupNeededResponse(AbstractMessage.OPENID_NS_11, authenticationRequest.getReturnTo());
-		}
+    @Inject
+    public AuthProcVerifyLoggedUser11Immediate(final UserVerifier userVerifier) {
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+    }
 
-		return null;
-
+    @Override
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final HttpSession userSession,
+	    final Set<String> fieldsToSign) {
+	logger.debug("verify identity: " + authenticationRequest);
+	if (!userVerifier.isUserLogged(userSession)) {
+	    return new SetupNeededResponse(AbstractMessage.OPENID_NS_11,
+		    authenticationRequest.getReturnTo());
 	}
+
+	return null;
+
+    }
 
 }

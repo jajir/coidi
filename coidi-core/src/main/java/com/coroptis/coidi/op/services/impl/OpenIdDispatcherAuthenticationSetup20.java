@@ -28,12 +28,17 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
+import com.google.common.base.Preconditions;
 
 public class OpenIdDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
-    @Inject
     @OpenId20CheckIdSetup
-    private AuthProc authenticationProcessor;
+    private final AuthProc authenticationProcessor;
+
+    @Inject
+    public OpenIdDispatcherAuthenticationSetup20(final AuthProc authenticationProcessor){
+	this.authenticationProcessor = Preconditions.checkNotNull(authenticationProcessor);
+    }
 
     @Override
     public AbstractMessage process(Map<String, String> requestParams,

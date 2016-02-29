@@ -41,21 +41,28 @@ import com.google.common.base.Preconditions;
  */
 public class AuthProcVerifyLoggedUser20Immediate implements AuthProc {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthProcVerifyLoggedUser20Immediate.class);
+    private final static Logger logger = LoggerFactory
+	    .getLogger(AuthProcVerifyLoggedUser20Immediate.class);
 
-	@Inject
-	private UserVerifier userVerifier;
+    private final UserVerifier userVerifier;
 
-	@Override
-	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-			final AuthenticationResponse response, final HttpSession session, final Set<String> fieldsToSign) {
-		logger.debug("verify identity: " + authenticationRequest);
-		Preconditions.checkNotNull(session, "UserSession is null");
-		if (!userVerifier.isUserLogged(session)) {
-			logger.debug("User is not logged in.");
-			return new SetupNeededResponse(AbstractMessage.OPENID_NS_20, authenticationRequest.getReturnTo());
-		}
-		return null;
+    @Inject
+    public AuthProcVerifyLoggedUser20Immediate(final UserVerifier userVerifier) {
+	this.userVerifier = Preconditions.checkNotNull(userVerifier);
+    }
+
+    @Override
+    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+	    final AuthenticationResponse response, final HttpSession session,
+	    final Set<String> fieldsToSign) {
+	logger.debug("verify identity: " + authenticationRequest);
+	Preconditions.checkNotNull(session, "UserSession is null");
+	if (!userVerifier.isUserLogged(session)) {
+	    logger.debug("User is not logged in.");
+	    return new SetupNeededResponse(AbstractMessage.OPENID_NS_20,
+		    authenticationRequest.getReturnTo());
 	}
+	return null;
+    }
 
 }
