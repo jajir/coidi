@@ -21,61 +21,61 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.util.RealmRequest;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 @Singleton
 public class RealmToolImpl implements RealmTool {
 
-	private final OpenIdRequestTool openIdRequestTool;
+    private final OpenIdRequestTool openIdRequestTool;
 
-	private final boolean wildCardEnabled;
+    private final boolean wildCardEnabled;
 
-	@Inject
-	public RealmToolImpl(final OpConfigurationService configurationService, final OpenIdRequestTool openIdRequestTool) {
-		this.wildCardEnabled = configurationService.isWildcardAllowedInRealm();
-		this.openIdRequestTool = Preconditions.checkNotNull(openIdRequestTool);
+    @Inject
+    public RealmToolImpl(final OpConfigurationService configurationService,
+	    final OpenIdRequestTool openIdRequestTool) {
+	this.wildCardEnabled = configurationService.isWildcardAllowedInRealm();
+	this.openIdRequestTool = Preconditions.checkNotNull(openIdRequestTool);
+    }
+
+    @Override
+    public boolean isMatching(final String realmPattern, final String returnTo) {
+	Preconditions.checkNotNull(realmPattern, "realmPattern is null");
+	Preconditions.checkNotNull(returnTo, "returnTo is null");
+	if (realmPattern.indexOf("#") > 0) {
+	    return false;
 	}
-
-	@Override
-	public boolean isMatching(final String realmPattern, final String returnTo) {
-		Preconditions.checkNotNull(realmPattern, "realmPattern is null");
-		Preconditions.checkNotNull(returnTo, "returnTo is null");
-		if (realmPattern.indexOf("#") > 0) {
-			return false;
-		}
-		if (wildCardEnabled) {
-			String adjustedPattern = realmPattern + "*";
-			final Pattern p = Pattern.compile(adjustedPattern.replace("*", ".*"));
-			return p.matcher(returnTo).matches();
-		} else {
-			return returnTo.startsWith(realmPattern);
-		}
+	if (wildCardEnabled) {
+	    String adjustedPattern = realmPattern + "*";
+	    final Pattern p = Pattern.compile(adjustedPattern.replace("*", ".*"));
+	    return p.matcher(returnTo).matches();
+	} else {
+	    return returnTo.startsWith(realmPattern);
 	}
+    }
 
-	@Override
-	public RealmRequest createRealmRequest(final Map<String, String> parameters) {
-		AuthenticationRequest request = new AuthenticationRequest(parameters);
-		if (openIdRequestTool.isOpenIdVersion1x(parameters)) {
-			request.setRealm(request.getTrustRoot());
-		}
-		RealmRequest out = new RealmRequest();
-		if (StringUtils.isBlank(request.getRealm())) {
-			out.setRealmPattern(request.getReturnTo());
-		} else {
-			out.setRealmPattern(request.getRealm());
-		}
-		out.setUrl(request.getReturnTo());
-		if (!isMatching(out.getRealmPattern(), out.getUrl())) {
-			return null;
-		}
-		return out;
+    @Override
+    public RealmRequest createRealmRequest(final Map<String, String> parameters) {
+	AuthenticationRequest request = new AuthenticationRequest(parameters);
+	if (openIdRequestTool.isOpenIdVersion1x(parameters)) {
+	    request.setRealm(request.getTrustRoot());
 	}
+	RealmRequest out = new RealmRequest();
+	if (Strings.isNullOrEmpty(request.getRealm())) {
+	    out.setRealmPattern(request.getReturnTo());
+	} else {
+	    out.setRealmPattern(request.getRealm());
+	}
+	out.setUrl(request.getReturnTo());
+	if (!isMatching(out.getRealmPattern(), out.getUrl())) {
+	    return null;
+	}
+	return out;
+    }
 
 }

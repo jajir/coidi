@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +30,7 @@ import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Verify that requested identity belongs logged user.
@@ -58,7 +58,7 @@ public class AuthProcVerifyIdentity20 implements AuthProc {
 	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
-	if (!StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	if (!Strings.isNullOrEmpty(authenticationRequest.getIdentity())) {
 	    if (AuthenticationRequest.IDENTITY_SELECT.equals(authenticationRequest.getIdentity())) {
 		/**
 		 * It's identity select request. Appropriate identity will be

@@ -1,17 +1,12 @@
-package com.coroptis.coidi.op.iocsupport;
+package com.coroptis.coidi.integration.op.util;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.RealmTool;
-import com.google.common.base.Preconditions;
+import com.coroptis.coidi.util.AbstractConfService;
 
-public class OpConfServiceImpl implements OpConfigurationService {
+public class OpConfServiceImpl extends AbstractConfService implements OpConfigurationService {
 
     private Integer timeToLiveInSeconds;
 
@@ -28,24 +23,17 @@ public class OpConfServiceImpl implements OpConfigurationService {
     private boolean wildCardEnabled;
 
     public OpConfServiceImpl(final String propertyFileName) {
-	Preconditions.checkNotNull(propertyFileName);
-	Properties prop = new Properties();
-	try {
-	    prop.load(new BufferedInputStream(OpConfigurationServiceImpl.class.getClassLoader()
-		    .getResourceAsStream(propertyFileName)));
-	} catch (IOException e) {
-	    throw new CoidiException(e.getMessage(), e);
-	}
-	assocTypeStr = prop.getProperty(AssociationTool.DEFAULT_ASSOCITION_TYPE);
-	errorContact = prop.getProperty("op.err.contact");
-	identityPattern = prop.getProperty("op.identity.pattern");
-	openidVersion11Enabled = Boolean
-		.valueOf(prop.getProperty(OpenIdRequestProcessor.CONF_OPENID_VERSION_11_ENABLED));
-	opServer = prop.getProperty("op.server");
+	super(propertyFileName);
+	assocTypeStr = getProp().getProperty(AssociationTool.DEFAULT_ASSOCITION_TYPE);
+	errorContact = getProp().getProperty("op.err.contact");
+	identityPattern = getProp().getProperty("op.identity.pattern");
+	openidVersion11Enabled = Boolean.valueOf(
+		getProp().getProperty(OpenIdRequestProcessor.CONF_OPENID_VERSION_11_ENABLED));
+	opServer = getProp().getProperty("op.server");
 	timeToLiveInSeconds = Integer
-		.valueOf(prop.getProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS));
+		.valueOf(getProp().getProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS));
 	wildCardEnabled = Boolean
-		.valueOf(prop.getProperty(RealmTool.KEY_IS_WILD_CARD_IN_REALM_ENABLED));
+		.valueOf(getProp().getProperty(RealmTool.KEY_IS_WILD_CARD_IN_REALM_ENABLED));
     }
 
     @Override

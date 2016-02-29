@@ -21,7 +21,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +34,7 @@ import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * When response doesn't contains value in association handle than it's
@@ -68,7 +68,7 @@ public class AuthProcStateLessAssociation implements AuthProc {
 	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
 	logger.debug("processing nonce: " + authenticationRequest);
-	if (StringUtils.isEmpty(response.getAssocHandle())) {
+	if (Strings.isNullOrEmpty(response.getAssocHandle())) {
 	    logger.debug("Entering into state-less mode.");
 	    /**
 	     * State-less mode, association handle will be generated and stored
@@ -80,7 +80,7 @@ public class AuthProcStateLessAssociation implements AuthProc {
 	     * If nonce was created in response than will be persisted. In
 	     * OpenID 1.1 could be missing.
 	     */
-	    if (StringUtils.isNotEmpty(response.getNonce())) {
+	    if (Strings.isNullOrEmpty(response.getNonce())) {
 		Nonce nonce = baseNonceDao.createNewInstance();
 		nonce.setNonce(response.getNonce());
 		nonce.setAssociation(association);

@@ -1,9 +1,9 @@
 package com.coroptis.coidi.junit.op.services;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
@@ -24,15 +24,15 @@ public class SregServiceTest extends TestCase {
     public void test_isSreg11() throws Exception {
 	assertTrue(service.isSreg11(new AuthenticationRequest(MapH.make("openid.sreg.optional",
 		"nickname,email", "openid.ns.sreg", "http://openid.net/extensions/sreg/1.1"))));
-	assertTrue(service.isSreg11(new AuthenticationRequest(MapH.make("openid.ns.sreg",
-		"http://openid.net/extensions/sreg/1.1"))));
+	assertTrue(service.isSreg11(new AuthenticationRequest(
+		MapH.make("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1"))));
 	assertFalse(service.isSreg11(new AuthenticationRequest(MapH.make("openid.sreg.optional",
 		"nickname,email", "openid.ns.sreg", "http://openid.net/somethig_else"))));
     }
 
     public void test_isSreg10() throws Exception {
-	assertTrue(service.isSreg10(new AuthenticationRequest(MapH.make("openid.sreg.optional",
-		"nickname,email"))));
+	assertTrue(service.isSreg10(
+		new AuthenticationRequest(MapH.make("openid.sreg.optional", "nickname,email"))));
 	assertTrue(service.isSreg10(new AuthenticationRequest(MapH.make("openid.sreg.optional",
 		"nickname,email", "openid.ns.sreg", "http://openid.net/somethig_else"))));
 	assertTrue(service.isSreg10(new AuthenticationRequest(MapH.make("openid.sreg.required",
@@ -67,11 +67,11 @@ public class SregServiceTest extends TestCase {
     }
 
     public void test_fillSregResponse_keysAreFilled_idenitityIsFilled() throws Exception {
-    IdentityMock identity = new IdentityMock();
+	IdentityMock identity = new IdentityMock();
 	identity.setNickname("kacer");
 	identity.setEmail("kachna@hnizdo.cz");
 	identity.setFullname("Kachna Obecna");
-	identity.setDob(DateUtils.parseDate("23.6.2003", new String[] { "dd.MM.yyyy" }));
+	identity.setDob(create(2003, 6, 23));
 	identity.setGendre(Gendre.M);
 	identity.setPostcode("123 99");
 	identity.setCountry("es");
@@ -103,6 +103,14 @@ public class SregServiceTest extends TestCase {
 	assertEquals("es", response.get("sreg.country"));
 	assertEquals("ES", response.get("sreg.language"));
 	assertEquals("Prage/Europe", response.get("sreg.timezone"));
+    }
+
+    private Date create(int year, int month, int day) {
+	Calendar cal = Calendar.getInstance();
+	cal.set(Calendar.YEAR, year);
+	cal.set(Calendar.MONTH, month);
+	cal.set(Calendar.DAY_OF_MONTH, day);
+	return cal.getTime();
     }
 
     @Override

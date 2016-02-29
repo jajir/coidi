@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.ErrorResponse;
 import com.coroptis.coidi.integration.op.util.OpBindingMock;
-import com.coroptis.coidi.op.iocsupport.OpConfServiceImpl;
+import com.coroptis.coidi.integration.op.util.OpConfServiceImpl;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 
 public class BasicMessageTest {

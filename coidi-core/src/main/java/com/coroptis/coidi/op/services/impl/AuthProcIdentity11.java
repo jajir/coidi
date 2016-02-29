@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +29,7 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Perform basic setting of authentication response for OpenID 1.1.
@@ -45,9 +45,9 @@ public class AuthProcIdentity11 implements AuthProc {
     private final static Logger logger = LoggerFactory.getLogger(AuthProcIdentity11.class);
 
     private final NegativeResponseGenerator negativeResponseGenerator;
-    
+
     @Inject
-    public AuthProcIdentity11(final NegativeResponseGenerator negativeResponseGenerator){
+    public AuthProcIdentity11(final NegativeResponseGenerator negativeResponseGenerator) {
 	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
     }
 
@@ -58,7 +58,7 @@ public class AuthProcIdentity11 implements AuthProc {
 	logger.debug("creating athentication response for: " + authenticationRequest);
 	response.setNameSpace(AbstractMessage.OPENID_NS_11);
 	response.setReturnTo(authenticationRequest.getReturnTo());
-	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
+	if (Strings.isNullOrEmpty(authenticationRequest.getIdentity())) {
 	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
 		    "Mandatory field 'openid.identity' is missing");
 	}

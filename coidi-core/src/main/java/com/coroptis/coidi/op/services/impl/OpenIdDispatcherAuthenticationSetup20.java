@@ -27,22 +27,19 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.OpenId20CheckIdSetup;
 import com.google.common.base.Preconditions;
 
 public class OpenIdDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
-    @OpenId20CheckIdSetup
     private final AuthProc authenticationProcessor;
 
     @Inject
-    public OpenIdDispatcherAuthenticationSetup20(final AuthProc authenticationProcessor){
+    public OpenIdDispatcherAuthenticationSetup20(final AuthProc authenticationProcessor) {
 	this.authenticationProcessor = Preconditions.checkNotNull(authenticationProcessor);
     }
 
     @Override
-    public AbstractMessage process(Map<String, String> requestParams,
-	    HttpSession userSession) {
+    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
 	if (requestParams.get(OPENID_MODE).equals(AuthenticationRequest.MODE_CHECKID_SETUP)) {
 	    AuthenticationRequest authenticationRequest = new AuthenticationRequest(requestParams);
 	    Set<String> fieldToSign = new HashSet<String>();

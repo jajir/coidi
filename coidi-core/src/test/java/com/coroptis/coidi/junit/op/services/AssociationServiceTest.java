@@ -19,9 +19,6 @@ import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.coroptis.coidi.op.services.impl.AssociationServiceImpl;
 import com.coroptis.coidi.util.AssociationMock;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 public class AssociationServiceTest {
 
@@ -93,17 +90,7 @@ public class AssociationServiceTest {
 		cryptoService = EasyMock.createMock(CryptoService.class);
 		associationTool = EasyMock.createMock(AssociationTool.class);
 		convertorService = EasyMock.createMock(ConvertorService.class);
-		final Injector injector = Guice.createInjector(new AbstractModule() {
-			@Override
-			protected void configure() {
-				bind(AssociationService.class).to(AssociationServiceImpl.class);
-				bind(BaseAssociationDao.class).toInstance(baseAssociationDao);
-				bind(CryptoService.class).toInstance(cryptoService);
-				bind(AssociationTool.class).toInstance(associationTool);
-				bind(ConvertorService.class).toInstance(convertorService);
-			}
-		});
-		associationService = injector.getInstance(AssociationService.class);
+		associationService = new AssociationServiceImpl(baseAssociationDao, cryptoService, associationTool, convertorService);
 		association = new AssociationMock();
 		calendar = Calendar.getInstance();
 		calendar.setTime(new Date());

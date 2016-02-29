@@ -18,11 +18,10 @@ package com.coroptis.coidi.core.message;
 import java.math.BigInteger;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 public class AssociationRequest extends AbstractOpenIdRequest {
 
@@ -119,7 +118,7 @@ public class AssociationRequest extends AbstractOpenIdRequest {
      * @return the dhGen
      */
     public BigInteger getDhGen() {
-	if (StringUtils.isEmpty(get(DH_GENERATOR))) {
+	if (Strings.isNullOrEmpty(get(DH_GENERATOR))) {
 	    return null;
 	} else {
 	    return convertToBigIntegerFromString(get(DH_GENERATOR));
@@ -138,7 +137,7 @@ public class AssociationRequest extends AbstractOpenIdRequest {
      * @return the dhModulo
      */
     public BigInteger getDhModulo() {
-	if (StringUtils.isEmpty(get(DH_MODULUS))) {
+	if (Strings.isNullOrEmpty(get(DH_MODULUS))) {
 	    return null;
 	} else {
 	    return convertToBigIntegerFromString(get(DH_MODULUS));

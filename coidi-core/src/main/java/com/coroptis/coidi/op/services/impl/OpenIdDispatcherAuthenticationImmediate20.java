@@ -27,7 +27,6 @@ import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
-import com.coroptis.coidi.op.util.OpenId20CheckIdImmediate;
 import com.google.common.base.Preconditions;
 
 /**
@@ -38,7 +37,6 @@ import com.google.common.base.Preconditions;
  */
 public class OpenIdDispatcherAuthenticationImmediate20 implements OpenIdDispatcher {
 
-    @OpenId20CheckIdImmediate
     private final AuthProc authenticationProcessor;
 
     @Inject

@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +31,7 @@ import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.UserVerifier;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 /**
  * Verify that identity and claimed identities are correctly entered. Initialize
@@ -64,8 +64,8 @@ public class AuthProcIdentity20 implements AuthProc {
 	    final AuthenticationResponse response, final HttpSession session,
 	    final Set<String> fieldsToSign) {
 	logger.debug("creating authentication response for: " + authenticationRequest);
-	if (StringUtils.isEmpty(authenticationRequest.getIdentity())) {
-	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
+	if (Strings.isNullOrEmpty(authenticationRequest.getIdentity())) {
+	    if (Strings.isNullOrEmpty(authenticationRequest.getClaimedId())) {
 		/**
 		 * Both are empty. It could be some OpenID extension request.
 		 */
@@ -75,7 +75,7 @@ public class AuthProcIdentity20 implements AuthProc {
 			AuthenticationResponse.IDENTITY, "' is empty, this is forbiden state.");
 	    }
 	} else {
-	    if (StringUtils.isEmpty(authenticationRequest.getClaimedId())) {
+	    if (Strings.isNullOrEmpty(authenticationRequest.getClaimedId())) {
 		return negativeResponseGenerator.buildError("field '",
 			AuthenticationResponse.CLAIMED_ID, "' is empty and field '",
 			AuthenticationResponse.IDENTITY, "' is filled, this is forbiden state.");
@@ -86,7 +86,7 @@ public class AuthProcIdentity20 implements AuthProc {
 		if (AuthenticationRequest.IDENTITY_SELECT
 			.equals(authenticationRequest.getIdentity())) {
 		    final String identity = userVerifier.getSelectedIdenity(session);
-		    if (StringUtils.isEmpty(identity)) {
+		    if (Strings.isNullOrEmpty(identity)) {
 			return negativeResponseGenerator.applicationError(
 				"requested identity is '" + AuthenticationRequest.IDENTITY_SELECT
 					+ "' but user didn't selected identity",
