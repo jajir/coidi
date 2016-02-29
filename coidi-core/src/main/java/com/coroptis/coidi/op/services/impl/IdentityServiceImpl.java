@@ -27,22 +27,24 @@ import com.google.common.base.Preconditions;
 @Singleton
 public class IdentityServiceImpl implements IdentityService {
 
-    @Inject
-    private BaseIdentityDao identityDao;
+	private final BaseIdentityDao identityDao;
 
-    @Inject
-    private IdentityNamesConvertor identityNamesConvertor;
+	private final IdentityNamesConvertor identityNamesConvertor;
 
-    @Override
-    public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {
-	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
-	if (identityNamesConvertor.isOpLocalIdentifier(opLocalIdentifier)) {
-	    return identityDao.getIdentityId(identityNamesConvertor
-		    .convertToIdentityId(opLocalIdentifier));
-	} else {
-	    return null;
+	@Inject
+	public IdentityServiceImpl(final BaseIdentityDao identityDao, final IdentityNamesConvertor identityNamesConvertor) {
+		this.identityDao = Preconditions.checkNotNull(identityDao);
+		this.identityNamesConvertor = Preconditions.checkNotNull(identityNamesConvertor);
 	}
-    }
 
+	@Override
+	public Identity getByOpLocalIdentifier(final String opLocalIdentifier) {
+		Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");
+		if (identityNamesConvertor.isOpLocalIdentifier(opLocalIdentifier)) {
+			return identityDao.getIdentityId(identityNamesConvertor.convertToIdentityId(opLocalIdentifier));
+		} else {
+			return null;
+		}
+	}
 
 }

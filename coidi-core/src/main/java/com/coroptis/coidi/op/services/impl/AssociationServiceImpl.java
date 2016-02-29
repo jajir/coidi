@@ -32,22 +32,28 @@ import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.google.common.base.Preconditions;
+
 @Singleton
 public class AssociationServiceImpl implements AssociationService {
 
 	private final Logger logger = LoggerFactory.getLogger(AssociationServiceImpl.class);
 
-	@Inject
-	private BaseAssociationDao baseAssociationDao;
+	private final BaseAssociationDao baseAssociationDao;
+
+	private final CryptoService cryptoService;
+
+	private final AssociationTool associationTool;
+
+	private final ConvertorService convertorService;
 
 	@Inject
-	private CryptoService cryptoService;
-
-	@Inject
-	private AssociationTool associationTool;
-
-	@Inject
-	private ConvertorService convertorService;
+	public AssociationServiceImpl(final BaseAssociationDao baseAssociationDao, final CryptoService cryptoService,
+			final AssociationTool associationTool, final ConvertorService convertorService) {
+		this.baseAssociationDao = Preconditions.checkNotNull(baseAssociationDao);
+		this.cryptoService = Preconditions.checkNotNull(cryptoService);
+		this.associationTool = Preconditions.checkNotNull(associationTool);
+		this.convertorService = Preconditions.checkNotNull(convertorService);
+	}
 
 	@Override
 	public void delete(final String associationHandle) {

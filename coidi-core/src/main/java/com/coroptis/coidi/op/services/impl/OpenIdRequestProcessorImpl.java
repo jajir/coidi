@@ -26,8 +26,7 @@ import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
-import com.coroptis.coidi.op.util.OpenId11;
-import com.coroptis.coidi.op.util.OpenId20;
+import com.google.common.base.Preconditions;
 
 /**
  * Simple implementation of {@link OpenIdRequestProcessor}.
@@ -38,32 +37,31 @@ import com.coroptis.coidi.op.util.OpenId20;
 @Singleton
 public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
-    @Inject
-    @OpenId11
-    private OpenIdDispatcher openIdDispatcher11;
+	private final OpenIdDispatcher openIdDispatcher11;
 
-    @Inject
-    @OpenId20
-    private OpenIdDispatcher openIdDispatcher20;
+	private final OpenIdDispatcher openIdDispatcher20;
 
-    private final boolean openidVersion11Enabled;
+	private final boolean openidVersion11Enabled;
 
-    @Inject
-    private OpenIdRequestTool openIdRequestTool;
+	private final OpenIdRequestTool openIdRequestTool;
 
-    @Inject
-    public OpenIdRequestProcessorImpl(final OpConfigurationService configurationService) {
-	this.openidVersion11Enabled = configurationService.isOpenId11Enabled();
-    }
-
-    @Override
-    public AbstractMessage process(final Map<String, String> requestParams,
-	    final HttpSession userSession) {
-	if (openidVersion11Enabled && openIdRequestTool.isOpenIdVersion1x(requestParams)) {
-	    return openIdDispatcher11.process(requestParams, userSession);
-	} else {
-	    return openIdDispatcher20.process(requestParams, userSession);
+	@Inject
+	public OpenIdRequestProcessorImpl(final OpConfigurationService configurationService,
+			final OpenIdDispatcher openIdDispatcher11, final OpenIdDispatcher openIdDispatcher20,
+			final OpenIdRequestTool openIdRequestTool) {
+		this.openidVersion11Enabled = configurationService.isOpenId11Enabled();
+		this.openIdDispatcher11 = Preconditions.checkNotNull(openIdDispatcher11);
+		this.openIdDispatcher20 = Preconditions.checkNotNull(openIdDispatcher20);
+		this.openIdRequestTool = Preconditions.checkNotNull(openIdRequestTool);
 	}
-    }
+
+	@Override
+	public AbstractMessage process(final Map<String, String> requestParams, final HttpSession userSession) {
+		if (openidVersion11Enabled && openIdRequestTool.isOpenIdVersion1x(requestParams)) {
+			return openIdDispatcher11.process(requestParams, userSession);
+		} else {
+			return openIdDispatcher20.process(requestParams, userSession);
+		}
+	}
 
 }
