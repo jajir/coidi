@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +33,8 @@ public class DiscoveryProcessorGoogle implements DiscoveryProcessor {
 
     private final static Logger logger = LoggerFactory.getLogger(DiscoveryProcessorGoogle.class);
 
-    @Inject
     private DiscoverySupport discoverySupport;
 
-    @Override
     public DiscoveryResult dicovery(String userSuppliedId) {
 	Preconditions.checkNotNull(userSuppliedId, "userSuppliedId");
 	if (discoverySupport.isItEmail(userSuppliedId)) {

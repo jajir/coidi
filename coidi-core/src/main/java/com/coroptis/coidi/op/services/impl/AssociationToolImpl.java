@@ -18,9 +18,6 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Association.AssociationType;
@@ -35,7 +32,7 @@ import com.google.common.base.Strings;
  * @author jirout
  * 
  */
-@Singleton
+ 
 public class AssociationToolImpl implements AssociationTool {
 
     private final Integer timeToLiveInSeconds;
@@ -46,7 +43,7 @@ public class AssociationToolImpl implements AssociationTool {
      */
     private final AssociationType defaultAssociationType;
 
-    @Inject
+     
     public AssociationToolImpl( // NO_UCD
 	    final OpConfigurationService configurationService) {
 	Preconditions.checkNotNull(configurationService, "OP configuration service is null");

@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class OpenIdDispatcherCheckAuthentication11 implements OpenIdDispatcher {
 
     private final BaseAssociationDao baseAssociationDao;
 
-    @Inject
+     
     public OpenIdDispatcherCheckAuthentication11(final AssociationTool associationTool,
 	    final AssociationService associationService,
 	    final BaseAssociationDao baseAssociationDao) {

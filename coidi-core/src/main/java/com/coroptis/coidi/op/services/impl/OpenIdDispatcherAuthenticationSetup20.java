@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -33,7 +32,7 @@ public class OpenIdDispatcherAuthenticationSetup20 implements OpenIdDispatcher {
 
     private final AuthProc authenticationProcessor;
 
-    @Inject
+     
     public OpenIdDispatcherAuthenticationSetup20(final AuthProc authenticationProcessor) {
 	this.authenticationProcessor = Preconditions.checkNotNull(authenticationProcessor);
     }

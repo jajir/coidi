@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-
 import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -52,7 +50,7 @@ public class DiscoverySupportImpl implements DiscoverySupport {
 
 	private final XrdsService xrdsService;
 
-	@Inject
+	 
 	public DiscoverySupportImpl(final HttpService httpService, final XrdsService xrdsService) {
 		this.httpService = Preconditions.checkNotNull(httpService);
 		this.xrdsService = Preconditions.checkNotNull(xrdsService);

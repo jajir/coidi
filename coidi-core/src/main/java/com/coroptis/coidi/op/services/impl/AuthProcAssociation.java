@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -44,7 +43,7 @@ public class AuthProcAssociation implements AuthProc {
 
     private final AssociationService associationService;
 
-    @Inject
+     
     public AuthProcAssociation(final AssociationService associationService) {
 	this.associationService = Preconditions.checkNotNull(associationService);
     }

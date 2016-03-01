@@ -17,7 +17,7 @@ package com.coroptis.coidi.core.message;
 
 import java.util.Map;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 public class CheckAuthenticationRequest extends AbstractOpenIdRequest {
 
@@ -45,7 +45,7 @@ public class CheckAuthenticationRequest extends AbstractOpenIdRequest {
 
     @Override
     public String toString() {
-	return Objects.toStringHelper(CheckAuthenticationRequest.class).add(MODE, getMode())
+	return MoreObjects.toStringHelper(CheckAuthenticationRequest.class).add(MODE, getMode())
 		.add(IDENTITY, getIdentity()).add(INVALIDATE_HANDLE, getInvalidateHandle())
 		.add(NONCE, getNonce()).add(RETURN_TO, getReturnTo()).add(SIG, getSignature())
 		.add(SIGNED, getSigned()).add(OPENID_NS, getNameSpace())

@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class AuthProcSreg11 implements AuthProc {
 
     private final NegativeResponseGenerator negativeResponseGenerator;
 
-    @Inject
+     
     public AuthProcSreg11(final IdentityService identityService, final SregService sregService,
 	    final NegativeResponseGenerator negativeResponseGenerator) {
 	this.identityService = Preconditions.checkNotNull(identityService);

@@ -17,8 +17,6 @@ package com.coroptis.coidi.rp.services.impl;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -39,7 +37,7 @@ public class YadisServiceImpl implements YadisService {
 
 	private final HttpService httpService;
 
-	@Inject
+	 
 	public YadisServiceImpl(final HttpService httpService) {
 		this.httpService = Preconditions.checkNotNull(httpService);
 	}

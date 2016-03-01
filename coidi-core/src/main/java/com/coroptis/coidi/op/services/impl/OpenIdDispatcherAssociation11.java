@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -42,7 +41,7 @@ public class OpenIdDispatcherAssociation11 implements OpenIdDispatcher {
 
     private final AssociationProcessor associationProcessor;
 
-    @Inject
+     
     public OpenIdDispatcherAssociation11(final NegativeResponseGenerator negativeResponseGenerator,
 	    final AssociationProcessor associationProcessor) {
 	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);

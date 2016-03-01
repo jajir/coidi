@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import javax.inject.Inject;
-
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.services.DiscoveryProcessor;
 import com.coroptis.coidi.rp.services.DiscoveryService;
@@ -29,7 +27,7 @@ public class DiscoveryServiceImpl implements DiscoveryService {
 
 	private final DiscoverySupport discoverySupport;
 
-	@Inject
+	 
 	public DiscoveryServiceImpl(final DiscoveryProcessor discoveryProcessor, final DiscoverySupport discoverySupport) {
 		this.discoveryProcessor = Preconditions.checkNotNull(discoveryProcessor);
 		this.discoverySupport = Preconditions.checkNotNull(discoverySupport);

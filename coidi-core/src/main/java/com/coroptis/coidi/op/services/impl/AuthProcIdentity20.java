@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -50,7 +49,7 @@ public class AuthProcIdentity20 implements AuthProc {
 
     private final NegativeResponseGenerator negativeResponseGenerator;
 
-    @Inject
+     
     public AuthProcIdentity20(final OpConfigurationService configurationService,
 	    final UserVerifier userVerifier,
 	    final NegativeResponseGenerator negativeResponseGenerator) {

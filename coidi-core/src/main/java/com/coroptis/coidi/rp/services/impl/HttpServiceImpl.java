@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.inject.Inject;
-
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
@@ -40,7 +38,7 @@ public class HttpServiceImpl implements HttpService {
 
     private final DefaultHttpClient httpClient;
 
-    @Inject
+     
     public HttpServiceImpl(final RpConfigurationService configurationService) {
 	httpClient = new DefaultHttpClient();
 	String proxyServer = configurationService.getProxyServer();

@@ -20,7 +20,7 @@ import java.util.Map;
 
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 
 public class AssociationRequest extends AbstractOpenIdRequest {
@@ -48,11 +48,11 @@ public class AssociationRequest extends AbstractOpenIdRequest {
     @Override
     public String toString() {
 	if (SessionType.NO_ENCRYPTION.equals(getSessionType())) {
-	    return Objects.toStringHelper(AssociationRequest.class).add(MODE, getMode())
+	    return MoreObjects.toStringHelper(AssociationRequest.class).add(MODE, getMode())
 		    .add(ASSOCIATION_TYPE, getAssociationType())
 		    .add(SESSION_TYPE, getSessionType()).add(OPENID_NS, getNameSpace()).toString();
 	} else {
-	    return Objects.toStringHelper(AssociationRequest.class).add(MODE, getMode())
+	    return MoreObjects.toStringHelper(AssociationRequest.class).add(MODE, getMode())
 		    .add(ASSOCIATION_TYPE, getAssociationType())
 		    .add(SESSION_TYPE, getSessionType()).add(DH_MODULUS, getDhModulo())
 		    .add(DH_CONSUMER_PUBLIC, getDhConsumerPublic()).add(DH_GENERATOR, getDhGen())

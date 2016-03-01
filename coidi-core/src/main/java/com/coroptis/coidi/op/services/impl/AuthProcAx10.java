@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class AuthProcAx10 implements AuthProc {
 
     private final AuthenticationService authenticationService;
 
-    @Inject
+     
     public AuthProcAx10(final AuthenticationService authenticationService) {
 	this.authenticationService = Preconditions.checkNotNull(authenticationService);
     }

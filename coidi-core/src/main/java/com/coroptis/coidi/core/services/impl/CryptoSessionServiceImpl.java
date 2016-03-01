@@ -18,8 +18,6 @@ package com.coroptis.coidi.core.services.impl;
 import java.math.BigInteger;
 import java.util.Random;
 
-import javax.inject.Inject;
-
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AssociationRequest;
 import com.coroptis.coidi.core.services.CryptoSessionService;
@@ -34,7 +32,7 @@ public class CryptoSessionServiceImpl implements CryptoSessionService {
 
 	private final Random random;
 
-	@Inject
+	 
 	public CryptoSessionServiceImpl(final CryptographyService cryptographyService) {
 		random = new Random();
 		this.cryptographyService = Preconditions.checkNotNull(cryptographyService, "");

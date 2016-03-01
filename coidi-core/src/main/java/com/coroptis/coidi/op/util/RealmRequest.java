@@ -1,6 +1,6 @@
 package com.coroptis.coidi.op.util;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 public class RealmRequest {
 
@@ -10,7 +10,7 @@ public class RealmRequest {
 
     @Override
     public String toString() {
-	return Objects.toStringHelper(RealmRequest.class).add("realmPattern", realmPattern)
+	return MoreObjects.toStringHelper(RealmRequest.class).add("realmPattern", realmPattern)
 		.add("url", url).toString();
     }
 

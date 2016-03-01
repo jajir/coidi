@@ -18,7 +18,6 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -54,7 +53,7 @@ public class AuthProcStateLessAssociation implements AuthProc {
 
     private final BaseNonceDao baseNonceDao;
 
-    @Inject
+     
     public AuthProcStateLessAssociation(final AssociationService associationService,
 	    final BaseAssociationDao baseAssociationDao, final BaseNonceDao baseNonceDao) {
 	this.associationService = Preconditions.checkNotNull(associationService);
@@ -80,7 +79,7 @@ public class AuthProcStateLessAssociation implements AuthProc {
 	     * If nonce was created in response than will be persisted. In
 	     * OpenID 1.1 could be missing.
 	     */
-	    if (Strings.isNullOrEmpty(response.getNonce())) {
+	    if (!Strings.isNullOrEmpty(response.getNonce())) {
 		Nonce nonce = baseNonceDao.createNewInstance();
 		nonce.setNonce(response.getNonce());
 		nonce.setAssociation(association);

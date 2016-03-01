@@ -17,12 +17,10 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Random;
 
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.CryptoService;
-@Singleton
+ 
 public class CryptoServiceImpl implements CryptoService {
 
     private final Random random;

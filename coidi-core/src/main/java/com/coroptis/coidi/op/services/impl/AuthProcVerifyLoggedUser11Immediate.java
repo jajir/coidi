@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -45,7 +44,7 @@ public class AuthProcVerifyLoggedUser11Immediate implements AuthProc {
 
     private final UserVerifier userVerifier;
 
-    @Inject
+     
     public AuthProcVerifyLoggedUser11Immediate(final UserVerifier userVerifier) {
 	this.userVerifier = Preconditions.checkNotNull(userVerifier);
     }

@@ -17,8 +17,6 @@ package com.coroptis.coidi.rp.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +51,7 @@ public class AuthReqRegistration11 implements AuthReq {
 
     private final String policyUrl;
 
-    @Inject
+     
     public AuthReqRegistration11(final RpConfigurationService configurationService) {
 	this.policyUrl = configurationService.getRegistrationPolicyUrl();
     }

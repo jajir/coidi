@@ -20,7 +20,7 @@ import java.util.Set;
 
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 /**
  * Simple {@link Association} implementation. Contains just setter and getters
@@ -133,7 +133,7 @@ public class AssociationBean implements Association {
 
     @Override
     public String toString() {
-	return Objects.toStringHelper(AssociationBean.class).add("assocHandle", assocHandle)
+	return MoreObjects.toStringHelper(AssociationBean.class).add("assocHandle", assocHandle)
 		.add("associationType", associationType).add("expiredIn", expiredIn)
 		.add("macKey", macKey).add("sessionType", sessionType).toString();
     }

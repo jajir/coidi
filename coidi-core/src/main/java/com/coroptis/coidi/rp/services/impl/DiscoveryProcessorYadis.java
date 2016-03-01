@@ -18,7 +18,6 @@ package com.coroptis.coidi.rp.services.impl;
 import java.io.IOException;
 import java.net.ConnectException;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.Header;
@@ -58,7 +57,7 @@ public class DiscoveryProcessorYadis implements DiscoveryProcessor {
 
 	private final DiscoverySupport discoverySupport;
 
-	@Inject
+	 
 	public DiscoveryProcessorYadis(final HttpService httpService, final XrdsService xrdsService,
 			final XmlProcessing xmlProcessing, final DiscoverySupport discoverySupport) {
 		this.httpService = Preconditions.checkNotNull(httpService);

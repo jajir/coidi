@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -38,7 +37,7 @@ public class OpenIdDispatcherTerminator implements OpenIdDispatcher {
 
     private final NegativeResponseGenerator negativeResponseGenerator;
 
-    @Inject
+     
     public OpenIdDispatcherTerminator(final NegativeResponseGenerator negativeResponseGenerator) {
 	this.negativeResponseGenerator = negativeResponseGenerator;
     }

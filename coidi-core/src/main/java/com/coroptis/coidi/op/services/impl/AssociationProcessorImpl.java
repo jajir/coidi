@@ -15,9 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +33,6 @@ import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.CryptoService;
 import com.google.common.base.Preconditions;
 
-@Singleton
 public class AssociationProcessorImpl implements AssociationProcessor {
 
 	private final static Logger logger = LoggerFactory.getLogger(AssociationProcessorImpl.class);
@@ -51,7 +47,6 @@ public class AssociationProcessorImpl implements AssociationProcessor {
 
 	private final ConvertorService convertorService;
 
-	@Inject
 	public AssociationProcessorImpl(final BaseAssociationDao baseAssociationDao,
 			final CryptoSessionService cryptoSessionService, final CryptoService cryptoService,
 			final AssociationService associationService, final ConvertorService convertorService) {

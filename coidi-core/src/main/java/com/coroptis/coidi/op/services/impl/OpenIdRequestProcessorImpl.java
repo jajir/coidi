@@ -17,8 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
@@ -34,7 +32,7 @@ import com.google.common.base.Preconditions;
  * @author jirout
  * 
  */
-@Singleton
+ 
 public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
 	private final OpenIdDispatcher openIdDispatcher11;
@@ -45,7 +43,7 @@ public class OpenIdRequestProcessorImpl implements OpenIdRequestProcessor {
 
 	private final OpenIdRequestTool openIdRequestTool;
 
-	@Inject
+	 
 	public OpenIdRequestProcessorImpl(final OpConfigurationService configurationService,
 			final OpenIdDispatcher openIdDispatcher11, final OpenIdDispatcher openIdDispatcher20,
 			final OpenIdRequestTool openIdRequestTool) {

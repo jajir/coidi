@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -51,7 +50,7 @@ public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
 
     private final AssociationService associationService;
 
-    @Inject
+     
     public OpenIdDispatcherCheckAuthentication20(
 	    final StatelessModeNonceService statelessModeNonceService,
 	    final SigningService signingService, final AssociationService associationService) {

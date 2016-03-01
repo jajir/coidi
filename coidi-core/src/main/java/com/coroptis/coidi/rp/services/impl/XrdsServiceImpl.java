@@ -18,7 +18,6 @@ package com.coroptis.coidi.rp.services.impl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -44,7 +43,7 @@ public class XrdsServiceImpl implements XrdsService {
 
 	private final ConvertorService convertorService;
 
-	@Inject
+	 
 	public XrdsServiceImpl(final ConvertorService convertorService) {
 		this.convertorService = Preconditions.checkNotNull(convertorService);
 	}

@@ -17,8 +17,6 @@ package com.coroptis.coidi.rp.services.impl;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
@@ -29,7 +27,7 @@ public class AuthReqOAuthExtension implements AuthReq {
 
     private final String realm;
 
-    @Inject
+     
     public AuthReqOAuthExtension(final RpConfigurationService configurationService) {
 	this.realm = configurationService.getRealm();
     }

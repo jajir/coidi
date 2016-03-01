@@ -18,10 +18,8 @@ package com.coroptis.coidi.op.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.CoidiException;
-@Singleton
+ 
 public class PrintableXrdService implements Printable {
 
     private Integer priority;

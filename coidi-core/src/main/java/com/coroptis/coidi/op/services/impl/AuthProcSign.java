@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import com.coroptis.coidi.CoidiException;
@@ -46,7 +45,7 @@ public class AuthProcSign implements AuthProc {
 
     private final Joiner joiner = Joiner.on(",").skipNulls();
 
-    @Inject
+     
     public AuthProcSign(final BaseAssociationDao associationDao,
 	    final SigningService signingService) {
 	this.associationDao = Preconditions.checkNotNull(associationDao);

@@ -18,7 +18,6 @@ package com.coroptis.coidi.rp.services.impl;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.HttpResponse;
@@ -41,7 +40,7 @@ public class HttpTranportServiceImpl implements HttpTransportService {
 
 	private final HttpService httpService;
 
-	@Inject
+	 
 	public HttpTranportServiceImpl(final HttpService httpService) {
 		this.httpService = Preconditions.checkNotNull(httpService);
 	}

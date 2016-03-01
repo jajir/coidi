@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +32,7 @@ public class AuthenticationVerificationServiceImpl implements AuthenticationVeri
 
 	private final AuthRespDecoder authRespDecoder;
 
-	@Inject
+	 
 	public AuthenticationVerificationServiceImpl(final AuthRespDecoder authRespDecoder) {
 		this.authRespDecoder = Preconditions.checkNotNull(authRespDecoder);
 	}

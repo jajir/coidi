@@ -18,8 +18,6 @@ package com.coroptis.coidi.rp.services.impl;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +48,7 @@ public class AssociationFactoryImpl implements AssociationFactory {
 
 	private final AssociationHelper associationHelper;
 
-	@Inject
+	 
 	public AssociationFactoryImpl(final CryptoSessionService cryptoSessionService,
 			final ConvertorService convertorService, final HttpTransportService httpTransportService,
 			final AssociationHelper associationHelper) {

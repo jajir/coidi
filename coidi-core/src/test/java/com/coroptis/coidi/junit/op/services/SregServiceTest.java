@@ -97,7 +97,7 @@ public class SregServiceTest extends TestCase {
 	assertEquals("kacer", response.get("sreg.nickname"));
 	assertEquals("kachna@hnizdo.cz", response.get("sreg.email"));
 	assertEquals("Kachna Obecna", response.get("sreg.fullname"));
-	assertEquals("2003-06-23", response.get("sreg.dob"));
+	assertEquals("2003-07-23", response.get("sreg.dob"));
 	assertEquals("M", response.get("sreg.gendre"));
 	assertEquals("123 99", response.get("sreg.postcode"));
 	assertEquals("es", response.get("sreg.country"));

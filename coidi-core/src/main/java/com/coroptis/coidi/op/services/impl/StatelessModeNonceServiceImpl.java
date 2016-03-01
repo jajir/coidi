@@ -15,9 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +28,7 @@ import com.coroptis.coidi.op.services.AssociationTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.google.common.base.Preconditions;
 
-@Singleton
+ 
 public class StatelessModeNonceServiceImpl implements StatelessModeNonceService {
 
 	private final static Logger logger = LoggerFactory.getLogger(StatelessModeNonceServiceImpl.class);
@@ -44,7 +41,7 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 
 	private final NonceService nonceService;
 
-	@Inject
+	 
 	public StatelessModeNonceServiceImpl(final BaseNonceDao baseNonceDao, final AssociationTool associationTool,
 			final BaseAssociationDao baseAssociationDao, final NonceService nonceService) {
 		this.baseNonceDao = Preconditions.checkNotNull(baseNonceDao);

@@ -238,7 +238,10 @@ public class RpBinding extends CoreBinding {
 	public AuthReq getAuthProcSimpleRp() {
 		AuthReq out = get("AuthProcSimpleRp");
 		if (out == null) {
-			out = new AuthProcSimpleRp(getAuthReqPreconditions(), getAuthReqUiIcon(), getAuthReqTerminator());
+			AuthReqChain chain = new AuthReqChain();
+			chain.add(getAuthReqPreconditions());
+			chain.add(getAuthReqUiIcon());
+			chain.add(getAuthReqTerminator());
 			put("AuthProcSimpleRp", out);
 		}
 		return out;
@@ -281,14 +284,17 @@ public class RpBinding extends CoreBinding {
 	}
 
 	/**
-	 * {@link SimpleAuthResponseDecoder}
+	 * {@link AuthResponseDecoderChain}
 	 */
 	public AuthRespDecoder getSimpleAuthResponseDecoder() {
 		AuthRespDecoder out = get("simpleAuthResponseDecoder");
 		if (out == null) {
-			out = new SimpleAuthResponseDecoder(getAuthRespOpenId20Verify(), getAuthRespDecoderOpenId(),
-					getAuthRespDecoderTerminator());
-			put("simpleAuthResponseDecoder", out);
+			AuthResponseDecoderChain chain = new AuthResponseDecoderChain();
+			chain.add(getAuthRespOpenId20Verify());
+			chain.add(getAuthRespDecoderOpenId());
+			chain.add(getAuthRespDecoderTerminator());
+			put("simpleAuthResponseDecoder", chain);
+			out = chain;
 		}
 		return out;
 	}

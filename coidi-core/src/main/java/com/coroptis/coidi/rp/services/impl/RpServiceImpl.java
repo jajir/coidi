@@ -15,8 +15,6 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +35,7 @@ public class RpServiceImpl implements RpService {
 
 	private final String realm;
 
-	@Inject
+	 
 	public RpServiceImpl(final RpConfigurationService configurationService, final AuthReq authReq) {
 		this.realm = configurationService.getRealm();
 		this.authReq = Preconditions.checkNotNull(authReq);

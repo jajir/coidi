@@ -17,8 +17,6 @@ package com.coroptis.coidi.core.services.impl;
 
 import java.io.UnsupportedEncodingException;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +40,7 @@ public class SigningServiceImpl implements SigningService {
 
 	private final ConvertorService convertorService;
 
-	@Inject
+	 
 	public SigningServiceImpl(final CryptographyService cryptoService, final MessageService messageService,
 			final ConvertorService convertorService) {
 		this.cryptoService = Preconditions.checkNotNull(cryptoService);

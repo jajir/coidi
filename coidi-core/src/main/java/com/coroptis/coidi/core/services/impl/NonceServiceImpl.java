@@ -23,8 +23,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +44,7 @@ public class NonceServiceImpl implements NonceService {
 
 	private final ConvertorService convertorService;
 
-	@Inject
+	 
 	public NonceServiceImpl(final ConvertorService convertorService) {
 		this.convertorService = Preconditions.checkNotNull(convertorService);
 		try {

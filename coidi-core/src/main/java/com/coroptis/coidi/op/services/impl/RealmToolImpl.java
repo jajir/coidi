@@ -18,9 +18,6 @@ package com.coroptis.coidi.op.services.impl;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdRequestTool;
@@ -29,14 +26,14 @@ import com.coroptis.coidi.op.util.RealmRequest;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-@Singleton
+ 
 public class RealmToolImpl implements RealmTool {
 
     private final OpenIdRequestTool openIdRequestTool;
 
     private final boolean wildCardEnabled;
 
-    @Inject
+     
     public RealmToolImpl(final OpConfigurationService configurationService,
 	    final OpenIdRequestTool openIdRequestTool) {
 	this.wildCardEnabled = configurationService.isWildcardAllowedInRealm();

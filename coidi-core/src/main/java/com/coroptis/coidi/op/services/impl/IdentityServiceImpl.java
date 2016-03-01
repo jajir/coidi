@@ -15,23 +15,20 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.google.common.base.Preconditions;
 
-@Singleton
+ 
 public class IdentityServiceImpl implements IdentityService {
 
 	private final BaseIdentityDao identityDao;
 
 	private final IdentityNamesConvertor identityNamesConvertor;
 
-	@Inject
+	 
 	public IdentityServiceImpl(final BaseIdentityDao identityDao, final IdentityNamesConvertor identityNamesConvertor) {
 		this.identityDao = Preconditions.checkNotNull(identityDao);
 		this.identityNamesConvertor = Preconditions.checkNotNull(identityNamesConvertor);

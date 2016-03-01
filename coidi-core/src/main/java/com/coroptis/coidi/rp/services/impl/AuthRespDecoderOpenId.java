@@ -1,7 +1,5 @@
 package com.coroptis.coidi.rp.services.impl;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +31,6 @@ public class AuthRespDecoderOpenId implements AuthRespDecoder {
 
 	private final NonceStorage nonceDao;
 
-	@Inject
 	public AuthRespDecoderOpenId(final NonceService nonceService, final SigningService signingService,
 			final NonceStorage nonceDao) {
 		this.nonceService = Preconditions.checkNotNull(nonceService);

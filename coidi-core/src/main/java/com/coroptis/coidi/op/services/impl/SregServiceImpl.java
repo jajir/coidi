@@ -20,15 +20,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Singleton;
-
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.IdentitySreg;
 import com.coroptis.coidi.op.services.SregService;
 import com.google.common.base.Strings;
 
-@Singleton
+ 
 public class SregServiceImpl implements SregService {
 
     @Override
@@ -61,15 +59,15 @@ public class SregServiceImpl implements SregService {
     public void fillSregResponse(final Set<String> keys, final AuthenticationResponse response,
 	    final IdentitySreg identity, final Set<String> fieldsToSign) {
 	// FIXME following code disable sreg extension, correct it
-	if (keys.contains(SREG_NICKNAME) && Strings.isNullOrEmpty(identity.getNickname())) {
+	if (keys.contains(SREG_NICKNAME) && !Strings.isNullOrEmpty(identity.getNickname())) {
 	    response.put(SREG + SREG_NICKNAME, identity.getNickname());
 	    fieldsToSign.add(SREG + SREG_NICKNAME);
 	}
-	if (keys.contains(SREG_EMAIL) && Strings.isNullOrEmpty(identity.getEmail())) {
+	if (keys.contains(SREG_EMAIL) && !Strings.isNullOrEmpty(identity.getEmail())) {
 	    response.put(SREG + SREG_EMAIL, identity.getEmail());
 	    fieldsToSign.add(SREG + SREG_EMAIL);
 	}
-	if (keys.contains(SREG_FULLNAME) && Strings.isNullOrEmpty(identity.getFullname())) {
+	if (keys.contains(SREG_FULLNAME) && !Strings.isNullOrEmpty(identity.getFullname())) {
 	    response.put(SREG + SREG_FULLNAME, identity.getFullname());
 	    fieldsToSign.add(SREG + SREG_FULLNAME);
 	}
@@ -82,19 +80,19 @@ public class SregServiceImpl implements SregService {
 	    response.put(SREG + SREG_GENDRE, identity.getGendre().name());
 	    fieldsToSign.add(SREG + SREG_GENDRE);
 	}
-	if (keys.contains(SREG_POSTCODE) && Strings.isNullOrEmpty(identity.getPostcode())) {
+	if (keys.contains(SREG_POSTCODE) && !Strings.isNullOrEmpty(identity.getPostcode())) {
 	    response.put(SREG + SREG_POSTCODE, identity.getPostcode());
 	    fieldsToSign.add(SREG + SREG_POSTCODE);
 	}
-	if (keys.contains(SREG_COUNTRY) && Strings.isNullOrEmpty(identity.getCountry())) {
+	if (keys.contains(SREG_COUNTRY) && !Strings.isNullOrEmpty(identity.getCountry())) {
 	    response.put(SREG + SREG_COUNTRY, identity.getCountry());
 	    fieldsToSign.add(SREG + SREG_COUNTRY);
 	}
-	if (keys.contains(SREG_LANGUAGE) && Strings.isNullOrEmpty(identity.getLanguage())) {
+	if (keys.contains(SREG_LANGUAGE) && !Strings.isNullOrEmpty(identity.getLanguage())) {
 	    response.put(SREG + SREG_LANGUAGE, identity.getLanguage());
 	    fieldsToSign.add(SREG + SREG_LANGUAGE);
 	}
-	if (keys.contains(SREG_TIMEZONE) && Strings.isNullOrEmpty(identity.getTimezone())) {
+	if (keys.contains(SREG_TIMEZONE) && !Strings.isNullOrEmpty(identity.getTimezone())) {
 	    response.put(SREG + SREG_TIMEZONE, identity.getTimezone());
 	    fieldsToSign.add(SREG + SREG_TIMEZONE);
 	}

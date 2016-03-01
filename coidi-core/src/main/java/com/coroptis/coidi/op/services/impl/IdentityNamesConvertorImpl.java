@@ -15,15 +15,12 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.google.common.base.Preconditions;
 
 /**
@@ -32,7 +29,7 @@ import com.google.common.base.Preconditions;
  * @author jirout
  * 
  */
-@Singleton
+ 
 public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     private final Logger logger = LoggerFactory.getLogger(IdentityNamesConvertor.class);
@@ -41,7 +38,7 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
 
     private final String identityPattern;
 
-    @Inject
+     
     public IdentityNamesConvertorImpl( // NO_UCD
 	    final OpConfigurationService configurationService) {
 	this.identityPattern = configurationService.getOpIdentityPattern();

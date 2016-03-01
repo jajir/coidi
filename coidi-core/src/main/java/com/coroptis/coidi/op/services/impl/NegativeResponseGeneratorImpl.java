@@ -15,9 +15,6 @@
  */
 package com.coroptis.coidi.op.services.impl;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +29,7 @@ import com.google.common.base.Strings;
  * @author jirout
  * 
  */
-@Singleton
+ 
 public class NegativeResponseGeneratorImpl implements NegativeResponseGenerator {
 
     private final static String MISSING_1 = "Required parameter '";
@@ -43,7 +40,7 @@ public class NegativeResponseGeneratorImpl implements NegativeResponseGenerator 
 
     private final String errorContact;
 
-    @Inject
+     
     public NegativeResponseGeneratorImpl(final OpConfigurationService configurationService) {
 	this.errorContact = configurationService.getErrorContact();
 	if (Strings.isNullOrEmpty(errorContact)) {

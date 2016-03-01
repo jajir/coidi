@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public class AuthProcNonce implements AuthProc {
 
     private final NonceService nonceService;
 
-    @Inject
+     
     public AuthProcNonce(final NonceService nonceService) {
 	this.nonceService = Preconditions.checkNotNull(nonceService);
     }

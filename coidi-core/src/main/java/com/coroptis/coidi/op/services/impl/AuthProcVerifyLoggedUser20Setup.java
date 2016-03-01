@@ -17,7 +17,6 @@ package com.coroptis.coidi.op.services.impl;
 
 import java.util.Set;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -48,7 +47,7 @@ public class AuthProcVerifyLoggedUser20Setup implements AuthProc {
 
     private final UserVerifier userVerifier;
 
-    @Inject
+     
     public AuthProcVerifyLoggedUser20Setup(
 	    final NegativeResponseGenerator negativeResponseGenerator,
 	    final UserVerifier userVerifier) {
