@@ -59,7 +59,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     public abstract OpConfigurationService getConf();
 
     /**
-     * {@link AssociationService}
+     * @return {@link AssociationService}
      */
     public AssociationService getAssociationService() {
 	AssociationService out = get(AssociationService.class);
@@ -72,7 +72,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link IdentityService}
+     * @return {@link IdentityService}
      */
     public IdentityService getIdentityService() {
 	IdentityService out = get(IdentityService.class);
@@ -84,7 +84,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link AssociationTool}
+     * @return {@link AssociationTool}
      */
     public AssociationTool getAssociationTool() {
 	AssociationTool out = get(AssociationTool.class);
@@ -96,7 +96,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link CryptoService}
+     * @return {@link CryptoService}
      */
     public CryptoService getCryptoService() {
 	CryptoService out = get(CryptoService.class);
@@ -108,7 +108,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link ConvertorService}
+     * @return {@link ConvertorService}
      */
     public AuthenticationService getAuthenticationService() {
 	AuthenticationService out = get(AuthenticationService.class);
@@ -120,7 +120,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link ConvertorService}
+     * @return {@link ConvertorService}
      */
     public StatelessModeNonceService getStatelessModeNonceService() {
 	StatelessModeNonceService out = get(StatelessModeNonceService.class);
@@ -133,7 +133,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link SregService}
+     * @return {@link SregService}
      */
     public SregService getSregService() {
 	SregService out = get(SregService.class);
@@ -145,7 +145,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link RealmTool}
+     * @return {@link RealmTool}
      */
     public RealmTool getRealmTool() {
 	RealmTool out = get(RealmTool.class);
@@ -157,7 +157,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link NegativeResponseGenerator}
+     * @return {@link NegativeResponseGenerator}
      */
     public NegativeResponseGenerator getNegativeResponseGenerator() {
 	NegativeResponseGenerator out = get(NegativeResponseGenerator.class);
@@ -169,7 +169,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link IdentityNamesConvertor}
+     * @return {@link IdentityNamesConvertor}
      */
     public IdentityNamesConvertor getIdentityNamesConvertor() {
 	IdentityNamesConvertor out = get(IdentityNamesConvertor.class);
@@ -181,7 +181,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link OpenIdRequestProcessor}
+     * @return {@link OpenIdRequestProcessor}
      */
     public OpenIdRequestProcessor getOpenIdRequestProcessor() {
 	OpenIdRequestProcessor out = get(OpenIdRequestProcessor.class);
@@ -194,7 +194,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link AssociationProcessor}
+     * @return {@link AssociationProcessor}
      */
     public AssociationProcessor getAssociationProcessor() {
 	AssociationProcessor out = get(AssociationProcessor.class);
@@ -207,7 +207,7 @@ public abstract class OpCoreBinding extends CoreBinding {
     }
 
     /**
-     * {@link ConvertorService}
+     * @return {@link ConvertorService}
      */
     public OpenIdRequestTool getOpenIdRequestTool() {
 	OpenIdRequestTool out = get(OpenIdRequestTool.class);
