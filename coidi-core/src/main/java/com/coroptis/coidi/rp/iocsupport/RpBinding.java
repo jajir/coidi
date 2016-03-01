@@ -242,7 +242,8 @@ public class RpBinding extends CoreBinding {
 			chain.add(getAuthReqPreconditions());
 			chain.add(getAuthReqUiIcon());
 			chain.add(getAuthReqTerminator());
-			put("AuthProcSimpleRp", out);
+			put("AuthProcSimpleRp", chain);
+			out = chain;
 		}
 		return out;
 	}
