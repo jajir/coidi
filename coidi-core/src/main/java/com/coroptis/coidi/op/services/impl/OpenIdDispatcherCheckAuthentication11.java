@@ -65,7 +65,7 @@ public class OpenIdDispatcherCheckAuthentication11 implements OpenIdDispatcher {
 		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
 	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);
 	    logger.debug("processing: " + request);
-	    CheckAuthenticationResponse response = new CheckAuthenticationResponse();
+	    CheckAuthenticationResponse response = new CheckAuthenticationResponse(requestParams);
 	    response.setNameSpace(AbstractMessage.OPENID_NS_11);
 	    Association association = baseAssociationDao.getByAssocHandle(request.getAssocHandle());
 	    if (associationTool.isPrivateAssociation(association)) {

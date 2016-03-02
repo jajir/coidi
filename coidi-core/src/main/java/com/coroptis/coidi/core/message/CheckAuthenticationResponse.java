@@ -22,12 +22,6 @@ public class CheckAuthenticationResponse extends AbstractOpenIdResponse {
     public final static String IS_VALID = "is_valid";
     public final static String INVALIDATE_HANDLE = "invalidate_handle";
 
-    public CheckAuthenticationResponse() {
-	super();
-	setNameSpace(OPENID_NS_20);
-	setUrl(false);
-    }
-
     public CheckAuthenticationResponse(final Map<String, String> map) {
 	super(map);
 	setNameSpace(OPENID_NS_20);

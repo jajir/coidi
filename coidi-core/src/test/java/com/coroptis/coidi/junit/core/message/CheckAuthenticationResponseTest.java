@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.junit.core.message;
 
+import java.util.HashMap;
+
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 
 import junit.framework.TestCase;
@@ -22,7 +24,7 @@ import junit.framework.TestCase;
 public class CheckAuthenticationResponseTest extends TestCase {
 
     public void testIsValid() throws Exception {
-	CheckAuthenticationResponse response = new CheckAuthenticationResponse();
+	CheckAuthenticationResponse response = new CheckAuthenticationResponse(new HashMap<String, String>());
 	assertFalse(response.getIsValid());
 
 	response.setIsValid(true);

@@ -26,6 +26,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.core.services.SigningService;
+import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Nonce;
 import com.coroptis.coidi.op.services.AssociationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
@@ -41,53 +42,52 @@ import com.google.common.base.Preconditions;
  */
 public class OpenIdDispatcherCheckAuthentication20 implements OpenIdDispatcher {
 
-    private final static Logger logger = LoggerFactory
-	    .getLogger(OpenIdDispatcherCheckAuthentication20.class);
+	private final static Logger logger = LoggerFactory.getLogger(OpenIdDispatcherCheckAuthentication20.class);
 
-    private final StatelessModeNonceService statelessModeNonceService;
+	private final StatelessModeNonceService statelessModeNonceService;
 
-    private final SigningService signingService;
+	private final SigningService signingService;
 
-    private final AssociationService associationService;
+	private final AssociationService associationService;
+	
+	private final BaseNonceDao baseNonceDao;
 
-     
-    public OpenIdDispatcherCheckAuthentication20(
-	    final StatelessModeNonceService statelessModeNonceService,
-	    final SigningService signingService, final AssociationService associationService) {
-	this.statelessModeNonceService = Preconditions.checkNotNull(statelessModeNonceService);
-	this.signingService = Preconditions.checkNotNull(signingService);
-	this.associationService = Preconditions.checkNotNull(associationService);
-    }
-
-    @Override
-    public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
-	if (requestParams.get(OPENID_MODE)
-		.equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
-	    CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);
-	    logger.debug("processing: " + request);
-	    CheckAuthenticationResponse response = new CheckAuthenticationResponse();
-	    Nonce nonce = statelessModeNonceService.getVerifiedNonce(request.getNonce());
-	    if (nonce == null) {
-		response.setIsValid(false);
-		return response;
-	    } else {
-		if (!statelessModeNonceService.isAssociationValid(nonce, request)) {
-		    response.setIsValid(false);
-		    return response;
-		}
-		if (!request.getSignature()
-			.equals(signingService.sign(request, nonce.getAssociation()))) {
-		    response.setIsValid(false);
-		    logger.info("Signature is not valid " + request);
-		    return response;
-		}
-	    }
-	    associationService.delete(request.getAssocHandle());
-	    response.setIsValid(true);
-	    response.setInvalidateHandle(request.getAssocHandle());
-	    return response;
+	public OpenIdDispatcherCheckAuthentication20(final StatelessModeNonceService statelessModeNonceService,
+			final SigningService signingService, final AssociationService associationService, final BaseNonceDao baseNonceDao) {
+		this.statelessModeNonceService = Preconditions.checkNotNull(statelessModeNonceService);
+		this.signingService = Preconditions.checkNotNull(signingService);
+		this.associationService = Preconditions.checkNotNull(associationService);
+		this.baseNonceDao = Preconditions.checkNotNull(baseNonceDao);
 	}
-	return null;
-    }
+
+	@Override
+	public AbstractMessage process(Map<String, String> requestParams, HttpSession userSession) {
+		if (requestParams.get(OPENID_MODE).equals(CheckAuthenticationRequest.MODE_CHECK_AUTHENTICATION)) {
+			CheckAuthenticationRequest request = new CheckAuthenticationRequest(requestParams);
+			logger.debug("processing: " + request);
+			CheckAuthenticationResponse response = new CheckAuthenticationResponse(requestParams);
+			Nonce nonce = statelessModeNonceService.getVerifiedNonce(request.getNonce());
+			if (nonce == null) {
+				response.setIsValid(false);
+				return response;
+			} else {
+				if (!statelessModeNonceService.isAssociationValid(nonce, request)) {
+					response.setIsValid(false);
+					return response;
+				}
+				if (!request.getSignature().equals(signingService.sign(request, nonce.getAssociation()))) {
+					response.setIsValid(false);
+					logger.info("Signature is not valid " + request);
+					return response;
+				}
+			}
+			associationService.delete(request.getAssocHandle());
+			baseNonceDao.delete(nonce);
+			response.setIsValid(true);
+			response.setInvalidateHandle(request.getAssocHandle());
+			return response;
+		}
+		return null;
+	}
 
 }
