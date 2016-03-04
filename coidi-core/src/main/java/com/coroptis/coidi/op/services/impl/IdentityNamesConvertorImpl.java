@@ -46,9 +46,9 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
     }
 
     @Override
-    public String convertToIdentityId(final String opIdentifier) {
+    public String convertToOpLocalIdentifier(final String opIdentifier) {
 	if (logger.isDebugEnabled()) {
-	    logger.debug("converting '" + opIdentifier + "' to op local identifier with pattern '"
+	    logger.debug("converting identifier '" + opIdentifier + "' to op local identifier with pattern '"
 		    + identityPattern + "'");
 	}
 	Preconditions.checkNotNull(opIdentifier, "opIdentifier is null");
@@ -70,9 +70,9 @@ public class IdentityNamesConvertorImpl implements IdentityNamesConvertor {
     }
 
     @Override
-    public String convertToOpLocalIdentifier(final String opLocalIdentifier) {
+    public String convertToIdentifier(final String opLocalIdentifier) {
 	if (logger.isDebugEnabled()) {
-	    logger.debug("converting '" + opLocalIdentifier + "' to op identifier with pattern '"
+	    logger.debug("converting OP local identifier '" + opLocalIdentifier + "' to identifier with pattern '"
 		    + identityPattern + "'");
 	}
 	Preconditions.checkNotNull(opLocalIdentifier, "opLocalIdentifier is null");

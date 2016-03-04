@@ -36,37 +36,37 @@ import com.coroptis.coidi.CoidiException;
  */
 public interface IdentityNamesConvertor {
 
-    /**
-     * Convert from OP local identifier to identity id.
-     * 
-     * @param opLocalIdentifier
-     *            required OP local identifier
-     * @return identity id
-     * @throws CoidiException
-     *             when it's not possible to parse opIdentifier
-     */
-    String convertToIdentityId(String opLocalIdentifier);
+	/**
+	 * Convert from identifier to user's OP local identifier.
+	 * 
+	 * @param opLocalIdentifier
+	 *            required identifier
+	 * @return OP local identifier
+	 * @throws CoidiException
+	 *             when it's not possible to parse opIdentifier
+	 */
+	String convertToOpLocalIdentifier(String identifier);
 
-    /**
-     * Convert identity id to OP local identifier.
-     * 
-     * @param identityId
-     *            required identity id
-     * @return OP local identifier
-     */
-    String convertToOpLocalIdentifier(String identityId);
+	/**
+	 * Convert OP local identifier identifier.
+	 * 
+	 * @param identityId
+	 *            required OP local identifier
+	 * @return identifier
+	 */
+	String convertToIdentifier(String identityId);
 
-    /**
-     * This inform if given string is in form of local identifier.
-     * 
-     * 
-     * @param someIdentifier
-     *            required some OP identifier
-     * @return true when it is OP local identifier, false when it's OP
-     *         identifier
-     * @throws CoidiException
-     *             when it's not possible to parse opIdentifier
-     */
-    Boolean isOpLocalIdentifier(String someIdentifier);
+	/**
+	 * This inform if given string is in form of local identifier.
+	 * 
+	 * 
+	 * @param someIdentifier
+	 *            required some OP identifier
+	 * @return true when it is OP local identifier, false when it's OP
+	 *         identifier
+	 * @throws CoidiException
+	 *             when it's not possible to parse opIdentifier
+	 */
+	Boolean isOpLocalIdentifier(String someIdentifier);
 
 }

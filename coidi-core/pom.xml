@@ -157,14 +157,19 @@
 	</dependencyManagement>
 
 	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
+		<downloadUrl>http://devel1.intdev.equabank.loc:8085/nexus/content/groups/public/</downloadUrl>
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<uniqueVersion>false</uniqueVersion>
+			<id>deploymentRepoReleases</id>
+			<name>Releases (Nexus)</name>
+			<url>http://devel1.intdev.equabank.loc:8085/nexus/content/repositories/releases/</url>
 		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>deploymentRepoSnapshots</id>
+			<name>Snapshots (Nexus)</name>
+			<url>http://devel1.intdev.equabank.loc:8085/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<build>

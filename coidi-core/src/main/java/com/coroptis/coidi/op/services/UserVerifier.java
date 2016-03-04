@@ -45,7 +45,7 @@ public interface UserVerifier {
      * user at OP should select his identity. In many cases there is simple
      * mapping between identity and user.
      * <p>
-     * This method allows coidi to ask users selected identity.
+     * This method allows OP provider to ask user to selected identity.
      * </p>
      * <p>
      * Method should not ask end user. Because could be called in
@@ -54,7 +54,7 @@ public interface UserVerifier {
      * 
      * @param session
      *            required HTTP session
-     * @return selected identity
+     * @return selected user's OP local identifier
      */
-    String getSelectedIdenity(HttpSession session);
+    String getSelectedOpLocalIdentifier(HttpSession session);
 }
