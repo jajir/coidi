@@ -39,7 +39,7 @@ public interface IdentityNamesConvertor {
 	/**
 	 * Convert from identifier to user's OP local identifier.
 	 * 
-	 * @param opLocalIdentifier
+	 * @param identifier
 	 *            required identifier
 	 * @return OP local identifier
 	 * @throws CoidiException
