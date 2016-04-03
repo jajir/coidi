@@ -43,7 +43,6 @@ public class AuthProcAssociation implements AuthProc {
 
     private final AssociationService associationService;
 
-     
     public AuthProcAssociation(final AssociationService associationService) {
 	this.associationService = Preconditions.checkNotNull(associationService);
     }
@@ -52,21 +51,13 @@ public class AuthProcAssociation implements AuthProc {
     public AbstractMessage process(final AuthenticationRequest authenticationRequest,
 	    final AuthenticationResponse response, final HttpSession userSession,
 	    final Set<String> fieldsToSign) {
-	logger.debug("verifying association: " + authenticationRequest);
+	logger.debug("verifying association: '{}'", authenticationRequest.getAssocHandle());
 	fieldsToSign.add(AuthenticationResponse.ASSOC_HANDLE);
-
-	if (authenticationRequest.getAssocHandle() == null) {
-	    logger.debug("assoc_handle in request is null.");
-	    response.setAssocHandle(null);
+	if (associationService.isValid(authenticationRequest.getAssocHandle())) {
+	    response.setAssocHandle(authenticationRequest.getAssocHandle());
 	} else {
-	    if (associationService.isValid(authenticationRequest.getAssocHandle())) {
-		response.setAssocHandle(authenticationRequest.getAssocHandle());
-	    } else {
-		response.setInvalidateHandle(authenticationRequest.getAssocHandle());
-		response.setAssocHandle(null);
-		logger.debug("Invalid association handle '" + authenticationRequest.getAssocHandle()
-			+ "'");
-	    }
+	    response.setInvalidateHandle(authenticationRequest.getAssocHandle());
+	    response.setAssocHandle(null);
 	}
 	return null;
     }

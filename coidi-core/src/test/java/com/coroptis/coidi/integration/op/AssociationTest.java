@@ -106,6 +106,22 @@ public class AssociationTest {
 	assertEquals("error@company.com", err.getContact());
     }
 
+    @Test
+    public void test_session_type_no_encription() throws Exception {
+	// test missing check that session-type can't be no-encryption without
+	// TLS
+	params.put("openid.session_type", "no-encryption");
+	mocks.replay();
+	AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
+
+	logger.debug(ret.getMessage());
+	assertTrue(ret instanceof ErrorResponse);
+	ErrorResponse err = (ErrorResponse) ret;
+	assertEquals(AbstractMessage.OPENID_NS_20, err.getNameSpace());
+	assertEquals("Session type value 'no-encryption' is not allowed", err.getError());
+	assertEquals("error@company.com", err.getContact());
+    }
+
     @Before
     public void setUp() {
 	params = new HashMap<String, String>();

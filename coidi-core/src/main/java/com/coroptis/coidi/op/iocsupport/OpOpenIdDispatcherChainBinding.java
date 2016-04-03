@@ -154,7 +154,7 @@ public abstract class OpOpenIdDispatcherChainBinding extends OpCoreBinding {
 	OpenIdDispatcher out = get(OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_20);
 	if (out == null) {
 	    out = new OpenIdDispatcherCheckAuthentication20(getStatelessModeNonceService(),
-		    getSigningService(), getAssociationService(),getBaseNonceDao());
+		    getSigningService(), getAssociationService(), getBaseNonceDao());
 	    put(OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_20, out);
 	}
 	return out;
@@ -164,7 +164,7 @@ public abstract class OpOpenIdDispatcherChainBinding extends OpCoreBinding {
 	OpenIdDispatcher out = get(OPEN_ID_DISPATCHER_ASSOCIATION_20);
 	if (out == null) {
 	    out = new OpenIdDispatcherAssociation20(getNegativeResponseGenerator(),
-		    getAssociationProcessor());
+		    getAssociationProcessor(), getConf());
 	    put(OPEN_ID_DISPATCHER_ASSOCIATION_20, out);
 	}
 	return out;

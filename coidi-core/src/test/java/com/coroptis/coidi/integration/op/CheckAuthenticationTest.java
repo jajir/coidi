@@ -123,6 +123,29 @@ public class CheckAuthenticationTest {
 		assertEquals("true", ret.get("is_valid"));
 	}
 
+	@Test
+	public void test_all_invalid_association() throws Exception {
+	    //FIXME 
+		params.put("openid.response_nonce", now_nonce);
+		EasyMock.expect(mocks.getBaseNonceDao().getByNonce(now_nonce)).andReturn(mocks.getNonce());
+		EasyMock.expect(mocks.getNonce().getAssociation()).andReturn(mocks.getAssociation()).times(4);
+		EasyMock.expect(mocks.getAssociation().getSessionType()).andReturn(null);
+		EasyMock.expect(mocks.getBaseAssociationDao().getByAssocHandle("1efbd96c-6112-4ebb-ae79-d451e7a1f455"))
+				.andReturn(mocks.getAssociation()).times(2);
+		EasyMock.expect(mocks.getAssociation().getSessionType()).andReturn(null);
+		EasyMock.expect(mocks.getAssociation().getAssocHandle()).andReturn("hello").times(2);
+
+		EasyMock.expect(mocks.getSigningService().sign((CheckAuthenticationRequest) EasyMock.anyObject(),
+				EasyMock.eq(mocks.getAssociation()))).andReturn("WOMRLznYVB3dscSLF4APl9xUXck=");
+		mocks.getBaseAssociationDao().delete(mocks.getAssociation());
+		mocks.getBaseNonceDao().delete(mocks.getNonce());
+		mocks.replay();
+		AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
+
+		logger.debug(ret.getMessage());
+		assertEquals("true", ret.get("is_valid"));
+	}
+
 	@Before
 	public void setUp() {
 		mocks = new OpBindingMock(new OpConfServiceImpl("op_application.properties"));

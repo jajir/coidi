@@ -25,6 +25,7 @@ import com.coroptis.coidi.op.entities.Association.AssociationType;
 import com.coroptis.coidi.op.entities.Association.SessionType;
 import com.coroptis.coidi.op.services.AssociationProcessor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
+import com.coroptis.coidi.op.services.OpConfigurationService;
 import com.coroptis.coidi.op.services.OpenIdDispatcher;
 import com.google.common.base.Preconditions;
 
@@ -41,11 +42,14 @@ public class OpenIdDispatcherAssociation20 implements OpenIdDispatcher {
 
     private final AssociationProcessor associationProcessor;
 
-     
+    private final OpConfigurationService opConfigurationService;
+
     public OpenIdDispatcherAssociation20(final NegativeResponseGenerator negativeResponseGenerator,
-	    final AssociationProcessor associationProcessor) {
+	    final AssociationProcessor associationProcessor,
+	    final OpConfigurationService opConfigurationService) {
 	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
 	this.associationProcessor = Preconditions.checkNotNull(associationProcessor);
+	this.opConfigurationService = Preconditions.checkNotNull(opConfigurationService);
     }
 
     @Override
@@ -63,17 +67,22 @@ public class OpenIdDispatcherAssociation20 implements OpenIdDispatcher {
 	    final String sessionTypeName = requestParams.get(OPENID_SESSION_TYPE);
 	    if (sessionTypeName == null) {
 		return negativeResponseGenerator.missingParameter(OPENID_SESSION_TYPE);
-	    } else if (SessionType.convert(sessionTypeName) == null) {
-		return negativeResponseGenerator.buildError("Invalid value '", sessionTypeName,
-			"' of property '", OPENID_SESSION_TYPE, "'");
+	    } else {
+		final SessionType sessionType = SessionType.convert(sessionTypeName);
+		if (sessionType == null) {
+		    return negativeResponseGenerator.buildError("Invalid value '", sessionTypeName,
+			    "' of property '", OPENID_SESSION_TYPE, "'");
+		} else if (SessionType.NO_ENCRYPTION.equals(sessionType)
+			&& !opConfigurationService.isNoEncryptionSessionTypeEnabled()) {
+		    return negativeResponseGenerator.buildError("Session type value '",
+			    sessionTypeName, "' is not allowed");
+		}
 	    }
 
 	    final String dhConsumerPublic = requestParams.get(OPENID_DH_CONSUMER_PUBLIC);
 	    if (dhConsumerPublic == null) {
 		return negativeResponseGenerator.missingParameter(OPENID_DH_CONSUMER_PUBLIC);
 	    }
-	    // TODO values are computed twice here and in AssociationRequest
-	    // getters.
 
 	    AssociationRequest request = new AssociationRequest(requestParams);
 	    return associationProcessor.processAssociation(request, request.getSessionType(),

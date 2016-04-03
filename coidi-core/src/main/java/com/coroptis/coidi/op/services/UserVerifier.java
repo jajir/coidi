@@ -57,4 +57,5 @@ public interface UserVerifier {
      * @return selected user's OP local identifier
      */
     String getSelectedOpLocalIdentifier(HttpSession session);
+
 }

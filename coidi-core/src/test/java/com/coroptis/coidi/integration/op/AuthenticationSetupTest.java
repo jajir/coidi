@@ -79,7 +79,7 @@ public class AuthenticationSetupTest {
      */
     @SuppressWarnings("unchecked")
     @Test
-    public void test_invalid_association() throws Exception {
+    public void test_not_existing_association() throws Exception {
 	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
 	EasyMock.expect(mocks.getUserVerifier().verify("http://www.coidi.com/identity/qwe",

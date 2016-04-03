@@ -58,4 +58,11 @@ public interface OpConfigurationService {
      */
     boolean isWildcardAllowedInRealm();
 
+    /**
+     * When server use HTTP than 'no-encryption' have to be disabled. It could
+     * be enabled just when TLS is used.
+     * 
+     * @return return <code>true</code>
+     */
+    boolean isNoEncryptionSessionTypeEnabled();
 }

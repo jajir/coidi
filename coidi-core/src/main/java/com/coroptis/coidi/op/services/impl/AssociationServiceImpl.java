@@ -74,7 +74,7 @@ public class AssociationServiceImpl implements AssociationService {
 		if (new Date().before(association.getExpiredIn())) {
 			return true;
 		} else {
-			logger.debug("Association is invalid - association '{}' with date '{}' is expired ", assoc_handle,
+			logger.debug("Association is invalid - association '{}' with date '{}' is expired", assoc_handle,
 					association.getExpiredIn());
 			return false;
 		}

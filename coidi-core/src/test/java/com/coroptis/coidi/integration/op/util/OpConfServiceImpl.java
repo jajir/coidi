@@ -22,6 +22,8 @@ public class OpConfServiceImpl extends AbstractConfService implements OpConfigur
 
     private boolean wildCardEnabled;
 
+    private boolean noEncryptionSessionTypeEnabled;
+
     public OpConfServiceImpl(final String propertyFileName) {
 	super(propertyFileName);
 	assocTypeStr = getProp().getProperty(AssociationTool.DEFAULT_ASSOCITION_TYPE);
@@ -34,6 +36,8 @@ public class OpConfServiceImpl extends AbstractConfService implements OpConfigur
 		.valueOf(getProp().getProperty(AssociationTool.DEFAULT_TIME_TO_LIVE_IN_SECONDS));
 	wildCardEnabled = Boolean
 		.valueOf(getProp().getProperty(RealmTool.KEY_IS_WILD_CARD_IN_REALM_ENABLED));
+	noEncryptionSessionTypeEnabled = Boolean
+		.valueOf(getProp().getProperty("op.no-encryption.session.type.enabled"));
     }
 
     @Override
@@ -69,6 +73,11 @@ public class OpConfServiceImpl extends AbstractConfService implements OpConfigur
     @Override
     public boolean isWildcardAllowedInRealm() {
 	return wildCardEnabled;
+    }
+
+    @Override
+    public boolean isNoEncryptionSessionTypeEnabled() {
+	return noEncryptionSessionTypeEnabled;
     }
 
 }
