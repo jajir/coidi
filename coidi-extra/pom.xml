@@ -22,10 +22,6 @@
 		<module>coidi-test-op</module>
 		<module>coidi-test-rp</module>
 		<module>coidi-test-support</module>
-		<module>coidi-op-guice</module>
-		<module>coidi-op-t5</module>
-		<module>coidi-rp-guice</module>
-		<module>coidi-rp-t5</module>
 	</modules>
 	<dependencies>
 	</dependencies>
