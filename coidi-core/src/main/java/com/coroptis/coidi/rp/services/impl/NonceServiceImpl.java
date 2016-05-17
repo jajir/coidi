@@ -43,6 +43,7 @@ public class NonceServiceImpl implements NonceService {
 		this.nonceStorage = Preconditions.checkNotNull(nonceStorage);
 	}
 
+	@Override
 	public boolean isNonceValid(final String nonce, final Integer expirationInMinutes) {
 		if (nonceTool.isNonceExpired(nonce, expirationInMinutes)) {
 			return false;
