@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
-import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.core.services.NonceTool;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseNonceDao;
 import com.coroptis.coidi.op.entities.Association;
@@ -39,15 +39,14 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 
 	private final BaseAssociationDao baseAssociationDao;
 
-	private final NonceService nonceService;
+	private final NonceTool nonceTool;
 
-	 
 	public StatelessModeNonceServiceImpl(final BaseNonceDao baseNonceDao, final AssociationTool associationTool,
-			final BaseAssociationDao baseAssociationDao, final NonceService nonceService) {
+			final BaseAssociationDao baseAssociationDao, final NonceTool nonceTool) {
 		this.baseNonceDao = Preconditions.checkNotNull(baseNonceDao);
 		this.associationTool = Preconditions.checkNotNull(associationTool);
 		this.baseAssociationDao = Preconditions.checkNotNull(baseAssociationDao);
-		this.nonceService = Preconditions.checkNotNull(nonceService);
+		this.nonceTool = Preconditions.checkNotNull(nonceTool);
 	}
 
 	@Override
@@ -56,11 +55,11 @@ public class StatelessModeNonceServiceImpl implements StatelessModeNonceService 
 			logger.info("Nonce is null");
 			return null;
 		}
-		if (!nonceService.verifyNonceExpiration(nonce, 30)) {
-			logger.info("Invalid nonce '" + nonce + "'");
+		if (nonceTool.isNonceExpired(nonce, 30)) {
+			logger.info("Nonce '" + nonce + "' is expired");
 			return null;
 		}
-		final Nonce nonceObject = baseNonceDao.getByNonce(nonce);
+		final Nonce nonceObject = baseNonceDao.getByNonce(nonce);	
 		if (nonceObject == null) {
 			logger.info("There is no stored such nonce '" + nonce + "'");
 			return null;

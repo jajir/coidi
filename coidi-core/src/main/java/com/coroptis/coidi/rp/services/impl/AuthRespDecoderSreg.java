@@ -11,6 +11,7 @@ import com.coroptis.coidi.core.message.NsSreg;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.base.ExtensionResultSreg;
+import com.coroptis.coidi.rp.base.AuthenticationResult.Status;
 import com.coroptis.coidi.rp.services.AuthRespDecoder;
 
 /**
@@ -24,7 +25,7 @@ public class AuthRespDecoderSreg implements AuthRespDecoder, NsSreg {
     private final static Logger logger = LoggerFactory.getLogger(AuthRespDecoderSreg.class);
 
     @Override
-    public Boolean decode(AuthenticationResponse authenticationResponse, Association association,
+    public boolean decode(AuthenticationResponse authenticationResponse, Association association,
 	    AuthenticationResult authenticationResult) {
 	boolean touche = false;
 	ExtensionResultSreg resultSreg = new ExtensionResultSreg();
@@ -47,7 +48,8 @@ public class AuthRespDecoderSreg implements AuthRespDecoder, NsSreg {
 	    } catch (ParseException e) {
 		logger.warn("unable to parse date of '" + SREG_DOB + "' in "
 			+ authenticationResponse.getMessage());
-		return false;
+		authenticationResult.setStatus(Status.cancel);
+		return true;
 	    }
 	    touche = true;
 	}
@@ -74,6 +76,6 @@ public class AuthRespDecoderSreg implements AuthRespDecoder, NsSreg {
 	if (touche) {
 	    authenticationResult.getExtensions().put(ExtensionResultSreg.CODE, resultSreg);
 	}
-	return true;
+	return false;
     }
 }

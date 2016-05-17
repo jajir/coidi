@@ -4,13 +4,13 @@ import com.coroptis.coidi.core.services.ConvertorService;
 import com.coroptis.coidi.core.services.CryptoSessionService;
 import com.coroptis.coidi.core.services.CryptographyService;
 import com.coroptis.coidi.core.services.MessageService;
-import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.core.services.NonceTool;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.core.services.impl.ConvertorServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptoSessionServiceImpl;
 import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
 import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
-import com.coroptis.coidi.core.services.impl.NonceServiceImpl;
+import com.coroptis.coidi.core.services.impl.NonceToolImpl;
 import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 
 /**
@@ -34,13 +34,13 @@ public class CoreBinding extends AbstractBinding {
     }
 
     /**
-     * @return {@link NonceService}
+     * @return {@link NonceTool}
      */
-    public NonceService getNonceService() {
-	NonceService out = get(NonceService.class);
+    public NonceTool getNonceTool() {
+    	NonceTool out = get(NonceTool.class);
 	if (out == null) {
-	    out = new NonceServiceImpl(getConvertorService());
-	    put(NonceService.class, out);
+	    out = new NonceToolImpl(getConvertorService());
+	    put(NonceTool.class, out);
 	}
 	return out;
     }

@@ -11,23 +11,22 @@ import com.google.common.base.Preconditions;
 
 public class AuthResponseDecoderChain implements AuthRespDecoder {
 
-    protected final List<AuthRespDecoder> dispatchers = new ArrayList<AuthRespDecoder>();
+	protected final List<AuthRespDecoder> dispatchers = new ArrayList<AuthRespDecoder>();
 
-    @Override
-    public Boolean decode(final AuthenticationResponse authenticationResponse,
-	    final Association association, final AuthenticationResult authenticationResult) {
-	for (final AuthRespDecoder builder : dispatchers) {
-	    final Boolean processed = builder.decode(authenticationResponse, association,
-		    authenticationResult);
-	    if (processed != null && processed) {
-		return true;
-	    }
+	@Override
+	public boolean decode(final AuthenticationResponse authenticationResponse, final Association association,
+			final AuthenticationResult authenticationResult) {
+		for (final AuthRespDecoder builder : dispatchers) {
+			final boolean stopProcessing = builder.decode(authenticationResponse, association, authenticationResult);
+			if (stopProcessing) {
+				return false;
+			}
+		}
+		return false;
 	}
-	return false;
-    }
 
-    public void add(final AuthRespDecoder decoder) {
-	dispatchers.add(Preconditions.checkNotNull(decoder));
-    }
+	public void add(final AuthRespDecoder decoder) {
+		dispatchers.add(Preconditions.checkNotNull(decoder));
+	}
 
 }

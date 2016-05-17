@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
-import com.coroptis.coidi.core.services.NonceService;
-import com.coroptis.coidi.core.services.impl.NonceServiceImpl;
+import com.coroptis.coidi.core.services.NonceTool;
+import com.coroptis.coidi.core.services.impl.NonceToolImpl;
 import com.coroptis.coidi.integration.op.util.OpBindingMock;
 import com.coroptis.coidi.integration.op.util.OpConfServiceImpl;
 import com.coroptis.coidi.op.entities.Association.SessionType;
@@ -44,7 +44,7 @@ public class CheckAuthenticationTest {
 
 	@Test
 	public void test_missing_nonce() throws Exception {
-		params.remove("");
+		params.remove("openid.response_nonce");
 		mocks.replay();
 		AbstractMessage ret = openIdRequestProcessor.process(params, mocks.getHttpSession());
 
@@ -151,8 +151,8 @@ public class CheckAuthenticationTest {
 		mocks = new OpBindingMock(new OpConfServiceImpl("op_application.properties"));
 		mocks.mockSigningService();
 		openIdRequestProcessor = mocks.getOpenIdRequestProcessor();
-		NonceService nonceService = new NonceServiceImpl(mocks.getConvertorService());
-		now_nonce = nonceService.createNonce();
+		NonceTool nonceTool = new NonceToolImpl(mocks.getConvertorService());
+		now_nonce = nonceTool.createNonce();
 
 		params = new HashMap<String, String>();
 		params.put("openid.ns", "http://specs.openid.net/auth/2.0");

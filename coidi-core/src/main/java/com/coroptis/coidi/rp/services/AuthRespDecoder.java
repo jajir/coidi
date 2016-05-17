@@ -14,18 +14,18 @@ import com.coroptis.coidi.rp.base.AuthenticationResult;
  */
 public interface AuthRespDecoder {
 
-    /**
-     * 
-     * @param authenticationResponse
-     *            required authentication response
-     * @param association
-     *            required association
-     * @param authenticationResult
-     *            required result authenticationResult
-     * @return <code>true</code> when message is processed otherwise
-     *         <code>false</code>
-     */
-    Boolean decode(AuthenticationResponse authenticationResponse, Association association,
-	    AuthenticationResult authenticationResult);
+	/**
+	 * 
+	 * @param authenticationResponse
+	 *            required authentication response
+	 * @param association
+	 *            required association
+	 * @param authenticationResult
+	 *            required result authenticationResult
+	 * @return <code>true</code> when message decoding is done otherwise
+	 *         <code>false</code>
+	 */
+	boolean decode(AuthenticationResponse authenticationResponse, Association association,
+			AuthenticationResult authenticationResult);
 
 }

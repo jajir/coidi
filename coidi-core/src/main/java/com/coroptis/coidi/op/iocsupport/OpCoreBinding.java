@@ -126,7 +126,7 @@ public abstract class OpCoreBinding extends CoreBinding {
 	StatelessModeNonceService out = get(StatelessModeNonceService.class);
 	if (out == null) {
 	    out = new StatelessModeNonceServiceImpl(getBaseNonceDao(), getAssociationTool(),
-		    getBaseAssociationDao(), getNonceService());
+		    getBaseAssociationDao(), getNonceTool());
 	    put(StatelessModeNonceService.class, out);
 	}
 	return out;

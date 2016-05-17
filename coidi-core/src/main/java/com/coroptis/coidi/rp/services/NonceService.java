@@ -15,17 +15,18 @@
  */
 package com.coroptis.coidi.rp.services;
 
-import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.op.entities.Association;
-import com.coroptis.coidi.rp.base.AuthenticationResult;
+public interface NonceService {
 
-public interface AuthenticationVerificationService {
+	/**
+	 * Verify that nonce is valid. Method check:
+	 * <ul>
+	 * <li>Nonce is not older that given time frame.</li>
+	 * <li>Nonce is used for first time.</li>
+	 * </ul>
+	 * @param nonce required nonce
+	 * @param expirationInMinutes  required  minutes how long the nonce is valid
+	 * @return <code>true</code> if nonce is valid otherwise <code>false</code>
+	 */
+	boolean isNonceValid(String nonce, Integer expirationInMinutes);
 
-    public final static Integer NONCE_EXPIRATION_TIME_IN_MINUTES = 30;
-
-    AuthenticationResult verify(AuthenticationResponse authenticationResponse,
-	    Association association);
-
-    boolean verifySimple(AuthenticationResponse authenticationResponse,
-    	    Association association);
 }

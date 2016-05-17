@@ -17,7 +17,7 @@ import com.google.common.base.Strings;
 public class AuthRespOpenId20Verify implements AuthRespDecoder {
 
 	@Override
-	public Boolean decode(final AuthenticationResponse authenticationResponse, final Association association,
+	public boolean decode(final AuthenticationResponse authenticationResponse, final Association association,
 			final AuthenticationResult authenticationResult) {
 		if (Strings.isNullOrEmpty(authenticationResponse.getNameSpace())) {
 			throw new CoidiException("OpenID namespace was not filled.");

@@ -178,7 +178,7 @@ public abstract class OpBinding extends OpOpenIdDispatcherChainBinding {
 	public AuthProc getAuthProcNonce() {
 		AuthProc out = get(AUTH_PROC_NONCE);
 		if (out == null) {
-			out = new AuthProcNonce(getNonceService());
+			out = new AuthProcNonce(getNonceTool());
 			put(AUTH_PROC_NONCE, out);
 		}
 		return out;

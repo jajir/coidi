@@ -20,7 +20,6 @@ import javax.servlet.http.HttpSession;
 import org.easymock.EasyMock;
 
 import com.coroptis.coidi.core.services.ConvertorService;
-import com.coroptis.coidi.core.services.NonceService;
 import com.coroptis.coidi.core.services.SigningService;
 import com.coroptis.coidi.op.dao.BaseAssociationDao;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
@@ -40,6 +39,7 @@ import com.coroptis.coidi.op.services.OpenIdRequestTool;
 import com.coroptis.coidi.op.services.RealmTool;
 import com.coroptis.coidi.op.services.StatelessModeNonceService;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.coroptis.coidi.rp.services.NonceService;
 
 public class Services {
 

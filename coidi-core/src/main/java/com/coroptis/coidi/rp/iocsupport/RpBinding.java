@@ -13,6 +13,7 @@ import com.coroptis.coidi.rp.services.DiscoveryService;
 import com.coroptis.coidi.rp.services.DiscoverySupport;
 import com.coroptis.coidi.rp.services.HttpService;
 import com.coroptis.coidi.rp.services.HttpTransportService;
+import com.coroptis.coidi.rp.services.NonceService;
 import com.coroptis.coidi.rp.services.NonceStorage;
 import com.coroptis.coidi.rp.services.RpConfigurationService;
 import com.coroptis.coidi.rp.services.RpService;
@@ -35,6 +36,7 @@ import com.coroptis.coidi.rp.services.impl.DiscoveryServiceImpl;
 import com.coroptis.coidi.rp.services.impl.DiscoverySupportImpl;
 import com.coroptis.coidi.rp.services.impl.HttpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.HttpTranportServiceImpl;
+import com.coroptis.coidi.rp.services.impl.NonceServiceImpl;
 import com.coroptis.coidi.rp.services.impl.NonceStoreInMemory;
 import com.coroptis.coidi.rp.services.impl.RpServiceImpl;
 import com.coroptis.coidi.rp.services.impl.XmlProcessingImpl;
@@ -254,8 +256,7 @@ public class RpBinding extends CoreBinding {
     public AuthRespDecoder getAuthRespDecoderOpenId() {
 	AuthRespDecoder out = get("AuthRespDecoderOpenId");
 	if (out == null) {
-	    out = new AuthRespDecoderOpenId(getNonceService(), getSigningService(),
-		    getNonceStorage());
+	    out = new AuthRespDecoderOpenId(getNonceService(), getSigningService());
 	    put("AuthRespDecoderOpenId", out);
 	}
 	return out;
@@ -325,6 +326,18 @@ public class RpBinding extends CoreBinding {
 	return out;
     }
 
+    /**
+     * @return {@link NonceService}
+     */
+    public NonceService getNonceService() {
+	NonceService out = get(NonceService.class);
+	if (out == null) {
+	    out = new NonceServiceImpl(getNonceTool(),getNonceStorage());
+	    put(NonceService.class, out);
+	}
+	return out;
+    }
+    
     /**
      * @return {@link CoidiRp}
      */

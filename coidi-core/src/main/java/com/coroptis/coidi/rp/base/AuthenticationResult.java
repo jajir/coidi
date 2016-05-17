@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.base.MoreObjects;
 
 /**
+ * 
  * This object is generated as result of authentication response.
  * 
  * @author jirout

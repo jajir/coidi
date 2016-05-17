@@ -15,10 +15,6 @@
  */
 package com.coroptis.coidi.rp.services.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
@@ -28,11 +24,8 @@ import com.google.common.base.Preconditions;
 
 public class AuthenticationVerificationServiceImpl implements AuthenticationVerificationService {
 
-	private final static Logger logger = LoggerFactory.getLogger(AuthenticationVerificationServiceImpl.class);
-
 	private final AuthRespDecoder authRespDecoder;
 
-	 
 	public AuthenticationVerificationServiceImpl(final AuthRespDecoder authRespDecoder) {
 		this.authRespDecoder = Preconditions.checkNotNull(authRespDecoder);
 	}
@@ -40,13 +33,15 @@ public class AuthenticationVerificationServiceImpl implements AuthenticationVeri
 	@Override
 	public AuthenticationResult verify(final AuthenticationResponse authenticationResponse,
 			final Association association) {
-		AuthenticationResult authenticationResult = new AuthenticationResult();
-		if (authRespDecoder.decode(authenticationResponse, association, authenticationResult)) {
-			return authenticationResult;
-		} else {
-			logger.debug("message error");
-			throw new CoidiException("There was some error in message");
-		}
+		final AuthenticationResult authenticationResult = new AuthenticationResult();
+		authRespDecoder.decode(authenticationResponse, association, authenticationResult);
+		return authenticationResult;
+	}
+
+	@Override
+	public boolean verifySimple(AuthenticationResponse authenticationResponse, Association association) {
+		final AuthenticationResult authenticationResult = verify(authenticationResponse, association);
+		return authenticationResult.isPositive();
 	}
 
 }

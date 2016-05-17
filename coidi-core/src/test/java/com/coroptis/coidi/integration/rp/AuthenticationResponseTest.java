@@ -59,6 +59,8 @@ public class AuthenticationResponseTest {
 	params.put("expires_in", "3598");
 	params.put("enc_mac_key", "nEuit6YB6FttN7j2JSwYUO+JV6I=");
 	params.put("assoc_type", "HMAC-SHA1");
+	params.put("response_nonce", "2016-05-17T19:19:48Zhello");
+	params.put("mode", "id_res");
 
 	mocks = new RpBingingMock(new RpConfService("rp_application.properties"));
 	authVerification = mocks.getAuthenticationVerificationService();

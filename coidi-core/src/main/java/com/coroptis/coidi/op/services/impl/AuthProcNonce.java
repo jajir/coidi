@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
-import com.coroptis.coidi.core.services.NonceService;
+import com.coroptis.coidi.core.services.NonceTool;
 import com.coroptis.coidi.op.services.AuthProc;
 import com.google.common.base.Preconditions;
 
@@ -37,23 +37,21 @@ import com.google.common.base.Preconditions;
  */
 public class AuthProcNonce implements AuthProc {
 
-    private final static Logger logger = LoggerFactory.getLogger(AuthProcNonce.class);
+	private final static Logger logger = LoggerFactory.getLogger(AuthProcNonce.class);
 
-    private final NonceService nonceService;
+	private final NonceTool nonceTool;
 
-     
-    public AuthProcNonce(final NonceService nonceService) {
-	this.nonceService = Preconditions.checkNotNull(nonceService);
-    }
+	public AuthProcNonce(final NonceTool nonceTool) {
+		this.nonceTool = Preconditions.checkNotNull(nonceTool);
+	}
 
-    @Override
-    public AbstractMessage process(final AuthenticationRequest authenticationRequest,
-	    final AuthenticationResponse response, final HttpSession userSession,
-	    final Set<String> fieldsToSign) {
-	logger.debug("processing nonce: " + authenticationRequest);
-	response.setNonce(nonceService.createNonce());
-	fieldsToSign.add(AuthenticationResponse.NONCE);
-	return null;
-    }
+	@Override
+	public AbstractMessage process(final AuthenticationRequest authenticationRequest,
+			final AuthenticationResponse response, final HttpSession userSession, final Set<String> fieldsToSign) {
+		logger.debug("processing nonce: " + authenticationRequest);
+		response.setNonce(nonceTool.createNonce());
+		fieldsToSign.add(AuthenticationResponse.NONCE);
+		return null;
+	}
 
 }
