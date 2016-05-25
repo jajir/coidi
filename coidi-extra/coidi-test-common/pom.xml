@@ -8,16 +8,11 @@
 	</parent>
 	<artifactId>coidi-test-common</artifactId>
 	<packaging>jar</packaging>
-	<name>Coidi test web applications common</name>
+	<name>Simplify loading of configuration</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-core</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>

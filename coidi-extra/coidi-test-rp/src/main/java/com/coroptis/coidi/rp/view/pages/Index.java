@@ -22,7 +22,6 @@ import com.coroptis.coidi.rp.view.util.UserSession;
 
 public class Index {
 
-    @SuppressWarnings("unused")
     @Property
     @SessionState
     private UserSession userSession;

@@ -25,7 +25,7 @@ import java.util.Locale;
 
 import org.apache.tapestry5.ioc.Resource;
 
-import com.coroptis.coidi.CoidiException;
+import com.coroptis.coidi.core.services.ConfigurationException;
 
 /**
  * Allows read file
@@ -81,7 +81,7 @@ public class FsResource implements Resource {
 	try {
 	    return file.toURI().toURL();
 	} catch (MalformedURLException e) {
-	    throw new CoidiException(e.getMessage(), e);
+	    throw new ConfigurationException(e.getMessage(), e);
 	}
     }
 

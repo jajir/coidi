@@ -27,9 +27,8 @@ import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.internal.util.ClasspathResource;
 import org.xml.sax.SAXException;
 
-import com.coroptis.coidi.CoidiException;
-import com.coroptis.coidi.core.services.ConfException;
 import com.coroptis.coidi.core.services.ConfService;
+import com.coroptis.coidi.core.services.ConfigurationException;
 import com.coroptis.coidi.core.util.Conf;
 import com.coroptis.coidi.core.util.FsResource;
 import com.google.common.base.Preconditions;
@@ -61,7 +60,7 @@ public class ConfServiceImpl implements ConfService {
 	this.systemPropertyConfigurationDirectory = System
 		.getProperty(CONF_KEY_CONFIGURATION_DIRECTORY);
 	if (systemPropertyConfigurationDirectory == null) {
-	    throw new CoidiException("system propety '" + CONF_KEY_CONFIGURATION_DIRECTORY
+	    throw new ConfigurationException("system propety '" + CONF_KEY_CONFIGURATION_DIRECTORY
 		    + "' is null. " + "Application don't know where to find"
 		    + " directory with configuration.");
 	}
@@ -81,7 +80,7 @@ public class ConfServiceImpl implements ConfService {
 	    configurationResource = new FsResource(configurationUrl);
 	}
 	if (!configurationResource.exists()) {
-	    throw new ConfException("Configuration file '" + configurationUrl + "' didn't exists.");
+	    throw new ConfigurationException("Configuration file '" + configurationUrl + "' didn't exists.");
 	}
 	return configurationResource;
     }

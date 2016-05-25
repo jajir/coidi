@@ -27,7 +27,6 @@ import com.coroptis.coidi.rp.view.util.UserSession;
 @Import(stylesheet = "context:css/layout.css")
 public class Layout {
 
-    @SuppressWarnings("unused")
     @Property
     @Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
     private String title;

@@ -28,15 +28,7 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
-import com.coroptis.coidi.core.services.impl.AppSymbolProvider;
-import com.coroptis.coidi.core.services.impl.ConfServiceImpl;
 import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
-import com.coroptis.coidi.core.services.impl.ConvertorServiceImpl;
-import com.coroptis.coidi.core.services.impl.CryptoSessionServiceImpl;
-import com.coroptis.coidi.core.services.impl.CryptographyServiceImpl;
-import com.coroptis.coidi.core.services.impl.MessageServiceImpl;
-import com.coroptis.coidi.core.services.impl.NonceServiceImpl;
-import com.coroptis.coidi.core.services.impl.SigningServiceImpl;
 import com.coroptis.coidi.core.util.Conf;
 
 /**
@@ -51,15 +43,7 @@ public class CoreModule {
     private final static Logger logger = Logger.getLogger(CoreModule.class);
 
     public static void bind(ServiceBinder binder) {
-	binder.bind(ConfService.class, ConfServiceImpl.class);
-	binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId("appSymbolProvider");
-	binder.bind(MessageService.class, MessageServiceImpl.class);
-	binder.bind(CryptographyService.class, CryptographyServiceImpl.class);
-	binder.bind(CryptoSessionService.class, CryptoSessionServiceImpl.class);
-	binder.bind(SigningService.class, SigningServiceImpl.class);
-	binder.bind(ConvertorService.class, ConvertorServiceImpl.class);
-	binder.bind(NonceService.class, NonceServiceImpl.class);
-	binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
+		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
     }
 
     public static void contributeSymbolSource(final OrderedConfiguration<SymbolProvider> providers,
