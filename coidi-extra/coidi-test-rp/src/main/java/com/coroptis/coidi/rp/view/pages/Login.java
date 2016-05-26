@@ -36,7 +36,6 @@ import com.coroptis.coidi.rp.base.AuthenticationParameters;
 import com.coroptis.coidi.rp.base.DiscoveryResult;
 import com.coroptis.coidi.rp.iocsupport.RpBinding;
 import com.coroptis.coidi.rp.services.AuthenticationProcessException;
-import com.coroptis.coidi.rp.services.RpService;
 import com.coroptis.coidi.rp.view.util.AccessOnlyForUnsigned;
 import com.google.common.base.Joiner;
 
@@ -79,9 +78,6 @@ public class Login {
 
 	@Property
 	private String mode;
-
-	@Inject
-	private RpService rpService;
 
 	@Component
 	private Form openId;
@@ -143,11 +139,11 @@ public class Login {
 			}
 
 			if (statelessMode) {
-				authenticationRequestUrl = rpService.authentication(discoveryResult, null, params);
+				authenticationRequestUrl = rpBinding.getRpService().authentication(discoveryResult, null, params);
 			} else {
 				association = rpBinding.getAssociationFactory().generateAssociation(discoveryResult.getEndPoint(),
 						sessionType, associationType);
-				authenticationRequestUrl = rpService.authentication(discoveryResult, association, params);
+				authenticationRequestUrl = rpBinding.getRpService().authentication(discoveryResult, association, params);
 			}
 			logger.debug("authenticationRequestUrl: " + authenticationRequestUrl);
 		} catch (AuthenticationProcessException e) {

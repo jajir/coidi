@@ -28,11 +28,13 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.ApplicationInitializerFilter;
 
+import com.coroptis.coidi.core.services.impl.AppSymbolProvider;
+import com.coroptis.coidi.core.services.impl.ConfServiceImpl;
 import com.coroptis.coidi.core.services.impl.ConfigurationServiceImpl;
 import com.coroptis.coidi.core.util.Conf;
 
 /**
- * This tapestry module helps to initialize T% in a same way in a different
+ * This tapestry module helps to initialize T5 in a same way in a different
  * application.
  * 
  * @author jan
@@ -43,7 +45,9 @@ public class CoreModule {
     private final static Logger logger = Logger.getLogger(CoreModule.class);
 
     public static void bind(ServiceBinder binder) {
-		binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
+	binder.bind(ConfService.class, ConfServiceImpl.class);
+	binder.bind(ConfigurationService.class, ConfigurationServiceImpl.class);
+		binder.bind(SymbolProvider.class, AppSymbolProvider.class).withId("appSymbolProvider");
     }
 
     public static void contributeSymbolSource(final OrderedConfiguration<SymbolProvider> providers,

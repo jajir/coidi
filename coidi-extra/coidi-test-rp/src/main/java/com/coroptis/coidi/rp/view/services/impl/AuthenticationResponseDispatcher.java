@@ -31,10 +31,9 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.core.message.CheckAuthenticationRequest;
 import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
-import com.coroptis.coidi.core.services.MessageService;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
-import com.coroptis.coidi.rp.services.AuthenticationVerificationService;
+import com.coroptis.coidi.rp.iocsupport.RpBinding;
 import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
@@ -54,13 +53,7 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
     private Logger logger;
 
     @Inject
-    private MessageService messageService;
-
-    @Inject
-    private AuthenticationVerificationService authenticationVerificationService;
-
-    @Inject
-    private HttpTransportService httpTransportService;
+    private RpBinding rpBinding;
 
     private final ApplicationStateManager asm;
 
@@ -75,12 +68,14 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 
 	if (httpRequest.getQueryString() != null && httpRequest.getQueryString().length() > 0) {
 	    logger.debug("query is coming: " + httpRequest.getQueryString());
-	    Map<String, String> map = messageService.convertUrlToMap(httpRequest.getQueryString());
+	    Map<String, String> map = rpBinding.getMessageService()
+		    .convertUrlToMap(httpRequest.getQueryString());
 	    AuthenticationResponse authenticationResponse = new AuthenticationResponse(map);
 
 	    if (asm.exists(Association.class)) {
 		logger.debug("there is association.");
-		AuthenticationResult authenticationResult = authenticationVerificationService
+		AuthenticationResult authenticationResult = rpBinding
+			.getAuthenticationVerificationService()
 			.verify(authenticationResponse, asm.get(Association.class));
 		if (authenticationResult.isPositive()) {
 		    UserSession session = asm.get(UserSession.class);
@@ -101,8 +96,8 @@ public class AuthenticationResponseDispatcher implements Dispatcher {
 		logger.debug("check authentication msg: " + checkAuthenticationRequest);
 
 		// post it to server
-		CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
-			httpTransportService.doPost(authenticationResponse.getOpEndpoint(),
+		CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(rpBinding
+			.getHttpTransportService().doPost(authenticationResponse.getOpEndpoint(),
 				checkAuthenticationRequest.getMap()));
 		if (response2.getIsValid()) {
 		    UserSession session = asm.get(UserSession.class);
