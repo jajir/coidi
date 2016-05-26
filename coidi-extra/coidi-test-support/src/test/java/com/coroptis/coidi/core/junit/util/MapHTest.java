@@ -17,7 +17,7 @@ package com.coroptis.coidi.core.junit.util;
 
 import java.util.Map;
 
-import com.coroptis.coidi.core.util.MapH;
+import com.coroptis.coidi.util.MapH;
 
 import junit.framework.TestCase;
 

@@ -5,14 +5,14 @@
     <session-factory>
     <!-- 
      -->
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/coidi_test_op</property>
+		<property name="hibernate.connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
+		<property name="hibernate.connection.url">jdbc:derby:memory:coidi_test_op;create=true</property>
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 		<property name="hibernate.connection.useUnicode">true</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">ok</property>
 		<property name="hibernate.connection.autocommit">false</property>
-		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
      
      
     <!-- 

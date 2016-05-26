@@ -15,33 +15,32 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-test-common</artifactId>
+			<artifactId>coidi-core</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-op-t5</artifactId>
+			<artifactId>coidi-test-common</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-hibernate</artifactId>
-			<version>${t5.version}</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>xml-apis</groupId>
-					<artifactId>xml-apis</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.5.1</version>
 		</dependency>
 		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-hibernate</artifactId>
 			<scope>compile</scope>
+		</dependency>
+		<!-- <dependency> <groupId>hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			<version>1.8.0.7</version> <scope>compile</scope> </dependency> -->
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.12.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openxri</groupId>
@@ -91,26 +90,18 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.coroptis.coidi</groupId>
-			<artifactId>coidi-test-support</artifactId>
-			<version>${parent.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>com.coroptis.coidi</groupId> <artifactId>coidi-test-support</artifactId> 
+			<version>${parent.version}</version> <scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymockclassextension</artifactId>
-			<version>${easymock.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tapestry</groupId>
 			<artifactId>tapestry-test</artifactId>
-			<version>${t5.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -165,6 +156,19 @@
 							<value>local</value>
 						</systemProperty>
 					</systemProperties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<path>/</path>
+					<port>8080</port>
+					<systemProperties>
+						<server.role>local</server.role>
+					</systemProperties>
+					<serverXml>src/main/tomcatconf/server.xml</serverXml>
 				</configuration>
 			</plugin>
 		</plugins>

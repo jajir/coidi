@@ -6,8 +6,8 @@ import java.util.Map;
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
-import com.coroptis.coidi.op.util.MockHttpSession;
 import com.coroptis.coidi.op.view.util.AbstractIntegrationDaoTest;
+import com.coroptis.coidi.op.view.util.MockHttpSession;
 
 public class ProtocolTest extends AbstractIntegrationDaoTest {
 
@@ -109,7 +109,7 @@ public class ProtocolTest extends AbstractIntegrationDaoTest {
 	req.put("openid.return_to", "http://www.brick.ie/openid/authenticate?destination=node%2F92");
 	req.put("openid.identity", AuthenticationRequest.IDENTITY_SELECT);
 	req.put("openid.claimed_id", AuthenticationRequest.IDENTITY_SELECT);
-	req.put(AuthenticationRequest.USERS_SELECTED_IDENTITY, "http://www.myid.com/prasatko/");
+//	req.put("openid.", "http://www.myid.com/prasatko/");
 	req.put("openid.ns.sreg", "http://openid.net/extensions/sreg/1.1");
 	req.put("openid.sreg.required", "nickname,email");
 

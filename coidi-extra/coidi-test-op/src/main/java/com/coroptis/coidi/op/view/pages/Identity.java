@@ -25,6 +25,7 @@ import org.slf4j.Logger;
 
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.OpenIdNs;
+import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.IdentityService;
 import com.coroptis.coidi.op.util.PrintableXrd;
@@ -48,7 +49,7 @@ public class Identity { // NO_UCD
     private Logger logger;
 
     @Inject
-    private IdentityService identityService;
+    private BaseIdentityDao baseIdentityDao;
 
     @Inject
     private Request request;
@@ -73,7 +74,7 @@ public class Identity { // NO_UCD
 	if (identityId == null) {
 	    throw new CoidiException("user name '" + identityId + "' is null");
 	}
-	identity = identityService.getByIdentityId(identityId);
+	identity = baseIdentityDao.getIdentityId(identityId);
 	if (identity == null) {
 	    logger.info("identity '" + identityId + "' is null");
 	    return error404;

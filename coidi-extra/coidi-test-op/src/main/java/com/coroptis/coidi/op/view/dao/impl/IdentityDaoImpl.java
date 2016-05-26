@@ -41,8 +41,8 @@ public class IdentityDaoImpl implements IdentityDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Identity> getChunk(Integer startIndex, Integer endIndex) {
-	Criteria criteria = session.createCriteria(IdentityImpl.class).addOrder(
-		Order.asc("idIdentity"));
+	Criteria criteria = session.createCriteria(IdentityImpl.class)
+		.addOrder(Order.asc("idIdentity"));
 	if (startIndex != null) {
 	    criteria.setFirstResult(startIndex);
 	}
@@ -55,4 +55,5 @@ public class IdentityDaoImpl implements IdentityDao {
 	}
 	return criteria.list();
     }
+
 }
