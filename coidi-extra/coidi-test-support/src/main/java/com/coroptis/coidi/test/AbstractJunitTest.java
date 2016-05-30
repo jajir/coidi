@@ -27,11 +27,9 @@ import org.apache.tapestry5.services.TapestryModule;
  * @author jan
  * 
  */
-public abstract class AbstractJunitTest extends TestCase implements
-		AdditionalBinder {
+public abstract class AbstractJunitTest extends TestCase implements AdditionalBinder {
 
-	private final static Logger logger = Logger
-			.getLogger(AbstractJunitTest.class);
+	private final static Logger logger = Logger.getLogger(AbstractJunitTest.class);
 
 	protected Registry registry;
 
@@ -58,8 +56,7 @@ public abstract class AbstractJunitTest extends TestCase implements
 		super.setUp();
 		AdditionalBinderProvider.setAdditionalBinder(this);
 		System.setProperty("server.role", "junit");
-		logger.debug("server.role was set to: '"
-				+ System.getProperty("server.role") + "'");
+		logger.debug("server.role was set to: '" + System.getProperty("server.role") + "'");
 		RegistryBuilder builder = new RegistryBuilder();
 		builder.add(TapestryModule.class);
 		builder.add(moduleClasses);

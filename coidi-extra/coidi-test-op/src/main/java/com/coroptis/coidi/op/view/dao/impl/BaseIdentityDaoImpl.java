@@ -24,13 +24,13 @@ import com.coroptis.coidi.op.view.entities.IdentityImpl;
 
 public class BaseIdentityDaoImpl implements BaseIdentityDao {
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public IdentityImpl getIdentityId(final String opLocalIdentifier) {
-	return (IdentityImpl) session.createCriteria(IdentityImpl.class)
-		.add(Restrictions.eq("idIdentity", opLocalIdentifier)).uniqueResult();
-    }
+	@Override
+	public IdentityImpl getIdentityId(final String opLocalIdentifier) {
+		return (IdentityImpl) session.createCriteria(IdentityImpl.class)
+				.add(Restrictions.eq("idIdentity", opLocalIdentifier)).uniqueResult();
+	}
 
 }

@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-	<user id_user="1" name="Jane" password="jane34" />
-	<user id_user="2" name="Juan" password="nauj" />
+	<coidi_user id_user="1" name="Jane" password="jane34" />
+	<coidi_user id_user="2" name="Juan" password="nauj" />
 
-	<identity id_identity="jane" id_user="1" email="jane@austin.com"
+	<coidi_identity id_identity="jane" id_user="1" email="jane@austin.com"
 		nickname="jane" fullname="Jane Austin" />
-	<identity id_identity="juan" id_user="2" />
-	<identity id_identity="juane" id_user="2" />
-	<identity id_identity="prasatko" id_user="2" email="prase@chliv.cz"
+	<coidi_identity id_identity="juan" id_user="2" />
+	<coidi_identity id_identity="juane" id_user="2" />
+	<coidi_identity id_identity="prasatko" id_user="2" email="prase@chliv.cz"
 		nickname="cunik" fullname="Prase Stetinate" />
 
-	<association assoc_handle="bbbb-bbbb-bbbb-bbbb" assoc_type="1"
+	<coidi_association assoc_handle="bbbb-bbbb-bbbb-bbbb" assoc_type="1"
 		session_type="1" mac_key="123456789012345678901234567890" expired_in="2012-01-20 14:20:23" />
-	<association assoc_handle="6a4129eb-1336-4970-9ca8-f2d56111eddc"
+	<coidi_association assoc_handle="6a4129eb-1336-4970-9ca8-f2d56111eddc"
 		assoc_type="1" session_type="1" mac_key="123456789012345678901234567890"
 		expired_in="2012-01-20 14:20:23" />
-	<association assoc_handle="d74d63e6-9db7-47b1-a7f2-ba3e04124a50"
+	<coidi_association assoc_handle="d74d63e6-9db7-47b1-a7f2-ba3e04124a50"
 		assoc_type="1" mac_key="123456789012345678901234567890" expired_in="2012-01-20 14:20:23" />
 
 
-	<stateless_mode_nonce nonce="nonce-string-value"
+	<coidi_stateless_mode_nonce nonce="nonce-string-value"
 		assocHandle="bbbb-bbbb-bbbb-bbbb" />
 </dataset>

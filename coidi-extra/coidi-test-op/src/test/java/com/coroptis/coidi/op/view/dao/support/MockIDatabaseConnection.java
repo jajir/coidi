@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.test;
+package com.coroptis.coidi.op.view.dao.support;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -53,8 +53,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 
 	private final SessionFactory sessionFactory;
 
-	private final Logger logger = Logger
-			.getLogger(MockIDatabaseConnection.class);
+	private final Logger logger = Logger.getLogger(MockIDatabaseConnection.class);
 
 	public MockIDatabaseConnection(final SessionFactory sessionFactory) {
 		// Defend.notNull(sessionFactory, "sessionFactory is null");
@@ -67,8 +66,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 			try {
 				session = sessionFactory.openSession();
 				session.beginTransaction();
-				databaseConnection = new DatabaseConnection(session
-						.connection());
+				databaseConnection = new DatabaseConnection(session.connection());
 			} catch (HibernateException e) {
 				logger.error(e.getMessage(), e);
 				throw new IllegalArgumentException(e.getMessage(), e);
@@ -80,7 +78,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 		return databaseConnection;
 	}
 
-	public void closeConnection()  {
+	public void closeConnection() {
 		if (session != null) {
 			if (session.getTransaction() != null) {
 				session.getTransaction().commit();
@@ -107,8 +105,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 	}
 
 	@Override
-	public ITable createQueryTable(String tableName, String sql)
-			throws DataSetException, SQLException {
+	public ITable createQueryTable(String tableName, String sql) throws DataSetException, SQLException {
 		return getIDatabaseConnection().createQueryTable(tableName, sql);
 	}
 
@@ -128,8 +125,7 @@ public class MockIDatabaseConnection implements IDatabaseConnection {
 	}
 
 	@Override
-	public int getRowCount(String tableName, String whereClause)
-			throws SQLException {
+	public int getRowCount(String tableName, String whereClause) throws SQLException {
 		return getIDatabaseConnection().getRowCount(tableName, whereClause);
 	}
 

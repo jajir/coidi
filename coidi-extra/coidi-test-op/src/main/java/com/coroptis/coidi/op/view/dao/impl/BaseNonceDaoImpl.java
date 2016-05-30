@@ -25,28 +25,27 @@ import com.coroptis.coidi.op.view.entities.NonceImpl;
 
 public class BaseNonceDaoImpl implements BaseNonceDao {
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public void save(Nonce nonce) {
-	session.save(nonce);
-    }
+	@Override
+	public void save(Nonce nonce) {
+		session.save(nonce);
+	}
 
-    @Override
-    public NonceImpl getByNonce(String noce) {
-	return (NonceImpl) session.createCriteria(NonceImpl.class)
-		.add(Restrictions.eq("nonce", noce)).uniqueResult();
-    }
+	@Override
+	public NonceImpl getByNonce(String noce) {
+		return (NonceImpl) session.createCriteria(NonceImpl.class).add(Restrictions.eq("nonce", noce)).uniqueResult();
+	}
 
-    @Override
-    public Nonce createNewInstance() {
-	return new NonceImpl();
-    }
+	@Override
+	public Nonce createNewInstance() {
+		return new NonceImpl();
+	}
 
-    @Override
-    public void delete(Nonce nonce) {
-	session.delete(nonce);
-    }
+	@Override
+	public void delete(Nonce nonce) {
+		session.delete(nonce);
+	}
 
 }

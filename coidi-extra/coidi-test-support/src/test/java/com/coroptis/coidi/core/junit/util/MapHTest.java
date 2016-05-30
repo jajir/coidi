@@ -23,27 +23,27 @@ import junit.framework.TestCase;
 
 public class MapHTest extends TestCase {
 
-    public void test_make() throws Exception {
-	Map<String, String> m1 = MapH.make("sa", "ds");
-	assertEquals(1, m1.size());
-	assertEquals("ds", m1.get("sa"));
-    }
-
-    public void test_make_complex() throws Exception {
-	Map<String, String> m1 = MapH.make("sa", "ds", "so", "iu", "rr", "hh");
-	assertEquals(3, m1.size());
-	assertEquals("ds", m1.get("sa"));
-	assertEquals("iu", m1.get("so"));
-	assertEquals("hh", m1.get("rr"));
-    }
-
-    public void test_make_invalidParams() throws Exception {
-	try {
-	    MapH.make("sa", "ds", "sd");
-	    fail();
-	} catch (IndexOutOfBoundsException e) {
-	    assertTrue(true);
+	public void test_make() throws Exception {
+		Map<String, String> m1 = MapH.make("sa", "ds");
+		assertEquals(1, m1.size());
+		assertEquals("ds", m1.get("sa"));
 	}
-    }
+
+	public void test_make_complex() throws Exception {
+		Map<String, String> m1 = MapH.make("sa", "ds", "so", "iu", "rr", "hh");
+		assertEquals(3, m1.size());
+		assertEquals("ds", m1.get("sa"));
+		assertEquals("iu", m1.get("so"));
+		assertEquals("hh", m1.get("rr"));
+	}
+
+	public void test_make_invalidParams() throws Exception {
+		try {
+			MapH.make("sa", "ds", "sd");
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			assertTrue(true);
+		}
+	}
 
 }

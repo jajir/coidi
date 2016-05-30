@@ -25,26 +25,23 @@ import org.apache.tapestry5.services.BeanModelSource;
 
 public class Identities {
 
-    @SuppressWarnings("unused")
-    @Inject
-    @Service("identityGds")
-    @Property
-    private GridDataSource source;
+	@Inject
+	@Service("identityGds")
+	@Property
+	private GridDataSource source;
 
-    @Inject
-    private BeanModelSource beanModelSource;
+	@Inject
+	private BeanModelSource beanModelSource;
 
-    @Inject
-    private ComponentResources resources;
+	@Inject
+	private ComponentResources resources;
 
-    @SuppressWarnings("unused")
-    @Property
-    private com.coroptis.coidi.op.entities.Identity identity;
+	@Property
+	private com.coroptis.coidi.op.entities.Identity identity;
 
-    public BeanModel<com.coroptis.coidi.op.entities.Identity> getModel() {
-	BeanModel<com.coroptis.coidi.op.entities.Identity> model = beanModelSource
-		.createDisplayModel(com.coroptis.coidi.op.entities.Identity.class,
-			resources.getMessages());
-	return model;
-    }
+	public BeanModel<com.coroptis.coidi.op.entities.Identity> getModel() {
+		BeanModel<com.coroptis.coidi.op.entities.Identity> model = beanModelSource
+				.createDisplayModel(com.coroptis.coidi.op.entities.Identity.class, resources.getMessages());
+		return model;
+	}
 }

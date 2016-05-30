@@ -32,37 +32,30 @@ import com.coroptis.coidi.test.EasyMockServicebuilder;
 
 public class JunitAppModule {
 
-    public static void bind(ServiceBinder binder) {
-	/**
-	 * Additional bindings
-	 */
-	AdditionalBinderProvider.bind(binder);
+	public static void bind(ServiceBinder binder) {
+		/**
+		 * Additional bindings
+		 */
+		AdditionalBinderProvider.bind(binder);
 
-	Services services = Services.getServices();
+		Services services = Services.getServices();
 
-	binder.bind(OpConfigurationService.class, new EasyMockServicebuilder<OpConfigurationService>(
-		services.getOpConfigurationService()));
-	binder.bind(BaseAssociationDao.class, new EasyMockServicebuilder<BaseAssociationDao>(
-		services.getAssociationDao()));
-	binder.bind(AuthenticationService.class, new EasyMockServicebuilder<AuthenticationService>(
-		services.getAuthenticationService()));
-	binder.bind(IdentityService.class,
-		new EasyMockServicebuilder<IdentityService>(services.getIdentityService()));
-	binder.bind(
-		NegativeResponseGenerator.class,
-		new EasyMockServicebuilder<NegativeResponseGenerator>(services
-			.getNegativeResponseGenerator()));
-	binder.bind(SigningService.class,
-		new EasyMockServicebuilder<SigningService>(services.getSigningService()));
-	binder.bind(
-		StatelessModeNonceService.class,
-		new EasyMockServicebuilder<StatelessModeNonceService>(services
-			.getStatelessModeNonceService()));
-	binder.bind(BaseUserDao.class,
-		new EasyMockServicebuilder<BaseUserDao>(services.getBaseUserDao()));
-	binder.bind(UserDao.class, new EasyMockServicebuilder<UserDao>(services.getUserDao()));
+		binder.bind(OpConfigurationService.class,
+				new EasyMockServicebuilder<OpConfigurationService>(services.getOpConfigurationService()));
+		binder.bind(BaseAssociationDao.class,
+				new EasyMockServicebuilder<BaseAssociationDao>(services.getAssociationDao()));
+		binder.bind(AuthenticationService.class,
+				new EasyMockServicebuilder<AuthenticationService>(services.getAuthenticationService()));
+		binder.bind(IdentityService.class, new EasyMockServicebuilder<IdentityService>(services.getIdentityService()));
+		binder.bind(NegativeResponseGenerator.class,
+				new EasyMockServicebuilder<NegativeResponseGenerator>(services.getNegativeResponseGenerator()));
+		binder.bind(SigningService.class, new EasyMockServicebuilder<SigningService>(services.getSigningService()));
+		binder.bind(StatelessModeNonceService.class,
+				new EasyMockServicebuilder<StatelessModeNonceService>(services.getStatelessModeNonceService()));
+		binder.bind(BaseUserDao.class, new EasyMockServicebuilder<BaseUserDao>(services.getBaseUserDao()));
+		binder.bind(UserDao.class, new EasyMockServicebuilder<UserDao>(services.getUserDao()));
 
-	binder.bind(ConvertorService.class,
-		new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
-    }
+		binder.bind(ConvertorService.class,
+				new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
+	}
 }

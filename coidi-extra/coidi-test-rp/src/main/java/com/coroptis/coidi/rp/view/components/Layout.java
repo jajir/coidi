@@ -27,17 +27,17 @@ import com.coroptis.coidi.rp.view.util.UserSession;
 @Import(stylesheet = "context:css/layout.css")
 public class Layout {
 
-    @Property
-    @Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
-    private String title;
+	@Property
+	@Parameter(required = true, defaultPrefix = BindingConstants.MESSAGE)
+	private String title;
 
-    @Property
-    @SessionState
-    private UserSession userSession;
+	@Property
+	@SessionState
+	private UserSession userSession;
 
-    Object onActionFromLogout() {
-	userSession.setSsoIdentity(null);
-	return Index.class;
-    }
+	Object onActionFromLogout() {
+		userSession.setSsoIdentity(null);
+		return Index.class;
+	}
 
 }

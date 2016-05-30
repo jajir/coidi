@@ -24,14 +24,13 @@ import com.coroptis.coidi.op.view.dao.IdentityDao;
 
 public class Index {
 
-    @Inject
-    private IdentityDao identityDao;
+	@Inject
+	private IdentityDao identityDao;
 
-    @SuppressWarnings("unused")
-    @Property
-    private com.coroptis.coidi.op.entities.Identity identity;
+	@Property
+	private com.coroptis.coidi.op.entities.Identity identity;
 
-    public List<com.coroptis.coidi.op.entities.Identity> getIdentities() {
-	return identityDao.getChunk(0, 10);
-    }
+	public List<com.coroptis.coidi.op.entities.Identity> getIdentities() {
+		return identityDao.getChunk(0, 10);
+	}
 }

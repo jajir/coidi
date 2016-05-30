@@ -40,49 +40,47 @@ import com.coroptis.coidi.core.services.CoreModule;
  */
 public class ExtendedTapestryFilter extends TapestryFilter {
 
-    private Logger logger = LoggerFactory.getLogger(ExtendedTapestryFilter.class);
+	private Logger logger = LoggerFactory.getLogger(ExtendedTapestryFilter.class);
 
-    @SuppressWarnings("unchecked")
-    private List<Class<?>> extract(ServletContext context) throws ClassNotFoundException {
-	List<Class<?>> models = new ArrayList<Class<?>>();
-	Enumeration<String> sttrNames = context.getInitParameterNames();
-	while (sttrNames.hasMoreElements()) {
-	    String attrName = sttrNames.nextElement();
-	    if (attrName.startsWith("additional.module.")) {
-		Class<?> c = Class.forName((String) context.getInitParameter(attrName));
-		logger.debug("adding additional module: " + c.getName());
-		models.add(c);
-	    }
+	@SuppressWarnings("unchecked")
+	private List<Class<?>> extract(ServletContext context) throws ClassNotFoundException {
+		List<Class<?>> models = new ArrayList<Class<?>>();
+		Enumeration<String> sttrNames = context.getInitParameterNames();
+		while (sttrNames.hasMoreElements()) {
+			String attrName = sttrNames.nextElement();
+			if (attrName.startsWith("additional.module.")) {
+				Class<?> c = Class.forName((String) context.getInitParameter(attrName));
+				logger.debug("adding additional module: " + c.getName());
+				models.add(c);
+			}
+		}
+		return models;
 	}
-	return models;
-    }
 
-    /**
-     * Overridden in subclasses to provide additional module definitions beyond
-     * those normally located. This implementation returns an empty array.
-     */
-    @Override
-    protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
-	final String prop = context.getInitParameter("system.property.configuration.directory");
-	if (prop == null) {
-	    logger.warn("Web application context param 'system.property.configuration.directory' wasn't defined.");
-	} else {
-	    System.setProperty("system.property.configuration.directory", prop);
+	/**
+	 * Overridden in subclasses to provide additional module definitions beyond
+	 * those normally located. This implementation returns an empty array.
+	 */
+	@Override
+	protected ModuleDef[] provideExtraModuleDefs(ServletContext context) {
+		final String prop = context.getInitParameter("system.property.configuration.directory");
+		if (prop == null) {
+			logger.warn("Web application context param 'system.property.configuration.directory' wasn't defined.");
+		} else {
+			System.setProperty("system.property.configuration.directory", prop);
+		}
+		try {
+			List<Class<?>> models = extract(context);
+			ModuleDef[] out = new ModuleDef[models.size() + 1];
+			for (int i = 0; i < models.size(); i++) {
+				out[i + 1] = new DefaultModuleDefImpl(models.get(i), logger,
+						new PlasticProxyFactoryImpl(ExtendedTapestryFilter.class.getClassLoader(), logger));
+			}
+			out[0] = new DefaultModuleDefImpl(CoreModule.class, logger,
+					new PlasticProxyFactoryImpl(ExtendedTapestryFilter.class.getClassLoader(), logger));
+			return out;
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
-	try {
-	    List<Class<?>> models = extract(context);
-	    ModuleDef[] out = new ModuleDef[models.size() + 1];
-	    for (int i = 0; i < models.size(); i++) {
-		out[i + 1] = new DefaultModuleDefImpl(models.get(i), logger,
-			new PlasticProxyFactoryImpl(ExtendedTapestryFilter.class.getClassLoader(),
-				logger));
-	    }
-	    out[0] = new DefaultModuleDefImpl(CoreModule.class, logger,
-		    new PlasticProxyFactoryImpl(ExtendedTapestryFilter.class.getClassLoader(),
-			    logger));
-	    return out;
-	} catch (ClassNotFoundException e) {
-	    throw new RuntimeException(e.getMessage(), e);
-	}
-    }
 }

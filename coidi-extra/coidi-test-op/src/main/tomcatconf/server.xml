@@ -92,17 +92,24 @@
 			<Host name="localhost" appBase="webapps" unpackWARs="true"
 				autoDeploy="true">
 
-				<!-- SingleSignOn valve, share authentication between web applications 
-					Documentation at: /docs/config/valve.html -->
-				<!-- <Valve className="org.apache.catalina.authenticator.SingleSignOn" 
-					/> -->
-
 				<!-- Access log processes all example. Documentation at: /docs/config/valve.html 
 					Note: The pattern used is equivalent to using pattern="common" -->
 				<Valve className="org.apache.catalina.valves.AccessLogValve"
 					directory="logs" prefix="localhost_access_log." suffix=".txt"
 					pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+				<Context path="/" docBase="src/main/webapp">
+				    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    				<!-- 
+					<ResourceLink name="jdbc/MyLocalDB" global="jdbc/coidi_op"
+						auth="Container" type="javax.sql.DataSource" />
+    				 -->
+					<Resource name="jdbc/coidi_op" global="jdbc/coidi_op" auth="Container"
+						type="javax.sql.DataSource" driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
+						url="jdbc:derby:target/derby-moje/;create=true" maxActive="100"
+						maxIdle="20" minIdle="5" maxWait="10000" />
 
+				</Context>		
+					
 			</Host>
 		</Engine>
 	</Service>

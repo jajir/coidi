@@ -22,8 +22,8 @@ import com.coroptis.coidi.rp.view.util.UserSession;
 
 public class Index {
 
-    @Property
-    @SessionState
-    private UserSession userSession;
+	@Property
+	@SessionState
+	private UserSession userSession;
 
 }

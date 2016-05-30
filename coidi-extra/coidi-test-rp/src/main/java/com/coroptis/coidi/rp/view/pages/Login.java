@@ -143,7 +143,8 @@ public class Login {
 			} else {
 				association = rpBinding.getAssociationFactory().generateAssociation(discoveryResult.getEndPoint(),
 						sessionType, associationType);
-				authenticationRequestUrl = rpBinding.getRpService().authentication(discoveryResult, association, params);
+				authenticationRequestUrl = rpBinding.getRpService().authentication(discoveryResult, association,
+						params);
 			}
 			logger.debug("authenticationRequestUrl: " + authenticationRequestUrl);
 		} catch (AuthenticationProcessException e) {

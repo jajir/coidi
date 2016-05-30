@@ -35,11 +35,11 @@
 		Liqui base -->
 	<context-param>
 		<param-name>liquibase.changelog</param-name>
-		<param-value>db/db-incremental.xml</param-value>
+		<param-value>db/db-data1.xml</param-value>
 	</context-param>
 	<context-param>
 		<param-name>liquibase.datasource</param-name>
-		<param-value>java:comp/env/jdbc/MySQLDS</param-value>
+		<param-value>java:comp/env/jdbc/coidi_op</param-value>
 	</context-param>
 
 	<listener>

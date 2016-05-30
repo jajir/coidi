@@ -27,8 +27,8 @@ import com.coroptis.coidi.core.util.TestServiceImpl;
  */
 public class IntegrationTestAppModule {
 
-    public static void bind(ServiceBinder binder) {
-	binder.bind(TestService.class, TestServiceImpl.class);
-    }
+	public static void bind(ServiceBinder binder) {
+		binder.bind(TestService.class, TestServiceImpl.class);
+	}
 
 }

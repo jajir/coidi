@@ -29,76 +29,76 @@ import com.coroptis.coidi.op.entities.Nonce;
 import com.google.common.base.Objects;
 
 @Entity
-@Table(name = "stateless_mode_nonce")
+@Table(name = "coidi_stateless_mode_nonce")
 public class NonceImpl extends AbstractEntity<NonceImpl> implements Nonce {
 
-    @Id
-    @Column(nullable = false, length = 50, name = "nonce")
-    private String nonce;
+	@Id
+	@Column(nullable = false, length = 50, name = "nonce")
+	private String nonce;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "assocHandle")
-    private AssociationImpl association;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "assoc_handle")
+	private AssociationImpl association;
 
-    @Override
-    protected Object[] getHashCodeData() {
-	return new Object[] { nonce };
-    }
+	@Override
+	protected Object[] getHashCodeData() {
+		return new Object[] { nonce };
+	}
 
-    @Override
-    protected NonceImpl getThis() {
-	return this;
-    }
+	@Override
+	protected NonceImpl getThis() {
+		return this;
+	}
 
-    @Override
-    protected boolean dataEquals(final NonceImpl other) {
-	if (!areEqual(nonce, other.getNonce()))
-	    return false;
-	return true;
-    }
+	@Override
+	protected boolean dataEquals(final NonceImpl other) {
+		if (!areEqual(nonce, other.getNonce()))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-	return Objects.toStringHelper(NonceImpl.class).add(nonce, "nonce").toString();
-    }
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(NonceImpl.class).add(nonce, "nonce").toString();
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.coroptis.coidi.op.entities.StatelessModeNonce#getNonce()
-     */
-    @Override
-    public String getNonce() {
-	return nonce;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.coroptis.coidi.op.entities.StatelessModeNonce#getNonce()
+	 */
+	@Override
+	public String getNonce() {
+		return nonce;
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.coroptis.coidi.op.entities.StatelessModeNonce#setNonce(java.lang.
-     * String)
-     */
-    @Override
-    public void setNonce(String nonce) {
-	this.nonce = nonce;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.coroptis.coidi.op.entities.StatelessModeNonce#setNonce(java.lang.
+	 * String)
+	 */
+	@Override
+	public void setNonce(String nonce) {
+		this.nonce = nonce;
+	}
 
-    /**
-     * @return the association
-     */
-    @Override
-    public AssociationImpl getAssociation() {
-	return association;
-    }
+	/**
+	 * @return the association
+	 */
+	@Override
+	public AssociationImpl getAssociation() {
+		return association;
+	}
 
-    /**
-     * @param association
-     *            the association to set
-     */
-    @Override
-    public void setAssociation(Association association) {
-	this.association = (AssociationImpl) association;
-    }
+	/**
+	 * @param association
+	 *            the association to set
+	 */
+	@Override
+	public void setAssociation(Association association) {
+		this.association = (AssociationImpl) association;
+	}
 
 }

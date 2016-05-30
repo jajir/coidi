@@ -29,31 +29,30 @@ import com.coroptis.coidi.op.view.entities.IdentityImpl;
 
 public class IdentityDaoImpl implements IdentityDao {
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public Integer getCount() {
-	return ((Long) session.createCriteria(IdentityImpl.class)
-		.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-    }
+	@Override
+	public Integer getCount() {
+		return ((Long) session.createCriteria(IdentityImpl.class).setProjection(Projections.rowCount()).uniqueResult())
+				.intValue();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Identity> getChunk(Integer startIndex, Integer endIndex) {
-	Criteria criteria = session.createCriteria(IdentityImpl.class)
-		.addOrder(Order.asc("idIdentity"));
-	if (startIndex != null) {
-	    criteria.setFirstResult(startIndex);
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Identity> getChunk(Integer startIndex, Integer endIndex) {
+		Criteria criteria = session.createCriteria(IdentityImpl.class).addOrder(Order.asc("idIdentity"));
+		if (startIndex != null) {
+			criteria.setFirstResult(startIndex);
+		}
+		if (endIndex != null) {
+			if (startIndex == null) {
+				criteria.setMaxResults(endIndex);
+			} else {
+				criteria.setMaxResults(endIndex - startIndex + 1);
+			}
+		}
+		return criteria.list();
 	}
-	if (endIndex != null) {
-	    if (startIndex == null) {
-		criteria.setMaxResults(endIndex);
-	    } else {
-		criteria.setMaxResults(endIndex - startIndex + 1);
-	    }
-	}
-	return criteria.list();
-    }
 
 }

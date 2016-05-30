@@ -8,12 +8,12 @@ import org.apache.tapestry5.services.Response;
 
 public class Error404 {
 
-    @Inject
-    private Response response;
+	@Inject
+	private Response response;
 
-    @SetupRender
-    void setupRender() {
-	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-    }
+	@SetupRender
+	void setupRender() {
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+	}
 
 }

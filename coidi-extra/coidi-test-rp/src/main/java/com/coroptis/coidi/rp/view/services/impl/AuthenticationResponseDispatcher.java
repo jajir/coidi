@@ -46,69 +46,66 @@ import com.coroptis.coidi.rp.view.util.UserSession;
  */
 public class AuthenticationResponseDispatcher implements Dispatcher {
 
-    @Inject
-    private RequestGlobals requestGlobals;
+	@Inject
+	private RequestGlobals requestGlobals;
 
-    @Inject
-    private Logger logger;
+	@Inject
+	private Logger logger;
 
-    @Inject
-    private RpBinding rpBinding;
+	@Inject
+	private RpBinding rpBinding;
 
-    private final ApplicationStateManager asm;
+	private final ApplicationStateManager asm;
 
-    public AuthenticationResponseDispatcher(ApplicationStateManager asm) {
-	this.asm = asm;
-    }
-
-    @Override
-    public boolean dispatch(final Request request, final Response response) throws IOException {
-
-	HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
-
-	if (httpRequest.getQueryString() != null && httpRequest.getQueryString().length() > 0) {
-	    logger.debug("query is coming: " + httpRequest.getQueryString());
-	    Map<String, String> map = rpBinding.getMessageService()
-		    .convertUrlToMap(httpRequest.getQueryString());
-	    AuthenticationResponse authenticationResponse = new AuthenticationResponse(map);
-
-	    if (asm.exists(Association.class)) {
-		logger.debug("there is association.");
-		AuthenticationResult authenticationResult = rpBinding
-			.getAuthenticationVerificationService()
-			.verify(authenticationResponse, asm.get(Association.class));
-		if (authenticationResult.isPositive()) {
-		    UserSession session = asm.get(UserSession.class);
-		    session.setAuthenticationResult(authenticationResult);
-		    session.setSsoIdentity(authenticationResponse.getIdentity());
-		}
-	    } else {
-		logger.debug("there is no association - stateless mode.");
-		// TODO finish stateless mode, move it to RP library
-		CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
-		checkAuthenticationRequest.setIdentity(authenticationResponse.getIdentity());
-		checkAuthenticationRequest
-			.setInvalidateHandle(authenticationResponse.getInvalidateHandle());
-		checkAuthenticationRequest.setNonce(authenticationResponse.getNonce());
-		checkAuthenticationRequest.setReturnTo(authenticationResponse.getReturnTo());
-		checkAuthenticationRequest.setSignature(authenticationResponse.getSignature());
-		checkAuthenticationRequest.setSigned(authenticationResponse.getSigned());
-		logger.debug("check authentication msg: " + checkAuthenticationRequest);
-
-		// post it to server
-		CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(rpBinding
-			.getHttpTransportService().doPost(authenticationResponse.getOpEndpoint(),
-				checkAuthenticationRequest.getMap()));
-		if (response2.getIsValid()) {
-		    UserSession session = asm.get(UserSession.class);
-		    session.setSsoIdentity(authenticationResponse.getIdentity());
-		} else {
-		    logger.error("check authentication wasn't successful");
-		}
-	    }
-
+	public AuthenticationResponseDispatcher(ApplicationStateManager asm) {
+		this.asm = asm;
 	}
-	return false;
-    }
+
+	@Override
+	public boolean dispatch(final Request request, final Response response) throws IOException {
+
+		HttpServletRequest httpRequest = requestGlobals.getHTTPServletRequest();
+
+		if (httpRequest.getQueryString() != null && httpRequest.getQueryString().length() > 0) {
+			logger.debug("query is coming: " + httpRequest.getQueryString());
+			Map<String, String> map = rpBinding.getMessageService().convertUrlToMap(httpRequest.getQueryString());
+			AuthenticationResponse authenticationResponse = new AuthenticationResponse(map);
+
+			if (asm.exists(Association.class)) {
+				logger.debug("there is association.");
+				AuthenticationResult authenticationResult = rpBinding.getAuthenticationVerificationService()
+						.verify(authenticationResponse, asm.get(Association.class));
+				if (authenticationResult.isPositive()) {
+					UserSession session = asm.get(UserSession.class);
+					session.setAuthenticationResult(authenticationResult);
+					session.setSsoIdentity(authenticationResponse.getIdentity());
+				}
+			} else {
+				logger.debug("there is no association - stateless mode.");
+				// TODO finish stateless mode, move it to RP library
+				CheckAuthenticationRequest checkAuthenticationRequest = new CheckAuthenticationRequest();
+				checkAuthenticationRequest.setIdentity(authenticationResponse.getIdentity());
+				checkAuthenticationRequest.setInvalidateHandle(authenticationResponse.getInvalidateHandle());
+				checkAuthenticationRequest.setNonce(authenticationResponse.getNonce());
+				checkAuthenticationRequest.setReturnTo(authenticationResponse.getReturnTo());
+				checkAuthenticationRequest.setSignature(authenticationResponse.getSignature());
+				checkAuthenticationRequest.setSigned(authenticationResponse.getSigned());
+				logger.debug("check authentication msg: " + checkAuthenticationRequest);
+
+				// post it to server
+				CheckAuthenticationResponse response2 = new CheckAuthenticationResponse(
+						rpBinding.getHttpTransportService().doPost(authenticationResponse.getOpEndpoint(),
+								checkAuthenticationRequest.getMap()));
+				if (response2.getIsValid()) {
+					UserSession session = asm.get(UserSession.class);
+					session.setSsoIdentity(authenticationResponse.getIdentity());
+				} else {
+					logger.error("check authentication wasn't successful");
+				}
+			}
+
+		}
+		return false;
+	}
 
 }

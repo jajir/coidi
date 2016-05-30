@@ -4,6 +4,6 @@ import com.coroptis.coidi.op.view.entities.User;
 
 public interface BaseUserDao {
 
-    User getById(final Integer idUser);
-    
+	User getById(final Integer idUser);
+
 }

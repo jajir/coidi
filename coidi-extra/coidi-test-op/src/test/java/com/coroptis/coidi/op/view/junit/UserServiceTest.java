@@ -34,64 +34,64 @@ import com.coroptis.coidi.op.view.util.BaseJunitTest;
  */
 public class UserServiceTest extends BaseJunitTest {
 
-    private final static String SERVICE_NAME = "realService";
+	private final static String SERVICE_NAME = "realService";
 
-    private UserService service;
+	private UserService service;
 
-    private User user;
+	private User user;
 
-    public void testLogin() throws Exception {
-	MessageDigest md = MessageDigest.getInstance("MD5");
-	md.update("monkey".getBytes("UTF-8"));
-	md.update(UserServiceImpl.SALT.getBytes());
-	byte[] bytes = md.digest();
-	EasyMock.expect(services.getConvertorService().convertToString(EasyMock.aryEq(bytes)))
-		.andReturn("hashedPasswd");
-	EasyMock.expect(services.getUserDao().login("karel", "hashedPasswd")).andReturn(user);
-	services.replay();
-	User ret = service.login("karel", "monkey");
+	public void testLogin() throws Exception {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update("monkey".getBytes("UTF-8"));
+		md.update(UserServiceImpl.SALT.getBytes());
+		byte[] bytes = md.digest();
+		EasyMock.expect(services.getConvertorService().convertToString(EasyMock.aryEq(bytes)))
+				.andReturn("hashedPasswd");
+		EasyMock.expect(services.getUserDao().login("karel", "hashedPasswd")).andReturn(user);
+		services.replay();
+		User ret = service.login("karel", "monkey");
 
-	assertNotNull(ret);
-	assertSame(user, ret);
-	services.verify();
-    }
+		assertNotNull(ret);
+		assertSame(user, ret);
+		services.verify();
+	}
 
-    public void testGeneratePassword() throws Exception {
-	System.out.println("qwe: '" + md5("qwe") + "'");
-	System.out.println("asd: '" + md5("asd") + "'");
-    }
+	public void testGeneratePassword() throws Exception {
+		System.out.println("qwe: '" + md5("qwe") + "'");
+		System.out.println("asd: '" + md5("asd") + "'");
+	}
 
-    /**
-     * Return Base64 encoded MD5 from input password.
-     * 
-     * @param plainPassword
-     * @return
-     */
-    private String md5(String plainPassword) throws Exception {
-	MessageDigest md = MessageDigest.getInstance("MD5");
-	md.update(plainPassword.getBytes("UTF-8"));
-	md.update(UserServiceImpl.SALT.getBytes());
-	return new String(Base64.encodeBase64(md.digest()));
-    }
+	/**
+	 * Return Base64 encoded MD5 from input password.
+	 * 
+	 * @param plainPassword
+	 * @return
+	 */
+	private String md5(String plainPassword) throws Exception {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(plainPassword.getBytes("UTF-8"));
+		md.update(UserServiceImpl.SALT.getBytes());
+		return new String(Base64.encodeBase64(md.digest()));
+	}
 
-    @Override
-    public void bind(ServiceBinder binder) {
-	binder.bind(UserService.class, UserServiceImpl.class).withId(SERVICE_NAME);
-    }
+	@Override
+	public void bind(ServiceBinder binder) {
+		binder.bind(UserService.class, UserServiceImpl.class).withId(SERVICE_NAME);
+	}
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	service = getService(SERVICE_NAME, UserService.class);
-	user = new User();
-	user.setIdUser(3);
-	user.setName("karel");
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		service = getService(SERVICE_NAME, UserService.class);
+		user = new User();
+		user.setIdUser(3);
+		user.setName("karel");
+	}
 
-    @Override
-    protected void tearDown() throws Exception {
-	service = null;
-	user = null;
-	super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception {
+		service = null;
+		user = null;
+		super.tearDown();
+	}
 }

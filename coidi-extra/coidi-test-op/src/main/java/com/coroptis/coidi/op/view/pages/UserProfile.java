@@ -33,18 +33,18 @@ import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
 @AccessOnlyForSigned
 public class UserProfile { // NO_UCD
 
-    @SessionState
-    private User userSession;
+	@SessionState
+	private User userSession;
 
-    @Property
-    private IdentityImpl identity;
+	@Property
+	private IdentityImpl identity;
 
-    public User getUser() {
-	return userSession;
-    }
+	public User getUser() {
+		return userSession;
+	}
 
-    public Set<IdentityImpl> getIdentities() {
-	return (Set) userSession.getIdentities();
-    }
+	public Set<IdentityImpl> getIdentities() {
+		return (Set) userSession.getIdentities();
+	}
 
 }

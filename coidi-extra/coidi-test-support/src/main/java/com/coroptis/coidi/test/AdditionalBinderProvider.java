@@ -27,8 +27,7 @@ import org.apache.tapestry5.ioc.ServiceBinder;
  */
 public class AdditionalBinderProvider {
 
-	private final static Logger logger = Logger
-			.getLogger(AdditionalBinderProvider.class);
+	private final static Logger logger = Logger.getLogger(AdditionalBinderProvider.class);
 
 	private static AdditionalBinder additionalBinder;
 

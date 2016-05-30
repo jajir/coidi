@@ -30,55 +30,55 @@ import com.coroptis.coidi.op.view.services.UserService;
 
 public class UserServiceImpl implements UserService {
 
-    @Inject
-    private Logger logger;
+	@Inject
+	private Logger logger;
 
-    @Inject
-    private UserDao userDao;
+	@Inject
+	private UserDao userDao;
 
-    @Inject
-    private ConvertorService convertorService;
+	@Inject
+	private ConvertorService convertorService;
 
-    public final static String SALT = "23t4bcdjs@()&d431f#";
+	public final static String SALT = "23t4bcdjs@()&d431f#";
 
-    @Override
-    public User login(final String name, final String password) {
-	return userDao.login(name, md5(password));
-    }
-
-    @Override
-    public User register(final String name, final String password, final String identityId) {
-	return userDao.register(name, md5(password), identityId);
-    }
-
-    @Override
-    public User getUserByName(final String userName) {
-	return userDao.getUserByName(userName);
-    }
-
-    @Override
-    public User getById(final Integer idUser) {
-	return userDao.getById(idUser);
-    }
-
-    /**
-     * Return Base64 encoded MD5 from input password.
-     * 
-     * @param plainPassword
-     * @return
-     */
-    private String md5(String plainPassword) {
-	try {
-	    MessageDigest md = MessageDigest.getInstance("MD5");
-	    md.update(plainPassword.getBytes("UTF-8"));
-	    md.update(SALT.getBytes());
-	    return convertorService.convertToString(md.digest());
-	} catch (NoSuchAlgorithmException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
-	} catch (UnsupportedEncodingException e) {
-	    logger.error(e.getMessage(), e);
-	    throw new CoidiException(e.getMessage(), e);
+	@Override
+	public User login(final String name, final String password) {
+		return userDao.login(name, md5(password));
 	}
-    }
+
+	@Override
+	public User register(final String name, final String password, final String identityId) {
+		return userDao.register(name, md5(password), identityId);
+	}
+
+	@Override
+	public User getUserByName(final String userName) {
+		return userDao.getUserByName(userName);
+	}
+
+	@Override
+	public User getById(final Integer idUser) {
+		return userDao.getById(idUser);
+	}
+
+	/**
+	 * Return Base64 encoded MD5 from input password.
+	 * 
+	 * @param plainPassword
+	 * @return
+	 */
+	private String md5(String plainPassword) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(plainPassword.getBytes("UTF-8"));
+			md.update(SALT.getBytes());
+			return convertorService.convertToString(md.digest());
+		} catch (NoSuchAlgorithmException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e.getMessage(), e);
+			throw new CoidiException(e.getMessage(), e);
+		}
+	}
 }

@@ -17,9 +17,9 @@ package com.coroptis.coidi.core.services;
 
 public interface TestService {
 
-    String getName();
+	String getName();
 
-    String getSurname();
+	String getSurname();
 
-    String getFavoriteColor();
+	String getFavoriteColor();
 }

@@ -26,21 +26,19 @@ import com.coroptis.coidi.test.EasyMockServicebuilder;
 
 public class JunitAppModule {
 
-    public static void bind(ServiceBinder binder) {
-	/**
-	 * Additional bindings
-	 */
-	AdditionalBinderProvider.bind(binder);
+	public static void bind(ServiceBinder binder) {
+		/**
+		 * Additional bindings
+		 */
+		AdditionalBinderProvider.bind(binder);
 
-	Services services = Services.getServices();
+		Services services = Services.getServices();
 
-	binder.bind(ConfService.class, new EasyMockServicebuilder<ConfService>(
-		services.getConfigurationService()));
-	binder.bind(ConvertorService.class,
-		new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
-	binder.bind(CryptographyService.class, new EasyMockServicebuilder<CryptographyService>(
-		services.getCryptographyService()));
-	binder.bind(MessageService.class,
-		new EasyMockServicebuilder<MessageService>(services.getMessageService()));
-    }
+		binder.bind(ConfService.class, new EasyMockServicebuilder<ConfService>(services.getConfigurationService()));
+		binder.bind(ConvertorService.class,
+				new EasyMockServicebuilder<ConvertorService>(services.getConvertorService()));
+		binder.bind(CryptographyService.class,
+				new EasyMockServicebuilder<CryptographyService>(services.getCryptographyService()));
+		binder.bind(MessageService.class, new EasyMockServicebuilder<MessageService>(services.getMessageService()));
+	}
 }

@@ -28,7 +28,7 @@ import org.apache.tapestry5.services.RequestGlobals;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
-import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
+import com.coroptis.coidi.op.iocsupport.OpBinding;
 import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
@@ -36,47 +36,47 @@ import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD
 
-    @Inject
-    private UserService userService;
+	@Inject
+	private UserService userService;
 
-    @SessionState
-    private User userSession;
+	@SessionState
+	private User userSession;
 
-    @SessionState
-    private AuthenticationRequest authenticationRequest;
+	@SessionState
+	private AuthenticationRequest authenticationRequest;
 
-    @Component
-    private Form loginForm;
+	@Component
+	private Form loginForm;
 
-    @Property
-    private String userName;
+	@Property
+	private String userName;
 
-    @Property
-    private String password;
+	@Property
+	private String password;
 
-    @Component(id = "password")
-    private PasswordField passwordField;
+	@Component(id = "password")
+	private PasswordField passwordField;
 
-    @Inject
-    private OpenIdRequestProcessor openIdRequestProcessor;
+	@Inject
+	private OpBinding opBinding;
 
-    @Inject
-    private RequestGlobals request;
+	@Inject
+	private RequestGlobals request;
 
-    void onValidateFromLoginForm() {
-	if (userService.login(userName, password) == null) {
-	    loginForm.recordError(passwordField, "Invalid user name or password.");
+	void onValidateFromLoginForm() {
+		if (userService.login(userName, password) == null) {
+			loginForm.recordError(passwordField, "Invalid user name or password.");
+		}
 	}
-    }
 
-    Object onSuccess() throws MalformedURLException {
-	userSession = userService.login(userName, password);
-	if (authenticationRequest != null) {
-	    AbstractMessage response = openIdRequestProcessor.process(
-		    authenticationRequest.getMap(), request.getHTTPServletRequest().getSession());
-	    return new URL(response.getMessage());
+	Object onSuccess() throws MalformedURLException {
+		userSession = userService.login(userName, password);
+		if (authenticationRequest != null) {
+			AbstractMessage response = opBinding.getOpenIdRequestProcessor().process(authenticationRequest.getMap(),
+					request.getHTTPServletRequest().getSession());
+			return new URL(response.getMessage());
+		}
+		return UserProfile.class;
 	}
-	return UserProfile.class;
-    }
 
 }

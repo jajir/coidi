@@ -13,38 +13,39 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao;
+package com.coroptis.coidi.op.view.dao.tests;
 
+import com.coroptis.coidi.op.view.dao.BaseUserDao;
+import com.coroptis.coidi.op.view.dao.support.AbstractDaoTest;
 import com.coroptis.coidi.op.view.entities.User;
-import com.coroptis.coidi.op.view.util.AbstractDaoTest;
 
 public class BaseUserDaoTest extends AbstractDaoTest {
 
-    private BaseUserDao dao;
+	private BaseUserDao dao;
 
-    public void testGetById() throws Exception {
-	User ret = (User) dao.getById(1);
+	public void testGetById() throws Exception {
+		User ret = (User) dao.getById(1);
 
-	assertNotNull(ret);
-	assertEquals("Jane", ret.getName());
-    }
+		assertNotNull(ret);
+		assertEquals("Jane", ret.getName());
+	}
 
-    public void testGetById_noSuchUser() throws Exception {
-	User ret = dao.getById(786876);
+	public void testGetById_noSuchUser() throws Exception {
+		User ret = dao.getById(786876);
 
-	assertNull(ret);
-    }
+		assertNull(ret);
+	}
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	dao = getService(BaseUserDao.class);
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		dao = getService(BaseUserDao.class);
+	}
 
-    @Override
-    protected void tearDown() throws Exception {
-	dao = null;
-	super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception {
+		dao = null;
+		super.tearDown();
+	}
 
 }

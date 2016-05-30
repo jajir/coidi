@@ -14,6 +14,10 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.tapestry</groupId>
+			<artifactId>tapestry-hibernate</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.coroptis.coidi</groupId>
 			<artifactId>coidi-core</artifactId>
 			<version>${project.parent.version}</version>
@@ -30,13 +34,6 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>3.5.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-hibernate</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<!-- <dependency> <groupId>hsqldb</groupId> <artifactId>hsqldb</artifactId> 
-			<version>1.8.0.7</version> <scope>compile</scope> </dependency> -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
@@ -63,12 +60,6 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.ibm.icu</groupId>
 			<artifactId>icu4j</artifactId>
 			<version>${icu4j.version}</version>
@@ -86,14 +77,23 @@
 			<version>${log4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
+		</dependency>
+		 -->
+		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> <groupId>com.coroptis.coidi</groupId> <artifactId>coidi-test-support</artifactId> 
-			<version>${parent.version}</version> <scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymockclassextension</artifactId>
@@ -168,7 +168,8 @@
 					<systemProperties>
 						<server.role>local</server.role>
 					</systemProperties>
-					<serverXml>src/main/tomcatconf/server.xml</serverXml>
+					<contextFile>src/main/tomcatconf/context.xml</contextFile>
+					<!-- <serverXml>src/main/tomcatconf/server.xml</serverXml> -->
 				</configuration>
 			</plugin>
 		</plugins>

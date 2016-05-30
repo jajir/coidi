@@ -40,14 +40,14 @@ import com.coroptis.coidi.op.view.dao.impl.BaseUserDaoImpl;
  */
 public class DaoTestAppModule {
 
-    private final static Logger logger = Logger.getLogger(DaoTestAppModule.class);
+	private final static Logger logger = Logger.getLogger(DaoTestAppModule.class);
 
-    public static void bind(ServiceBinder binder) {
-	logger.debug("Starting test app module ....");
-	binder.bind(BaseUserDao.class, BaseUserDaoImpl.class);
-	binder.bind(IdentityService.class, IdentityServiceImpl.class);
-	binder.bind(AssociationService.class, AssociationServiceImpl.class);
-	binder.bind(BaseNonceDao.class, BaseNonceDaoImpl.class);
-    }
+	public static void bind(ServiceBinder binder) {
+		logger.debug("Starting test app module ....");
+		binder.bind(BaseUserDao.class, BaseUserDaoImpl.class);
+		binder.bind(IdentityService.class, IdentityServiceImpl.class);
+		binder.bind(AssociationService.class, AssociationServiceImpl.class);
+		binder.bind(BaseNonceDao.class, BaseNonceDaoImpl.class);
+	}
 
 }

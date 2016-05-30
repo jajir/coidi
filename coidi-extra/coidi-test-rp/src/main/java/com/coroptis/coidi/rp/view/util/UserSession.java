@@ -25,45 +25,45 @@ import com.coroptis.coidi.rp.base.AuthenticationResult;
  */
 public class UserSession {
 
-    private String ssoIdentity;
+	private String ssoIdentity;
 
-    /**
-     * When it comes from OP it's stored here.
-     */
-    private AuthenticationResult authenticationResult;
+	/**
+	 * When it comes from OP it's stored here.
+	 */
+	private AuthenticationResult authenticationResult;
 
-    public boolean isLogged() {
-	return ssoIdentity != null;
-    }
+	public boolean isLogged() {
+		return ssoIdentity != null;
+	}
 
-    /**
-     * @return the ssoIdentity
-     */
-    public String getSsoIdentity() {
-	return ssoIdentity;
-    }
+	/**
+	 * @return the ssoIdentity
+	 */
+	public String getSsoIdentity() {
+		return ssoIdentity;
+	}
 
-    /**
-     * @param ssoIdentity
-     *            the ssoIdentity to set
-     */
-    public void setSsoIdentity(String ssoIdentity) {
-	this.ssoIdentity = ssoIdentity;
-    }
+	/**
+	 * @param ssoIdentity
+	 *            the ssoIdentity to set
+	 */
+	public void setSsoIdentity(String ssoIdentity) {
+		this.ssoIdentity = ssoIdentity;
+	}
 
-    /**
-     * @return the authenticationResult
-     */
-    public AuthenticationResult getAuthenticationResult() {
-	return authenticationResult;
-    }
+	/**
+	 * @return the authenticationResult
+	 */
+	public AuthenticationResult getAuthenticationResult() {
+		return authenticationResult;
+	}
 
-    /**
-     * @param authenticationResult
-     *            the authenticationResult to set
-     */
-    public void setAuthenticationResult(AuthenticationResult authenticationResult) {
-	this.authenticationResult = authenticationResult;
-    }
+	/**
+	 * @param authenticationResult
+	 *            the authenticationResult to set
+	 */
+	public void setAuthenticationResult(AuthenticationResult authenticationResult) {
+		this.authenticationResult = authenticationResult;
+	}
 
 }

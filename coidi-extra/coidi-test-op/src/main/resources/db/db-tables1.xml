@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="tables.creating" author="jan">
+	
+		<createTable tableName="coidi_user">
+			<column name="id_user" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)" />
+			<column name="password" type="varchar(50)" />
+		</createTable>
+
+		<createTable tableName="coidi_identity">
+			<column name="id_identity" type="varchar(50)" >
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_user" type="int" />
+			<column name="nickname" type="varchar(50)" />
+			<column name="email" type="varchar(250)" />
+			<column name="fullname" type="varchar(250)" />
+			<column name="dob" type="timestamp" />
+			<column name="gendre" type="int" />
+			<column name="postcode" type="varchar(10)" />
+			<column name="country" type="varchar(50)" />
+			<column name="language" type="varchar(10)" />
+			<column name="timezone" type="varchar(50)" />
+		</createTable>
+		<addForeignKeyConstraint baseTableName="coidi_identity"
+			baseColumnNames="id_user" constraintName="identity_user_fk"
+			referencedTableName="coidi_user" referencedColumnNames="id_user" />
+
+		<createTable tableName="coidi_association">
+			<column name="assoc_handle" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="assoc_type" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="session_type" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="mac_key" type="varchar(50)" />
+			<column name="expired_in" type="timestamp" />
+		</createTable>
+
+		<createTable tableName="coidi_stateless_mode_nonce">
+			<column name="nonce" type="varchar(50)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="assoc_handle" type="varchar(50)" />
+		</createTable>
+		<addForeignKeyConstraint baseTableName="coidi_stateless_mode_nonce"
+			baseColumnNames="assoc_handle" constraintName="nonce_association_fk"
+			referencedTableName="coidi_association" referencedColumnNames="assoc_handle" />
+
+	</changeSet>
+
+</databaseChangeLog>

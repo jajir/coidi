@@ -26,31 +26,31 @@ import com.coroptis.coidi.op.view.entities.AssociationImpl;
 
 public class BaseAssociationDaoImpl implements BaseAssociationDao {
 
-    @Inject
-    private Logger logger;
+	@Inject
+	private Logger logger;
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public void create(Association association) {
-	logger.debug("creating: " + association);
-	session.save(association);
-    }
+	@Override
+	public void create(Association association) {
+		logger.debug("creating: " + association);
+		session.save(association);
+	}
 
-    @Override
-    public Association getByAssocHandle(String assoc_handle) {
-	return (Association) session.createCriteria(Association.class)
-		.add(Restrictions.eq("assocHandle", assoc_handle)).uniqueResult();
-    }
+	@Override
+	public Association getByAssocHandle(String assoc_handle) {
+		return (Association) session.createCriteria(Association.class).add(Restrictions.eq("assocHandle", assoc_handle))
+				.uniqueResult();
+	}
 
-    @Override
-    public Association createNewInstance() {
-	return new AssociationImpl();
-    }
+	@Override
+	public Association createNewInstance() {
+		return new AssociationImpl();
+	}
 
-    @Override
-    public void delete(Association association) {
-	session.delete(association);
-    }
+	@Override
+	public void delete(Association association) {
+		session.delete(association);
+	}
 }

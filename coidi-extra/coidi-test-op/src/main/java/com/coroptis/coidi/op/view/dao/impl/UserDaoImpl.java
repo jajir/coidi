@@ -26,39 +26,37 @@ import com.coroptis.coidi.op.view.entities.User;
 
 public class UserDaoImpl implements UserDao {
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public User getById(Integer idUser) {
-	return (User) session.get(User.class, idUser);
-    }
+	@Override
+	public User getById(Integer idUser) {
+		return (User) session.get(User.class, idUser);
+	}
 
-    @Override
-    public User login(final String name, final String password) {
-	return (User) session
-		.createCriteria(User.class)
-		.add(Restrictions.and(Restrictions.eq("name", name),
-			Restrictions.eq("password", password))).uniqueResult();
-    }
+	@Override
+	public User login(final String name, final String password) {
+		return (User) session.createCriteria(User.class)
+				.add(Restrictions.and(Restrictions.eq("name", name), Restrictions.eq("password", password)))
+				.uniqueResult();
+	}
 
-    @CommitAfter
-    @Override
-    public User register(final String name, final String password, final String identityId) {
-	User user = new User();
-	user.setName(name);
-	user.setPassword(password);
-	IdentityImpl identity = new IdentityImpl();
-	identity.setUser(user);
-	identity.setIdIdentity(identityId);
-	session.save(user);
-	session.save(identity);
-	return user;
-    }
+	@CommitAfter
+	@Override
+	public User register(final String name, final String password, final String identityId) {
+		User user = new User();
+		user.setName(name);
+		user.setPassword(password);
+		IdentityImpl identity = new IdentityImpl();
+		identity.setUser(user);
+		identity.setIdIdentity(identityId);
+		session.save(user);
+		session.save(identity);
+		return user;
+	}
 
-    @Override
-    public User getUserByName(final String userName) {
-	return (User) session.createCriteria(User.class)
-		.add(Restrictions.eq("name", userName)).uniqueResult();
-    }
+	@Override
+	public User getUserByName(final String userName) {
+		return (User) session.createCriteria(User.class).add(Restrictions.eq("name", userName)).uniqueResult();
+	}
 }

@@ -28,15 +28,15 @@ import org.apache.tapestry5.ioc.ServiceResources;
  */
 public class EasyMockServicebuilder<T> implements ServiceBuilder<T> {
 
-    private final T service;
+	private final T service;
 
-    public EasyMockServicebuilder(final T service) {
-	this.service = service;
-    }
+	public EasyMockServicebuilder(final T service) {
+		this.service = service;
+	}
 
-    @Override
-    public T buildService(ServiceResources resources) {
-	return service;
-    }
+	@Override
+	public T buildService(ServiceResources resources) {
+		return service;
+	}
 
 }

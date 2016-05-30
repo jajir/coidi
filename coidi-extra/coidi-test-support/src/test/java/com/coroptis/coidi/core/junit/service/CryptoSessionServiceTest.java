@@ -29,50 +29,49 @@ import com.coroptis.coidi.core.util.KeyPair;
 
 public class CryptoSessionServiceTest extends BaseJunitTest {
 
-    private final static String SERVICE_NAME = "realService";
+	private final static String SERVICE_NAME = "realService";
 
-    private CryptoSessionService service;
+	private CryptoSessionService service;
 
-    public void testGenerateCryptoSession() throws Exception {
-	Map<String, String> requestParams = new HashMap<String, String>();
-	AssociationRequest request = new AssociationRequest(requestParams);
+	public void testGenerateCryptoSession() throws Exception {
+		Map<String, String> requestParams = new HashMap<String, String>();
+		AssociationRequest request = new AssociationRequest(requestParams);
 
-	services.replay();
-	KeyPair ret = service.generateCryptoSession(request);
+		services.replay();
+		KeyPair ret = service.generateCryptoSession(request);
 
-	assertNotNull(ret);
-    }
+		assertNotNull(ret);
+	}
 
-    public void testGenerateCryptoSession2_dhModulo_isNull() throws Exception {
-	services.replay();
-	KeyPair ret = service.generateCryptoSession(null, BigInteger.TEN);
+	public void testGenerateCryptoSession2_dhModulo_isNull() throws Exception {
+		services.replay();
+		KeyPair ret = service.generateCryptoSession(null, BigInteger.TEN);
 
-	assertNotNull(ret);
-    }
+		assertNotNull(ret);
+	}
 
-    public void testGenerateCryptoSession2_dhGen_isNull() throws Exception {
-	services.replay();
-	KeyPair ret = service.generateCryptoSession(BigInteger.TEN, null);
+	public void testGenerateCryptoSession2_dhGen_isNull() throws Exception {
+		services.replay();
+		KeyPair ret = service.generateCryptoSession(BigInteger.TEN, null);
 
-	assertNotNull(ret);
-    }
+		assertNotNull(ret);
+	}
 
-    @Override
-    public void bind(ServiceBinder binder) {
-	binder.bind(CryptoSessionService.class, CryptoSessionServiceImpl.class)
-		.withId(SERVICE_NAME);
-    }
+	@Override
+	public void bind(ServiceBinder binder) {
+		binder.bind(CryptoSessionService.class, CryptoSessionServiceImpl.class).withId(SERVICE_NAME);
+	}
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	service = getService(SERVICE_NAME, CryptoSessionService.class);
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		service = getService(SERVICE_NAME, CryptoSessionService.class);
+	}
 
-    @Override
-    protected void tearDown() throws Exception {
-	services.verify();
-	service = null;
-	super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception {
+		services.verify();
+		service = null;
+		super.tearDown();
+	}
 }

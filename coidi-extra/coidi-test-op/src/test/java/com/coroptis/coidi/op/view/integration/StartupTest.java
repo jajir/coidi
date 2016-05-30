@@ -29,31 +29,30 @@ import com.google.common.io.Files;
 
 public class StartupTest extends AbstractIntegrationDaoTest {
 
-    public void testLogin() throws Exception {
-	UserService userService = getService(UserService.class);
+	public void testLogin() throws Exception {
+		UserService userService = getService(UserService.class);
 
-	assertNull(userService.login("karel", "kachnicka"));
-    }
-
-    public void testLoadInitialData() throws Exception {
-	/**
-	 * Following code is copied from OpModule
-	 */
-	Session session = getService(Session.class);
-	for (final String line : Files.readLines(new File("src/main/resources/data.sql"),
-		Charset.forName("UTF-8"))) {
-	    if (line.length() > 0) {
-		logger.debug("executing: " + line);
-		session.doWork(new Work() {
-
-		    @Override
-		    public void execute(Connection connection) throws SQLException {
-			connection.createStatement().execute(line);
-			connection.commit();
-		    }
-		});
-	    }
+		assertNull(userService.login("karel", "kachnicka"));
 	}
-    }
+
+	public void testLoadInitialData() throws Exception {
+		/**
+		 * Following code is copied from OpModule
+		 */
+		Session session = getService(Session.class);
+		for (final String line : Files.readLines(new File("src/main/resources/data.sql"), Charset.forName("UTF-8"))) {
+			if (line.length() > 0) {
+				logger.debug("executing: " + line);
+				session.doWork(new Work() {
+
+					@Override
+					public void execute(Connection connection) throws SQLException {
+						connection.createStatement().execute(line);
+						connection.commit();
+					}
+				});
+			}
+		}
+	}
 
 }

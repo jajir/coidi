@@ -27,26 +27,23 @@ import com.coroptis.coidi.rp.view.services.impl.AuthenticationResponseDispatcher
 
 public class RpViewModule {
 
-    public static void bind(ServiceBinder binder) {
-	binder.bind(Dispatcher.class, AuthenticationResponseDispatcher.class)
-		.withId("authenticationResponseDispatcher");
-	binder.bind(Dispatcher.class, AccessControllerDispatcher.class)
-		.withId("accessControllerDispatcher");
-	binder.bind(RpConfigurationService.class, RpConfigurationServiceImpl.class);
-    }
+	public static void bind(ServiceBinder binder) {
+		binder.bind(Dispatcher.class, AuthenticationResponseDispatcher.class)
+				.withId("authenticationResponseDispatcher");
+		binder.bind(Dispatcher.class, AccessControllerDispatcher.class).withId("accessControllerDispatcher");
+		binder.bind(RpConfigurationService.class, RpConfigurationServiceImpl.class);
+	}
 
-    public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
-	    @InjectService("authenticationResponseDispatcher") Dispatcher authenticationResponseDispatcher,
-	    @InjectService("accessControllerDispatcher") Dispatcher accessControllerDispatcher) {
-	configuration.add("authenticationResponseDispatcher", authenticationResponseDispatcher,
-		"before:PageRender");
-	configuration.add("accessControllerDispatcher", accessControllerDispatcher,
-		"before:PageRender");
-    }
+	public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
+			@InjectService("authenticationResponseDispatcher") Dispatcher authenticationResponseDispatcher,
+			@InjectService("accessControllerDispatcher") Dispatcher accessControllerDispatcher) {
+		configuration.add("authenticationResponseDispatcher", authenticationResponseDispatcher, "before:PageRender");
+		configuration.add("accessControllerDispatcher", accessControllerDispatcher, "before:PageRender");
+	}
 
-    public static RpBinding buildRpBinding(final RpConfigurationService conf) {
-	return new RpBinding(conf) {
-	};
-    }
+	public static RpBinding buildRpBinding(final RpConfigurationService conf) {
+		return new RpBinding(conf) {
+		};
+	}
 
 }

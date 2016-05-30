@@ -40,149 +40,146 @@ import com.coroptis.coidi.op.view.dao.UserDao;
  */
 public class Services {
 
-    private final BaseNonceDao statelessModeNonceDao = EasyMock.createMock(BaseNonceDao.class);
-    private final OpConfigurationService opConfigurationService = EasyMock
-	    .createMock(OpConfigurationService.class);
-    private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-    private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
-    private final BaseAssociationDao associationDao = EasyMock.createMock(BaseAssociationDao.class);
-    private final SigningService signingService = EasyMock.createMock(SigningService.class);
-    private final StatelessModeNonceService statelessModeNonceService = EasyMock
-	    .createMock(StatelessModeNonceService.class);
-    private final AuthenticationService authenticationService = EasyMock
-	    .createMock(AuthenticationService.class);
-    private final IdentityService identityService = EasyMock.createMock(IdentityService.class);
-    private final NegativeResponseGenerator negativeResponseGenerator = EasyMock
-	    .createMock(NegativeResponseGenerator.class);
-    private final UserDao userDao = EasyMock.createMock(UserDao.class);
-    private final HttpSession httpSession = EasyMock.createMock(HttpSession.class);
-    private final UserVerifier userVerifier = EasyMock.createMock(UserVerifier.class);
+	private final BaseNonceDao statelessModeNonceDao = EasyMock.createMock(BaseNonceDao.class);
+	private final OpConfigurationService opConfigurationService = EasyMock.createMock(OpConfigurationService.class);
+	private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
+	private final BaseUserDao baseUserDao = EasyMock.createMock(BaseUserDao.class);
+	private final BaseAssociationDao associationDao = EasyMock.createMock(BaseAssociationDao.class);
+	private final SigningService signingService = EasyMock.createMock(SigningService.class);
+	private final StatelessModeNonceService statelessModeNonceService = EasyMock
+			.createMock(StatelessModeNonceService.class);
+	private final AuthenticationService authenticationService = EasyMock.createMock(AuthenticationService.class);
+	private final IdentityService identityService = EasyMock.createMock(IdentityService.class);
+	private final NegativeResponseGenerator negativeResponseGenerator = EasyMock
+			.createMock(NegativeResponseGenerator.class);
+	private final UserDao userDao = EasyMock.createMock(UserDao.class);
+	private final HttpSession httpSession = EasyMock.createMock(HttpSession.class);
+	private final UserVerifier userVerifier = EasyMock.createMock(UserVerifier.class);
 
-    private final Object[] mocks = new Object[] { getStatelessModeNonceDao(),
-	    getOpConfigurationService(), getAssociationDao(), getSigningService(),
-	    getStatelessModeNonceService(),
-	    getAuthenticationService(), getIdentityService(), getNegativeResponseGenerator(),
-	    getBaseUserDao(), getConvertorService(), getUserDao(), getHttpSession(), getUserVerifier() };
+	private final Object[] mocks = new Object[] { getStatelessModeNonceDao(), getOpConfigurationService(),
+			getAssociationDao(), getSigningService(), getStatelessModeNonceService(), getAuthenticationService(),
+			getIdentityService(), getNegativeResponseGenerator(), getBaseUserDao(), getConvertorService(), getUserDao(),
+			getHttpSession(), getUserVerifier() };
 
-    private static Services services;
+	private static Services services;
 
-    public static Services getServices() {
-	if (services == null) {
-	    services = new Services();
+	public static Services getServices() {
+		if (services == null) {
+			services = new Services();
+		}
+		return services;
 	}
-	return services;
-    }
 
-    private Services() {
-    }
-
-    public void reset() {
-	for (Object object : mocks) {
-	    EasyMock.reset(object);
+	private Services() {
 	}
-    }
 
-    public void verify() {
-	for (Object object : mocks) {
-	    EasyMock.verify(object);
+	public void reset() {
+		for (Object object : mocks) {
+			EasyMock.reset(object);
+		}
 	}
-    }
 
-    public void replay() {
-	for (Object object : mocks) {
-	    EasyMock.replay(object);
+	public void verify() {
+		for (Object object : mocks) {
+			EasyMock.verify(object);
+		}
 	}
-    }
 
-    /**
-     * @return the statelessModeNonceDao
-     */
-    public BaseNonceDao getStatelessModeNonceDao() {
-	return statelessModeNonceDao;
-    }
+	public void replay() {
+		for (Object object : mocks) {
+			EasyMock.replay(object);
+		}
+	}
 
-    /**
-     * @return the associationDao
-     */
-    public BaseAssociationDao getAssociationDao() {
-	return associationDao;
-    }
+	/**
+	 * @return the statelessModeNonceDao
+	 */
+	public BaseNonceDao getStatelessModeNonceDao() {
+		return statelessModeNonceDao;
+	}
 
-    /**
-     * @return the signingService
-     */
-    public SigningService getSigningService() {
-	return signingService;
-    }
+	/**
+	 * @return the associationDao
+	 */
+	public BaseAssociationDao getAssociationDao() {
+		return associationDao;
+	}
 
-    /**
-     * @return the statelessModeNonceService
-     */
-    public StatelessModeNonceService getStatelessModeNonceService() {
-	return statelessModeNonceService;
-    }
+	/**
+	 * @return the signingService
+	 */
+	public SigningService getSigningService() {
+		return signingService;
+	}
 
-    /**
-     * @return the authenticationService
-     */
-    public AuthenticationService getAuthenticationService() {
-	return authenticationService;
-    }
+	/**
+	 * @return the statelessModeNonceService
+	 */
+	public StatelessModeNonceService getStatelessModeNonceService() {
+		return statelessModeNonceService;
+	}
 
-    /**
-     * @return the identityService
-     */
-    public IdentityService getIdentityService() {
-	return identityService;
-    }
+	/**
+	 * @return the authenticationService
+	 */
+	public AuthenticationService getAuthenticationService() {
+		return authenticationService;
+	}
 
-    /**
-     * @return the negativeResponseGenerator
-     */
-    public NegativeResponseGenerator getNegativeResponseGenerator() {
-	return negativeResponseGenerator;
-    }
+	/**
+	 * @return the identityService
+	 */
+	public IdentityService getIdentityService() {
+		return identityService;
+	}
 
-    /**
-     * @return the userDao
-     */
-    public BaseUserDao getBaseUserDao() {
-	return baseUserDao;
-    }
+	/**
+	 * @return the negativeResponseGenerator
+	 */
+	public NegativeResponseGenerator getNegativeResponseGenerator() {
+		return negativeResponseGenerator;
+	}
 
-    /**
-     * @return the convertorService
-     */
-    public ConvertorService getConvertorService() {
-	return convertorService;
-    }
+	/**
+	 * @return the userDao
+	 */
+	public BaseUserDao getBaseUserDao() {
+		return baseUserDao;
+	}
 
-    /**
-     * @return the userDao
-     */
-    public UserDao getUserDao() {
-	return userDao;
-    }
+	/**
+	 * @return the convertorService
+	 */
+	public ConvertorService getConvertorService() {
+		return convertorService;
+	}
 
-    /**
-     * @return the opConfigurationService
-     */
-    public OpConfigurationService getOpConfigurationService() {
-        return opConfigurationService;
-    }
+	/**
+	 * @return the userDao
+	 */
+	public UserDao getUserDao() {
+		return userDao;
+	}
 
-    /**
-     * @return the httpSession
-     */
-    public HttpSession getHttpSession() {
-        return httpSession;
-    }
+	/**
+	 * @return the opConfigurationService
+	 */
+	public OpConfigurationService getOpConfigurationService() {
+		return opConfigurationService;
+	}
 
-    /**
-     * @return the userVerifier
-     */
-    public UserVerifier getUserVerifier() {
-        return userVerifier;
-    }
+	/**
+	 * @return the httpSession
+	 */
+	public HttpSession getHttpSession() {
+		return httpSession;
+	}
+
+	/**
+	 * @return the userVerifier
+	 */
+	public UserVerifier getUserVerifier() {
+		return userVerifier;
+	}
 
 }

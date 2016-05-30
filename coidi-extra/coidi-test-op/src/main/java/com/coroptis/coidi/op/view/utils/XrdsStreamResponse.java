@@ -26,23 +26,23 @@ import com.google.common.base.Preconditions;
 
 public class XrdsStreamResponse implements StreamResponse {
 
-    private final String xml;
+	private final String xml;
 
-    public XrdsStreamResponse(final String xml) {
-	this.xml = Preconditions.checkNotNull(xml, "xrds xml");
-    }
+	public XrdsStreamResponse(final String xml) {
+		this.xml = Preconditions.checkNotNull(xml, "xrds xml");
+	}
 
-    @Override
-    public void prepareResponse(Response response) {
-    }
+	@Override
+	public void prepareResponse(Response response) {
+	}
 
-    @Override
-    public InputStream getStream() throws IOException {
-	return new ByteArrayInputStream(xml.getBytes());
-    }
+	@Override
+	public InputStream getStream() throws IOException {
+		return new ByteArrayInputStream(xml.getBytes());
+	}
 
-    @Override
-    public String getContentType() {
-	return "application/xrds+xml";
-    }
+	@Override
+	public String getContentType() {
+		return "application/xrds+xml";
+	}
 }

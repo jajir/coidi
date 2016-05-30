@@ -27,34 +27,34 @@ import com.coroptis.coidi.op.view.dao.IdentityDao;
 
 public class IdentityGds implements GridDataSource {
 
-    private final static Logger logger = Logger.getLogger(IdentityGds.class);
+	private final static Logger logger = Logger.getLogger(IdentityGds.class);
 
-    @Inject
-    private IdentityDao identityDao;
+	@Inject
+	private IdentityDao identityDao;
 
-    private List<Identity> currentPage;
+	private List<Identity> currentPage;
 
-    @Override
-    public int getAvailableRows() {
-	return identityDao.getCount();
-    }
+	@Override
+	public int getAvailableRows() {
+		return identityDao.getCount();
+	}
 
-    @Override
-    public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints) {
-	logger.debug("start: " + startIndex);
-	logger.debug("end  : " + endIndex);
-	currentPage = identityDao.getChunk(startIndex, endIndex);
-    }
+	@Override
+	public void prepare(int startIndex, int endIndex, List<SortConstraint> sortConstraints) {
+		logger.debug("start: " + startIndex);
+		logger.debug("end  : " + endIndex);
+		currentPage = identityDao.getChunk(startIndex, endIndex);
+	}
 
-    @Override
-    public Object getRowValue(int index) {
-	logger.debug("max: " + currentPage.size() + ", getting: " + index);
-	return currentPage.get(index);
-    }
+	@Override
+	public Object getRowValue(int index) {
+		logger.debug("max: " + currentPage.size() + ", getting: " + index);
+		return currentPage.get(index);
+	}
 
-    @Override
-    public Class<Identity> getRowType() {
-	return Identity.class;
-    }
+	@Override
+	public Class<Identity> getRowType() {
+		return Identity.class;
+	}
 
 }

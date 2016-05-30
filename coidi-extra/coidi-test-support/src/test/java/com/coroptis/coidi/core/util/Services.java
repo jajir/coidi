@@ -24,71 +24,69 @@ import com.coroptis.coidi.core.services.MessageService;
 
 public class Services {
 
-    private final ConfService configurationService = EasyMock
-	    .createMock(ConfService.class);
-    private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
-    private final CryptographyService cryptographyService = EasyMock
-	    .createMock(CryptographyService.class);
-    private final MessageService messageService = EasyMock.createMock(MessageService.class);
+	private final ConfService configurationService = EasyMock.createMock(ConfService.class);
+	private final ConvertorService convertorService = EasyMock.createMock(ConvertorService.class);
+	private final CryptographyService cryptographyService = EasyMock.createMock(CryptographyService.class);
+	private final MessageService messageService = EasyMock.createMock(MessageService.class);
 
-    private final Object[] mocks = new Object[] { getConfigurationService(), getConvertorService(),
-	    getCryptographyService(), getMessageService() };
+	private final Object[] mocks = new Object[] { getConfigurationService(), getConvertorService(),
+			getCryptographyService(), getMessageService() };
 
-    private static Services services;
+	private static Services services;
 
-    public static Services getServices() {
-	if (services == null) {
-	    services = new Services();
+	public static Services getServices() {
+		if (services == null) {
+			services = new Services();
+		}
+		return services;
 	}
-	return services;
-    }
 
-    private Services() {
-    }
-
-    public void reset() {
-	for (Object object : mocks) {
-	    EasyMock.reset(object);
+	private Services() {
 	}
-    }
 
-    public void verify() {
-	for (Object object : mocks) {
-	    EasyMock.verify(object);
+	public void reset() {
+		for (Object object : mocks) {
+			EasyMock.reset(object);
+		}
 	}
-    }
 
-    public void replay() {
-	for (Object object : mocks) {
-	    EasyMock.replay(object);
+	public void verify() {
+		for (Object object : mocks) {
+			EasyMock.verify(object);
+		}
 	}
-    }
 
-    /**
-     * @return the configurationService
-     */
-    public ConfService getConfigurationService() {
-	return configurationService;
-    }
+	public void replay() {
+		for (Object object : mocks) {
+			EasyMock.replay(object);
+		}
+	}
 
-    /**
-     * @return the convertorService
-     */
-    public ConvertorService getConvertorService() {
-	return convertorService;
-    }
+	/**
+	 * @return the configurationService
+	 */
+	public ConfService getConfigurationService() {
+		return configurationService;
+	}
 
-    /**
-     * @return the cryptographyService
-     */
-    public CryptographyService getCryptographyService() {
-	return cryptographyService;
-    }
+	/**
+	 * @return the convertorService
+	 */
+	public ConvertorService getConvertorService() {
+		return convertorService;
+	}
 
-    /**
-     * @return the messageService
-     */
-    public MessageService getMessageService() {
-	return messageService;
-    }
+	/**
+	 * @return the cryptographyService
+	 */
+	public CryptographyService getCryptographyService() {
+		return cryptographyService;
+	}
+
+	/**
+	 * @return the messageService
+	 */
+	public MessageService getMessageService() {
+		return messageService;
+	}
 }

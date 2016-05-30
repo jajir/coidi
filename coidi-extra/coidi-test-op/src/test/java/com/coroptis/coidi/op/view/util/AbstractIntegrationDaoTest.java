@@ -30,6 +30,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
 
 import com.coroptis.coidi.core.services.CoreModule;
+import com.coroptis.coidi.op.view.dao.support.AbstractDaoTest;
 import com.coroptis.coidi.op.view.services.OpViewModule;
 import com.coroptis.coidi.test.MockIDatabaseConnection;
 import com.google.common.base.Preconditions;
@@ -43,103 +44,102 @@ import com.google.common.base.Preconditions;
  */
 public abstract class AbstractIntegrationDaoTest extends DatabaseTestCase {
 
-    protected final static Logger logger = Logger.getLogger(AbstractIntegrationDaoTest.class);
+	protected final static Logger logger = Logger.getLogger(AbstractIntegrationDaoTest.class);
 
-    public final static String MOCK_DATA_PATH = "src/test/mock-data/";
+	public final static String MOCK_DATA_PATH = "src/test/mock-data/";
 
-    protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op.view";
+	protected final static String T5_APPLICATION_PACKAGE = "com.coroptis.coidi.op.view";
 
-    protected final static String T5_APPLICATION_NAME = "OpView";
+	protected final static String T5_APPLICATION_NAME = "OpView";
 
-    protected final static String T5_WEBAPP_BASE = "src/main/webapp";
+	protected final static String T5_WEBAPP_BASE = "src/main/webapp";
 
-    static {
-	CommonStaticConf.conf();
-	logger.debug("loading T5 registry with server.role.junit: "
-		+ System.getProperty("server.role"));
+	static {
+		CommonStaticConf.conf();
+		logger.debug("loading T5 registry with server.role.junit: " + System.getProperty("server.role"));
 
-	pageTester = new PageTester(T5_APPLICATION_PACKAGE, T5_APPLICATION_NAME, T5_WEBAPP_BASE,
-		CoreModule.class, OpViewModule.class);
-    }
-
-    /**
-     * Basic T5 object allowing to start web application in testing mode and
-     * then access pages, clink on links and post forms.
-     */
-    private static PageTester pageTester;
-
-    /**
-     * Get connections to real database.
-     * 
-     * @return connection to database
-     * @throws Exception
-     */
-    @Override
-    protected IDatabaseConnection getConnection() throws Exception {
-	Preconditions.checkNotNull(pageTester.getRegistry(), "registry");
-	Session session = pageTester.getRegistry().getService(Session.class);
-	return new MockIDatabaseConnection(session.getSessionFactory());
-    }
-
-    /**
-     * Get connection to fake data. When test method {@link #getDatasetsFiles()}
-     * return null then file from system property
-     * <code>dataset.file.location</code> are used.
-     * 
-     * @return initialized dataset
-     * @throws DataSetException
-     * @throws IOException
-     */
-    @Override
-    protected IDataSet getDataSet() throws DataSetException, IOException {
-	return new FlatXmlDataSet(new FileInputStream(MOCK_DATA_PATH + "basic.xml"));
-    }
-
-    @Override
-    protected DatabaseOperation getSetUpOperation() throws Exception {
-	return DatabaseOperation.REFRESH;
-    }
-
-    @Override
-    protected DatabaseOperation getTearDownOperation() throws Exception {
-	return DatabaseOperation.DELETE_ALL;
-    }
-
-    /**
-     * @return the pageTester
-     */
-    protected PageTester getPageTester() {
-	return pageTester;
-    }
-
-    protected <T> T getService(Class<T> serviceInterface) {
-	return getPageTester().getService(serviceInterface);
-    }
-
-    protected <T> T getService(Class<T> serviceInterface, String id) {
-	return getPageTester().getRegistry().getService(id, serviceInterface);
-    }
-
-    protected void commit() {
-	HibernateSessionManager hibernateSessionManager = getService(HibernateSessionManager.class);
-	Session session = hibernateSessionManager.getSession();
-	if (session.getTransaction().isActive()) {
-	    session.getTransaction().commit();
+		pageTester = new PageTester(T5_APPLICATION_PACKAGE, T5_APPLICATION_NAME, T5_WEBAPP_BASE, CoreModule.class,
+				OpViewModule.class);
 	}
-    }
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	// HibernateSessionManager hibernateSessionManager =
-	// getService(HibernateSessionManager.class);
-	// Session session = hibernateSessionManager.getSession();
-	// session.beginTransaction();
-    }
+	/**
+	 * Basic T5 object allowing to start web application in testing mode and
+	 * then access pages, clink on links and post forms.
+	 */
+	private static PageTester pageTester;
 
-    @Override
-    protected void tearDown() throws Exception {
-	super.tearDown();
-    }
+	/**
+	 * Get connections to real database.
+	 * 
+	 * @return connection to database
+	 * @throws Exception
+	 */
+	@Override
+	protected IDatabaseConnection getConnection() throws Exception {
+		Preconditions.checkNotNull(pageTester.getRegistry(), "registry");
+		Session session = pageTester.getRegistry().getService(Session.class);
+		return new MockIDatabaseConnection(session.getSessionFactory());
+	}
+
+	/**
+	 * Get connection to fake data. When test method {@link #getDatasetsFiles()}
+	 * return null then file from system property
+	 * <code>dataset.file.location</code> are used.
+	 * 
+	 * @return initialized dataset
+	 * @throws DataSetException
+	 * @throws IOException
+	 */
+	@Override
+	protected IDataSet getDataSet() throws DataSetException, IOException {
+		return new FlatXmlDataSet(new FileInputStream(MOCK_DATA_PATH + "basic.xml"));
+	}
+
+	@Override
+	protected DatabaseOperation getSetUpOperation() throws Exception {
+		return DatabaseOperation.REFRESH;
+	}
+
+	@Override
+	protected DatabaseOperation getTearDownOperation() throws Exception {
+		return DatabaseOperation.DELETE_ALL;
+	}
+
+	/**
+	 * @return the pageTester
+	 */
+	protected PageTester getPageTester() {
+		return pageTester;
+	}
+
+	protected <T> T getService(Class<T> serviceInterface) {
+		return getPageTester().getService(serviceInterface);
+	}
+
+	protected <T> T getService(Class<T> serviceInterface, String id) {
+		return getPageTester().getRegistry().getService(id, serviceInterface);
+	}
+
+	protected void commit() {
+		HibernateSessionManager hibernateSessionManager = getService(HibernateSessionManager.class);
+		Session session = hibernateSessionManager.getSession();
+		if (session.getTransaction().isActive()) {
+			session.getTransaction().commit();
+		}
+	}
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		// HibernateSessionManager hibernateSessionManager =
+		// getService(HibernateSessionManager.class);
+		// Session session = hibernateSessionManager.getSession();
+		// session.beginTransaction();
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
 
 }

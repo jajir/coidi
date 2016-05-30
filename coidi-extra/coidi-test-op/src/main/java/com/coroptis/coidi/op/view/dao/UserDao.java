@@ -19,11 +19,11 @@ import com.coroptis.coidi.op.view.entities.User;
 
 public interface UserDao {
 
-    User getById(Integer idUser);
+	User getById(Integer idUser);
 
-    User login(String name, String password);
+	User login(String name, String password);
 
-    User register(String name, String password, String identityId);
+	User register(String name, String password, String identityId);
 
-    User getUserByName(String userName);
+	User getUserByName(String userName);
 }

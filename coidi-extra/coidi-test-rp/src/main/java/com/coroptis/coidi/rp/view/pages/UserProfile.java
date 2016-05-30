@@ -24,8 +24,8 @@ import com.coroptis.coidi.rp.view.util.UserSession;
 @AccessOnlyForSigned
 public class UserProfile {
 
-    @SessionState
-    @Property
-    UserSession userSession;
+	@SessionState
+	@Property
+	UserSession userSession;
 
 }

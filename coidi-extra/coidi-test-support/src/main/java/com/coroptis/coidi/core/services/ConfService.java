@@ -28,86 +28,87 @@ import org.apache.tapestry5.ioc.Resource;
  */
 public interface ConfService {
 
-    /**
-     * When server.role is not specified in system properties this default value
-     * is taken.
-     */
-    static final String DEFAULT_SERVER_ROLE = "local";
+	/**
+	 * When server.role is not specified in system properties this default value
+	 * is taken.
+	 */
+	static final String DEFAULT_SERVER_ROLE = "local";
 
-    /**
-     * Under this key is server role loaded from system properties.
-     */
-    static final String SYSTEM_PROPERTY_SERVER_ROLE = "server.role";
+	/**
+	 * Under this key is server role loaded from system properties.
+	 */
+	static final String SYSTEM_PROPERTY_SERVER_ROLE = "server.role";
 
-    /**
-     * Default directory in class path where should be application
-     * configuration.
-     */
-    public static final String DEFAULT_CONFIGURATION_DIRECTORY = "./META-INF/";
+	/**
+	 * Default directory in class path where should be application
+	 * configuration.
+	 */
+	public static final String DEFAULT_CONFIGURATION_DIRECTORY = "./META-INF/";
 
-    /**
-     * Under this key could be found value in application resources with
-     * annotation @Symbol
-     */
-    public static final String CONF_KEY_CONFIGURATION_DIRECTORY = "system.property.configuration.directory";
+	/**
+	 * Under this key could be found value in application resources with
+	 * annotation @Symbol
+	 */
+	public static final String CONF_KEY_CONFIGURATION_DIRECTORY = "system.property.configuration.directory";
 
-    /**
-     * Get valid server role
-     * 
-     * @return server role
-     */
-    String getServerRole();
+	/**
+	 * Get valid server role
+	 * 
+	 * @return server role
+	 */
+	String getServerRole();
 
-    /**
-     * Method that get directory where is stored application configuration.
-     * Currently file <code>configuration-...xml</code> and
-     * <code>log4j-...xml</code>.
-     * 
-     * @return path to directory where application configuration is stored
-     */
-    String getConfigurationDirectory();
+	/**
+	 * Method that get directory where is stored application configuration.
+	 * Currently file <code>configuration-...xml</code> and
+	 * <code>log4j-...xml</code>.
+	 * 
+	 * @return path to directory where application configuration is stored
+	 */
+	String getConfigurationDirectory();
 
-    /**
-     * Return configuration file called 'configuration-&lt;server.role&gt;.xml'.
-     * 
-     * @return default application configuration file
-     */
-    Resource getDefaultConfiguration();
+	/**
+	 * Return configuration file called 'configuration-&lt;server.role&gt;.xml'.
+	 * 
+	 * @return default application configuration file
+	 */
+	Resource getDefaultConfiguration();
 
-    /**
-     * Return configuration file called '&lt;configurationName&gt;-&lt;server.role&gt;.xml'.
-     * 
-     * @param configurationName
-     *            required configuration name, name have to be usable as part of
-     *            file name
-     * @return application configuration file
-     */
-    Resource getConfiguration(String configurationName);
+	/**
+	 * Return configuration file called
+	 * '&lt;configurationName&gt;-&lt;server.role&gt;.xml'.
+	 * 
+	 * @param configurationName
+	 *            required configuration name, name have to be usable as part of
+	 *            file name
+	 * @return application configuration file
+	 */
+	Resource getConfiguration(String configurationName);
 
-    /**
-     * Return configuration file called
-     * '&lt;configurationName&gt;-&lt;server.role&gt;.&lt;fileExtension&gt;'.
-     * 
-     * @param configurationName
-     *            required configuration name, name have to be usable as part of
-     *            file name
-     * @param fileExtension
-     *            required file name extension without leading dot
-     * @return application configuration file
-     */
-    Resource getConfiguration(String configurationName, String fileExtension);
+	/**
+	 * Return configuration file called
+	 * '&lt;configurationName&gt;-&lt;server.role&gt;.&lt;fileExtension&gt;'.
+	 * 
+	 * @param configurationName
+	 *            required configuration name, name have to be usable as part of
+	 *            file name
+	 * @param fileExtension
+	 *            required file name extension without leading dot
+	 * @return application configuration file
+	 */
+	Resource getConfiguration(String configurationName, String fileExtension);
 
-    /**
-     * Creates {@link Properties}
-     * 
-     * @param configurationSection
-     *            pattern that matches an element in configuration
-     * @return properties loaded from XML configuration file, no file cannot be
-     *         found
-     */
-    Map<String, String> loadDefaultConfiguration(String configurationSection);
+	/**
+	 * Creates {@link Properties}
+	 * 
+	 * @param configurationSection
+	 *            pattern that matches an element in configuration
+	 * @return properties loaded from XML configuration file, no file cannot be
+	 *         found
+	 */
+	Map<String, String> loadDefaultConfiguration(String configurationSection);
 
-    String getProperty(String key);
+	String getProperty(String key);
 
-    Integer getPropertyInt(String key);
+	Integer getPropertyInt(String key);
 }

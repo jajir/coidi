@@ -35,59 +35,59 @@ import com.coroptis.coidi.core.services.ConfigurationException;
  */
 public class FsResource implements Resource {
 
-    private final File file;
+	private final File file;
 
-    public FsResource(final String path) {
-	this.file = new File(path);
-    }
-
-    @Override
-    public boolean exists() {
-	return file.exists();
-    }
-
-    @Override
-    public Resource forFile(String relativePath) {
-	throw new UnsupportedOperationException("not implemented");
-    }
-
-    @Override
-    public Resource forLocale(Locale locale) {
-	throw new UnsupportedOperationException("not implemented");
-    }
-
-    @Override
-    public String getFile() {
-	return file.getAbsolutePath();
-    }
-
-    @Override
-    public String getFolder() {
-	return file.getParent();
-    }
-
-    @Override
-    public String getPath() {
-	return file.getAbsolutePath();
-    }
-
-    @Override
-    public InputStream openStream() throws IOException {
-	return new FileInputStream(file);
-    }
-
-    @Override
-    public URL toURL() {
-	try {
-	    return file.toURI().toURL();
-	} catch (MalformedURLException e) {
-	    throw new ConfigurationException(e.getMessage(), e);
+	public FsResource(final String path) {
+		this.file = new File(path);
 	}
-    }
 
-    @Override
-    public Resource withExtension(String extension) {
-	throw new UnsupportedOperationException("not implemented");
-    }
+	@Override
+	public boolean exists() {
+		return file.exists();
+	}
+
+	@Override
+	public Resource forFile(String relativePath) {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public Resource forLocale(Locale locale) {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public String getFile() {
+		return file.getAbsolutePath();
+	}
+
+	@Override
+	public String getFolder() {
+		return file.getParent();
+	}
+
+	@Override
+	public String getPath() {
+		return file.getAbsolutePath();
+	}
+
+	@Override
+	public InputStream openStream() throws IOException {
+		return new FileInputStream(file);
+	}
+
+	@Override
+	public URL toURL() {
+		try {
+			return file.toURI().toURL();
+		} catch (MalformedURLException e) {
+			throw new ConfigurationException(e.getMessage(), e);
+		}
+	}
+
+	@Override
+	public Resource withExtension(String extension) {
+		throw new UnsupportedOperationException("not implemented");
+	}
 
 }

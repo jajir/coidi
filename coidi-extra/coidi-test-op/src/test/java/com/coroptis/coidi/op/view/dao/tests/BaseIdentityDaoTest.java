@@ -13,38 +13,38 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.coroptis.coidi.op.view.dao;
+package com.coroptis.coidi.op.view.dao.tests;
 
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
 import com.coroptis.coidi.op.entities.Identity;
-import com.coroptis.coidi.op.view.util.AbstractDaoTest;
+import com.coroptis.coidi.op.view.dao.support.AbstractDaoTest;
 
 public class BaseIdentityDaoTest extends AbstractDaoTest {
 
-    BaseIdentityDao identityDao;
+	BaseIdentityDao identityDao;
 
-    public void testGetIdentityByOpLocalIdentifier() throws Exception {
-	Identity ret = identityDao.getIdentityId("jane");
+	public void testGetIdentityByOpLocalIdentifier() throws Exception {
+		Identity ret = identityDao.getIdentityId("jane");
 
-	assertNotNull(ret);
-	assertEquals("jane", ret.getIdIdentity());
-    }
+		assertNotNull(ret);
+		assertEquals("jane", ret.getIdIdentity());
+	}
 
-    public void testGetIdentityByOpLocalIdentifier_notExists() throws Exception {
-	Identity ret = identityDao.getIdentityId("brekeke");
+	public void testGetIdentityByOpLocalIdentifier_notExists() throws Exception {
+		Identity ret = identityDao.getIdentityId("brekeke");
 
-	assertNull(ret);
-    }
+		assertNull(ret);
+	}
 
-    @Override
-    protected void setUp() throws Exception {
-	super.setUp();
-	identityDao = getService(BaseIdentityDao.class);
-    }
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		identityDao = getService(BaseIdentityDao.class);
+	}
 
-    @Override
-    protected void tearDown() throws Exception {
-	identityDao = null;
-	super.tearDown();
-    }
+	@Override
+	protected void tearDown() throws Exception {
+		identityDao = null;
+		super.tearDown();
+	}
 }

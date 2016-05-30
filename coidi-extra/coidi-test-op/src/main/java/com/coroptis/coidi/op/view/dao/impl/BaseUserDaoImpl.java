@@ -24,12 +24,11 @@ import com.coroptis.coidi.op.view.entities.User;
 
 public class BaseUserDaoImpl implements BaseUserDao {
 
-    @Inject
-    private Session session;
+	@Inject
+	private Session session;
 
-    @Override
-    public User getById(final Integer idUser) {
-	return (User) session.createCriteria(User.class)
-		.add(Restrictions.eq("idUser", idUser)).uniqueResult();
-    }
+	@Override
+	public User getById(final Integer idUser) {
+		return (User) session.createCriteria(User.class).add(Restrictions.eq("idUser", idUser)).uniqueResult();
+	}
 }
