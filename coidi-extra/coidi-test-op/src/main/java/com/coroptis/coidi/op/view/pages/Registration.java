@@ -23,7 +23,7 @@ import org.apache.tapestry5.corelib.components.PasswordField;
 import org.apache.tapestry5.corelib.components.TextField;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.coroptis.coidi.op.services.IdentityService;
+import com.coroptis.coidi.op.iocsupport.OpBinding;
 import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
@@ -37,53 +37,53 @@ import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 @AccessOnlyForUnsigned
 public class Registration { // NO_UCD
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
 
-	@Inject
-	private IdentityService identityService;
+    @Inject
+    private OpBinding opBinding;
 
-	@SessionState
-	private User userSession;
+    @SessionState
+    private User userSession;
 
-	@Component
-	private Form registrationForm;
+    @Component
+    private Form registrationForm;
 
-	@Component(id = "password2")
-	private PasswordField passwordField;
+    @Component(id = "password2")
+    private PasswordField passwordField;
 
-	@Component(id = "identityId")
-	private PasswordField identityIdField;
+    @Component(id = "identityId")
+    private PasswordField identityIdField;
 
-	@Component(id = "userName")
-	private TextField userNameField;
+    @Component(id = "userName")
+    private TextField userNameField;
 
-	@Property
-	private String userName;
+    @Property
+    private String userName;
 
-	@Property
-	private String password;
+    @Property
+    private String password;
 
-	@Property
-	private String password2;
+    @Property
+    private String password2;
 
-	@Property
-	private String identityId;
+    @Property
+    private String identityId;
 
-	void onValidateFromRegistrationForm() {
-		if (userService.getUserByName(userName) != null) {
-			registrationForm.recordError(userNameField, "user name is already registered.");
-		}
-		if (identityService.getByOpLocalIdentifier(identityId) != null) {
-			registrationForm.recordError(identityIdField, "identity id is already registered.");
-		}
-		if (password != null && !password.equals(password2)) {
-			registrationForm.recordError(passwordField, "Password have to be same.");
-		}
+    void onValidateFromRegistrationForm() {
+	if (userService.getUserByName(userName) != null) {
+	    registrationForm.recordError(userNameField, "user name is already registered.");
 	}
-
-	Object onSuccess() {
-		userSession = userService.register(userName, password, identityId);
-		return UserProfile.class;
+	if (opBinding.getIdentityService().getByOpLocalIdentifier(identityId) != null) {
+	    registrationForm.recordError(identityIdField, "identity id is already registered.");
 	}
+	if (password != null && !password.equals(password2)) {
+	    registrationForm.recordError(passwordField, "Password have to be same.");
+	}
+    }
+
+    Object onSuccess() {
+	userSession = userService.register(userName, password, identityId);
+	return UserProfile.class;
+    }
 }

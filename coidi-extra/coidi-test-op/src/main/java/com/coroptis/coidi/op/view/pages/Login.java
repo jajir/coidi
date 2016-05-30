@@ -36,47 +36,48 @@ import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
 
-	@SessionState
-	private User userSession;
+    @SessionState
+    private User userSession;
 
-	@SessionState
-	private AuthenticationRequest authenticationRequest;
+    @SessionState(create = false)
+    private AuthenticationRequest authenticationRequest;
 
-	@Component
-	private Form loginForm;
+    @Component
+    private Form loginForm;
 
-	@Property
-	private String userName;
+    @Property
+    private String userName;
 
-	@Property
-	private String password;
+    @Property
+    private String password;
 
-	@Component(id = "password")
-	private PasswordField passwordField;
+    @Component(id = "password")
+    private PasswordField passwordField;
 
-	@Inject
-	private OpBinding opBinding;
+    @Inject
+    private OpBinding opBinding;
 
-	@Inject
-	private RequestGlobals request;
+    @Inject
+    private RequestGlobals request;
 
-	void onValidateFromLoginForm() {
-		if (userService.login(userName, password) == null) {
-			loginForm.recordError(passwordField, "Invalid user name or password.");
-		}
+    void onValidateFromLoginForm() {
+	if (userService.login(userName, password) == null) {
+	    loginForm.recordError(passwordField, "Invalid user name or password.");
 	}
+    }
 
-	Object onSuccess() throws MalformedURLException {
-		userSession = userService.login(userName, password);
-		if (authenticationRequest != null) {
-			AbstractMessage response = opBinding.getOpenIdRequestProcessor().process(authenticationRequest.getMap(),
-					request.getHTTPServletRequest().getSession());
-			return new URL(response.getMessage());
-		}
-		return UserProfile.class;
+    Object onSuccess() throws MalformedURLException {
+	userSession = userService.login(userName, password);
+	if (authenticationRequest == null) {
+	    return UserProfile.class;
+	} else {
+	    AbstractMessage response = opBinding.getOpenIdRequestProcessor().process(
+		    authenticationRequest.getMap(), request.getHTTPServletRequest().getSession());
+	    return new URL(response.getMessage());
 	}
+    }
 
 }

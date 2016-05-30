@@ -5,16 +5,18 @@
     <session-factory>
     
 		<property name="hibernate.connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
-		<property name="hibernate.connection.url">jdbc:derby:memory:coidi_op;create=true</property>
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/coidi_op</property>
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 		<property name="hibernate.connection.useUnicode">true</property>
-		<property name="hibernate.connection.username">root</property>
+		<!-- 
+		<property name="hibernate.connection.username">ok</property>
 		<property name="hibernate.connection.password">ok</property>
+		 -->
 		<property name="hibernate.connection.autocommit">false</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
      
      
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">validate</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
     </session-factory>

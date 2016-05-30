@@ -15,15 +15,15 @@
 <Context>
 
 	<!-- Default set of monitored resources -->
+
+	<!-- java:comp/env/jdbc/coidi_op jdbc/coidi_op <ResourceLink name="jdbc/MyLocalDB" 
+		global="jdbc/coidi_op" auth="Container" type="javax.sql.DataSource" /> org.apache.tomcat.jdbc.pool.DataSource -->
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 
-	<!-- 
-	<ResourceLink name="jdbc/MyLocalDB" global="jdbc/coidi_op"
-		auth="Container" type="javax.sql.DataSource" />
-	 -->
 	<Resource name="jdbc/coidi_op" global="jdbc/coidi_op" auth="Container"
 		type="javax.sql.DataSource" driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-		url="jdbc:derby:target/derby-coidi_op/;create=true" maxActive="100"
+		url="jdbc:derby:target/derby-coidi_op/;create=true" maxActive="10"
+		
 		maxIdle="20" minIdle="5" maxWait="10000" />
 
 </Context>

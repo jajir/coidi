@@ -7,5 +7,6 @@
 		<property name="nonce.timeToLiveInSeconds">108000</property>
 		<property name="err.contact">john@somesite.com</property>
 		<property name="noEncryptionSessionTypeEnabled">false</property>
+		<property name="wild-card.in.realm.enabled">true</property>
 	</op>
 </configuration>

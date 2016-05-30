@@ -28,6 +28,7 @@ import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.EagerLoad;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Match;
@@ -83,6 +84,7 @@ public class OpViewModule {// NO_UCD
 		configuration.add("accessControllerDispatcher", accessController, "before:PageRender");
 	}
 
+	@EagerLoad
 	public static void contributeHibernateEntityPackageManager(Configuration<String> conf) {
 		conf.add("com.coroptis.coidi.op.view.entities");
 	}
