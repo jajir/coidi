@@ -26,7 +26,7 @@
 			<column name="gendre" type="int" />
 			<column name="postcode" type="varchar(10)" />
 			<column name="country" type="varchar(50)" />
-			<column name="language" type="varchar(10)" />
+			<column name="lang" type="varchar(10)" />
 			<column name="timezone" type="varchar(50)" />
 		</createTable>
 		<addForeignKeyConstraint baseTableName="coidi_identity"

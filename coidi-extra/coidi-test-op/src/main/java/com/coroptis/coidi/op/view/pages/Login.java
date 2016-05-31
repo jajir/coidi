@@ -71,6 +71,8 @@ public class Login { // NO_UCD
 
     Object onSuccess() throws MalformedURLException {
 	userSession = userService.login(userName, password);
+	//FIXME hacking of lazy loading
+	userSession.getIdentities();
 	if (authenticationRequest == null) {
 	    return UserProfile.class;
 	} else {

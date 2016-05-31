@@ -26,7 +26,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.coroptis.coidi.op.entities.IdentitySreg;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @Entity
 @Table(name = "coidi_identity")
@@ -61,7 +61,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 	@Column(length = 50)
 	private String country;
 
-	@Column(length = 10)
+	@Column(length = 10, name = "lang")
 	private String language;
 
 	@Column(length = 50)
@@ -69,7 +69,7 @@ public class IdentityImpl extends AbstractEntity<IdentityImpl> implements Identi
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(IdentityImpl.class).add("idIdentity", idIdentity).toString();
+		return MoreObjects.toStringHelper(IdentityImpl.class).add("idIdentity", idIdentity).toString();
 	}
 
 	/*

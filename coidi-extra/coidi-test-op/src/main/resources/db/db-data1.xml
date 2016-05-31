@@ -19,7 +19,7 @@
 			<column name="email" value="karel@gmail.com"/>
 			<column name="fullname" value="Karel Black"/>
 			<column name="gendre" valueNumeric="0"/>
-			<column name="language" value="cs"/>
+			<column name="lang" value="cs"/>
 			<column name="nickname" value="Charles"/>
 			<column name="postcode" value="120 00"/>
 			<column name="timezone" value="Prague"/>
@@ -36,7 +36,7 @@
 			<column name="email" value="juan@gmail.com"/>
 			<column name="fullname" value="Juan Ceur"/>
 			<column name="gendre" valueNumeric="1"/>
-			<column name="language" value="es"/>
+			<column name="lang" value="es"/>
 			<column name="nickname" value="Juan"/>
 			<column name="postcode" value="130 00"/>
 			<column name="timezone" value="Madrid"/>
@@ -48,7 +48,7 @@
 			<column name="email" value="yan@gmail.com"/>
 			<column name="fullname" value="Yan Ceur"/>
 			<column name="gendre" valueNumeric="1"/>
-			<column name="language" value="en"/>
+			<column name="lang" value="en"/>
 			<column name="nickname" value="Yan"/>
 			<column name="postcode" value="130 00"/>
 			<column name="timezone" value="London"/>

@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import com.coroptis.coidi.CoidiException;
 import com.coroptis.coidi.OpenIdNs;
 import com.coroptis.coidi.op.dao.BaseIdentityDao;
-import com.coroptis.coidi.op.services.IdentityNamesConvertor;
+import com.coroptis.coidi.op.iocsupport.OpBinding;
 import com.coroptis.coidi.op.util.PrintableXrd;
 import com.coroptis.coidi.op.util.PrintableXrdService;
 import com.coroptis.coidi.op.util.PrintableXrds;
@@ -57,7 +57,7 @@ public class Identity { // NO_UCD
 	private Response response;
 
 	@Inject
-	private IdentityNamesConvertor identityNamesConvertor;
+	private OpBinding opBinding;
 
 	private String opLocalIdentifier;
 
@@ -79,7 +79,7 @@ public class Identity { // NO_UCD
 			return error404;
 		}
 		response.setHeader("X-XRDS-Location",
-				identityNamesConvertor.convertToOpLocalIdentifier(identityId) + "?xrds=get");
+				opBinding.getIdentityNamesConvertor().convertToOpLocalIdentifier(identityId) + "?xrds=get");
 		response.setHeader("Vary:", "Accept");
 		if (request.getParameter("xrds") != null) {
 			logger.debug("Based on request parameter xrds return XRDS document");
@@ -98,7 +98,7 @@ public class Identity { // NO_UCD
 	}
 
 	public String getOpLocalIdentifier() {
-		return identityNamesConvertor.convertToOpLocalIdentifier(opLocalIdentifier);
+		return opBinding.getIdentityNamesConvertor().convertToOpLocalIdentifier(opLocalIdentifier);
 	}
 
 	private XrdsStreamResponse generateXrds() {
@@ -111,7 +111,7 @@ public class Identity { // NO_UCD
 		service.getTypes().add(OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0);
 		service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 		service.setUri(getOpEndpoint());
-		service.setLocalID(identityNamesConvertor.convertToOpLocalIdentifier(opLocalIdentifier));
+		service.setLocalID(opBinding.getIdentityNamesConvertor().convertToOpLocalIdentifier(opLocalIdentifier));
 		xrds.getXrds().get(0).getServices().add(service);
 
 		service = new PrintableXrdService();
