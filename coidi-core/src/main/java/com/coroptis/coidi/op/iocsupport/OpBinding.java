@@ -26,40 +26,25 @@ import com.coroptis.coidi.op.services.impl.AuthProcVerifyLoggedUser20Setup;
  */
 public abstract class OpBinding extends OpOpenIdDispatcherChainBinding {
 
-	private final static String AUTH_PROC_OPEN_ID_20_CHECKID_SETUP = "authProcOpenId20CheckIdSetup";
-	private final static String AUTH_PROC_OPEN_ID_20_CHECKID_IMMEDIATE = "authProcOpenId20CheckIdImmediate";
-	private final static String AUTH_PROC_OPEN_ID_11_CHECKID_SETUP = "authProcOpenId11CheckIdSetup";
-	private final static String AUTH_PROC_OPEN_ID_11_CHECKID_IMMEDIATE = "authProcOpenId11CheckIdImmediate";
-
-	private final static String AUTH_PROC_ASSOCIATION = "authProcAssociation";
-
-	private final static String AUTH_PROC_AX_10 = "authProcAx10";
-
-	private final static String AUTH_PROC_IDENTITY_11 = "authProcIdentity11";
-
-	private final static String AUTH_PROC_IDENTITY_20 = "authProcIdentity20";
-
-	private final static String AUTH_PROC_NONCE = "authProcNonce";
-
-	private final static String AUTH_PROC_SIGN = "authProcSign";
-
-	private final static String AUTH_PROC_SREG_10 = "authProcSreg10";
-
-	private final static String AUTH_PROC_SREG_11 = "authProcSreg11";
-
-	private final static String AUTH_PROC_STATE_LESS_ASSOCIATION = "authProcStateLessAssociation";
-
-	private final static String AUTH_PROC_VERIFY_IDENTITY_11 = "authProcVerifyIdentity11";
-
-	private final static String AUTH_PROC_VERIFY_IDENTITY_20 = "authProcVerifyIdentity20";
-
-	private final static String AUTH_PROC_VERIFY_LOGGED_USER_11_IMMEDIATE = "authProcVerifyLoggedUser11Immediate";
-
-	private final static String AUTH_PROC_VERIFY_LOGGED_USER_11_SETUP = "authProcVerifyLoggedUser11Setup";
-
-	private final static String AUTH_PROC_VERIFY_LOGGED_USER_20_IMMEDIATE = "authProcVerifyLoggedUser20Immediate";
-
-	private final static String AUTH_PROC_VERIFY_LOGGED_USER_20_SETUP = "authProcVerifyLoggedUser20Setup";
+	protected final static String AUTH_PROC_OPEN_ID_20_CHECKID_SETUP = "authProcOpenId20CheckIdSetup";
+	protected final static String AUTH_PROC_OPEN_ID_20_CHECKID_IMMEDIATE = "authProcOpenId20CheckIdImmediate";
+	protected final static String AUTH_PROC_OPEN_ID_11_CHECKID_SETUP = "authProcOpenId11CheckIdSetup";
+	protected final static String AUTH_PROC_OPEN_ID_11_CHECKID_IMMEDIATE = "authProcOpenId11CheckIdImmediate";
+	protected final static String AUTH_PROC_ASSOCIATION = "authProcAssociation";
+	protected final static String AUTH_PROC_AX_10 = "authProcAx10";
+	protected final static String AUTH_PROC_IDENTITY_11 = "authProcIdentity11";
+	protected final static String AUTH_PROC_IDENTITY_20 = "authProcIdentity20";
+	protected final static String AUTH_PROC_NONCE = "authProcNonce";
+	protected final static String AUTH_PROC_SIGN = "authProcSign";
+	protected final static String AUTH_PROC_SREG_10 = "authProcSreg10";
+	protected final static String AUTH_PROC_SREG_11 = "authProcSreg11";
+	protected final static String AUTH_PROC_STATE_LESS_ASSOCIATION = "authProcStateLessAssociation";
+	protected final static String AUTH_PROC_VERIFY_IDENTITY_11 = "authProcVerifyIdentity11";
+	protected final static String AUTH_PROC_VERIFY_IDENTITY_20 = "authProcVerifyIdentity20";
+	protected final static String AUTH_PROC_VERIFY_LOGGED_USER_11_IMMEDIATE = "authProcVerifyLoggedUser11Immediate";
+	protected final static String AUTH_PROC_VERIFY_LOGGED_USER_11_SETUP = "authProcVerifyLoggedUser11Setup";
+	protected final static String AUTH_PROC_VERIFY_LOGGED_USER_20_IMMEDIATE = "authProcVerifyLoggedUser20Immediate";
+	protected final static String AUTH_PROC_VERIFY_LOGGED_USER_20_SETUP = "authProcVerifyLoggedUser20Setup";
 
 	public abstract UserVerifier getUserVerifier();
 

@@ -16,21 +16,19 @@ import com.coroptis.coidi.op.services.impl.OpenIdDispatcherTerminator;
 
 public abstract class OpOpenIdDispatcherChainBinding extends OpCoreBinding {
 
-    private final static String OPEN_ID_DISPATCHER_20 = "openIdDispatcher20";
-
-    private final static String OPEN_ID_DISPATCHER_11 = "openIdDispatcher11";
-
-    private final static String OPEN_ID_DISPATCHER_CHECKER_11 = "openIdDispatcherChecker11";
-    private final static String OPEN_ID_DISPATCHER_AUTHENTICATION_IMMEDIATE_11 = "openIdDispatcherAuthenticationImmediate11";
-    private final static String OPEN_ID_DISPATCHER_AUTHENTICATION_SETUP_11 = "openIdDispatcherAuthenticationSetup11";
-    private final static String OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_11 = "openIdDispatcherCheckAuthentication11";
-    private final static String OPEN_ID_DISPATCHER_ASSOCIATION_11 = "openIdDispatcherAssociation11";
-    private final static String OPEN_ID_DISPATCHER_TERMINATOR = "openIdDispatcherTerminator";
-    private final static String OPEN_ID_DISPATCHER_CHECKER_20 = "openIdDispatcherChecker20";
-    private final static String OPEN_ID_DISPATCHER_AUTHENTICATION_IMMEDIATE_20 = "openIdDispatcherAuthenticationImmediate20";
-    private final static String OPEN_ID_DISPATCHER_AUTHENTICATION_SETUP_20 = "openIdDispatcherAuthenticationSetup20";
-    private final static String OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_20 = "openIdDispatcherCheckAuthentication20";
-    private final static String OPEN_ID_DISPATCHER_ASSOCIATION_20 = "openIdDispatcherAssociation20";
+	protected final static String OPEN_ID_DISPATCHER_20 = "openIdDispatcher20";
+    protected final static String OPEN_ID_DISPATCHER_11 = "openIdDispatcher11";
+    protected final static String OPEN_ID_DISPATCHER_CHECKER_11 = "openIdDispatcherChecker11";
+    protected final static String OPEN_ID_DISPATCHER_AUTHENTICATION_IMMEDIATE_11 = "openIdDispatcherAuthenticationImmediate11";
+    protected final static String OPEN_ID_DISPATCHER_AUTHENTICATION_SETUP_11 = "openIdDispatcherAuthenticationSetup11";
+    protected final static String OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_11 = "openIdDispatcherCheckAuthentication11";
+    protected final static String OPEN_ID_DISPATCHER_ASSOCIATION_11 = "openIdDispatcherAssociation11";
+    protected final static String OPEN_ID_DISPATCHER_TERMINATOR = "openIdDispatcherTerminator";
+    protected final static String OPEN_ID_DISPATCHER_CHECKER_20 = "openIdDispatcherChecker20";
+    protected final static String OPEN_ID_DISPATCHER_AUTHENTICATION_IMMEDIATE_20 = "openIdDispatcherAuthenticationImmediate20";
+    protected final static String OPEN_ID_DISPATCHER_AUTHENTICATION_SETUP_20 = "openIdDispatcherAuthenticationSetup20";
+    protected final static String OPEN_ID_DISPATCHER_CHECK_AUTHENTICATION_20 = "openIdDispatcherCheckAuthentication20";
+    protected final static String OPEN_ID_DISPATCHER_ASSOCIATION_20 = "openIdDispatcherAssociation20";
 
     public abstract AuthProc getAuthProcOpenId20CheckIdSetup();
 

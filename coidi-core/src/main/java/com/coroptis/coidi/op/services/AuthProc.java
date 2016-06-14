@@ -27,8 +27,9 @@ import com.coroptis.coidi.core.message.AuthenticationResponse;
  * Interface define chain of commands that process incoming authentication
  * request and helps produce authentication response.
  * <p>
- * Each parts of chain of command change response, only terminator return non
- * null value.
+ * Each parts of chain of command can change response. Only last command in
+ * chain return non <code>null</code> value. Ale in case of error message
+ * interface implementation return non <code>null</code> value
  * </p>
  * 
  * @author jirout
