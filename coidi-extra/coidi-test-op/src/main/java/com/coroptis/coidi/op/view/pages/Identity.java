@@ -30,6 +30,7 @@ import com.coroptis.coidi.op.iocsupport.OpBinding;
 import com.coroptis.coidi.op.util.PrintableXrd;
 import com.coroptis.coidi.op.util.PrintableXrdService;
 import com.coroptis.coidi.op.util.PrintableXrds;
+import com.coroptis.coidi.op.view.entities.IdentityImpl;
 import com.coroptis.coidi.op.view.utils.XrdsStreamResponse;
 
 /**
@@ -62,7 +63,7 @@ public class Identity { // NO_UCD
 	private String opLocalIdentifier;
 
 	@Property
-	private com.coroptis.coidi.op.entities.Identity identity;
+	private IdentityImpl identity;
 
 	@InjectPage
 	private Error404 error404;
@@ -73,13 +74,13 @@ public class Identity { // NO_UCD
 		if (identityId == null) {
 			throw new CoidiException("user name '" + identityId + "' is null");
 		}
-		identity = baseIdentityDao.getIdentityId(identityId);
+		identity = (IdentityImpl)baseIdentityDao.getIdentityId(identityId);
 		if (identity == null) {
 			logger.info("identity '" + identityId + "' is null");
 			return error404;
 		}
 		response.setHeader("X-XRDS-Location",
-				opBinding.getIdentityNamesConvertor().convertToOpLocalIdentifier(identityId) + "?xrds=get");
+				opBinding.getIdentityNamesConvertor().convertToIdentifier(identityId) + "?xrds=get");
 		response.setHeader("Vary:", "Accept");
 		if (request.getParameter("xrds") != null) {
 			logger.debug("Based on request parameter xrds return XRDS document");
@@ -111,7 +112,7 @@ public class Identity { // NO_UCD
 		service.getTypes().add(OpenIdNs.TYPE_CLAIMED_IDENTIFIER_ELEMENT_2_0);
 		service.getTypes().add(OpenIdNs.TYPE_SREG_1_1);
 		service.setUri(getOpEndpoint());
-		service.setLocalID(opBinding.getIdentityNamesConvertor().convertToOpLocalIdentifier(opLocalIdentifier));
+		service.setLocalID(opBinding.getIdentityNamesConvertor().convertToIdentifier(opLocalIdentifier));
 		xrds.getXrds().get(0).getServices().add(service);
 
 		service = new PrintableXrdService();

@@ -23,6 +23,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import com.coroptis.coidi.op.view.entities.IdentityImpl;
 import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * Main public profile page.
@@ -33,18 +34,18 @@ import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
 @AccessOnlyForSigned
 public class UserProfile { // NO_UCD
 
-	@SessionState
-	private User userSession;
+    @SessionState
+    private UserSession userSession;
 
-	@Property
-	private IdentityImpl identity;
+    @Property
+    private IdentityImpl identity;
 
-	public User getUser() {
-		return userSession;
-	}
+    public User getUser() {
+	return userSession.getUser();
+    }
 
-	public Set<IdentityImpl> getIdentities() {
-		return (Set) userSession.getIdentities();
-	}
+    public Set<IdentityImpl> getIdentities() {
+	return (Set) userSession.getUser().getIdentities();
+    }
 
 }

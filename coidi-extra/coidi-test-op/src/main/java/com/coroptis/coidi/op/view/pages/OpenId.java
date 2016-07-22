@@ -19,7 +19,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
@@ -27,10 +26,11 @@ import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.op.services.AuthenticationService;
-import com.coroptis.coidi.op.services.OpenIdRequestProcessor;
-import com.coroptis.coidi.op.view.entities.User;
+import com.coroptis.coidi.core.message.ErrorResponse;
+import com.coroptis.coidi.op.iocsupport.OpBinding;
+import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.view.utils.TextResponse;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * This end point will accept and process all OpenID (direct and indirect)
@@ -41,48 +41,56 @@ import com.coroptis.coidi.op.view.utils.TextResponse;
  */
 public class OpenId { // NO_UCD
 
-	@Inject
-	private Logger logger;
+    @Inject
+    private Logger logger;
 
-	@Inject
-	private RequestGlobals request;
+    @Inject
+    private RequestGlobals request;
 
-	@Inject
-	private Response response;
+    @Inject
+    private Response response;
 
-	@Inject
-	private OpenIdRequestProcessor openIdRequestProcessor;
+    @Inject
+    private OpBinding opBinding;
 
-	@javax.inject.Inject
-	private AuthenticationService authenticationService;
+    @SessionState
+    private UserSession userSession;
 
-	@SessionState
-	private User userSession;
-
-	public StreamResponse onActivate() {
-		try {
-			HttpServletRequest httpRequest = request.getHTTPServletRequest();
-			Map<String, String> map = authenticationService
-					.convertHttpRequestParametersToMap(request.getHTTPServletRequest());
-			logger.info("SSO openId request is " + httpRequest.getQueryString());
-			AbstractMessage requestResponse = openIdRequestProcessor.process(map, httpRequest.getSession());
-			logger.debug("openId response: " + requestResponse.getMessage());
-			if (requestResponse.isUrl()) {
-				String redirUrl = requestResponse.getUrl(null);
-				logger.info("SSO openId response is redirect to: '" + redirUrl + "'");
-				response.sendRedirect(redirUrl);
-				return new TextResponse("");
-			} else {
-				logger.info("SSO openId response is '" + requestResponse.getMessage() + "'");
-				return new TextResponse(requestResponse.getMessage());
-			}
-		} catch (Exception e) {
-			/**
-			 * It's dirty, but some exceptions can't be caught in different way.
-			 */
-			logger.error(e.getMessage(), e);
-			return new TextResponse("occured error: " + e.getMessage());
+    public Object onActivate() {
+	try {
+	    HttpServletRequest httpRequest = request.getHTTPServletRequest();
+	    Map<String, String> map = opBinding.getAuthenticationService()
+		    .convertHttpRequestParametersToMap(request.getHTTPServletRequest());
+	    logger.info("SSO openId request is " + httpRequest.getQueryString());
+	    AbstractMessage requestResponse = opBinding.getOpenIdRequestProcessor().process(map,
+		    httpRequest.getSession());
+	    logger.debug("openId response: " + requestResponse.getMessage());
+	    if (requestResponse instanceof ErrorResponse) {
+		if (NegativeResponseGenerator.APPLICATION_ERROR_PLEASE_LOGIN.equals(
+			requestResponse.get(NegativeResponseGenerator.APPLICATION_ERROR_KEY))) {
+		    return Login.class;
+		} else {
+		    logger.info("SSO openId response is '" + requestResponse.getMessage() + "'");
+		    return new TextResponse(requestResponse.getMessage());
 		}
+	    } else {
+		if (requestResponse.isUrl()) {
+		    String redirUrl = requestResponse.getUrl(null);
+		    logger.info("SSO openId response is redirect to: '" + redirUrl + "'");
+		    response.sendRedirect(redirUrl);
+		    return new TextResponse("");
+		} else {
+		    logger.info("SSO openId response is '" + requestResponse.getMessage() + "'");
+		    return new TextResponse(requestResponse.getMessage());
+		}
+	    }
+	} catch (Exception e) {
+	    /**
+	     * It's dirty, but some exceptions can't be caught in different way.
+	     */
+	    logger.error(e.getMessage(), e);
+	    return new TextResponse("occured error: " + e.getMessage());
 	}
+    }
 
 }

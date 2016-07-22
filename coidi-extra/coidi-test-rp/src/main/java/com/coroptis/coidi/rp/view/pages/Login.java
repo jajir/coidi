@@ -56,6 +56,11 @@ public class Login {
 	@Symbol("common.return_to")
 	private String return_to;
 
+	@Property
+	@Inject
+	@Symbol("openid.provider")
+	private String openidProvider;
+
 	@Inject
 	private Messages messages;
 

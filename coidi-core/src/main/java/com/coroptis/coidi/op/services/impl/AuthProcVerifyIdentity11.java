@@ -26,6 +26,7 @@ import com.coroptis.coidi.core.message.AbstractMessage;
 import com.coroptis.coidi.core.message.AuthenticationRequest;
 import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.services.AuthProc;
+import com.coroptis.coidi.op.services.IdentityNamesConvertor;
 import com.coroptis.coidi.op.services.NegativeResponseGenerator;
 import com.coroptis.coidi.op.services.UserVerifier;
 import com.google.common.base.Preconditions;
@@ -42,12 +43,14 @@ public class AuthProcVerifyIdentity11 implements AuthProc {
 
     private final NegativeResponseGenerator negativeResponseGenerator;
 
+    private final IdentityNamesConvertor identityNamesConvertor;
+
     private final UserVerifier userVerifier;
 
-     
     public AuthProcVerifyIdentity11(final NegativeResponseGenerator negativeResponseGenerator,
-	    final UserVerifier userVerifier) {
+	    final IdentityNamesConvertor identityNamesConvertor, final UserVerifier userVerifier) {
 	this.negativeResponseGenerator = Preconditions.checkNotNull(negativeResponseGenerator);
+	this.identityNamesConvertor = Preconditions.checkNotNull(identityNamesConvertor);
 	this.userVerifier = Preconditions.checkNotNull(userVerifier);
 
     }
@@ -57,7 +60,9 @@ public class AuthProcVerifyIdentity11 implements AuthProc {
 	    final AuthenticationResponse response, final HttpSession session,
 	    final Set<String> fieldsToSign) {
 	logger.debug("verify identity: " + authenticationRequest);
-	if (!userVerifier.verify(authenticationRequest.getIdentity(), session)) {
+	final String opLocalIdentifier = identityNamesConvertor
+		.convertToOpLocalIdentifier(authenticationRequest.getIdentity());
+	if (!userVerifier.verify(opLocalIdentifier, session)) {
 	    return negativeResponseGenerator.buildErrorWithNs(AbstractMessage.OPENID_NS_11,
 		    "Requested identity '", authenticationRequest.getIdentity(),
 		    "' doesn't exists.");

@@ -115,7 +115,7 @@ public class AuthenticationImmediateTest {
 		assertTrue(signed.contains("response_nonce"));
 		assertTrue(signed.contains("claimed_id"));
 		assertEquals("http://localhost:9090/openid", ret.get("op_endpoint"));
-		assertEquals("qwe", ret.get("identity"));
+		assertEquals("http://www.coidi.com/identity/qwe", ret.get("identity"));
 		assertEquals("https://sourceforge.net/account/openid_verify.php", ret.get("return_to"));
 		assertEquals("http://www.coidi.com/identity/qwe", ret.get("claimed_id"));
 	}
@@ -146,7 +146,7 @@ public class AuthenticationImmediateTest {
 		assertTrue(signed.contains("response_nonce"));
 		assertTrue(signed.contains("claimed_id"));
 		assertEquals("http://localhost:9090/openid", ret.get("op_endpoint"));
-		assertEquals("qwe", ret.get("identity"));
+		assertEquals("http://www.coidi.com/identity/qwe", ret.get("identity"));
 		assertEquals("https://sourceforge.net/account/openid_verify.php", ret.get("return_to"));
 		assertEquals("http://www.coidi.com/identity/qwe", ret.get("claimed_id"));
 	}
@@ -190,7 +190,7 @@ public class AuthenticationImmediateTest {
 		params = new HashMap<String, String>();
 		params.put(OpenIdDispatcher.OPENID_MODE, CheckAuthenticationRequest.MODE_CHECKID_IMMEDIATE);
 		params.put("openid.ns", "http://specs.openid.net/auth/2.0");
-		params.put("openid.identity", "qwe");
+		params.put("openid.identity", "http://www.coidi.com/identity/qwe");
 		params.put("openid.claimed_id", "http://www.coidi.com/identity/qwe");
 		params.put("openid.assoc_handle", "cc5b843b-e375-4640-8f71-38e40b2950a6");
 		params.put("openid.return_to", "https://sourceforge.net/account/openid_verify.php");

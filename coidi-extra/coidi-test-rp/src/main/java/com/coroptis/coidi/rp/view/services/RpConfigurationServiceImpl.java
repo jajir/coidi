@@ -1,41 +1,41 @@
 package com.coroptis.coidi.rp.view.services;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 
 import com.coroptis.coidi.rp.services.RpConfigurationService;
 
 public class RpConfigurationServiceImpl implements RpConfigurationService {
 	@Inject
-	@Named("openid.realm")
+	@Symbol("openid.realm")
 	private String realm;
 
 	@Inject
-	@Named("proxy.server")
+	@Symbol("proxy.server")
 	private String proxyServer;
 
 	@Inject
-	@Named("proxy.port")
+	@Symbol("proxy.port")
 	private Integer proxyPort;
 
 	@Inject
-	@Named("proxy.userName")
+	@Symbol("proxy.userName")
 	private String proxyUsername;
 
 	@Inject
-	@Named("proxy.password")
+	@Symbol("proxy.password")
 	private String proxyPassword;
 
 	@Inject
-	@Named("common.extension.registration.requiredFields")
+	@Symbol("common.extension.registration.requiredFields")
 	private String requiredFields;
 
 	@Inject
-	@Named("common.extension.registration.optionalFields")
+	@Symbol("common.extension.registration.optionalFields")
 	private String optionalFields;
 
 	@Inject
-	@Named("common.extension.registration.policyUrl")
+	@Symbol("common.extension.registration.policyUrl")
 	private String policyUrl;
 
 	@Override

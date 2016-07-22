@@ -2,33 +2,47 @@ package com.coroptis.coidi.op.view.services.impl;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.ApplicationStateManager;
+
 import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.op.entities.Identity;
 import com.coroptis.coidi.op.services.UserVerifier;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 public class UserVerifierImpl implements UserVerifier {
 
-	@Override
-	public boolean verify(String opLocalIdentity, HttpSession session) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Inject
+    private ApplicationStateManager asm;
 
-	@Override
-	public boolean isUserLogged(HttpSession session) {
-		// TODO Auto-generated method stub
-		return false;
+    private UserSession getUserSession(){
+	return asm.get(UserSession.class);
+    }
+    
+    @Override
+    public boolean verify(String opLocalIdentity, HttpSession session) {
+	for (final Identity ident : getUserSession().getUser().getIdentities()) {
+	    if (opLocalIdentity.equals(ident.getIdIdentity())) {
+		return true;
+	    }
 	}
+	return false;
+    }
 
-	@Override
-	public void storeAuthenticatonRequest(HttpSession session, AuthenticationRequest authenticationRequest) {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean isUserLogged(HttpSession session) {
+	return getUserSession().isLogged();
+    }
 
-	}
+    @Override
+    public void storeAuthenticatonRequest(HttpSession session,
+	    AuthenticationRequest authenticationRequest) {
+	getUserSession().setAuthenticationRequest(authenticationRequest);
+    }
 
-	@Override
-	public String getSelectedOpLocalIdentifier(HttpSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getSelectedOpLocalIdentifier(HttpSession session) {
+	return getUserSession().getLoggedIdentity();
+    }
 
 }

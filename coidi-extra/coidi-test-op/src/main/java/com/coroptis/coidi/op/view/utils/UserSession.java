@@ -29,6 +29,8 @@ public class UserSession {
 	private Integer idUser;
 
 	private AuthenticationRequest authenticationRequest;
+	
+	private String loggedIdentity;
 
 	public boolean isLogged() {
 		return idUser != null;
@@ -77,4 +79,17 @@ public class UserSession {
 		this.idUser = idUser;
 	}
 
+	/**
+	 * @return the loggedIdentity
+	 */
+	public String getLoggedIdentity() {
+	    return loggedIdentity;
+	}
+
+	/**
+	 * @param loggedIdentity the loggedIdentity to set
+	 */
+	public void setLoggedIdentity(String loggedIdentity) {
+	    this.loggedIdentity = loggedIdentity;
+	}
 }

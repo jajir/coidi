@@ -208,7 +208,7 @@ public abstract class OpBinding extends OpOpenIdDispatcherChainBinding {
 	public AuthProc getAuthProcVerifyIdentity11() {
 		AuthProc out = get(AUTH_PROC_VERIFY_IDENTITY_11);
 		if (out == null) {
-			out = new AuthProcVerifyIdentity11(getNegativeResponseGenerator(), getUserVerifier());
+			out = new AuthProcVerifyIdentity11(getNegativeResponseGenerator(), getIdentityNamesConvertor(),getUserVerifier());
 			put(AUTH_PROC_VERIFY_IDENTITY_11, out);
 		}
 		return out;
@@ -217,7 +217,8 @@ public abstract class OpBinding extends OpOpenIdDispatcherChainBinding {
 	public AuthProc getAuthProcVerifyIdentity20() {
 		AuthProc out = get(AUTH_PROC_VERIFY_IDENTITY_20);
 		if (out == null) {
-			out = new AuthProcVerifyIdentity20(getNegativeResponseGenerator(), getUserVerifier());
+		    out = new AuthProcVerifyIdentity20(getNegativeResponseGenerator(),
+			    getIdentityNamesConvertor(), getUserVerifier());
 			put(AUTH_PROC_VERIFY_IDENTITY_20, out);
 		}
 		return out;

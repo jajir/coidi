@@ -32,17 +32,6 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			
-		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>3.5.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.12.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.openxri</groupId>
@@ -82,69 +71,42 @@
 			<version>${log4j.version}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.12.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+			<scope>runtime</scope>
 		</dependency>
-		<!-- 
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.1</version>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>3.5.1</version>
+			<scope>runtime</scope>
 		</dependency>
-		 -->
-		
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.easymock</groupId>
-			<artifactId>easymockclassextension</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tapestry</groupId>
-			<artifactId>tapestry-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>2.3.0</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xercesImpl</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>xerces</groupId>
-					<artifactId>xmlParserAPIs</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-collections</groupId>
-					<artifactId>commons-collections</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-nop</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+
+		<!-- <dependency> <groupId>org.easymock</groupId> <artifactId>easymockclassextension</artifactId> 
+			<scope>test</scope> </dependency> <dependency> <groupId>org.apache.tapestry</groupId> 
+			<artifactId>tapestry-test</artifactId> <scope>test</scope> </dependency> 
+			<dependency> <groupId>org.dbunit</groupId> <artifactId>dbunit</artifactId> 
+			<version>2.3.0</version> <scope>test</scope> <exclusions> <exclusion> <groupId>xerces</groupId> 
+			<artifactId>xercesImpl</artifactId> </exclusion> <exclusion> <groupId>xerces</groupId> 
+			<artifactId>xmlParserAPIs</artifactId> </exclusion> <exclusion> <groupId>commons-collections</groupId> 
+			<artifactId>commons-collections</artifactId> </exclusion> <exclusion> <groupId>junit</groupId> 
+			<artifactId>junit</artifactId> </exclusion> <exclusion> <groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> </exclusion> <exclusion> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-api</artifactId> </exclusion> <exclusion> <groupId>org.slf4j</groupId> 
+			<artifactId>slf4j-nop</artifactId> </exclusion> </exclusions> </dependency> -->
 	</dependencies>
 	<build>
 		<plugins>

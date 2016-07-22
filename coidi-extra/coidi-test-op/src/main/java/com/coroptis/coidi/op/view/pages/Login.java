@@ -18,6 +18,7 @@ package com.coroptis.coidi.op.view.pages;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
@@ -27,23 +28,23 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 
 import com.coroptis.coidi.core.message.AbstractMessage;
-import com.coroptis.coidi.core.message.AuthenticationRequest;
+import com.coroptis.coidi.core.message.AuthenticationResponse;
 import com.coroptis.coidi.op.iocsupport.OpBinding;
 import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.services.UserService;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 @AccessOnlyForUnsigned
 public class Login { // NO_UCD
+
+    private Logger logger = Logger.getLogger(Login.class);
 
     @Inject
     private UserService userService;
 
     @SessionState
-    private User userSession;
-
-    @SessionState(create = false)
-    private AuthenticationRequest authenticationRequest;
+    private UserSession userSession;
 
     @Component
     private Form loginForm;
@@ -70,16 +71,30 @@ public class Login { // NO_UCD
     }
 
     Object onSuccess() throws MalformedURLException {
-	userSession = userService.login(userName, password);
-	//FIXME hacking of lazy loading
-	userSession.getIdentities();
-	if (authenticationRequest == null) {
+	// TODO move to service, it's duplicated
+	User user = userService.login(userName, password);
+	userSession.setIdUser(user.getIdUser());
+	if (userSession.getAuthenticationRequest() == null) {
+	    userSession.setLoggedIdentity(getDefaultIdentity(user));
 	    return UserProfile.class;
 	} else {
 	    AbstractMessage response = opBinding.getOpenIdRequestProcessor().process(
-		    authenticationRequest.getMap(), request.getHTTPServletRequest().getSession());
-	    return new URL(response.getMessage());
+		    userSession.getAuthenticationRequest().getMap(),
+		    request.getHTTPServletRequest().getSession());
+	    if (response instanceof AuthenticationResponse) {
+		AuthenticationResponse authResp = (AuthenticationResponse)response;
+		userSession.setLoggedIdentity("brekeke");
+		return new URL(authResp.getUrl(null));
+	    } else {
+		// something went wrong
+		logger.error(response);
+		userSession.setLoggedIdentity(getDefaultIdentity(user));
+		return UserProfile.class;
+	    }
 	}
     }
 
+    private String getDefaultIdentity(User user) {
+	return user.getIdentities().iterator().next().getIdIdentity();
+    }
 }

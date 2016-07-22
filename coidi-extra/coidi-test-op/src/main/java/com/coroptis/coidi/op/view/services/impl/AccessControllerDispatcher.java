@@ -27,9 +27,9 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
-import com.coroptis.coidi.op.view.entities.User;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForSigned;
 import com.coroptis.coidi.op.view.utils.AccessOnlyForUnsigned;
+import com.coroptis.coidi.op.view.utils.UserSession;
 
 /**
  * Dispatcher that handle access rights for site resources.
@@ -44,7 +44,7 @@ public class AccessControllerDispatcher implements Dispatcher {
 
 	private final static String LOGIN_PAGE = "/login";
 
-	private ApplicationStateManager asm;
+	private final ApplicationStateManager asm;
 	private final ComponentClassResolver resolver;
 	private final ComponentSource componentSource;
 
@@ -81,7 +81,7 @@ public class AccessControllerDispatcher implements Dispatcher {
 		logger.debug("page path: " + pageName);
 		Component page = componentSource.getPage(pageName);
 		if (page.getClass().getAnnotation(AccessOnlyForSigned.class) != null) {
-			if (asm.exists(User.class)) {
+			if (isUserLoggedIn()) {
 				return false;
 			} else {
 				response.sendRedirect(request.getContextPath() + LOGIN_PAGE);
@@ -90,7 +90,7 @@ public class AccessControllerDispatcher implements Dispatcher {
 		}
 
 		if (page.getClass().getAnnotation(AccessOnlyForUnsigned.class) != null) {
-			if (asm.exists(User.class)) {
+			if (isUserLoggedIn()) {
 				response.sendRedirect(request.getContextPath());
 				return true;
 			} else {
@@ -99,6 +99,15 @@ public class AccessControllerDispatcher implements Dispatcher {
 		}
 
 		return false;
+	}
+	
+	private boolean isUserLoggedIn(){
+	    if(asm.exists(UserSession.class)){
+		UserSession userSession = (UserSession)asm.get(UserSession.class);
+		return userSession.isLogged();
+	    }else{
+		return false;
+	    }
 	}
 
 }

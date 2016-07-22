@@ -5,7 +5,7 @@
 	<artifactId>coidi-extra</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Create Coidi distribution</name>
+	<name>Project with example OpenId provider (OP) and relaying party (RP)</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<t5.version>5.3.8</t5.version>
@@ -20,7 +20,6 @@
 		<module>coidi-test-common</module>
 		<module>coidi-test-op</module>
 		<module>coidi-test-rp</module>
-		<module>coidi-test-support</module>
 	</modules>
 	<dependencies>
 	</dependencies>

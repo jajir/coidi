@@ -82,7 +82,7 @@ public class AuthenticationSetupTest {
     public void test_not_existing_association() throws Exception {
 	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
-	EasyMock.expect(mocks.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+	EasyMock.expect(mocks.getUserVerifier().verify("qwe",
 		mocks.getHttpSession())).andReturn(true);
 	EasyMock.expect(mocks.getBaseAssociationDao()
 		.getByAssocHandle("cc5b843b-e375-4640-8f71-38e40b2950a6")).andReturn(null);
@@ -133,7 +133,7 @@ public class AuthenticationSetupTest {
     public void test_all_pass() throws Exception {
 	EasyMock.expect(mocks.getUserVerifier().isUserLogged(mocks.getHttpSession()))
 		.andReturn(true);
-	EasyMock.expect(mocks.getUserVerifier().verify("http://www.coidi.com/identity/qwe",
+	EasyMock.expect(mocks.getUserVerifier().verify("qwe",
 		mocks.getHttpSession())).andReturn(true);
 	EasyMock.expect(mocks.getBaseAssociationDao()
 		.getByAssocHandle("cc5b843b-e375-4640-8f71-38e40b2950a6")).andReturn(assoc)
