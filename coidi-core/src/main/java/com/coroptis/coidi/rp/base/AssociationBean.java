@@ -34,7 +34,12 @@ import com.google.common.base.MoreObjects;
  */
 public class AssociationBean implements Association {
 
-    private String assocHandle;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String assocHandle;
 
     private AssociationType associationType;
 

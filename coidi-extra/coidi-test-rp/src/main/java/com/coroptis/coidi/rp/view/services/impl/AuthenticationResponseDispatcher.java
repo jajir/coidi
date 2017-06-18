@@ -34,7 +34,6 @@ import com.coroptis.coidi.core.message.CheckAuthenticationResponse;
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.rp.base.AuthenticationResult;
 import com.coroptis.coidi.rp.iocsupport.RpBinding;
-import com.coroptis.coidi.rp.services.HttpTransportService;
 import com.coroptis.coidi.rp.view.util.UserSession;
 
 /**

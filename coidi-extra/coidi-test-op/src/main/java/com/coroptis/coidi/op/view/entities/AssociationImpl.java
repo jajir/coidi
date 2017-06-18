@@ -27,11 +27,16 @@ import javax.persistence.Table;
 
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @Entity
 @Table(name = "coidi_association")
 public class AssociationImpl extends AbstractEntity<AssociationImpl> implements Association {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(nullable = false, length = 50, name = "assoc_handle")
@@ -54,7 +59,7 @@ public class AssociationImpl extends AbstractEntity<AssociationImpl> implements 
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(AssociationImpl.class).add("assocHandle", assocHandle)
+		return MoreObjects.toStringHelper(AssociationImpl.class).add("assocHandle", assocHandle)
 				.add("associationType", associationType).add("expiredIn", expiredIn).add("macKey", macKey)
 				.add("sessionType", sessionType).toString();
 	}

@@ -15,6 +15,7 @@
  */
 package com.coroptis.coidi.op.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ import java.util.Set;
  * @author jirout
  * 
  */
-public interface Association {
+public interface Association extends Serializable {
 
     /**
      * This define algorithm used for signing message with secret mac key.

@@ -14,6 +14,11 @@ import com.coroptis.coidi.op.entities.Nonce;
  */
 public class AssociationMock implements Association {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String assocHandle;
 
 	private AssociationType associationType;

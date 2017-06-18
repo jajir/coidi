@@ -29,7 +29,7 @@ import javax.persistence.Table;
 import org.apache.tapestry5.beaneditor.NonVisual;
 
 import com.coroptis.coidi.op.entities.Identity;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @Entity
 @Table(name = "coidi_user")
@@ -52,7 +52,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(User.class).add("idUser", idUser).add("name", name).toString();
+		return MoreObjects.toStringHelper(User.class).add("idUser", idUser).add("name", name).toString();
 	}
 
 	/*

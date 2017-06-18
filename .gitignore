@@ -13,4 +13,5 @@ buildNumber.properties
 *.log
 mem.script
 mem.properties
+.DS_Store
 

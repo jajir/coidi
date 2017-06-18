@@ -15,6 +15,8 @@
  */
 package com.coroptis.coidi.op.entities;
 
+import java.io.Serializable;
+
 /**
  * Nonce is random string that prevent re-using messages. In some cases should
  * be persisted on OP and on RP.
@@ -22,7 +24,7 @@ package com.coroptis.coidi.op.entities;
  * @author jirout
  * 
  */
-public interface Nonce {
+public interface Nonce extends Serializable {
 
     /**
      * @return the nonce

@@ -26,11 +26,16 @@ import javax.persistence.Table;
 
 import com.coroptis.coidi.op.entities.Association;
 import com.coroptis.coidi.op.entities.Nonce;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 @Entity
 @Table(name = "coidi_stateless_mode_nonce")
 public class NonceImpl extends AbstractEntity<NonceImpl> implements Nonce {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(nullable = false, length = 50, name = "nonce")
@@ -59,7 +64,7 @@ public class NonceImpl extends AbstractEntity<NonceImpl> implements Nonce {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(NonceImpl.class).add(nonce, "nonce").toString();
+		return MoreObjects.toStringHelper(NonceImpl.class).add(nonce, "nonce").toString();
 	}
 
 	/*
